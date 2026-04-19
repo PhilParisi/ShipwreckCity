@@ -11,6 +11,7 @@ function buildNav(activePage) {
       <a href="/index.html"  class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
       <a href="/map.html"    class="${activePage === 'map'    ? 'active' : ''}">Map</a>
       <a href="/archive.html"class="${activePage === 'archive'? 'active' : ''}">Archive</a>
+      <a href="/support.html" class="${activePage === 'support' ? 'active' : ''}">Support</a>
       <a href="/about.html"  class="${activePage === 'about'  ? 'active' : ''}">About</a>
     </div>
   </nav>`;
@@ -26,6 +27,7 @@ function buildFooter() {
       <a href="/index.html">Explore</a>
       <a href="/map.html">Map</a>
       <a href="/about.html">About</a>
+      <a href="/support.html">Support</a>
     </div>
   </footer>`;
 }

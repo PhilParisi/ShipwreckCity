@@ -23,7 +23,8 @@
  *  discovery   — how/when it was found paragraph
  *  dimensions  — e.g. "62ft × 18ft" or null
  *  footage     — YouTube or Vimeo embed URL, or null
- *  images      — array of image paths or URLs (first = hero)
+ *  images      — gallery filenames inside img/wrecks/{id}/ (e.g. ["01.jpg","02.jpg"])
+ *               Homepage tile uses primetime.{jpg|png|webp} automatically — no entry needed here.
  *  featured    — true = shown in homepage spotlight
  */
 
@@ -34,9 +35,9 @@ const SITE_CONFIG = {
   coordinates: [47.6380, -122.3383], // map center
   mapZoom: 14,
   social: {
-    instagram: "",   // e.g. "@shipwreckcity"
-    youtube: "",
-    email: ""
+    instagram: "@philparisi_",   // e.g. "@shipwreckcity"
+    youtube: "https://www.youtube.com/@philparisi_",
+    email: "Phil.Parisi@RemoteCoastSystems.com"
   }
 };
 
@@ -100,5 +101,105 @@ const WRECKS = [
     footage: null,
     images: [],
     featured: true
+  },
+  {
+    id: "the-resolute",
+    name: "The Resolute",
+    catalog: "WR — 004",
+    type: "Pile Driver Barge",
+    year: 1936,
+    yearNote: null,
+    depth: 35,
+    coordinates: [47.6390, -122.3355],
+    location: "East basin, Lake Union",
+    status: "documented",
+    tagline: "A sunken work barge, her pile-driving rig still upright.",
+    summary: "The Resolute capsized during a heavy windstorm in November 1936, taking her crew's tools and most of her deck equipment to the bottom. Her iron pile-driving frame still stands vertically, creating an eerie artificial reef at 35 feet.",
+    history: "Operated by the Puget Sound Harbor Works Co., the Resolute was a fixture on Lake Union throughout the 1920s and '30s, sinking dock pilings for the growing industrial waterfront. She was uninsured at the time of her loss.",
+    discovery: "Located by commercial divers during a dock survey in 1998. Hull condition assessed as stable. Catalogued 2023.",
+    dimensions: "80ft × 24ft",
+    footage: null,
+    images: [],
+    featured: false
+  },
+  {
+    id: "gasoline-tender-5",
+    name: "Tender No. 5",
+    catalog: "WR — 005",
+    type: "Gasoline Launch",
+    year: 1918,
+    yearNote: null,
+    depth: 12,
+    coordinates: [47.6355, -122.3440],
+    location: "West shoreline, Lake Union",
+    status: "partial",
+    tagline: "A shallow-water launch, hull intact but identity elusive.",
+    summary: "Resting in just 12 feet of water along the west shore, Tender No. 5 is named for a partial registry plate recovered from her transom. She is one of the shallowest catalogued wrecks in the survey area, accessible to snorkelers.",
+    history: "Small gasoline launches of this type were used extensively on Lake Union as crew tenders, supply runners, and pleasure craft in the early 20th century. The specific vessel's history prior to sinking remains unclear.",
+    discovery: "First noted by a kayaker in 2018 during low-water conditions. Diving survey completed 2022.",
+    dimensions: "26ft × 8ft",
+    footage: null,
+    images: [],
+    featured: false
+  },
+  {
+    id: "unknown-hull-06",
+    name: "Unknown Hull",
+    catalog: "WR — 006",
+    type: "Unidentified",
+    year: null,
+    yearNote: "est. 1920s–30s",
+    depth: 51,
+    coordinates: [47.6402, -122.3310],
+    location: "Deep channel, northeast quadrant",
+    status: "unidentified",
+    tagline: "The deepest wreck in the survey — identity unknown.",
+    summary: "At 51 feet, this is the deepest wreck documented in the Lake Union survey. She is heavily silted and partially buried at the bow. Visibility at depth is typically under 5 feet. Only experienced divers should attempt.",
+    history: "The construction indicates a medium-sized commercial vessel, possibly a small freighter or passenger barge. The deep channel she rests in was dredged repeatedly in the 1920s, which may explain the obscured wreckage.",
+    discovery: "Detected via multibeam sonar in 2022. First physically dived in 2023. No identifying features recovered.",
+    dimensions: null,
+    footage: null,
+    images: [],
+    featured: false
+  },
+  {
+    id: "the-westlake-ferry",
+    name: "The Westlake",
+    catalog: "WR — 007",
+    type: "Passenger Ferry",
+    year: 1929,
+    yearNote: null,
+    depth: 22,
+    coordinates: [47.6330, -122.3370],
+    location: "South basin, Lake Union",
+    status: "partial",
+    tagline: "A Depression-era ferry that never made her final crossing.",
+    summary: "The Westlake operated a short passenger route across the south basin of Lake Union from 1924 until she was scuttled in 1929 after the operator went bankrupt. Her wooden superstructure has collapsed, but the steel-reinforced hull remains largely intact.",
+    history: "The Westlake Ferry Co. ran a six-day-a-week crossing service for workers commuting between the Eastlake and Westlake neighborhoods before the Aurora Bridge made it obsolete. The company folded in the first year of the Depression.",
+    discovery: "Long known to local divers as 'The Flat One' for her barge-like profile. Formally identified from property records in 2021.",
+    dimensions: "54ft × 22ft",
+    footage: null,
+    images: [],
+    featured: false
+  },
+  {
+    id: "the-mrs-caldwell",
+    name: "The Mrs. Caldwell",
+    catalog: "WR — 008",
+    type: "Steam Launch",
+    year: 1911,
+    yearNote: null,
+    depth: 17,
+    coordinates: [47.6420, -122.3450],
+    location: "Northwest cove, Lake Union",
+    status: "documented",
+    tagline: "A private steam launch, sunk at anchor in a winter gale.",
+    summary: "Named for the wife of her original owner, the Mrs. Caldwell is a well-preserved private steam launch resting at 17 feet. Her brass fittings have long since been recovered by divers, but her hull, boiler, and drive shaft remain in place.",
+    history: "Commissioned in 1909 by a timber merchant named R.A. Caldwell for recreational use on Lake Union and Lake Washington. She sank at anchor during a severe November windstorm in 1911, just two years after her launch.",
+    discovery: "Identified from a 1911 newspaper account of the sinking and confirmed by hull measurements in 2020.",
+    dimensions: "38ft × 10ft",
+    footage: null,
+    images: [],
+    featured: false
   }
 ];

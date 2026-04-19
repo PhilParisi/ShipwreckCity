@@ -22,16 +22,13 @@
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-scan"></div>
-  <svg class="hero-waterlines" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,220 Q300,200 600,215 T1200,205" stroke="#4a9eba" stroke-width="0.8" fill="none" opacity="0.25"/>
-    <path d="M0,255 Q300,238 600,252 T1200,242" stroke="#4a9eba" stroke-width="0.5" fill="none" opacity="0.18"/>
-    <path d="M0,288 Q300,274 600,286 T1200,278" stroke="#4a9eba" stroke-width="0.4" fill="none" opacity="0.12"/>
-    <path d="M0,320 Q300,308 600,318 T1200,312" stroke="#4a9eba" stroke-width="0.3" fill="none" opacity="0.08"/>
-  </svg>
+  <div class="hero-blip hero-blip-1"></div>
+  <div class="hero-blip hero-blip-2"></div>
+  <div class="hero-blip hero-blip-3"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">Lake Union · Seattle · 47°37'N 122°20'W</div>
     <h1 class="hero-title">SHIP<br><em>WRECK</em><br>CITY</h1>
-    <p class="hero-sub">An underwater archive of Lake Union's sunken past — the vessels lost to time, fire, and the deep.</p>
+    <p class="hero-sub">Completing the underwater archive of Lake Union's sunken maritime history — the vessels lost to time, fire, and the deep.</p>
   </div>
   <div class="hero-meta">
     <div class="hero-meta-label">Depth range</div>
@@ -43,16 +40,52 @@
 <div class="stats-bar" id="stats-bar"></div>
 
 <!-- WRECK GRID -->
-<section class="section container">
-  <div class="section-label">Documented wrecks — Lake Union</div>
-  <div class="wrecks-grid" id="wrecks-grid"></div>
+<section class="wrecks-scroll-section">
+  <div class="container">
+    <div class="section-label">Targets — Lake Union</div>
+  </div>
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="scroll-left" aria-label="Scroll left">&#8592;</button>
+    <div class="wrecks-scroll-track" id="wrecks-grid"></div>
+    <button class="scroll-arrow scroll-arrow-right" id="scroll-right" aria-label="Scroll right">&#8594;</button>
+  </div>
 </section>
 
 <!-- MAP -->
 <section class="map-section">
   <div class="container">
     <div class="section-label">Wreck map — Lake Union</div>
-    <div id="wreck-map"></div>
+    <div class="map-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Documented</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8a6a3a;"></div> Unidentified</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2a6080;"></div> Partial</div>
+    </div>
+    <div class="map-wrapper" id="map-wrapper">
+      <div id="wreck-map"></div>
+      <button class="map-fullscreen-btn" id="map-fullscreen" aria-label="Toggle fullscreen">
+        <svg class="icon-expand" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="1,5 1,1 5,1"/><polyline points="11,1 15,1 15,5"/>
+          <polyline points="15,11 15,15 11,15"/><polyline points="5,15 1,15 1,11"/>
+        </svg>
+        <svg class="icon-collapse" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none">
+          <polyline points="5,1 1,1 1,5"/><polyline points="11,1 15,1 15,5"/>
+          <polyline points="15,11 15,15 11,15"/><polyline points="5,15 1,15 1,11"/>
+          <polyline points="5,5 1,1"/><polyline points="11,5 15,1"/>
+          <polyline points="15,15 11,11"/><polyline points="1,15 5,11"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORTERS -->
+<section class="supporters-section">
+  <div class="container">
+    <div class="section-label">Supporters</div>
+    <div class="supporters-grid" id="supporters-grid">
+      <!-- Add supporter logos here as <img> tags or <a><img></a> pairs -->
+      <!-- Example: <a href="https://example.com"><img src="/img/supporters/logo.png" alt="Supporter name"></a> -->
+    </div>
   </div>
 </section>
 
@@ -67,19 +100,31 @@
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
   // Stats
+  const targets = 94;
   const depths = WRECKS.map(w => w.depth).filter(Boolean);
   const maxD   = depths.length ? Math.max(...depths) : 0;
   const minD   = depths.length ? Math.min(...depths) : 0;
   document.getElementById('hero-depth').textContent = `${minD} — ${maxD} ft`;
 
   document.getElementById('stats-bar').innerHTML = `
-    <div class="stat"><div class="stat-num">${WRECKS.length}</div><div class="stat-label">Documented wrecks</div></div>
+    <div class="stat"><div class="stat-num">${targets}</div><div class="stat-label">Submerged targets</div></div>
+    <div class="stat"><div class="stat-num">${WRECKS.length}</div><div class="stat-label">Updated Targets</div></div>
     <div class="stat"><div class="stat-num">${(() => { const yrs = WRECKS.map(w=>w.year).filter(Boolean); return yrs.length ? Math.min(...yrs) : '—'; })()}</div><div class="stat-label">Oldest known</div></div>
     <div class="stat"><div class="stat-num">${maxD}ft</div><div class="stat-label">Max depth</div></div>
-    <div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>
   `;
 
-  // Wreck grid
+  //<div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>
+
+  // Try each extension in order until one loads (for primetime.* files)
+  const PRIMETIME_EXTS = ['jpg','jpeg','png','webp'];
+  function tryPrimetimeExt(img, id) {
+    const cur  = img.src.split('.').pop();
+    const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
+    if (next) { img.src = `/img/wrecks/${id}/primetime.${next}`; }
+    else       { img.style.display = 'none'; }
+  }
+
+  // Wreck grid — alternating info card + photo tile
   const grid = document.getElementById('wrecks-grid');
   grid.innerHTML = WRECKS.map(w => `
     <a class="wreck-card" href="/wrecks/${w.id}.html">
@@ -92,6 +137,15 @@
       <div class="wreck-card-tagline">${w.tagline}</div>
       <div class="wreck-type-badge">${w.type}</div>
     </a>
+    <div class="wreck-photo-tile">
+      <img src="/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
+           onload="this.nextElementSibling.style.display='none'"
+           onerror="tryPrimetimeExt(this,'${w.id}')">
+      <div class="wreck-photo-fallback">
+        <span>${w.catalog}</span>
+        <span>No image</span>
+      </div>
+    </div>
   `).join('');
 
   // Map
@@ -111,8 +165,45 @@
     if (!w.coordinates) return;
     L.marker(w.coordinates, { icon: makeMarker(L, w) })
       .addTo(map)
-      .bindPopup(makePopup(w), { maxWidth: 220 });
+      .bindPopup(makePopup(w), { maxWidth: 440 });
   });
+
+  // Map fullscreen toggle
+  const mapWrapper  = document.getElementById('map-wrapper');
+  const fsBtn       = document.getElementById('map-fullscreen');
+  const iconExpand  = fsBtn.querySelector('.icon-expand');
+  const iconCollapse= fsBtn.querySelector('.icon-collapse');
+
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      mapWrapper.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const isFs = !!document.fullscreenElement;
+    iconExpand.style.display   = isFs ? 'none' : '';
+    iconCollapse.style.display = isFs ? ''     : 'none';
+    const mapEl = document.getElementById('wreck-map');
+    mapEl.style.height = isFs ? window.innerHeight + 'px' : '';
+    setTimeout(() => map.invalidateSize(), 50);
+  });
+
+  // Scroll arrows
+  const track      = document.getElementById('wrecks-grid');
+  const btnLeft    = document.getElementById('scroll-left');
+  const btnRight   = document.getElementById('scroll-right');
+  const CARD_STEP  = 385; // card width + 1px gap
+
+  function syncArrows() {
+    btnLeft.disabled  = track.scrollLeft <= 0;
+    btnRight.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
+  }
+  btnLeft.addEventListener('click',  () => { track.scrollBy({ left: -CARD_STEP, behavior: 'smooth' }); });
+  btnRight.addEventListener('click', () => { track.scrollBy({ left:  CARD_STEP, behavior: 'smooth' }); });
+  track.addEventListener('scroll', syncArrows);
+  syncArrows();
 </script>
 </body>
 </html>

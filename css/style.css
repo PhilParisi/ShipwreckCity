@@ -29,7 +29,7 @@ body {
   font-family: var(--font-body);
   background: var(--bg-dark);
   color: var(--text-mid);
-  font-size: 13px;
+  font-size: 25px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
@@ -47,7 +47,9 @@ img { max-width: 100%; display: block; }
 /* ============================================================
    NAV
    ============================================================ */
-.site-nav {
+
+/* Site nav titles in top right */
+   .site-nav {
   position: sticky;
   top: 0;
   z-index: 100;
@@ -60,9 +62,10 @@ img { max-width: 100%; display: block; }
   backdrop-filter: blur(8px);
 }
 
+/* Shipwreck city logo in the top left */
 .nav-logo {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 30px;
   letter-spacing: 3px;
   color: var(--text-primary);
   text-decoration: none;
@@ -71,7 +74,7 @@ img { max-width: 100%; display: block; }
 
 .nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a {
-  font-size: 10px;
+  font-size: 22px;
   letter-spacing: 2.5px;
   color: var(--text-muted);
   text-decoration: none;
@@ -94,27 +97,115 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
+/* square grid behind the sonar sweep */
 .hero-grid {
   position: absolute; inset: 0;
   background-image:
     repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px),
     repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px);
-  opacity: 0.3;
+  opacity: 0.8;
 }
 
+/* sonar sweep effect */
 .hero-scan {
   position: absolute;
   left: 0; right: 0;
-  height: 2px;
+  height: 5px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity: 0.15;
   animation: scan 8s ease-in-out infinite;
 }
 @keyframes scan {
   0%   { top: 0%; opacity: 0; }
-  10%  { opacity: 0.15; }
+  10%  { opacity: 0.5; }
   90%  { opacity: 0.15; }
   100% { top: 100%; opacity: 0; }
+}
+
+/* sonar blips — 3 targets lit up as the sweep passes */
+.hero-blip {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+.hero-blip-1 { left: 30%; top: 18%; --blip-color: #5a8a6a; }
+.hero-blip-2 { left: 68%; top: 52%; --blip-color: #4a9eba; }
+.hero-blip-3 { left: 44%; top: 83%; --blip-color: #8a6a3a; }
+
+.hero-blip::before,
+.hero-blip::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+/* dot */
+.hero-blip::before {
+  width: 6px;
+  height: 6px;
+  background: var(--blip-color);
+  box-shadow: 0 0 6px var(--blip-color), 0 0 14px var(--blip-color);
+}
+/* expanding ring */
+.hero-blip::after {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--blip-color);
+}
+
+/* blip 1 — fires at ~30% of the 8s sweep */
+.hero-blip-1::before { animation: blipDot1 8s ease-in-out infinite; }
+.hero-blip-1::after  { animation: blipRing1 8s ease-in-out infinite; }
+
+@keyframes blipDot1 {
+  0%, 28%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  30%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  58%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  68%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  100%     { opacity: 0; }
+}
+@keyframes blipRing1 {
+  0%, 29%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  30%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  45%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+}
+
+/* blip 2 — fires at ~52% of the 8s sweep */
+.hero-blip-2::before { animation: blipDot2 8s ease-in-out infinite; }
+.hero-blip-2::after  { animation: blipRing2 8s ease-in-out infinite; }
+
+@keyframes blipDot2 {
+  0%, 50%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  52%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  80%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  90%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  100%     { opacity: 0; }
+}
+@keyframes blipRing2 {
+  0%, 50%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  52%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  67%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+}
+
+/* blip 3 — fires at ~72% of the 8s sweep */
+.hero-blip-3::before { animation: blipDot3 8s ease-in-out infinite; }
+.hero-blip-3::after  { animation: blipRing3 8s ease-in-out infinite; }
+
+@keyframes blipDot3 {
+  0%, 70%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  72%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  92%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  99%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  100%     { opacity: 0; }
+}
+@keyframes blipRing3 {
+  0%, 70%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  72%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  87%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
 }
 
 .hero-waterlines {
@@ -129,17 +220,19 @@ img { max-width: 100%; display: block; }
   max-width: 640px;
 }
 
+/* Little bitty text above shipwreck city */
 .hero-eyebrow {
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 4px;
   color: var(--accent);
   text-transform: uppercase;
   margin-bottom: 14px;
 }
 
+/* Big Shipwreck City Text */
 .hero-title {
   font-family: var(--font-display);
-  font-size: 100px;
+  font-size: 180px;
   line-height: 0.9;
   letter-spacing: 2px;
   color: var(--text-primary);
@@ -147,13 +240,14 @@ img { max-width: 100%; display: block; }
 }
 .hero-title em { color: var(--accent); font-style: normal; }
 
+
 .hero-sub {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.9;
   color: var(--text-muted);
-  max-width: 420px;
+  max-width: 500px;
 }
 
 .hero-meta {
@@ -164,14 +258,14 @@ img { max-width: 100%; display: block; }
   text-align: right;
 }
 .hero-meta-label {
-  font-size: 9px;
+  font-size: 18px;
   letter-spacing: 3px;
   color: var(--accent);
   text-transform: uppercase;
   margin-bottom: 4px;
 }
 .hero-meta-val {
-  font-size: 13px;
+  font-size: 18px;
   color: var(--green);
 }
 
@@ -193,16 +287,16 @@ img { max-width: 100%; display: block; }
 }
 .stat-num {
   font-family: var(--font-display);
-  font-size: 42px;
+  font-size: 100px;
   color: var(--text-primary);
   line-height: 1;
   margin-bottom: 4px;
 }
 .stat-label {
-  font-size: 9px;
+  font-size: 15px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-muted);
 }
 
 /* ============================================================
@@ -212,7 +306,7 @@ img { max-width: 100%; display: block; }
 .section-wide { padding: 48px 0; }
 
 .section-label {
-  font-size: 9px;
+  font-size: 18px;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--accent);
@@ -230,7 +324,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
-   WRECK GRID (homepage listing)
+   WRECK GRID (archive page listing)
    ============================================================ */
 .wrecks-grid {
   display: grid;
@@ -239,9 +333,91 @@ img { max-width: 100%; display: block; }
   background: var(--border);
 }
 
+/* ============================================================
+   WRECK SCROLL TRACK (homepage horizontal scroll)
+   ============================================================ */
+.wrecks-scroll-section {
+  padding: 48px 0;
+}
+.wrecks-scroll-section .container { padding: 0 32px; }
+
+.wrecks-scroll-track {
+  display: flex;
+  overflow-x: auto;
+  gap: 1px;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-mid) var(--bg-dark);
+}
+.wrecks-scroll-track::-webkit-scrollbar { height: 3px; }
+.wrecks-scroll-track::-webkit-scrollbar-track { background: var(--bg-dark); }
+.wrecks-scroll-track::-webkit-scrollbar-thumb { background: var(--border-mid); }
+
+.wrecks-scroll-track .wreck-card {
+  flex: 0 0 384px;
+  scroll-snap-align: start;
+}
+
+.wreck-photo-tile {
+  flex: 0 0 384px;
+  scroll-snap-align: start;
+  background: var(--bg-deep);
+  position: relative;
+  overflow: hidden;
+}
+.wreck-photo-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.wreck-photo-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-faint);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.wrecks-scroll-wrapper {
+  position: relative;
+}
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  color: var(--accent);
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, opacity 0.2s;
+  font-family: var(--font-body);
+}
+.scroll-arrow:hover { background: var(--bg-hover); }
+.scroll-arrow:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
+.scroll-arrow-left  { left: 0; }
+.scroll-arrow-right { right: 0; }
+
 .wreck-card {
   background: var(--bg-card);
-  padding: 24px;
+  padding: 45px;
   cursor: pointer;
   transition: background 0.2s;
   display: block;
@@ -251,21 +427,21 @@ img { max-width: 100%; display: block; }
 .wreck-card:hover { background: var(--bg-hover); text-decoration: none; }
 
 .wreck-card-num {
-  font-size: 9px;
+  font-size: 14px;
   letter-spacing: 3px;
   color: var(--accent);
   margin-bottom: 10px;
 }
 .wreck-card-name {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 30px;
   letter-spacing: 1px;
   color: var(--text-primary);
   margin-bottom: 8px;
   line-height: 1;
 }
 .wreck-card-meta {
-  font-size: 11px;
+  font-size: 15px;
   color: var(--text-faint);
   line-height: 1.7;
   margin-bottom: 12px;
@@ -308,15 +484,51 @@ img { max-width: 100%; display: block; }
   background: var(--bg-deep);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 48px 32px;
+  padding: 48px 0;
 }
+.map-section .container { padding: 0 32px; }
 
-#wreck-map {
+.map-wrapper {
+  position: relative;
   width: 100%;
-  height: 440px;
+}
+#wreck-map,
+#full-map {
+  width: 100%;
+  height: calc(100vh - 200px);
+  min-height: 500px;
   background: #0d1e2c;
   border: 1px solid var(--border-mid);
 }
+.map-wrapper:fullscreen,
+.map-wrapper:-webkit-full-screen {
+  background: var(--bg-deep);
+}
+.map-wrapper:fullscreen #wreck-map,
+.map-wrapper:fullscreen #full-map,
+.map-wrapper:-webkit-full-screen #wreck-map,
+.map-wrapper:-webkit-full-screen #full-map {
+  width: 100%;
+  min-height: unset;
+  border: none;
+}
+.map-fullscreen-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  color: var(--text-mid);
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.map-fullscreen-btn:hover { background: var(--bg-hover); color: var(--accent); }
 
 /* Leaflet overrides */
 .leaflet-container { background: #0d1e2c !important; font-family: var(--font-body) !important; }
@@ -328,10 +540,10 @@ img { max-width: 100%; display: block; }
   box-shadow: none !important;
 }
 .leaflet-popup-tip { background: var(--bg-card) !important; }
-.leaflet-popup-content { font-family: var(--font-body); font-size: 12px; line-height: 1.6; }
-.popup-name { font-family: var(--font-display); font-size: 20px; color: var(--text-primary); letter-spacing: 1px; }
-.popup-meta { color: var(--text-faint); font-size: 10px; letter-spacing: 1px; margin: 4px 0 8px; }
-.popup-link { color: var(--accent); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+.leaflet-popup-content { font-family: var(--font-body); font-size: 24px; line-height: 1.6; }
+.popup-name { font-family: var(--font-display); font-size: 40px; color: var(--text-primary); letter-spacing: 1px; }
+.popup-meta { color: var(--text-faint); font-size: 20px; letter-spacing: 1px; margin: 4px 0 8px; }
+.popup-link { color: var(--accent); font-size: 20px; letter-spacing: 2px; text-transform: uppercase; }
 .leaflet-control-zoom a {
   background: var(--bg-card) !important;
   color: var(--text-mid) !important;
@@ -506,8 +718,33 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
+   WRECK PHOTO GALLERY (detail page)
+   ============================================================ */
+.wreck-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 40px;
+}
+.wreck-gallery-item {
+  display: block;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+.wreck-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.wreck-gallery-item:hover img { transform: scale(1.04); }
+
+/* ============================================================
    WRECK IMAGE HERO
    ============================================================ */
+.wreck-img-hero-wrap { line-height: 0; }
 .wreck-img-hero {
   width: 100%;
   height: 380px;
@@ -593,9 +830,11 @@ img { max-width: 100%; display: block; }
   opacity: 0.2;
 }
 .page-hero-content { position: relative; z-index: 2; }
+.page-hero .hero-eyebrow { font-size: 19px; }
+
 .page-title {
   font-family: var(--font-display);
-  font-size: 64px;
+  font-size: 80px;
   line-height: 0.92;
   color: var(--text-primary);
   letter-spacing: 2px;
@@ -605,10 +844,49 @@ img { max-width: 100%; display: block; }
 .page-sub {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 15px;
+  font-size: 19px;
   color: var(--text-muted);
   max-width: 480px;
   line-height: 1.8;
+}
+
+/* ============================================================
+   MAP LEGEND (shared — main page + map page)
+   ============================================================ */
+.map-legend {
+  display: flex;
+  gap: 24px;
+  padding: 12px 0;
+  font-size: 15px;
+  color: var(--text-faint);
+}
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.legend-dot   { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+/* ============================================================
+   SUPPORTERS
+   ============================================================ */
+.supporters-section {
+  border-top: 1px solid var(--border);
+  padding: 48px 32px;
+}
+.supporters-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px 56px;
+  padding-top: 8px;
+}
+.supporters-grid img {
+  height: 48px;
+  width: auto;
+  opacity: 0.6;
+  filter: grayscale(1) brightness(1.4);
+  transition: opacity 0.2s, filter 0.2s;
+}
+.supporters-grid a:hover img {
+  opacity: 1;
+  filter: none;
 }
 
 /* ============================================================
@@ -679,6 +957,7 @@ img { max-width: 100%; display: block; }
 @media (max-width: 900px) {
   .hero-title { font-size: 72px; }
   .wrecks-grid { grid-template-columns: 1fr 1fr; }
+  .wrecks-scroll-track .wreck-card { flex: 0 0 336px; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
   .wreck-body { grid-template-columns: 1fr; }
   .wreck-aside { border-top: 1px solid var(--border); }
@@ -688,6 +967,7 @@ img { max-width: 100%; display: block; }
 @media (max-width: 600px) {
   .hero-title { font-size: 52px; }
   .wrecks-grid { grid-template-columns: 1fr; }
+  .wrecks-scroll-track .wreck-card { flex: 0 0 312px; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
   .site-nav { padding: 14px 20px; }
   .nav-links { gap: 16px; }
