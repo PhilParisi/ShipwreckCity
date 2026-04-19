@@ -1,6 +1,6 @@
 # Shipwreck City
 
-An interactive archive of Lake Union's sunken vessels (and beyond). Built as a static site for GitHub Pages.
+An interactive archive of Lake Union's sunken vessels. Built as a static site for GitHub Pages.
 
 ---
 
