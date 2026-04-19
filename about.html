@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Shipwreck City</title>
+  <meta name="description" content="About the Shipwreck City project — documenting the sunken vessels of Lake Union, Seattle.">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; }
+    .about-body p {
+      font-family: var(--font-serif); font-size: 15px;
+      line-height: 1.95; color: var(--text-mid); margin-bottom: 24px;
+    }
+    .about-body h2 {
+      font-family: var(--font-display); font-size: 32px;
+      color: var(--text-primary); letter-spacing: 1px;
+      margin: 40px 0 16px;
+    }
+    .about-aside-block { margin-bottom: 36px; }
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">The project</div>
+    <h1 class="page-title">ABOUT<br>THE DIVE</h1>
+    <p class="page-sub">What Shipwreck City is, and why these boats matter.</p>
+  </div>
+</div>
+
+<section class="section container">
+  <div class="about-grid">
+    <div class="about-body">
+      <h2>The project</h2>
+      <p>
+        Shipwreck City is an ongoing effort to document, photograph, and archive the
+        sunken vessels resting on the floor of Lake Union — one of Seattle's most
+        historic and underexplored bodies of water. Lake Union has been a working
+        waterway since the 1880s, and its bottom holds a remarkable record of the
+        city's maritime past.
+      </p>
+      <p>
+        Most of these boats are unknown to the people who kayak and sail above them
+        every day. Our goal is to change that — by building a public archive that
+        treats each wreck as the historical artifact it is.
+      </p>
+
+      <h2>The method</h2>
+      <p>
+        Each wreck is located via side-scan sonar, then dived to collect video footage,
+        measurements, and photographic documentation. Where possible, we cross-reference
+        with historical records at the Washington State Archives, the Museum of History
+        &amp; Industry, and old newspaper archives.
+      </p>
+      <p>
+        All footage is shot in-water by our team of divers. We do not disturb the wrecks
+        or remove artifacts — these are historical sites and we document them as found.
+      </p>
+
+      <h2>Coverage</h2>
+      <p>
+        We are currently focused on Lake Union. Future phases may expand to Lake
+        Washington, the Ship Canal, and Puget Sound. If you have information about
+        a wreck not in our archive, we want to hear from you.
+      </p>
+    </div>
+
+    <div class="about-aside">
+      <div class="about-aside-block">
+        <div class="aside-label" style="margin-top:0;">Location</div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:13px;color:var(--text-muted);line-height:1.7;">
+          Lake Union<br>Seattle, Washington<br>47°37'N 122°20'W
+        </p>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Wrecks catalogued</div>
+        <div style="font-family:var(--font-display);font-size:48px;color:var(--text-primary);" id="about-count">—</div>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Contact</div>
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.7;" id="about-contact">
+          — add your contact info in <code style="font-size:10px;color:var(--accent);">wrecks-data.js</code>
+        </p>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Built with</div>
+        <p style="font-size:11px;color:var(--text-faint);line-height:1.9;">
+          Plain HTML/CSS/JS<br>
+          Leaflet.js (maps)<br>
+          CartoDB dark tiles<br>
+          Hosted on GitHub Pages
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="/js/wrecks-data.js"></script>
+<script src="/js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('about');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+  document.getElementById('about-count').textContent = WRECKS.length;
+  if (SITE_CONFIG.social.email) {
+    document.getElementById('about-contact').innerHTML =
+      `<a href="mailto:${SITE_CONFIG.social.email}">${SITE_CONFIG.social.email}</a>`;
+  }
+</script>
+</body>
+</html>

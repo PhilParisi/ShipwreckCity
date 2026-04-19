@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wreck Map — Shipwreck City</title>
+  <meta name="description" content="Interactive map of all documented shipwrecks in Lake Union, Seattle.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    #full-map { width: 100%; height: calc(100vh - 200px); min-height: 500px; }
+    .map-sidebar {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 300px; background: rgba(10,14,20,0.92);
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 500;
+      padding: 24px;
+    }
+    .map-wrap { position: relative; }
+    .map-legend {
+      display: flex; gap: 20px; padding: 14px 0;
+      border-top: 1px solid var(--border);
+      font-size: 10px; color: var(--text-faint);
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Lake Union · Seattle</div>
+    <h1 class="page-title">WRECK<br>MAP</h1>
+    <p class="page-sub">All documented wrecks plotted by GPS coordinates. Click any marker to view the record.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="map-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Documented</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8a6a3a;"></div> Unidentified</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2a6080;"></div> Partial</div>
+  </div>
+</div>
+
+<div class="map-wrap container" style="position:relative;">
+  <div id="full-map"></div>
+</div>
+
+<div id="footer-mount"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/wrecks-data.js"></script>
+<script src="/js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('map');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  const map = L.map('full-map', {
+    center: SITE_CONFIG.coordinates,
+    zoom: SITE_CONFIG.mapZoom + 1
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  WRECKS.forEach(w => {
+    if (!w.coordinates) return;
+    L.marker(w.coordinates, { icon: makeMarker(L, w) })
+      .addTo(map)
+      .bindPopup(makePopup(w), { maxWidth: 240 });
+  });
+</script>
+</body>
+</html>

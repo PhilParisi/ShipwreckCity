@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipwreck City — Lake Union's Sunken Past</title>
+  <meta name="description" content="An underwater archive of Lake Union's shipwrecks. Explore documented wrecks, footage, maps, and field notes from Seattle's hidden depths.">
+  <meta property="og:title" content="Shipwreck City">
+  <meta property="og:description" content="An interactive museum of Lake Union's sunken vessels.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-scan"></div>
+  <svg class="hero-waterlines" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,220 Q300,200 600,215 T1200,205" stroke="#4a9eba" stroke-width="0.8" fill="none" opacity="0.25"/>
+    <path d="M0,255 Q300,238 600,252 T1200,242" stroke="#4a9eba" stroke-width="0.5" fill="none" opacity="0.18"/>
+    <path d="M0,288 Q300,274 600,286 T1200,278" stroke="#4a9eba" stroke-width="0.4" fill="none" opacity="0.12"/>
+    <path d="M0,320 Q300,308 600,318 T1200,312" stroke="#4a9eba" stroke-width="0.3" fill="none" opacity="0.08"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Lake Union · Seattle · 47°37'N 122°20'W</div>
+    <h1 class="hero-title">SHIP<br><em>WRECK</em><br>CITY</h1>
+    <p class="hero-sub">An underwater archive of Lake Union's sunken past — the vessels lost to time, fire, and the deep.</p>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-meta-label">Depth range</div>
+    <div class="hero-meta-val" id="hero-depth">— ft</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar" id="stats-bar"></div>
+
+<!-- WRECK GRID -->
+<section class="section container">
+  <div class="section-label">Documented wrecks — Lake Union</div>
+  <div class="wrecks-grid" id="wrecks-grid"></div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="container">
+    <div class="section-label">Wreck map — Lake Union</div>
+    <div id="wreck-map"></div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/wrecks-data.js"></script>
+<script src="/js/site.js"></script>
+<script>
+  // Nav & footer
+  document.getElementById('nav-mount').innerHTML   = buildNav('home');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  // Stats
+  const depths = WRECKS.map(w => w.depth).filter(Boolean);
+  const maxD   = depths.length ? Math.max(...depths) : 0;
+  const minD   = depths.length ? Math.min(...depths) : 0;
+  document.getElementById('hero-depth').textContent = `${minD} — ${maxD} ft`;
+
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat"><div class="stat-num">${WRECKS.length}</div><div class="stat-label">Documented wrecks</div></div>
+    <div class="stat"><div class="stat-num">${(() => { const yrs = WRECKS.map(w=>w.year).filter(Boolean); return yrs.length ? Math.min(...yrs) : '—'; })()}</div><div class="stat-label">Oldest known</div></div>
+    <div class="stat"><div class="stat-num">${maxD}ft</div><div class="stat-label">Max depth</div></div>
+    <div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>
+  `;
+
+  // Wreck grid
+  const grid = document.getElementById('wrecks-grid');
+  grid.innerHTML = WRECKS.map(w => `
+    <a class="wreck-card" href="/wrecks/${w.id}.html">
+      <div class="wreck-card-num">${w.catalog}</div>
+      <div class="wreck-card-name">${w.name}</div>
+      <div class="wreck-card-meta">
+        <span class="status-dot status-${w.status}"></span>${statusLabel(w.status)} · ${yearDisplay(w)} · ${depthDisplay(w.depth)}<br>
+        ${w.location}
+      </div>
+      <div class="wreck-card-tagline">${w.tagline}</div>
+      <div class="wreck-type-badge">${w.type}</div>
+    </a>
+  `).join('');
+
+  // Map
+  const map = L.map('wreck-map', {
+    center: SITE_CONFIG.coordinates,
+    zoom:   SITE_CONFIG.mapZoom,
+    zoomControl: true
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  WRECKS.forEach(w => {
+    if (!w.coordinates) return;
+    L.marker(w.coordinates, { icon: makeMarker(L, w) })
+      .addTo(map)
+      .bindPopup(makePopup(w), { maxWidth: 220 });
+  });
+</script>
+</body>
+</html>
