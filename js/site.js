@@ -3,16 +3,19 @@
  * (nav, footer) and utility helpers
  */
 
+// Auto-detect subdirectory for GitHub Pages project repos vs local dev
+const ROOT = location.hostname.includes('github.io') ? '/ShipwreckCity' : '';
+
 function buildNav(activePage) {
   return `
   <nav class="site-nav">
-    <a href="/index.html" class="nav-logo">SHIPWRECK<span>CITY</span></a>
+    <a href="${ROOT}/index.html" class="nav-logo">SHIPWRECK<span>CITY</span></a>
     <div class="nav-links">
-      <a href="/index.html"  class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
-      <a href="/map.html"    class="${activePage === 'map'    ? 'active' : ''}">Map</a>
-      <a href="/archive.html"class="${activePage === 'archive'? 'active' : ''}">Archive</a>
-      <a href="/support.html" class="${activePage === 'support' ? 'active' : ''}">Support</a>
-      <a href="/about.html"  class="${activePage === 'about'  ? 'active' : ''}">About</a>
+      <a href="${ROOT}/index.html"  class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
+      <a href="${ROOT}/map.html"    class="${activePage === 'map'    ? 'active' : ''}">Map</a>
+      <a href="${ROOT}/archive.html"class="${activePage === 'archive'? 'active' : ''}">Archive</a>
+      <a href="${ROOT}/support.html" class="${activePage === 'support' ? 'active' : ''}">Support</a>
+      <a href="${ROOT}/about.html"  class="${activePage === 'about'  ? 'active' : ''}">About</a>
     </div>
   </nav>`;
 }
@@ -24,10 +27,10 @@ function buildFooter() {
     <div class="footer-logo">SHIPWRECK<span>CITY</span></div>
     <div class="footer-copy">© ${year} Shipwreck City · Lake Union, Seattle</div>
     <div class="footer-links">
-      <a href="/index.html">Explore</a>
-      <a href="/map.html">Map</a>
-      <a href="/about.html">About</a>
-      <a href="/support.html">Support</a>
+      <a href="${ROOT}/index.html">Explore</a>
+      <a href="${ROOT}/map.html">Map</a>
+      <a href="${ROOT}/about.html">About</a>
+      <a href="${ROOT}/support.html">Support</a>
     </div>
   </footer>`;
 }
@@ -92,6 +95,6 @@ function makePopup(wreck) {
     <div class="popup-name">${wreck.name}</div>
     <div class="popup-meta">${wreck.catalog} · ${wreck.type} · ${yr}</div>
     <div class="popup-meta">${wreck.location}</div>
-    <a class="popup-link" href="/wrecks/${wreck.id}.html">View record →</a>
+    <a class="popup-link" href="${ROOT}/wrecks/${wreck.id}.html">View record →</a>
   `;
 }
