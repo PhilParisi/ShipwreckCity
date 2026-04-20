@@ -79,8 +79,8 @@
 
 <div id="footer-mount"></div>
 
-<script src="/js/wrecks-data.js"></script>
-<script src="/js/site.js"></script>
+<script src="js/wrecks-data.js"></script>
+<script src="js/site.js"></script>
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('archive');
   document.getElementById('footer-mount').innerHTML = buildFooter();
@@ -91,7 +91,7 @@
   function tryPrimetimeExt(img, id) {
     const cur  = img.src.split('.').pop();
     const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
-    if (next) { img.src = `/img/wrecks/${id}/primetime.${next}`; }
+    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
     else       { img.closest('.td-img').style.background = 'var(--bg-deep)'; img.style.display = 'none'; }
   }
 
@@ -101,11 +101,11 @@
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
       <tr>
         <td class="td-img">
-          <img src="/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
+          <img src="${ROOT}/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
                onerror="tryPrimetimeExt(this,'${w.id}')">
         </td>
-        <td><a href="/wrecks/${w.id}.html">${w.catalog}</a></td>
-        <td><a href="/wrecks/${w.id}.html"><span class="td-name">${w.name}</span></a></td>
+        <td><a href="${ROOT}/wrecks/${w.id}.html">${w.catalog}</a></td>
+        <td><a href="${ROOT}/wrecks/${w.id}.html"><span class="td-name">${w.name}</span></a></td>
         <td>${w.type}</td>
         <td>${depthDisplay(w.depth)}</td>
         <td class="td-tagline">${w.tagline}</td>

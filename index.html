@@ -92,8 +92,8 @@
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/js/wrecks-data.js"></script>
-<script src="/js/site.js"></script>
+<script src="js/wrecks-data.js"></script>
+<script src="js/site.js"></script>
 <script>
   // Nav & footer
   document.getElementById('nav-mount').innerHTML   = buildNav('home');
@@ -120,14 +120,14 @@
   function tryPrimetimeExt(img, id) {
     const cur  = img.src.split('.').pop();
     const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
-    if (next) { img.src = `/img/wrecks/${id}/primetime.${next}`; }
+    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
     else       { img.style.display = 'none'; }
   }
 
   // Wreck grid — alternating info card + photo tile
   const grid = document.getElementById('wrecks-grid');
   grid.innerHTML = WRECKS.map(w => `
-    <a class="wreck-card" href="/wrecks/${w.id}.html">
+    <a class="wreck-card" href="${ROOT}/wrecks/${w.id}.html">
       <div class="wreck-card-num">${w.catalog}</div>
       <div class="wreck-card-name">${w.name}</div>
       <div class="wreck-card-meta">
@@ -138,7 +138,7 @@
       <div class="wreck-type-badge">${w.type}</div>
     </a>
     <div class="wreck-photo-tile">
-      <img src="/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
+      <img src="${ROOT}/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
            onload="this.nextElementSibling.style.display='none'"
            onerror="tryPrimetimeExt(this,'${w.id}')">
       <div class="wreck-photo-fallback">

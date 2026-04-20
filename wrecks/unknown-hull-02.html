@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -18,13 +18,12 @@
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/js/wrecks-data.js"></script>
-<script src="/js/site.js"></script>
+<script src="../js/wrecks-data.js"></script>
+<script src="../js/site.js"></script>
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('explore');
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
-  // Determine which wreck to show from the URL filename
   const slug  = location.pathname.split('/').pop().replace('.html', '');
   const wreck = WRECKS.find(w => w.id === slug);
 
@@ -33,17 +32,15 @@
       <div class="section container" style="padding-top:80px;">
         <div class="section-label">Error</div>
         <p style="font-family:var(--font-serif);font-style:italic;color:var(--text-muted);">
-          Wreck record not found. <a href="/index.html">Return to explore →</a>
+          Wreck record not found. <a href="${ROOT}/index.html">Return to explore →</a>
         </p>
       </div>`;
     document.title = 'Not Found — Shipwreck City';
   } else {
-    // Inject SEO meta
     document.title = `${wreck.name} — Shipwreck City`;
     document.querySelector('meta[name="description"]')
       ?.setAttribute('content', wreck.tagline);
 
-    // Add OG tags
     const ogTitle = document.createElement('meta');
     ogTitle.setAttribute('property','og:title');
     ogTitle.setAttribute('content', `${wreck.name} — Shipwreck City`);
@@ -54,7 +51,6 @@
     ogDesc.setAttribute('content', wreck.summary);
     document.head.appendChild(ogDesc);
 
-    // Prev/next navigation
     const idx  = WRECKS.indexOf(wreck);
     const prev = WRECKS[idx - 1];
     const next = WRECKS[idx + 1];
@@ -62,7 +58,7 @@
     const navHtml = `
       <div class="wreck-nav">
         ${prev
-          ? `<a class="wreck-nav-item prev" href="/wrecks/${prev.id}.html">
+          ? `<a class="wreck-nav-item prev" href="${ROOT}/wrecks/${prev.id}.html">
               <div class="wreck-nav-dir">← Previous</div>
               <div class="wreck-nav-name">${prev.name}</div>
              </a>`
@@ -72,7 +68,7 @@
              </div>`
         }
         ${next
-          ? `<a class="wreck-nav-item next" href="/wrecks/${next.id}.html">
+          ? `<a class="wreck-nav-item next" href="${ROOT}/wrecks/${next.id}.html">
               <div class="wreck-nav-dir">Next →</div>
               <div class="wreck-nav-name">${next.name}</div>
              </a>`
@@ -83,7 +79,6 @@
         }
       </div>`;
 
-    // Image hero or placeholder
     const imgSection = wreck.images && wreck.images.length
       ? `<img src="${wreck.images[0]}" alt="${wreck.name}" class="wreck-img-hero" style="object-fit:cover;width:100%;height:380px;">`
       : `<div class="wreck-img-placeholder" style="position:relative;">
@@ -99,7 +94,6 @@
           </svg>
          </div>`;
 
-    // Footage section
     const footageHtml = wreck.footage
       ? `<div class="footage-embed"><iframe src="${wreck.footage}" allowfullscreen title="${wreck.name} dive footage"></iframe></div>`
       : `<div class="footage-embed" style="height:200px;">
@@ -113,18 +107,16 @@
          </div>`;
 
     document.getElementById('wreck-page').innerHTML = `
-      <!-- WRECK HERO -->
       <div class="wreck-hero">
         <div class="wreck-hero-grid"></div>
         <div class="wreck-hero-content">
-          <div class="wreck-breadcrumb"><a href="/index.html">Explore</a> / ${wreck.catalog}</div>
+          <div class="wreck-breadcrumb"><a href="${ROOT}/index.html">Explore</a> / ${wreck.catalog}</div>
           <div class="wreck-catalog-num">${wreck.catalog}</div>
           <h1 class="wreck-title">${wreck.name}</h1>
           <p class="wreck-tagline">${wreck.tagline}</p>
         </div>
       </div>
 
-      <!-- DATA BAR -->
       <div class="wreck-data-bar">
         <div class="wreck-data-item">
           <div class="wreck-data-label">Type</div>
@@ -151,10 +143,8 @@
         </div>` : ''}
       </div>
 
-      <!-- IMAGE HERO -->
       ${imgSection}
 
-      <!-- BODY -->
       <div class="wreck-body">
         <div class="wreck-main">
           <div class="prose-section">
@@ -189,7 +179,7 @@
 
           <div class="aside-label" style="margin-top:28px;">All wrecks</div>
           ${WRECKS.map(w => `
-            <a href="/wrecks/${w.id}.html" style="
+            <a href="${ROOT}/wrecks/${w.id}.html" style="
               display:block;padding:8px 0;border-bottom:1px solid var(--border);
               color:${w.id === wreck.id ? 'var(--text-primary)' : 'var(--text-faint)'};
               text-decoration:none;font-size:11px;letter-spacing:1px;
@@ -201,11 +191,9 @@
         </div>
       </div>
 
-      <!-- WRECK NAV -->
       ${navHtml}
     `;
 
-    // Mini map
     if (wreck.coordinates) {
       const coordEl = document.getElementById('coord-display');
       coordEl.innerHTML = coordDisplay(wreck.coordinates);

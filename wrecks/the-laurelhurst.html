@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -18,8 +18,8 @@
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/js/wrecks-data.js"></script>
-<script src="/js/site.js"></script>
+<script src="../js/wrecks-data.js"></script>
+<script src="../js/site.js"></script>
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('explore');
   document.getElementById('footer-mount').innerHTML = buildFooter();
@@ -33,7 +33,7 @@
       <div class="section container" style="padding-top:80px;">
         <div class="section-label">Error</div>
         <p style="font-family:var(--font-serif);font-style:italic;color:var(--text-muted);">
-          Wreck record not found. <a href="/index.html">Return to explore →</a>
+          Wreck record not found. <a href="${ROOT}/index.html">Return to explore →</a>
         </p>
       </div>`;
     document.title = 'Not Found — Shipwreck City';
@@ -62,7 +62,7 @@
     const navHtml = `
       <div class="wreck-nav">
         ${prev
-          ? `<a class="wreck-nav-item prev" href="/wrecks/${prev.id}.html">
+          ? `<a class="wreck-nav-item prev" href="${ROOT}/wrecks/${prev.id}.html">
               <div class="wreck-nav-dir">← Previous</div>
               <div class="wreck-nav-name">${prev.name}</div>
              </a>`
@@ -72,7 +72,7 @@
              </div>`
         }
         ${next
-          ? `<a class="wreck-nav-item next" href="/wrecks/${next.id}.html">
+          ? `<a class="wreck-nav-item next" href="${ROOT}/wrecks/${next.id}.html">
               <div class="wreck-nav-dir">Next →</div>
               <div class="wreck-nav-name">${next.name}</div>
              </a>`
@@ -117,7 +117,7 @@
       <div class="wreck-hero">
         <div class="wreck-hero-grid"></div>
         <div class="wreck-hero-content">
-          <div class="wreck-breadcrumb"><a href="/index.html">Explore</a> / ${wreck.catalog}</div>
+          <div class="wreck-breadcrumb"><a href="${ROOT}/index.html">Explore</a> / ${wreck.catalog}</div>
           <div class="wreck-catalog-num">${wreck.catalog}</div>
           <h1 class="wreck-title">${wreck.name}</h1>
           <p class="wreck-tagline">${wreck.tagline}</p>
@@ -189,7 +189,7 @@
 
           <div class="aside-label" style="margin-top:28px;">All wrecks</div>
           ${WRECKS.map(w => `
-            <a href="/wrecks/${w.id}.html" style="
+            <a href="${ROOT}/wrecks/${w.id}.html" style="
               display:block;padding:8px 0;border-bottom:1px solid var(--border);
               color:${w.id === wreck.id ? 'var(--text-primary)' : 'var(--text-faint)'};
               text-decoration:none;font-size:11px;letter-spacing:1px;
