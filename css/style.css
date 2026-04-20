@@ -613,7 +613,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 .wreck-hero-content { position: relative; z-index: 2; max-width: 760px; }
 
 .wreck-breadcrumb {
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 2px;
   color: var(--text-faint);
   text-transform: uppercase;
@@ -622,7 +622,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 .wreck-breadcrumb a { color: var(--accent); }
 
 .wreck-catalog-num {
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 4px;
   color: var(--accent);
   margin-bottom: 10px;
@@ -660,20 +660,20 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 .wreck-data-item:last-child { border-right: none; }
 .wreck-data-label {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--text-faint);
   margin-bottom: 4px;
 }
 .wreck-data-val {
-  font-size: 15px;
+  font-size: 20px;
   color: var(--text-primary);
 }
 
 .wreck-body {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 416px;
   gap: 0;
   border-bottom: 1px solid var(--border);
 }
@@ -687,7 +687,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 
 .prose-section { margin-bottom: 40px; }
 .prose-section h3 {
-  font-size: 9px;
+  font-size: 17px;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--accent);
@@ -697,13 +697,13 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 .prose-section p {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.9;
   color: var(--text-mid);
 }
 
 .aside-label {
-  font-size: 9px;
+  font-size: 16px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--accent);
@@ -716,15 +716,15 @@ a.section-label-link:hover { color: var(--text-primary); }
 
 .aside-coord {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 16px;
   color: var(--green);
   line-height: 1.8;
 }
 .aside-detail-row {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-  padding: 7px 0;
+  font-size: 15px;
+  padding: 9px 0;
   border-bottom: 1px solid var(--border);
   color: var(--text-muted);
 }
@@ -832,15 +832,16 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 .wreck-nav-item:hover { background: var(--bg-hover); }
 .wreck-nav-dir {
-  font-size: 9px;
+  font-size: 14px;
   letter-spacing: 3px;
+  color: var(--text-mid);
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-mid);
   margin-bottom: 6px;
 }
 .wreck-nav-name {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 30px;
   color: var(--text-primary);
   letter-spacing: 1px;
 }

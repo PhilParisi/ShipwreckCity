@@ -178,16 +178,18 @@
           <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
 
           <div class="aside-label" style="margin-top:28px;">All wrecks</div>
+          <div style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
           ${WRECKS.map(w => `
             <a href="${ROOT}/wrecks/${w.id}.html" style="
-              display:block;padding:8px 0;border-bottom:1px solid var(--border);
+              display:block;padding:10px 0;border-bottom:1px solid var(--border);
               color:${w.id === wreck.id ? 'var(--text-primary)' : 'var(--text-faint)'};
-              text-decoration:none;font-size:11px;letter-spacing:1px;
+              text-decoration:none;font-size:17px;letter-spacing:1px;
               ${w.id === wreck.id ? 'pointer-events:none;' : ''}
             ">
-              <span style="color:var(--accent);margin-right:8px;font-size:9px;">${w.catalog.split('—')[1]?.trim() || ''}</span>${w.name}
+              <span style="color:var(--accent);margin-right:8px;font-size:17px;">${w.catalog.split('—')[1]?.trim() || ''}</span>${w.name}
             </a>
           `).join('')}
+          </div>
         </div>
       </div>
 
