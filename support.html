@@ -97,64 +97,26 @@
         right time. This page is a record of that generosity.
       </p>
 
-      <h2>Marinas & Access</h2>
+      <h2>Organizations</h2>
+      <p>
+        These organizations have formally endorsed the Shipwreck City Project,
+        made a financial donation, provided equipment, shared essential maritime records, or other form of support.
+      </p>
+      <ul class="support-list" id="list-organizations"></ul>
+
+      <h2>Marinas &amp; Access</h2>
       <p>
         The following marinas have granted access to their docks and waterways,
         making it possible to stage equipment and access dive sites safely.
       </p>
-      <ul class="support-list">
-        <li>
-          <span class="entry-name">Boat World Marina</span>
-          <span class="entry-note">Dock access for ROV dives on three wrecks along Westlake.</span>
-        </li>
-      </ul>
-
-      <h2>Organizations</h2>
-      <p>
-        These organizations have formally endorsed the Shipwreck City Project,
-        made a financial donation, provided essential maritime records, or other form of support.      </p>
-      <ul class="support-list">
-        <li>
-          <span class="entry-name">Puget Soundkeeper Alliance</span>
-          <span class="entry-note">Letter of support recognizing the project's contribution to the documentation of Lake Union's environmental and historical record.</span>
-        </li>
-        <li>
-          <span class="entry-name">MOHAI</span>
-          <span class="entry-note">Museum of History &amp; Industry — letter of support acknowledging the archive's alignment with Seattle's broader maritime heritage mission.</span>
-        </li>
-      </ul>
+      <ul class="support-list" id="list-marinas"></ul>
 
       <h2>Individuals</h2>
       <p>
         These friends of Shipwreck City have gone above and beyond — offering their time, vessels, knowledge,
         and equipment to help put robots, cameras, and sensors in the water.
       </p>
-      <ul class="support-list">
-        <li>
-          <span class="entry-name">Libby B.</span>
-          <span class="entry-note">Historical curator, community connector, and project advisor who opened doors and elevated this project well-beyond its original means.</span>
-        </li>
-        <li>
-          <span class="entry-name">George S.</span>
-          <span class="entry-note">Captain of a 16' Whaler, who allowed us to deploy ROVs on wrecks in central Lake Union.</span>
-        </li>
-        <li>
-          <span class="entry-name">Sean</span>
-          <span class="entry-note">Captain of a 54' Cruiser, who allowed us to deploy ROVs on wrecks along the Ship Canal.</span>
-        </li>
-        <li>
-          <span class="entry-name">Anna B.</span>
-          <span class="entry-note">Local marine expert who shared extensive knowledge of derelict vessels and organized several field outings.</span>
-        </li>
-        <li>
-          <span class="entry-name">Shawn A.</span>
-          <span class="entry-note">ROV copilot and scuba expert who assisted with ROV deployments.</span>
-        </li>
-        <li>
-          <span class="entry-name">James M.</span>
-          <span class="entry-note">ROV copilot and ocean engineer who assisted with ROV deployments.</span>
-        </li>
-      </ul>
+      <ul class="support-list" id="list-individuals"></ul>
 
       <div class="cta-block">
         <p>
@@ -178,7 +140,7 @@
       </div>
       <div class="support-aside-block">
         <div class="aside-label">Supporters</div>
-        <div style="font-family:var(--font-display);font-size:62px;color:var(--text-primary);">5+</div>
+        <div id="supporter-count" style="font-family:var(--font-display);font-size:62px;color:var(--text-primary);">—</div>
       </div>
       <div class="support-aside-block">
         <div class="aside-label">Want to help?</div>
@@ -194,10 +156,26 @@
 <div id="footer-mount"></div>
 
 <script src="js/wrecks-data.js"></script>
+<script src="js/links-data.js"></script>
 <script src="js/site.js"></script>
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('support');
   document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  function renderSupportList(id, type) {
+    const items = SUPPORTERS.filter(s => s.type === type);
+    document.getElementById(id).innerHTML = items.map(s => `
+      <li>
+        <span class="entry-name">${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>` : s.name}</span>
+        <span class="entry-note">${s.note}</span>
+      </li>
+    `).join('');
+  }
+  renderSupportList('list-organizations', 'organization');
+  renderSupportList('list-marinas', 'marina');
+  renderSupportList('list-individuals', 'individual');
+
+  document.getElementById('supporter-count').textContent = SUPPORTERS.length;
 
   if (SITE_CONFIG.social.email) {
     document.querySelector('.cta-email a').href = `mailto:${SITE_CONFIG.social.email}`;

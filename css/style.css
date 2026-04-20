@@ -74,7 +74,7 @@ img { max-width: 100%; display: block; }
 
 .nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a {
-  font-size: 22px;
+  font-size: 16px;
   letter-spacing: 2.5px;
   color: var(--text-muted);
   text-decoration: none;
@@ -227,6 +227,7 @@ img { max-width: 100%; display: block; }
   color: var(--accent);
   text-transform: uppercase;
   margin-bottom: 14px;
+  padding-top: 24px;
 }
 
 /* Big Shipwreck City Text */
@@ -317,6 +318,12 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 12px;
 }
+a.section-label-link {
+  text-decoration: none;
+  transition: color 0.15s;
+}
+a.section-label-link:hover { color: var(--text-primary); }
+
 .section-label::after {
   content: '';
   display: block;
@@ -337,7 +344,7 @@ img { max-width: 100%; display: block; }
    WRECK SCROLL TRACK (homepage horizontal scroll)
    ============================================================ */
 .wrecks-scroll-section {
-  padding: 48px 0;
+  padding: 0;
 }
 .wrecks-scroll-section .container { padding: 0 32px; }
 
@@ -539,6 +546,33 @@ img { max-width: 100%; display: block; }
   color: var(--text-mid) !important;
   box-shadow: none !important;
 }
+/* Wreck map markers */
+@keyframes sonar-ping {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+.wreck-marker {
+  position: relative;
+  width: 12px; height: 12px;
+  background: var(--mc);
+  border: 2px solid #07111a;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mc) 27%, transparent);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.wreck-marker::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: var(--mc);
+  opacity: 0;
+  pointer-events: none;
+}
+.wreck-marker:hover { transform: scale(1.5); }
+.wreck-marker:hover::after { animation: sonar-ping 0.7s ease-out forwards; }
+
 .leaflet-popup-tip { background: var(--bg-card) !important; }
 .leaflet-popup-content { font-family: var(--font-body); font-size: 24px; line-height: 1.6; }
 .popup-name { font-family: var(--font-display); font-size: 40px; color: var(--text-primary); letter-spacing: 1px; }
@@ -878,10 +912,10 @@ img { max-width: 100%; display: block; }
   padding-top: 8px;
 }
 .supporters-grid img {
-  height: 48px;
+  height: 96px;
   width: auto;
-  opacity: 0.6;
-  filter: grayscale(1) brightness(1.4);
+  opacity: 1;
+  filter: brightness(0.7);
   transition: opacity 0.2s, filter 0.2s;
 }
 .supporters-grid a:hover img {

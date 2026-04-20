@@ -74,16 +74,9 @@ function makeMarker(L, wreck) {
 
   const icon = L.divIcon({
     className: '',
-    html: `<div style="
-      width:12px;height:12px;
-      background:${color};
-      border:2px solid #07111a;
-      border-radius:50%;
-      box-shadow:0 0 0 3px ${color}44;
-      cursor:pointer;
-    "></div>`,
-    iconSize: [12, 12],
-    iconAnchor: [6, 6],
+    html: `<div class="wreck-marker" style="--mc:${color}"></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
     popupAnchor: [0, -10]
   });
   return icon;

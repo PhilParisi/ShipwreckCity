@@ -41,9 +41,6 @@
 
 <!-- WRECK GRID -->
 <section class="wrecks-scroll-section">
-  <div class="container">
-    <div class="section-label">Targets — Lake Union</div>
-  </div>
   <div class="wrecks-scroll-wrapper">
     <button class="scroll-arrow scroll-arrow-left" id="scroll-left" aria-label="Scroll left">&#8592;</button>
     <div class="wrecks-scroll-track" id="wrecks-grid"></div>
@@ -54,7 +51,7 @@
 <!-- MAP -->
 <section class="map-section">
   <div class="container">
-    <div class="section-label">Wreck map — Lake Union</div>
+    <a id="map-section-label" class="section-label section-label-link">Target Map →</a>
     <div class="map-legend">
       <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Documented</div>
       <div class="legend-item"><div class="legend-dot" style="background:#8a6a3a;"></div> Unidentified</div>
@@ -81,11 +78,8 @@
 <!-- SUPPORTERS -->
 <section class="supporters-section">
   <div class="container">
-    <div class="section-label">Supporters</div>
-    <div class="supporters-grid" id="supporters-grid">
-      <!-- Add supporter logos here as <img> tags or <a><img></a> pairs -->
-      <!-- Example: <a href="https://example.com"><img src="/img/supporters/logo.png" alt="Supporter name"></a> -->
-    </div>
+    <a id="supporters-section-label" class="section-label section-label-link">Supporters →</a>
+    <div class="supporters-grid" id="supporters-grid"></div>
   </div>
 </section>
 
@@ -93,11 +87,23 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/wrecks-data.js"></script>
+<script src="js/links-data.js"></script>
 <script src="js/site.js"></script>
 <script>
+  // Supporter logos
+  document.getElementById('supporters-grid').innerHTML = SUPPORTERS
+    .filter(s => s.logo)
+    .map(s => s.url && s.url !== '#'
+      ? `<a href="${s.url}" target="_blank" rel="noopener"><img src="${ROOT}/${s.logo}" alt="${s.name}"></a>`
+      : `<img src="${ROOT}/${s.logo}" alt="${s.name}">`)
+    .join('');
+
   // Nav & footer
   document.getElementById('nav-mount').innerHTML   = buildNav('home');
   document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  document.getElementById('map-section-label').href       = `${ROOT}/map.html`;
+  document.getElementById('supporters-section-label').href = `${ROOT}/support.html`;
 
   // Stats
   const targets = 94;
@@ -200,8 +206,17 @@
     btnLeft.disabled  = track.scrollLeft <= 0;
     btnRight.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
   }
-  btnLeft.addEventListener('click',  () => { track.scrollBy({ left: -CARD_STEP, behavior: 'smooth' }); });
-  btnRight.addEventListener('click', () => { track.scrollBy({ left:  CARD_STEP, behavior: 'smooth' }); });
+  let autoTimer = setInterval(autoStep, 3000);
+  function autoStep() {
+    const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
+    track.scrollBy({ left: atEnd ? -track.scrollWidth : CARD_STEP, behavior: 'smooth' });
+  }
+  function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
+
+  btnLeft.addEventListener('click',  () => { stopAuto(); track.scrollBy({ left: -CARD_STEP, behavior: 'smooth' }); });
+  btnRight.addEventListener('click', () => { stopAuto(); track.scrollBy({ left:  CARD_STEP, behavior: 'smooth' }); });
+  track.addEventListener('wheel',      stopAuto, { passive: true });
+  track.addEventListener('touchstart', stopAuto, { passive: true });
   track.addEventListener('scroll', syncArrows);
   syncArrows();
 </script>
