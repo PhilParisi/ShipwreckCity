@@ -53,9 +53,9 @@
   <div class="container">
     <a id="map-section-label" class="section-label section-label-link">Target Map →</a>
     <div class="map-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Documented</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#8a6a3a;"></div> Unidentified</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#2a6080;"></div> Partial</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Recently Explored</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Previously Explored</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c87941;"></div> Never Explored</div>
     </div>
     <div class="map-wrapper" id="map-wrapper">
       <div id="wreck-map"></div>
@@ -106,17 +106,19 @@
   document.getElementById('supporters-section-label').href = `${ROOT}/support.html`;
 
   // Stats
-  const targets = 94;
-  const depths = WRECKS.map(w => w.depth).filter(Boolean);
-  const maxD   = depths.length ? Math.max(...depths) : 0;
-  const minD   = depths.length ? Math.min(...depths) : 0;
+  const depths        = WRECKS.map(w => w.depth).filter(Boolean);
+  const maxD          = depths.length ? Math.max(...depths) : 0;
+  const minD          = depths.length ? Math.min(...depths) : 0;
+  const recentCount   = WRECKS.filter(w => w.status === 'recently-explored').length;
+  const newTargetCount= WRECKS.filter(w => w.newTarget).length;
+  const totalHours    = WRECKS.reduce((sum, w) => sum + (w.diveDuration || 0), 0);
   document.getElementById('hero-depth').textContent = `${minD} — ${maxD} ft`;
 
   document.getElementById('stats-bar').innerHTML = `
-    <div class="stat"><div class="stat-num">${targets}</div><div class="stat-label">Submerged targets</div></div>
-    <div class="stat"><div class="stat-num">${WRECKS.length}</div><div class="stat-label">Updated Targets</div></div>
-    <div class="stat"><div class="stat-num">${(() => { const yrs = WRECKS.map(w=>w.year).filter(Boolean); return yrs.length ? Math.min(...yrs) : '—'; })()}</div><div class="stat-label">Oldest known</div></div>
-    <div class="stat"><div class="stat-num">${maxD}ft</div><div class="stat-label">Max depth</div></div>
+    <div class="stat"><div class="stat-num">${WRECKS.length}</div><div class="stat-label">Submerged Targets</div></div>
+    <div class="stat"><div class="stat-num">${recentCount}</div><div class="stat-label">Recently Explored</div></div>
+    <div class="stat"><div class="stat-num">${newTargetCount}</div><div class="stat-label">New Wrecks Found</div></div>
+    <div class="stat"><div class="stat-num">${totalHours}hr</div><div class="stat-label">Underwater</div></div>
   `;
 
   //<div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>

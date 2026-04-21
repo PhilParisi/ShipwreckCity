@@ -37,9 +37,9 @@ function buildFooter() {
 
 function statusLabel(status) {
   const labels = {
-    documented:   'Documented',
-    unidentified: 'Unidentified',
-    partial:      'Partial'
+    'recently-explored':  'Recently Explored',
+    'previously-explored':'Previously Explored',
+    'never-explored':     'Never Explored',
   };
   return labels[status] || status;
 }
@@ -67,10 +67,10 @@ function coordDisplay(coords) {
 // Custom Leaflet marker
 function makeMarker(L, wreck) {
   const color = {
-    documented:   '#5a8a6a',
-    unidentified: '#8a6a3a',
-    partial:      '#2a6080'
-  }[wreck.status] || '#4a9eba';
+    'recently-explored':  '#4a9eba',   // blue
+    'previously-explored':'#5a8a6a',   // green
+    'never-explored':     '#c87941',   // orange
+  }[wreck.status] || '#4a6070';
 
   const icon = L.divIcon({
     className: '',

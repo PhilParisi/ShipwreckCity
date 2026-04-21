@@ -480,9 +480,9 @@ a.section-label-link:hover { color: var(--text-primary); }
   margin-right: 6px;
   vertical-align: middle;
 }
-.status-documented  { background: var(--green); }
-.status-unidentified{ background: #8a6a3a; }
-.status-partial     { background: var(--accent-dim); }
+.status-recently-explored  { background: #4a9eba; }
+.status-previously-explored{ background: #5a8a6a; }
+.status-never-explored     { background: #c87941; }
 
 /* ============================================================
    MAP SECTION
