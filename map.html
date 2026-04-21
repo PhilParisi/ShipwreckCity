@@ -76,11 +76,11 @@
     zoom: SITE_CONFIG.mapZoom + 1
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
+  const tiles = makeTileLayers(L);
+  tiles.dark.addTo(map);
+  applyTileFilter(map, 'Dark');
+  L.control.layers({ 'Dark': tiles.dark, 'Satellite': tiles.satellite }, {}, { position: 'topright' }).addTo(map);
+  map.on('baselayerchange', e => applyTileFilter(map, e.name));
 
   WRECKS.forEach(w => {
     if (!w.coordinates) return;

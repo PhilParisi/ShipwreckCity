@@ -68,6 +68,30 @@
     .support-aside .aside-label { font-size: 12px; }
     .support-aside-block { margin-bottom: 36px; }
 
+    .support-aside {
+      display: flex; flex-direction: column;
+      height: 100%; overflow: hidden;
+    }
+    .support-aside-block:last-child {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; margin-bottom: 0;
+    }
+    .journey-photos {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+      overflow-y: hidden;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .journey-photos:hover { overflow-y: auto; }
+    .journey-photos a { display: block; overflow: hidden; flex-shrink: 0; }
+    .journey-photos img {
+      width: 100%; display: block;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      filter: brightness(0.85);
+    }
+    .journey-photos a:hover img { transform: scale(1.03); filter: brightness(1); }
+
     @media (max-width: 700px) {
       .support-grid { grid-template-columns: 1fr; gap: 32px; }
     }
@@ -135,7 +159,7 @@
       <div class="support-aside-block">
         <div class="aside-label" style="margin-top:0;">Project area</div>
         <p style="font-family:var(--font-serif);font-style:italic;font-size:17px;color:var(--text-muted);line-height:1.7;">
-          Lake Union<br>Seattle, Washington<br>47°37'N 122°20'W
+          Lake Uniom & Connecting Waterways<br>Seattle, Washington<br>47°37'N 122°20'W
         </p>
       </div>
       <div class="support-aside-block">
@@ -149,6 +173,10 @@
           Every action moves the archive forward.
         </p>
       </div>
+      <div class="support-aside-block">
+        <div class="aside-label">From the field</div>
+        <div class="journey-photos" id="journey-photos"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -156,6 +184,7 @@
 <div id="footer-mount"></div>
 
 <script src="js/wrecks-data.js"></script>
+<script src="js/photos-data.js"></script>
 <script src="js/links-data.js"></script>
 <script src="js/site.js"></script>
 <script>
@@ -176,6 +205,18 @@
   renderSupportList('list-individuals', 'individual');
 
   document.getElementById('supporter-count').textContent = SUPPORTERS.length;
+
+  // Journey photos — auto-populated from img/supporters-page/ by csv_to_wrecks_data.py
+  const photoEl = document.getElementById('journey-photos');
+  if (JOURNEY_PHOTOS.length) {
+    photoEl.innerHTML = JOURNEY_PHOTOS.map(f => `
+      <a href="${ROOT}/img/supporters-page/${f}" target="_blank">
+        <img src="${ROOT}/img/supporters-page/${f}" alt="From the field — ${f}" loading="lazy">
+      </a>
+    `).join('');
+  } else {
+    photoEl.style.display = 'none';
+  }
 
   if (SITE_CONFIG.social.email) {
     document.querySelector('.cta-email a').href = `mailto:${SITE_CONFIG.social.email}`;

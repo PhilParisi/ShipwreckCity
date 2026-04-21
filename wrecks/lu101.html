@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO meta tags injected by JS below -->
+  <title>Loading...</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+<div id="nav-mount"></div>
+<main id="wreck-page"></main>
+<div id="footer-mount"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../js/wrecks-data.js"></script>
+<script src="../js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('explore');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  const slug  = location.pathname.split('/').pop().replace('.html', '');
+  const wreck = WRECKS.find(w => w.id === slug);
+
+  if (!wreck) {
+    document.getElementById('wreck-page').innerHTML = `
+      <div class="section container" style="padding-top:80px;">
+        <div class="section-label">Error</div>
+        <p style="font-family:var(--font-serif);font-style:italic;color:var(--text-muted);">
+          Wreck record not found. <a href="${ROOT}/index.html">Return to explore →</a>
+        </p>
+      </div>`;
+    document.title = 'Not Found — Shipwreck City';
+  } else {
+    document.title = `${wreck.name} — Shipwreck City`;
+    document.querySelector('meta[name="description"]')
+      ?.setAttribute('content', wreck.tagline);
+
+    const ogTitle = document.createElement('meta');
+    ogTitle.setAttribute('property','og:title');
+    ogTitle.setAttribute('content', `${wreck.name} — Shipwreck City`);
+    document.head.appendChild(ogTitle);
+
+    const ogDesc = document.createElement('meta');
+    ogDesc.setAttribute('property','og:description');
+    ogDesc.setAttribute('content', wreck.summary);
+    document.head.appendChild(ogDesc);
+
+    // Prev/next navigation
+    const idx  = WRECKS.indexOf(wreck);
+    const prev = WRECKS[idx - 1];
+    const next = WRECKS[idx + 1];
+
+    const navHtml = `
+      <div class="wreck-nav">
+        ${prev
+          ? `<a class="wreck-nav-item prev" href="${ROOT}/wrecks/${prev.id}.html">
+              <div class="wreck-nav-dir">← Previous</div>
+              <div class="wreck-nav-name">${prev.name}</div>
+             </a>`
+          : `<div class="wreck-nav-item" style="opacity:0.3;pointer-events:none">
+              <div class="wreck-nav-dir">← Previous</div>
+              <div class="wreck-nav-name">—</div>
+             </div>`
+        }
+        ${next
+          ? `<a class="wreck-nav-item next" href="${ROOT}/wrecks/${next.id}.html">
+              <div class="wreck-nav-dir">Next →</div>
+              <div class="wreck-nav-name">${next.name}</div>
+             </a>`
+          : `<div class="wreck-nav-item next" style="opacity:0.3;pointer-events:none">
+              <div class="wreck-nav-dir">Next →</div>
+              <div class="wreck-nav-name">—</div>
+             </div>`
+        }
+      </div>`;
+
+    // Footage section
+    const footageHtml = wreck.footage
+      ? `<div class="footage-embed"><iframe src="${wreck.footage}" allowfullscreen title="${wreck.name} dive footage"></iframe></div>`
+      : `<div class="footage-embed" style="height:200px;">
+           <div class="footage-placeholder">
+             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+               <circle cx="16" cy="16" r="12" stroke="#4a6070" stroke-width="1.5"/>
+               <polygon points="13,11 13,21 22,16" fill="#4a6070"/>
+             </svg>
+             <span>Footage pending</span>
+           </div>
+         </div>`;
+
+    document.getElementById('wreck-page').innerHTML = `
+      <!-- WRECK HERO -->
+      <div class="wreck-hero">
+        <div class="wreck-hero-grid"></div>
+        <div class="wreck-hero-content">
+          <div class="wreck-breadcrumb"><a href="${ROOT}/index.html">Explore</a> / ${wreck.catalog}</div>
+          <div class="wreck-catalog-num">${wreck.catalog}</div>
+          <h1 class="wreck-title">${wreck.name}</h1>
+          <p class="wreck-tagline">${wreck.tagline}</p>
+        </div>
+      </div>
+
+      <!-- DATA BAR -->
+      <div class="wreck-data-bar">
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Type</div>
+          <div class="wreck-data-val">${wreck.type}</div>
+        </div>
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Year sunk</div>
+          <div class="wreck-data-val">${yearDisplay(wreck)}</div>
+        </div>
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Depth</div>
+          <div class="wreck-data-val">${depthDisplay(wreck.depth)}</div>
+        </div>
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Status</div>
+          <div class="wreck-data-val">
+            <span class="status-dot status-${wreck.status}"></span>${statusLabel(wreck.status)}
+          </div>
+        </div>
+        ${wreck.dimensions ? `
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Dimensions</div>
+          <div class="wreck-data-val">${wreck.dimensions}</div>
+        </div>` : ''}
+      </div>
+
+      <!-- PRIMETIME IMAGE -->
+      <div id="primetime-wrap"></div>
+
+      <!-- BODY -->
+      <div class="wreck-body">
+        <div class="wreck-main">
+          <div class="prose-section">
+            <h3>Overview</h3>
+            <p>${wreck.summary}</p>
+          </div>
+          <div class="prose-section">
+            <h3>History</h3>
+            <p>${wreck.history}</p>
+          </div>
+          <div class="prose-section">
+            <h3>Discovery &amp; Documentation</h3>
+            <p>${wreck.discovery}</p>
+          </div>
+
+          <!-- GALLERY -->
+          <div id="gallery-wrap"></div>
+
+          <div class="section-label" style="margin-top:40px;">Dive footage</div>
+          ${footageHtml}
+        </div>
+
+        <div class="wreck-aside">
+          <div class="aside-label">Location</div>
+          <div class="aside-coord" id="coord-display">—</div>
+          <div id="wreck-detail-map"></div>
+
+          <div class="aside-label" style="margin-top:28px;">Field data</div>
+          <div class="aside-detail-row"><span>Catalog</span><span>${wreck.catalog}</span></div>
+          <div class="aside-detail-row"><span>Vessel type</span><span>${wreck.type}</span></div>
+          <div class="aside-detail-row"><span>Status</span><span>${statusLabel(wreck.status)}</span></div>
+          ${wreck.depth ? `<div class="aside-detail-row"><span>Depth</span><span>${wreck.depth} ft</span></div>` : ''}
+          ${wreck.dimensions ? `<div class="aside-detail-row"><span>Dimensions</span><span>${wreck.dimensions}</span></div>` : ''}
+          <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
+
+          <div class="aside-label" style="margin-top:28px;">All wrecks</div>
+          <div style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
+          ${WRECKS.map(w => `
+            <a href="${ROOT}/wrecks/${w.id}.html" style="
+              display:block;padding:10px 0;border-bottom:1px solid var(--border);
+              color:${w.id === wreck.id ? 'var(--text-primary)' : 'var(--text-faint)'};
+              text-decoration:none;font-size:17px;letter-spacing:1px;
+              ${w.id === wreck.id ? 'pointer-events:none;' : ''}
+            ">
+              <span style="color:var(--accent);margin-right:8px;font-size:17px;">${w.catalog}</span>${w.name}
+            </a>
+          `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- WRECK NAV -->
+      ${navHtml}
+    `;
+
+    // ── Primetime image ───────────────────────────────────────────────────────
+    const PRIMETIME_EXTS = ['jpg','jpeg','png','webp'];
+    const primetimeWrap  = document.getElementById('primetime-wrap');
+    const galleryWrap    = document.getElementById('gallery-wrap');
+
+    const extraPhotos = (wreck.images || []).map(f => `${ROOT}/img/wrecks/${wreck.id}/${f}`);
+
+    (function resolvePrimetime(extIdx) {
+      const ext = PRIMETIME_EXTS[extIdx];
+      if (!ext) {
+        // No primetime found
+        primetimeWrap.innerHTML = `
+          <div class="wreck-img-placeholder">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <rect x="10" y="20" width="60" height="44" rx="3" stroke="#e8e0cc" stroke-width="1.5"/>
+              <circle cx="28" cy="37" r="6" stroke="#e8e0cc" stroke-width="1.2"/>
+              <polyline points="10,64 28,44 42,56 54,42 70,64" stroke="#e8e0cc" stroke-width="1.2" fill="none"/>
+            </svg>
+          </div>`;
+        renderGallery(extraPhotos);
+        return;
+      }
+      const probe = new Image();
+      probe.onload  = () => {
+        primetimeWrap.innerHTML = `
+          <div class="wreck-primetime-wrap">
+            <img src="${probe.src}" alt="${wreck.name}">
+          </div>`;
+        renderGallery(extraPhotos);
+      };
+      probe.onerror = () => resolvePrimetime(extIdx + 1);
+      probe.src = `${ROOT}/img/wrecks/${wreck.id}/primetime.${ext}`;
+    })(0);
+
+    function renderGallery(photos) {
+      if (!photos.length) return;
+      galleryWrap.innerHTML = `
+        <div class="section-label" style="margin-top:40px;">Gallery</div>
+        <div class="wreck-gallery">
+          ${photos.map((src, i) => `<img src="${src}" alt="${wreck.name} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
+        </div>`;
+
+      galleryWrap.querySelectorAll('img[data-idx]').forEach(img => {
+        img.addEventListener('click', () => openLightbox(photos, parseInt(img.dataset.idx)));
+      });
+    }
+
+    // ── Lightbox ──────────────────────────────────────────────────────────────
+    const lb = document.createElement('div');
+    lb.id = 'lightbox';
+    lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;';
+    lb.innerHTML = `
+      <button id="lb-prev" style="position:absolute;left:0;top:0;bottom:0;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8592;</button>
+      <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:95vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);">
+      <button id="lb-next" style="position:absolute;right:0;top:0;bottom:0;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8594;</button>
+      <div id="lb-counter" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.35);"></div>
+    `;
+    document.body.appendChild(lb);
+
+    let lbPhotos = [], lbIdx = 0;
+
+    function lbShow(i) {
+      lbIdx = (i + lbPhotos.length) % lbPhotos.length;
+      document.getElementById('lb-img').src = lbPhotos[lbIdx];
+      document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${lbPhotos.length}`;
+      document.getElementById('lb-prev').style.opacity = lbPhotos.length > 1 ? '1' : '0';
+      document.getElementById('lb-next').style.opacity = lbPhotos.length > 1 ? '1' : '0';
+    }
+
+    function openLightbox(photos, idx) {
+      lbPhotos = photos;
+      lb.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      lbShow(idx);
+    }
+
+    function closeLightbox() {
+      lb.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx - 1); });
+    document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx + 1); });
+    lb.addEventListener('click', e => { if (e.target === lb || e.target === document.getElementById('lb-img')) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (lb.style.display === 'none') return;
+      if (e.key === 'ArrowLeft')  lbShow(lbIdx - 1);
+      if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
+      if (e.key === 'Escape')     closeLightbox();
+    });
+
+    // ── Mini map ──────────────────────────────────────────────────────────────
+    if (wreck.coordinates) {
+      const coordEl = document.getElementById('coord-display');
+      coordEl.innerHTML = coordDisplay(wreck.coordinates);
+
+      const miniMap = L.map('wreck-detail-map', {
+        center: wreck.coordinates,
+        zoom: 15,
+        zoomControl: false,
+        attributionControl: false
+      });
+      const darkTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        subdomains: 'abcd', maxZoom: 19
+      }).addTo(miniMap);
+      darkTile.on('load', () => {
+        miniMap.getPanes().tilePane.style.filter = 'brightness(1.6) contrast(1.1)';
+      });
+      miniMap.getPanes().tilePane.style.filter = 'brightness(1.6) contrast(1.1)';
+      L.marker(wreck.coordinates, { icon: makeMarker(L, wreck) })
+        .addTo(miniMap)
+        .bindPopup(wreck.name)
+        .openPopup();
+    }
+  }
+</script>
+</body>
+</html>

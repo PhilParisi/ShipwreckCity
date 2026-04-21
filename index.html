@@ -25,10 +25,14 @@
   <div class="hero-blip hero-blip-1"></div>
   <div class="hero-blip hero-blip-2"></div>
   <div class="hero-blip hero-blip-3"></div>
+  <div class="hero-blip hero-blip-4"></div>
+  <div class="hero-blip hero-blip-5"></div>
+  <div class="hero-blip hero-blip-6"></div>
+  <div class="hero-blip hero-blip-7"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">Lake Union · Seattle · 47°37'N 122°20'W</div>
     <h1 class="hero-title">SHIP<br><em>WRECK</em><br>CITY</h1>
-    <p class="hero-sub">Completing the underwater archive of Lake Union's sunken maritime history — the vessels lost to time, fire, and the deep.</p>
+    <p class="hero-sub">Completing the underwater archive of Seattle's sunken maritime history — the vessels lost to time, fire, and the deep.</p>
   </div>
   <div class="hero-meta">
     <div class="hero-meta-label">Depth range</div>
@@ -75,6 +79,15 @@
   </div>
 </section>
 
+<!-- FIELD PHOTOS -->
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="field-scroll-left" aria-label="Scroll left">&#8592;</button>
+    <div class="field-scroll-track" id="field-photos-track"></div>
+    <button class="scroll-arrow scroll-arrow-right" id="field-scroll-right" aria-label="Scroll right">&#8594;</button>
+  </div>
+</section>
+
 <!-- SUPPORTERS -->
 <section class="supporters-section">
   <div class="container">
@@ -87,6 +100,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="js/wrecks-data.js"></script>
+<script src="js/photos-data.js"></script>
 <script src="js/links-data.js"></script>
 <script src="js/site.js"></script>
 <script>
@@ -115,9 +129,9 @@
   document.getElementById('hero-depth').textContent = `${minD} — ${maxD} ft`;
 
   document.getElementById('stats-bar').innerHTML = `
-    <div class="stat"><div class="stat-num">${WRECKS.length}</div><div class="stat-label">Submerged Targets</div></div>
-    <div class="stat"><div class="stat-num">${recentCount}</div><div class="stat-label">Recently Explored</div></div>
-    <div class="stat"><div class="stat-num">${newTargetCount}</div><div class="stat-label">New Wrecks Found</div></div>
+    <div class="stat"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></div>
+    <div class="stat"><div class="stat-num" style="color:#4a9eba;">${recentCount}</div><div class="stat-label">Recently Explored</div></div>
+    <div class="stat"><div class="stat-num">${newTargetCount}</div><div class="stat-label">New Wrecks Uncovered</div></div>
     <div class="stat"><div class="stat-num">${totalHours}hr</div><div class="stat-label">Underwater</div></div>
   `;
 
@@ -132,9 +146,9 @@
     else       { img.style.display = 'none'; }
   }
 
-  // Wreck grid — alternating info card + photo tile
+  // Wreck grid — only wrecks that have photos
   const grid = document.getElementById('wrecks-grid');
-  grid.innerHTML = WRECKS.map(w => `
+  grid.innerHTML = WRECKS.filter(w => w.hasPrimetime || w.images.length > 0).map(w => `
     <a class="wreck-card" href="${ROOT}/wrecks/${w.id}.html">
       <div class="wreck-card-num">${w.catalog}</div>
       <div class="wreck-card-name">${w.name}</div>
@@ -163,11 +177,11 @@
     zoomControl: true
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
+  const tiles = makeTileLayers(L);
+  tiles.dark.addTo(map);
+  applyTileFilter(map, 'Dark');
+  L.control.layers({ 'Dark': tiles.dark, 'Satellite': tiles.satellite }, {}, { position: 'topright' }).addTo(map);
+  map.on('baselayerchange', e => applyTileFilter(map, e.name));
 
   WRECKS.forEach(w => {
     if (!w.coordinates) return;
@@ -221,6 +235,38 @@
   track.addEventListener('touchstart', stopAuto, { passive: true });
   track.addEventListener('scroll', syncArrows);
   syncArrows();
+
+  // Field photos strip
+  const FIELD_PHOTOS = FIELDWORK_PHOTOS;
+  const PHOTO_STEP = 481 * 4; // 4 tiles at a time
+  const fieldTrack  = document.getElementById('field-photos-track');
+  const fieldLeft   = document.getElementById('field-scroll-left');
+  const fieldRight  = document.getElementById('field-scroll-right');
+
+  fieldTrack.innerHTML = FIELD_PHOTOS.map(f => `
+    <div class="field-photo-tile">
+      <img src="${ROOT}/img/main-fieldwork/${f}" alt="Field — ${f}" loading="lazy">
+    </div>
+  `).join('');
+
+  function syncFieldArrows() {
+    fieldLeft.disabled  = fieldTrack.scrollLeft <= 0;
+    fieldRight.disabled = fieldTrack.scrollLeft >= fieldTrack.scrollWidth - fieldTrack.clientWidth - 1;
+  }
+
+  let fieldAutoTimer = setInterval(fieldAutoStep, 3500);
+  function fieldAutoStep() {
+    const atEnd = fieldTrack.scrollLeft >= fieldTrack.scrollWidth - fieldTrack.clientWidth - 1;
+    fieldTrack.scrollBy({ left: atEnd ? -fieldTrack.scrollWidth : PHOTO_STEP, behavior: 'smooth' });
+  }
+  function stopFieldAuto() { clearInterval(fieldAutoTimer); fieldAutoTimer = null; }
+
+  fieldLeft.addEventListener('click',   () => { stopFieldAuto(); fieldTrack.scrollBy({ left: -PHOTO_STEP, behavior: 'smooth' }); });
+  fieldRight.addEventListener('click',  () => { stopFieldAuto(); fieldTrack.scrollBy({ left:  PHOTO_STEP, behavior: 'smooth' }); });
+  fieldTrack.addEventListener('wheel',      stopFieldAuto, { passive: true });
+  fieldTrack.addEventListener('touchstart', stopFieldAuto, { passive: true });
+  fieldTrack.addEventListener('scroll', syncFieldArrows);
+  syncFieldArrows();
 </script>
 </body>
 </html>

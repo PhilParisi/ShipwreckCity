@@ -82,6 +82,26 @@ function makeMarker(L, wreck) {
   return icon;
 }
 
+// Tile layers — call once per map, pass both to L.control.layers()
+function makeTileLayers(L) {
+  const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  });
+  const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '&copy; Esri &mdash; Esri, USDA, USGS, GeoEye, Aerogrid, IGN, IGP and the GIS User Community',
+    maxZoom: 19
+  });
+  return { dark, satellite };
+}
+
+// Apply brightness boost to dark tile pane; remove it for satellite
+function applyTileFilter(map, layerName) {
+  const pane = map.getPanes().tilePane;
+  pane.style.filter = (layerName === 'Satellite') ? '' : 'brightness(1.6) contrast(1.1)';
+}
+
 function makePopup(wreck) {
   const yr = yearDisplay(wreck);
   return `

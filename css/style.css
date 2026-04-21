@@ -113,7 +113,7 @@ img { max-width: 100%; display: block; }
   height: 5px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity: 0.15;
-  animation: scan 8s ease-in-out infinite;
+  animation: scan 5s ease-in-out infinite;
 }
 @keyframes scan {
   0%   { top: 0%; opacity: 0; }
@@ -122,7 +122,7 @@ img { max-width: 100%; display: block; }
   100% { top: 100%; opacity: 0; }
 }
 
-/* sonar blips — 3 targets lit up as the sweep passes */
+/* sonar blips */
 .hero-blip {
   position: absolute;
   z-index: 3;
@@ -131,6 +131,10 @@ img { max-width: 100%; display: block; }
 .hero-blip-1 { left: 30%; top: 18%; --blip-color: #5a8a6a; }
 .hero-blip-2 { left: 68%; top: 52%; --blip-color: #4a9eba; }
 .hero-blip-3 { left: 44%; top: 83%; --blip-color: #8a6a3a; }
+.hero-blip-4 { left: 14%; top: 40%; --blip-color: #9a5a7a; }
+.hero-blip-5 { left: 82%; top: 24%; --blip-color: #4a8a7a; }
+.hero-blip-6 { left: 58%; top: 62%; --blip-color: #c87941; }
+.hero-blip-7 { left: 22%; top: 72%; --blip-color: #6a7aaa; }
 
 .hero-blip::before,
 .hero-blip::after {
@@ -140,24 +144,21 @@ img { max-width: 100%; display: block; }
   transform: translate(-50%, -50%);
   opacity: 0;
 }
-/* dot */
 .hero-blip::before {
   width: 6px;
   height: 6px;
   background: var(--blip-color);
   box-shadow: 0 0 6px var(--blip-color), 0 0 14px var(--blip-color);
 }
-/* expanding ring */
 .hero-blip::after {
   width: 14px;
   height: 14px;
   border: 1px solid var(--blip-color);
 }
 
-/* blip 1 — fires at ~30% of the 8s sweep */
-.hero-blip-1::before { animation: blipDot1 8s ease-in-out infinite; }
-.hero-blip-1::after  { animation: blipRing1 8s ease-in-out infinite; }
-
+/* blip 1 — top 18%, fires at ~30% */
+.hero-blip-1::before { animation: blipDot1 5s ease-in-out infinite; }
+.hero-blip-1::after  { animation: blipRing1 5s ease-in-out infinite; }
 @keyframes blipDot1 {
   0%, 28%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
   30%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
@@ -172,10 +173,9 @@ img { max-width: 100%; display: block; }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
 }
 
-/* blip 2 — fires at ~52% of the 8s sweep */
-.hero-blip-2::before { animation: blipDot2 8s ease-in-out infinite; }
-.hero-blip-2::after  { animation: blipRing2 8s ease-in-out infinite; }
-
+/* blip 2 — top 52%, fires at ~52% */
+.hero-blip-2::before { animation: blipDot2 5s ease-in-out infinite; }
+.hero-blip-2::after  { animation: blipRing2 5s ease-in-out infinite; }
 @keyframes blipDot2 {
   0%, 50%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
   52%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
@@ -190,10 +190,9 @@ img { max-width: 100%; display: block; }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
 }
 
-/* blip 3 — fires at ~72% of the 8s sweep */
-.hero-blip-3::before { animation: blipDot3 8s ease-in-out infinite; }
-.hero-blip-3::after  { animation: blipRing3 8s ease-in-out infinite; }
-
+/* blip 3 — top 83%, fires at ~72% */
+.hero-blip-3::before { animation: blipDot3 5s ease-in-out infinite; }
+.hero-blip-3::after  { animation: blipRing3 5s ease-in-out infinite; }
 @keyframes blipDot3 {
   0%, 70%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
   72%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
@@ -203,6 +202,74 @@ img { max-width: 100%; display: block; }
 }
 @keyframes blipRing3 {
   0%, 70%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  72%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  87%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+}
+
+/* blip 4 — top 40%, fires at ~40% */
+.hero-blip-4::before { animation: blipDot4 5s ease-in-out infinite; }
+.hero-blip-4::after  { animation: blipRing4 5s ease-in-out infinite; }
+@keyframes blipDot4 {
+  0%, 38%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  40%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  68%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  78%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  100%     { opacity: 0; }
+}
+@keyframes blipRing4 {
+  0%, 39%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  40%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  55%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+}
+
+/* blip 5 — top 24%, fires at ~22% */
+.hero-blip-5::before { animation: blipDot5 5s ease-in-out infinite; }
+.hero-blip-5::after  { animation: blipRing5 5s ease-in-out infinite; }
+@keyframes blipDot5 {
+  0%, 20%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  22%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  50%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  60%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  100%     { opacity: 0; }
+}
+@keyframes blipRing5 {
+  0%, 21%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  22%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  37%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+}
+
+/* blip 6 — top 62%, fires at ~62% */
+.hero-blip-6::before { animation: blipDot6 5s ease-in-out infinite; }
+.hero-blip-6::after  { animation: blipRing6 5s ease-in-out infinite; }
+@keyframes blipDot6 {
+  0%, 60%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  62%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  88%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  96%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  100%     { opacity: 0; }
+}
+@keyframes blipRing6 {
+  0%, 61%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  62%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  77%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+}
+
+/* blip 7 — top 72%, fires at ~72% */
+.hero-blip-7::before { animation: blipDot7 5s ease-in-out infinite; }
+.hero-blip-7::after  { animation: blipRing7 5s ease-in-out infinite; }
+@keyframes blipDot7 {
+  0%, 70%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  72%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  94%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  99%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  100%     { opacity: 0; }
+}
+@keyframes blipRing7 {
+  0%, 71%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
   72%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
   87%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
@@ -590,6 +657,30 @@ a.section-label-link:hover { color: var(--text-primary); }
   font-family: var(--font-body) !important;
   font-size: 9px !important;
 }
+.leaflet-control-layers {
+  background: rgba(10,14,20,0.92) !important;
+  border: 1px solid var(--border-mid) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--text-mid) !important;
+}
+.leaflet-control-layers-toggle {
+  background-color: var(--bg-card) !important;
+  border-radius: 0 !important;
+}
+.leaflet-control-layers-expanded {
+  padding: 10px 14px !important;
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+  letter-spacing: 1px !important;
+}
+.leaflet-control-layers label {
+  color: var(--text-mid) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 4px 0 !important;
+}
 
 /* ============================================================
    WRECK DETAIL PAGE
@@ -597,7 +688,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 .wreck-hero {
   position: relative;
   background: var(--bg-deep);
-  padding: 80px 32px 56px;
+  padding: 36px 32px 40px;
   border-bottom: 1px solid var(--border);
   overflow: hidden;
 }
@@ -776,18 +867,19 @@ a.section-label-link:hover { color: var(--text-primary); }
 .wreck-gallery-item:hover img { transform: scale(1.04); }
 
 /* ============================================================
-   WRECK IMAGE HERO
+   WRECK PRIMETIME IMAGE + GALLERY
    ============================================================ */
-.wreck-img-hero-wrap { line-height: 0; }
-.wreck-img-hero {
+.wreck-primetime-wrap {
   width: 100%;
-  height: 380px;
-  object-fit: cover;
-  background: var(--bg-deep);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #020810;
   border-bottom: 1px solid var(--border);
+  line-height: 0;
+}
+.wreck-primetime-wrap img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
 }
 .wreck-img-placeholder {
   width: 100%;
@@ -801,6 +893,24 @@ a.section-label-link:hover { color: var(--text-primary); }
   overflow: hidden;
 }
 .wreck-img-placeholder svg { opacity: 0.08; }
+
+.wreck-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 4px;
+  background: #020810;
+  border-bottom: 1px solid var(--border);
+  padding: 4px;
+}
+.wreck-gallery img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+  transition: opacity 0.15s;
+}
+.wreck-gallery img:hover { opacity: 0.8; }
 
 /* ============================================================
    MINI MAP (detail page)
@@ -901,6 +1011,39 @@ a.section-label-link:hover { color: var(--text-primary); }
 /* ============================================================
    SUPPORTERS
    ============================================================ */
+.field-scroll-track {
+  display: flex;
+  overflow-x: auto;
+  gap: 1px;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.field-scroll-track::-webkit-scrollbar { display: none; }
+.field-photo-tile {
+  flex: 0 0 480px;
+  height: 320px;
+  scroll-snap-align: start;
+  background: var(--bg-deep);
+  overflow: hidden;
+  position: relative;
+}
+.field-photo-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  filter: brightness(0.8);
+}
+.field-photo-tile:hover img {
+  transform: scale(1.04);
+  filter: brightness(1);
+}
+
 .supporters-section {
   border-top: 1px solid var(--border);
   padding: 48px 32px;
