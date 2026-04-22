@@ -522,7 +522,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 
 .wreck-card {
   background: var(--bg-card);
-  padding: 45px;
+  padding: 35px;
   cursor: pointer;
   transition: background 0.2s;
   display: block;
@@ -688,30 +688,24 @@ a.section-label-link:hover { color: var(--text-primary); }
   font-family: var(--font-body) !important;
   font-size: 9px !important;
 }
-.leaflet-control-layers {
-  background: rgba(10,14,20,0.92) !important;
-  border: 1px solid var(--border-mid) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  color: var(--text-mid) !important;
+.tile-toggle {
+  display: flex;
+  gap: 1px;
 }
-.leaflet-control-layers-toggle {
-  background-color: var(--bg-card) !important;
-  border-radius: 0 !important;
+.tile-toggle-btn {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  background: rgba(10,14,20,0.92);
+  border: 1px solid var(--border-mid);
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
-.leaflet-control-layers-expanded {
-  padding: 10px 14px !important;
-  font-family: var(--font-body) !important;
-  font-size: 12px !important;
-  letter-spacing: 1px !important;
-}
-.leaflet-control-layers label {
-  color: var(--text-mid) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  margin: 4px 0 !important;
-}
+.tile-toggle-btn:hover { color: var(--text-primary); background: var(--bg-hover); }
+.tile-toggle-btn.active { color: var(--accent); border-color: var(--accent); }
 
 /* ============================================================
    WRECK DETAIL PAGE
@@ -1056,7 +1050,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 .field-scroll-track::-webkit-scrollbar { display: none; }
 .field-photo-tile {
   flex: 0 0 480px;
-  height: 320px;
+  height: 288px;
   scroll-snap-align: start;
   background: var(--bg-deep);
   overflow: hidden;

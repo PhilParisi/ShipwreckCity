@@ -181,10 +181,9 @@
   });
 
   const tiles = makeTileLayers(L);
-  tiles.dark.addTo(map);
-  applyTileFilter(map, 'Dark');
-  L.control.layers({ 'Dark': tiles.dark, 'Satellite': tiles.satellite }, {}, { position: 'topright' }).addTo(map);
-  map.on('baselayerchange', e => applyTileFilter(map, e.name));
+  tiles.satellite.addTo(map);
+  applyTileFilter(map, 'Satellite');
+  addTileToggle(L, map, tiles, 'Satellite');
 
   WRECKS.forEach(w => {
     if (!w.coordinates) return;
@@ -232,7 +231,7 @@
     const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
     track.scrollBy({ left: atEnd ? -track.scrollWidth : GROUP_STEP, behavior: 'smooth' });
   }
-  function startAuto() { if (!autoTimer) autoTimer = setInterval(autoStep, 3000); }
+  function startAuto() { if (!autoTimer) autoTimer = setInterval(autoStep, 6000); }
   function stopAuto()  { clearInterval(autoTimer); autoTimer = null; }
 
   startAuto();
@@ -268,7 +267,7 @@
     const atEnd = fieldTrack.scrollLeft >= fieldTrack.scrollWidth - fieldTrack.clientWidth - 1;
     fieldTrack.scrollBy({ left: atEnd ? -fieldTrack.scrollWidth : PHOTO_STEP, behavior: 'smooth' });
   }
-  function startFieldAuto() { if (!fieldAutoTimer) fieldAutoTimer = setInterval(fieldAutoStep, 3000); }
+  function startFieldAuto() { if (!fieldAutoTimer) fieldAutoTimer = setInterval(fieldAutoStep, 6000); }
   function stopFieldAuto()  { clearInterval(fieldAutoTimer); fieldAutoTimer = null; }
 
   startFieldAuto();

@@ -136,7 +136,7 @@
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('about');
   document.getElementById('footer-mount').innerHTML = buildFooter();
-  document.getElementById('about-count').textContent = WRECKS.length;
+  document.getElementById('about-count').textContent = WRECKS.filter(w => w.status === 'recently-explored').length;
   if (SITE_CONFIG.social.email) {
     document.getElementById('about-contact').innerHTML =
       `<a href="mailto:${SITE_CONFIG.social.email}">${SITE_CONFIG.social.email}</a>`;

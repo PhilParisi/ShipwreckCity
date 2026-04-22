@@ -89,17 +89,47 @@ function makeTileLayers(L) {
     subdomains: 'abcd',
     maxZoom: 19
   });
-  const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: '&copy; Esri &mdash; Esri, USDA, USGS, GeoEye, Aerogrid, IGN, IGP and the GIS User Community',
+  const satBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '&copy; Esri',
     maxZoom: 19
   });
+  const satLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  });
+  const satellite = L.layerGroup([satBase, satLabels]);
   return { dark, satellite };
 }
 
 // Apply brightness boost to dark tile pane; remove it for satellite
 function applyTileFilter(map, layerName) {
   const pane = map.getPanes().tilePane;
-  pane.style.filter = (layerName === 'Satellite') ? '' : 'brightness(1.6) contrast(1.1)';
+  pane.style.filter = (layerName === 'Satellite') ? '' : 'brightness(2.8) contrast(2) grayscale(0.5)';
+}
+
+// Inline Dark / Satellite toggle control — replaces the stack-icon layer switcher
+function addTileToggle(L, map, tiles, defaultLayer = 'Dark') {
+  const TileToggle = L.Control.extend({
+    onAdd() {
+      const wrap = L.DomUtil.create('div', 'tile-toggle');
+      L.DomEvent.disableClickPropagation(wrap);
+      ['Dark', 'Satellite'].forEach(name => {
+        const btn = L.DomUtil.create('button', 'tile-toggle-btn', wrap);
+        btn.textContent = name;
+        if (name === defaultLayer) btn.classList.add('active');
+        L.DomEvent.on(btn, 'click', () => {
+          if (name === 'Dark') { map.removeLayer(tiles.satellite); tiles.dark.addTo(map); }
+          else                 { map.removeLayer(tiles.dark);      tiles.satellite.addTo(map); }
+          applyTileFilter(map, name);
+          wrap.querySelectorAll('.tile-toggle-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+      return wrap;
+    }
+  });
+  new TileToggle({ position: 'topright' }).addTo(map);
 }
 
 function makePopup(wreck) {

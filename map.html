@@ -77,10 +77,9 @@
   });
 
   const tiles = makeTileLayers(L);
-  tiles.dark.addTo(map);
-  applyTileFilter(map, 'Dark');
-  L.control.layers({ 'Dark': tiles.dark, 'Satellite': tiles.satellite }, {}, { position: 'topright' }).addTo(map);
-  map.on('baselayerchange', e => applyTileFilter(map, e.name));
+  tiles.satellite.addTo(map);
+  applyTileFilter(map, 'Satellite');
+  addTileToggle(L, map, tiles, 'Satellite');
 
   WRECKS.forEach(w => {
     if (!w.coordinates) return;
