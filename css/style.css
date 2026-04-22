@@ -97,6 +97,28 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
+/* faint wreck photo layered into hero background */
+.hero-bg-photo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 70%;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 45%);
+  mask-image: linear-gradient(to right, transparent 0%, black 45%);
+}
+.hero-bg-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) brightness(0.18) sepia(0.6) hue-rotate(185deg) saturate(4);
+  opacity: 0.75;
+  display: block;
+}
+
 /* square grid behind the sonar sweep */
 .hero-grid {
   position: absolute; inset: 0;
@@ -129,11 +151,11 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 .hero-blip-1 { left: 30%; top: 18%; --blip-color: #5a8a6a; }
-.hero-blip-2 { left: 68%; top: 52%; --blip-color: #4a9eba; }
-.hero-blip-3 { left: 44%; top: 83%; --blip-color: #8a6a3a; }
-.hero-blip-4 { left: 14%; top: 40%; --blip-color: #9a5a7a; }
-.hero-blip-5 { left: 82%; top: 24%; --blip-color: #4a8a7a; }
-.hero-blip-6 { left: 58%; top: 62%; --blip-color: #c87941; }
+.hero-blip-2 { left: 38%; top: 52%; --blip-color: #4a9eba; }
+.hero-blip-3 { left: 44%; top: 83%; --blip-color: #5a8a6a; }
+/*.hero-blip-4 { left: 14%; top: 40%; --blip-color: #9a5a7a; }*/
+.hero-blip-5 { left: 50%; top: 34%; --blip-color: #4a9eba; }
+.hero-blip-6 { left: 27%; top: 62%; --blip-color: #c87941; }
 .hero-blip-7 { left: 22%; top: 72%; --blip-color: #6a7aaa; }
 
 .hero-blip::before,
@@ -207,7 +229,7 @@ img { max-width: 100%; display: block; }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
 }
 
-/* blip 4 — top 40%, fires at ~40% */
+/* blip 4 — top 40%, fires at ~40% 
 .hero-blip-4::before { animation: blipDot4 5s ease-in-out infinite; }
 .hero-blip-4::after  { animation: blipRing4 5s ease-in-out infinite; }
 @keyframes blipDot4 {
@@ -222,43 +244,43 @@ img { max-width: 100%; display: block; }
   40%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
   55%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
-}
+}*/
 
 /* blip 5 — top 24%, fires at ~22% */
 .hero-blip-5::before { animation: blipDot5 5s ease-in-out infinite; }
 .hero-blip-5::after  { animation: blipRing5 5s ease-in-out infinite; }
 @keyframes blipDot5 {
-  0%, 20%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
-  22%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
-  50%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
-  60%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
+  0%, 39%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  41%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  57%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+  63%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
   100%     { opacity: 0; }
 }
 @keyframes blipRing5 {
-  0%, 21%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
-  22%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
-  37%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  0%, 40%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  41%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  56%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
 }
 
-/* blip 6 — top 62%, fires at ~62% */
+ /* blip 6 — top 62%, fires at ~62% */
 .hero-blip-6::before { animation: blipDot6 5s ease-in-out infinite; }
 .hero-blip-6::after  { animation: blipRing6 5s ease-in-out infinite; }
 @keyframes blipDot6 {
-  0%, 60%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
-  62%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
+  0%, 55%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  57%      { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
   88%      { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
   96%      { opacity: 0;   transform: translate(-50%,-50%) scale(1); }
   100%     { opacity: 0; }
 }
 @keyframes blipRing6 {
-  0%, 61%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
-  62%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
-  77%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
+  0%, 56%  { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
+  57%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+  72%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
 }
 
-/* blip 7 — top 72%, fires at ~72% */
+/* blip 7 — top 72%, fires at ~72% 
 .hero-blip-7::before { animation: blipDot7 5s ease-in-out infinite; }
 .hero-blip-7::after  { animation: blipRing7 5s ease-in-out infinite; }
 @keyframes blipDot7 {
@@ -273,7 +295,7 @@ img { max-width: 100%; display: block; }
   72%      { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
   87%      { opacity: 0;   transform: translate(-50%,-50%) scale(6); }
   100%     { opacity: 0;   transform: translate(-50%,-50%) scale(0); }
-}
+}*/
 
 .hero-waterlines {
   position: absolute; inset: 0;
@@ -442,13 +464,17 @@ a.section-label-link:hover { color: var(--text-primary); }
   background: var(--bg-deep);
   position: relative;
   overflow: hidden;
+  display: block;
+  text-decoration: none;
 }
 .wreck-photo-tile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: opacity 0.2s;
 }
+.wreck-photo-tile:hover img { opacity: 0.7; }
 .wreck-photo-fallback {
   position: absolute;
   inset: 0;

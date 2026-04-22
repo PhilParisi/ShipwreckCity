@@ -20,6 +20,9 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-bg-photo">
+    <img src="img/wrecks/lu009/primetime.png" alt="" aria-hidden="true">
+  </div>
   <div class="hero-grid"></div>
   <div class="hero-scan"></div>
   <div class="hero-blip hero-blip-1"></div>
@@ -159,7 +162,7 @@
       <div class="wreck-card-tagline">${w.tagline}</div>
       <div class="wreck-type-badge">${w.type}</div>
     </a>
-    <div class="wreck-photo-tile">
+    <a class="wreck-photo-tile" href="${ROOT}/wrecks/${w.id}.html">
       <img src="${ROOT}/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
            onload="this.nextElementSibling.style.display='none'"
            onerror="tryPrimetimeExt(this,'${w.id}')">
@@ -167,7 +170,7 @@
         <span>${w.catalog}</span>
         <span>No image</span>
       </div>
-    </div>
+    </a>
   `).join('');
 
   // Map
@@ -216,23 +219,28 @@
   const track      = document.getElementById('wrecks-grid');
   const btnLeft    = document.getElementById('scroll-left');
   const btnRight   = document.getElementById('scroll-right');
+  const wreckScrollSection = track.closest('section');
   const CARD_STEP  = 385; // card width + 1px gap
 
   function syncArrows() {
     btnLeft.disabled  = track.scrollLeft <= 0;
     btnRight.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
   }
-  let autoTimer = setInterval(autoStep, 3000);
+  const GROUP_STEP = CARD_STEP * 4; // 2 wreck cards + 2 photo tiles
+  let autoTimer = null;
   function autoStep() {
     const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
-    track.scrollBy({ left: atEnd ? -track.scrollWidth : CARD_STEP, behavior: 'smooth' });
+    track.scrollBy({ left: atEnd ? -track.scrollWidth : GROUP_STEP, behavior: 'smooth' });
   }
-  function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
+  function startAuto() { if (!autoTimer) autoTimer = setInterval(autoStep, 3000); }
+  function stopAuto()  { clearInterval(autoTimer); autoTimer = null; }
 
-  btnLeft.addEventListener('click',  () => { stopAuto(); track.scrollBy({ left: -CARD_STEP, behavior: 'smooth' }); });
-  btnRight.addEventListener('click', () => { stopAuto(); track.scrollBy({ left:  CARD_STEP, behavior: 'smooth' }); });
-  track.addEventListener('wheel',      stopAuto, { passive: true });
-  track.addEventListener('touchstart', stopAuto, { passive: true });
+  startAuto();
+  wreckScrollSection.addEventListener('mouseenter', stopAuto);
+  wreckScrollSection.addEventListener('mouseleave', startAuto);
+
+  btnLeft.addEventListener('click',  () => track.scrollBy({ left: -GROUP_STEP, behavior: 'smooth' }));
+  btnRight.addEventListener('click', () => track.scrollBy({ left:  GROUP_STEP, behavior: 'smooth' }));
   track.addEventListener('scroll', syncArrows);
   syncArrows();
 

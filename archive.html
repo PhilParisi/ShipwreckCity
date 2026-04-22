@@ -43,6 +43,87 @@
     .filter-btn:hover, .filter-btn.active {
       border-color: var(--accent); color: var(--accent);
     }
+
+    /* Download section */
+    .download-section {
+      margin-top: 80px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 16px 32px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--font-body);
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .download-btn:hover {
+      background: var(--accent);
+      color: var(--bg-deep);
+      text-decoration: none;
+    }
+    .download-desc {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-top: 16px;
+    }
+    .field-ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .field-ref-table th {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 400;
+      border-bottom: 1px solid var(--border);
+    }
+    .field-ref-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .field-ref-table td:first-child {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      font-size: 13px;
+      white-space: nowrap;
+      padding-right: 20px;
+    }
+    .field-group-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 16px 12px 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (max-width: 800px) {
+      .download-section { grid-template-columns: 1fr; gap: 40px; }
+    }
   </style>
 </head>
 <body>
@@ -75,6 +156,79 @@
     </thead>
     <tbody id="archive-body"></tbody>
   </table>
+</section>
+
+<!-- DOWNLOAD + FIELD REFERENCE -->
+<section class="section container" style="max-width:1750px;">
+  <div class="download-section">
+
+    <div>
+      <div class="section-label">Data Download</div>
+      <p class="download-desc">
+        The master archive is maintained as a structured CSV spreadsheet and updated
+        as new data is available. It includes all survey data, source references,
+        footage status, and field notes for every cataloged target in Lake Union and connected waterways.
+      </p>
+      <a class="download-btn" href="data/wreck_archive.csv" download="wreck_master_archive.csv">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="8,2 8,11"/><polyline points="4,8 8,12 12,8"/>
+          <polyline points="2,14 14,14"/>
+        </svg>
+        Download CSV
+      </a>
+    </div>
+
+    <div>
+      <div class="section-label">Field Reference</div>
+      <table class="field-ref-table">
+        <thead>
+          <tr><th>Field</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="2" class="field-group-label">Target Identity</td></tr>
+          <tr><td>target_no</td><td>Unique catalog number (e.g. LU001). Assigned sequentially from the CSS sonar survey baseline.</td></tr>
+          <tr><td>target_name</td><td>Known vessel name, if positively identified. Nicknames indicated with '***'. Otherwise Unknown.</td></tr>
+          <tr><td>type</td><td>General vessel category (Shipwreck, Debris, Infrastructure, Vehicle, or Unknown).</td></tr>
+          <tr><td>subtype</td><td>More specific classification where known (e.g. Landing Craft, Sailboat, Dock section).</td></tr>
+          <tr><td>material</td><td>Hull construction material (Wood, Metal, Fiberglass, Unknown, etc.).</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">Location & Physical</td></tr>
+          <tr><td>longitude</td><td>GPS coordinate in decimal degrees (WGS84). Derived from sonar survey centroid.</td></tr>
+          <tr><td>latitude</td><td>GPS coordinate in decimal degrees (WGS84). Derived from sonar survey centroid.</td></tr>
+          <tr><td>depth_ft</td><td>Depth to wreck in feet, measured at the shallowest point of the hull.</td></tr>
+          <tr><td>dimensions_ft</td><td>Estimated length × beam (width) in feet. Diver measurements or side scan estimate (where both are available, diver taken as truth). ROV surveys did not contribute to dimensions.</td></tr>
+          <tr><td>target_description</td><td>Brief free-text summary description of the target.</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">CSS Survey (Coastal Sensing &amp; Survey)</td></tr>
+          <tr><td>css_surveyed</td><td>Whether this target appeared in the CSS side-scan sonar survey of Lake Union.</td></tr>
+          <tr><td>css_survey_date</td><td>Date the CSS sonar survey was conducted for this target.</td></tr>
+          <tr><td>css_dimensions</td><td>Dimensions as measured from CSS sonar data.</td></tr>
+          <tr><td>css_historically_explored</td><td>Whether CSS records indicate prior historical exploration of this target (CSS themselves only explored JE Boyden with an ROV).</td></tr>
+          <tr><td>css_description</td><td>These are the original target names from the CSS survey log.</td></tr>
+          <tr><td>css_url</td><td>Link to the CSS public survey record for this target.</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">DCS Films (Scuba Dive Records)</td></tr>
+          <tr><td>dcs_target_no</td><td>DCS Films' internal target reference number, where applicable.</td></tr>
+          <tr><td>dcs_scuba_footage</td><td>Whether DCS Films captured scuba dive footage of this target.</td></tr>
+          <tr><td>dcs_scuba_date</td><td>Date DCS Films conducted their scuba dive on this target.</td></tr>
+          <tr><td>dcs_dimensions</td><td>Dimensions recorded by DCS divers during in-water survey. The values are considered more accurate than side scan measurement.</td></tr>
+          <tr><td>dcs_notes</td><td>Notes of names and dimensions from start of DCS Films videos (more information exists at their url).</td></tr>
+          <tr><td>dcs_url</td><td>Link to DCS Films footage and/or historical documentation for this target.</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">Shipwreck City (SC) Field Data</td></tr>
+          <tr><td>sc_current_footage_status</td><td>Current exploration status: No Footage (no footage is publicly available or known), Historical Footage (from DCS or other source), Updated Footage (SC completed a ROV dive to update Historical Footage), First Footage (SC completed a ROV dive where no footage was available).</em>.</td></tr>
+          <tr><td>sc_initial_footage_status</td><td>Footage status before Shipwreck City involvement — establishes the baseline before work started.</td></tr>
+          <tr><td>sc_newly_uncovered</td><td>Yes if this target was not present in any prior survey and was first logged by the Shipwreck City effort.</td></tr>
+          <tr><td>sc_rov_dive_duration</td><td>Duration of Shipwreck City ROV dive in hours.</td></tr>
+          <tr><td>sc_rov_dive_date</td><td>Date of the Shipwreck City ROV dive.</td></tr>
+          <tr><td>sc_notes</td><td>Shipwreck City field notes, observations, and identification context.</td></tr>
+          <tr><td>sc_url</td><td>Link to Shipwreck City footage or documentation for this target.</td></tr>
+          <tr><td>sc_howto_access</td><td>Nearest access point to visit target (Specific marina or via Boat).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 </section>
 
 <div id="footer-mount"></div>

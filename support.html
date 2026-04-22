@@ -210,9 +210,9 @@
   const photoEl = document.getElementById('journey-photos');
   if (JOURNEY_PHOTOS.length) {
     photoEl.innerHTML = JOURNEY_PHOTOS.map(f => `
-      <a href="${ROOT}/img/supporters-page/${f}" target="_blank">
+      <div>
         <img src="${ROOT}/img/supporters-page/${f}" alt="From the field — ${f}" loading="lazy">
-      </a>
+      </div>
     `).join('');
   } else {
     photoEl.style.display = 'none';

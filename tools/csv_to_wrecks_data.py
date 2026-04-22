@@ -14,6 +14,7 @@ import json
 import re
 import glob
 import os
+import shutil
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -206,7 +207,7 @@ def convert(csv_path):
                 "images":      images,
                 "featured":    False,
                 "newTarget":   (row.get('sc_newly_uncovered') or '').strip().lower() == 'yes',
-                "diveDuration": (lambda v: float(v) if v else None)(clean(row.get('sc_dive_duration'))),
+                "diveDuration": (lambda v: float(v) if v else None)(clean(row.get('sc_rov_dive_duration'))),
             }
             wrecks.append(wreck)
 
@@ -340,7 +341,14 @@ def main():
         f.write(output)
 
     print(f"Written: {out_path}")
-    print(f"  {len(wrecks)} wrecks, {sum(1 for w in wrecks if w['coordinates']) } with GPS coordinates.")
+    print(f"  {len(wrecks)} wrecks, {sum(1 for w in wrecks if w['coordinates'])} with GPS coordinates.")
+
+    # Copy CSV to a fixed download path
+    data_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'data'))
+    os.makedirs(data_dir, exist_ok=True)
+    fixed_csv = os.path.join(data_dir, 'wreck_archive.csv')
+    shutil.copy2(csv_path, fixed_csv)
+    print(f"Written: {fixed_csv}")
 
 if __name__ == '__main__':
     main()
