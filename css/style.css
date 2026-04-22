@@ -374,6 +374,11 @@ img { max-width: 100%; display: block; }
 .stat {
   background: var(--bg-dark);
   padding: 22px 28px;
+  transition: opacity 0.2s, filter 0.2s;
+}
+a.stat:hover {
+  opacity: 0.75;
+  filter: brightness(1.2);
 }
 .stat-num {
   font-family: var(--font-display);
@@ -1113,7 +1118,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 .footer-logo span { color: var(--accent); }
 .footer-copy {
   font-size: 10px;
-  color: var(--text-faint);
+  color: var(--text-muted);
   letter-spacing: 1px;
 }
 .footer-links { display: flex; gap: 20px; }
@@ -1121,7 +1126,7 @@ a.section-label-link:hover { color: var(--text-primary); }
   font-size: 9px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-muted);
   text-decoration: none;
 }
 .footer-links a:hover { color: var(--accent); }

@@ -250,7 +250,9 @@
   }
 
   function renderTable(filter) {
-    const filtered = filter === 'all' ? WRECKS : WRECKS.filter(w => w.status === filter || w.type === filter);
+    const filtered = filter === 'all'             ? WRECKS
+                   : filter === 'newly-uncovered' ? WRECKS.filter(w => w.newTarget)
+                   : WRECKS.filter(w => w.status === filter || w.type === filter);
     document.getElementById('archive-count').textContent = `${filtered.length} wreck${filtered.length !== 1 ? 's' : ''} — Lake Union`;
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
       <tr>
@@ -270,12 +272,12 @@
     `).join('');
   }
 
-  // Build filter buttons from unique statuses
-  const statuses = ['all', ...new Set(WRECKS.map(w => w.status))];
+  // Build filter buttons from unique statuses + newly uncovered
+  const statuses = ['all', ...new Set(WRECKS.map(w => w.status)), 'newly-uncovered'];
   const filterBar = document.getElementById('filter-bar');
   filterBar.innerHTML = statuses.map(s => `
     <button class="filter-btn ${s === 'all' ? 'active' : ''}" data-filter="${s}">
-      ${s === 'all' ? 'All wrecks' : statusLabel(s)}
+      ${s === 'all' ? 'All wrecks' : s === 'newly-uncovered' ? 'Newly Uncovered' : statusLabel(s)}
     </button>
   `).join('');
 
@@ -287,7 +289,13 @@
     renderTable(btn.dataset.filter);
   });
 
-  renderTable('all');
+  const initialFilter = location.hash.replace('#', '') || 'all';
+  const initialBtn = filterBar.querySelector(`[data-filter="${initialFilter}"]`);
+  if (initialBtn) {
+    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    initialBtn.classList.add('active');
+  }
+  renderTable(initialFilter);
 </script>
 </body>
 </html>

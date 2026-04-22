@@ -132,9 +132,9 @@
   document.getElementById('hero-depth').textContent = `${minD} — ${maxD} ft`;
 
   document.getElementById('stats-bar').innerHTML = `
-    <div class="stat"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></div>
-    <div class="stat"><div class="stat-num" style="color:#4a9eba;">${recentCount}</div><div class="stat-label">Recently Explored</div></div>
-    <div class="stat"><div class="stat-num">${newTargetCount}</div><div class="stat-label">New Wrecks Uncovered</div></div>
+    <a class="stat" href="${ROOT}/archive.html" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
+    <a class="stat" href="${ROOT}/archive.html#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">${recentCount}</div><div class="stat-label">Recently Explored</div></a>
+    <a class="stat" href="${ROOT}/archive.html#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">${newTargetCount}</div><div class="stat-label">New Wrecks Uncovered</div></a>
     <div class="stat"><div class="stat-num">${totalHours}hr</div><div class="stat-label">Underwater</div></div>
   `;
 
@@ -247,9 +247,10 @@
   // Field photos strip
   const FIELD_PHOTOS = FIELDWORK_PHOTOS;
   const PHOTO_STEP = 481 * 4; // 4 tiles at a time
-  const fieldTrack  = document.getElementById('field-photos-track');
-  const fieldLeft   = document.getElementById('field-scroll-left');
-  const fieldRight  = document.getElementById('field-scroll-right');
+  const fieldTrack   = document.getElementById('field-photos-track');
+  const fieldLeft    = document.getElementById('field-scroll-left');
+  const fieldRight   = document.getElementById('field-scroll-right');
+  const fieldSection = fieldTrack.closest('section');
 
   fieldTrack.innerHTML = FIELD_PHOTOS.map(f => `
     <div class="field-photo-tile">
@@ -262,17 +263,20 @@
     fieldRight.disabled = fieldTrack.scrollLeft >= fieldTrack.scrollWidth - fieldTrack.clientWidth - 1;
   }
 
-  let fieldAutoTimer = setInterval(fieldAutoStep, 3500);
+  let fieldAutoTimer = null;
   function fieldAutoStep() {
     const atEnd = fieldTrack.scrollLeft >= fieldTrack.scrollWidth - fieldTrack.clientWidth - 1;
     fieldTrack.scrollBy({ left: atEnd ? -fieldTrack.scrollWidth : PHOTO_STEP, behavior: 'smooth' });
   }
-  function stopFieldAuto() { clearInterval(fieldAutoTimer); fieldAutoTimer = null; }
+  function startFieldAuto() { if (!fieldAutoTimer) fieldAutoTimer = setInterval(fieldAutoStep, 3000); }
+  function stopFieldAuto()  { clearInterval(fieldAutoTimer); fieldAutoTimer = null; }
 
-  fieldLeft.addEventListener('click',   () => { stopFieldAuto(); fieldTrack.scrollBy({ left: -PHOTO_STEP, behavior: 'smooth' }); });
-  fieldRight.addEventListener('click',  () => { stopFieldAuto(); fieldTrack.scrollBy({ left:  PHOTO_STEP, behavior: 'smooth' }); });
-  fieldTrack.addEventListener('wheel',      stopFieldAuto, { passive: true });
-  fieldTrack.addEventListener('touchstart', stopFieldAuto, { passive: true });
+  startFieldAuto();
+  fieldSection.addEventListener('mouseenter', stopFieldAuto);
+  fieldSection.addEventListener('mouseleave', startFieldAuto);
+
+  fieldLeft.addEventListener('click',  () => fieldTrack.scrollBy({ left: -PHOTO_STEP, behavior: 'smooth' }));
+  fieldRight.addEventListener('click', () => fieldTrack.scrollBy({ left:  PHOTO_STEP, behavior: 'smooth' }));
   fieldTrack.addEventListener('scroll', syncFieldArrows);
   syncFieldArrows();
 </script>
