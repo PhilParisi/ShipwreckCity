@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Shipwreck City</title>
+  <meta name="description" content="Get in touch with the Shipwreck City team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-form label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent);
+    }
+    .contact-form textarea {
+      height: 180px;
+      resize: vertical;
+    }
+    .contact-form select option { background: var(--bg-card); }
+    .contact-aside p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 32px;
+    }
+    .contact-aside-item {
+      margin-bottom: 28px;
+    }
+    .contact-aside-item .aside-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .contact-aside-item .aside-val {
+      font-size: 16px;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+    @media (max-width: 700px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Get in touch</div>
+    <h1 class="page-title">CONTACT<br>THE TEAM</h1>
+  </div>
+</div>
+
+<section class="section container">
+  <div class="contact-grid">
+
+    <div class="contact-form">
+      <form id="contact-form">
+        <label for="cf-name">Name</label>
+        <input type="text" id="cf-name" name="name" placeholder="Your name" required>
+
+        <label for="cf-email">Email</label>
+        <input type="email" id="cf-email" name="email" placeholder="your@email.com" required>
+
+        <label for="cf-subject">Subject</label>
+        <select id="cf-subject" name="subject">
+          <option value="General inquiry">General inquiry</option>
+          <option value="Dock access or marina">Dock or marina access</option>
+          <option value="Vessel or equipment support">Vessel or equipment support</option>
+          <option value="Research or historical records">Research or historical records</option>
+          <option value="Shipwreck or debris tips">Shipwreck or debris tips</option>
+          <option value="Media and press">Media and press</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" placeholder="Tell us what's on your mind…" required></textarea>
+
+        <button type="submit" class="download-btn" style="width:100%;justify-content:center;">
+          Send Message →
+        </button>
+      </form>
+      <div id="cf-success" style="display:none; margin-top:24px; padding:24px; border:1px solid var(--accent); color:var(--accent); font-size:15px; letter-spacing:1px;">
+        Message sent — thank you for reaching out and we'll be in touch soon.
+      </div>
+    </div>
+
+    <div class="contact-aside">
+      <p>
+        Shipwreck City is a small team. We read every message and are excited to hear from you.
+      </p>
+      <div class="contact-aside-item">
+        <div class="aside-label">Ways to support</div>
+        <div class="aside-val">
+          Dock access · Vessel time<br>
+          Letters of support · Research leads<br>
+          Photographs · Financial donations
+        </div>
+      </div>
+      <div class="contact-aside-item">
+        <div class="aside-label">Make a donation</div>
+        <div class="aside-val" style="margin-bottom:12px;">Every contribution moves the archive forward.</div>
+        <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">
+          Make a Donation →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/wrecks-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    const data = {
+      name:    document.getElementById('cf-name').value,
+      email:   document.getElementById('cf-email').value,
+      subject: document.getElementById('cf-subject').value,
+      message: document.getElementById('cf-message').value,
+    };
+    const res = await fetch('https://formspree.io/f/xnjlypeg', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (res.ok) {
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('cf-success').style.display = 'block';
+    } else {
+      btn.textContent = 'Send Message →';
+      btn.disabled = false;
+      alert('Something went wrong — please try again or email us directly.');
+    }
+  });
+</script>
+</body>
+</html>

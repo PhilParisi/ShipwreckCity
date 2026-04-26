@@ -49,13 +49,13 @@ const SUPPORTERS = [
     type: "organization",
     note: "Museum of History & Industry — letter of support acknowledging the archive's alignment with Seattle's broader maritime heritage mission."
   },
-  {
+  /*{
     name: "Puget Soundkeeper Alliance",
     url:  "https://pugetsoundkeeper.org",
     logo: "img/supporters-logo/psk_logo.png",
     type: "organization",
     note: "Letter of support recognizing the project's contribution to the documentation of Lake Union's environmental and historical record."
-  },
+  },*/
     {
     name: "Chesapeake Technology: SonarWiz",
     url:  "https://chesapeaketech.com/",
@@ -85,7 +85,7 @@ const SUPPORTERS = [
     note: "Captain of a 16' Whaler, who allowed us to deploy ROVs on wrecks in central Lake Union."
   },
   {
-    name: "Sean",
+    name: "Sean B.",
     url:  null,
     logo: null,
     type: "individual",

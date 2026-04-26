@@ -145,11 +145,12 @@
       <div class="cta-block">
         <p>
           If you would like to support Shipwreck City — whether through dock access,
-          a letter of support, vessel time, financial donation, or a connection in the community
+          a letter of support, vessel time, financial support, or a connection in the community
           — we would love to hear from you.
         </p>
-        <div class="cta-email">
-          <a href="mailto:">Get in touch →</a>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+          <a href="${ROOT}/contact.html" class="download-btn" id="cta-contact-btn">Contact the Team →</a>
+          <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
         </div>
       </div>
 
@@ -169,9 +170,11 @@
       <div class="support-aside-block">
         <div class="aside-label">Want to help?</div>
         <p style="font-size:17px;color:var(--text-muted);line-height:1.7;">
-          We are always looking for creative contributions and community connections.
-          Every action moves the archive forward.
+          We are are moved by the generosity of the community. Every donation moves the archive forward.
         </p>
+        <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn" style="margin-top:16px;">
+          Support the project →
+        </a>
       </div>
       <div class="support-aside-block">
         <div class="aside-label">From the field</div>
@@ -190,6 +193,7 @@
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('support');
   document.getElementById('footer-mount').innerHTML = buildFooter();
+  document.getElementById('cta-contact-btn').href   = `${ROOT}/contact.html`;
 
   function renderSupportList(id, type) {
     const items = SUPPORTERS.filter(s => s.type === type);

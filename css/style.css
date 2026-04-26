@@ -114,8 +114,8 @@ img { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: grayscale(1) brightness(0.18) sepia(0.6) hue-rotate(185deg) saturate(4);
-  opacity: 0.75;
+  filter: grayscale(1) brightness(0.38) sepia(0.6) hue-rotate(185deg) saturate(4);
+  opacity: 0.9;
   display: block;
 }
 
@@ -133,14 +133,14 @@ img { max-width: 100%; display: block; }
   position: absolute;
   left: 0; right: 0;
   height: 5px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.15;
+  background: linear-gradient(90deg, transparent, white, transparent);
+  opacity: 0.35;
   animation: scan 5s ease-in-out infinite;
 }
 @keyframes scan {
   0%   { top: 0%; opacity: 0; }
   10%  { opacity: 0.5; }
-  90%  { opacity: 0.15; }
+  90%  { opacity: 0.35; }
   100% { top: 100%; opacity: 0; }
 }
 
@@ -1090,6 +1090,31 @@ a.section-label-link:hover { color: var(--text-primary); }
 .supporters-grid a:hover img {
   opacity: 1;
   filter: none;
+}
+
+/* ============================================================
+   SHARED BUTTON
+   ============================================================ */
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.download-btn:hover {
+  background: var(--accent);
+  color: var(--bg-deep);
+  text-decoration: none;
 }
 
 /* ============================================================
