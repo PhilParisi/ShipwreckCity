@@ -192,6 +192,7 @@ def convert(csv_path):
                 "name":        name,
                 "catalog":     catalog,
                 "type":        make_type(row),
+                "subtype":     clean(row.get('subtype')),
                 "year":        None,
                 "yearNote":    None,
                 "depth":       parse_depth(row.get('depth_ft')),
@@ -209,6 +210,8 @@ def convert(csv_path):
                 "featured":    False,
                 "newTarget":   (row.get('sc_newly_uncovered') or '').strip().lower() == 'yes',
                 "diveDuration": (lambda v: float(v) if v else None)(clean(row.get('sc_rov_dive_duration'))),
+                "css_url":     clean(row.get('css_url')),
+                "dcs_url":     clean(row.get('dcs_url')),
             }
             wrecks.append(wreck)
 
@@ -236,10 +239,11 @@ def js_value(v, indent=6):
 def wreck_to_js(w):
     lines = ['  {']
     fields = [
-        'id', 'name', 'catalog', 'type', 'year', 'yearNote',
+        'id', 'name', 'catalog', 'type', 'subtype', 'year', 'yearNote',
         'depth', 'coordinates', 'location', 'status', 'tagline',
         'summary', 'history', 'discovery', 'dimensions',
         'footage', 'hasPrimetime', 'images', 'featured', 'newTarget', 'diveDuration',
+        'css_url', 'dcs_url',
     ]
     for key in fields:
         val = w.get(key)

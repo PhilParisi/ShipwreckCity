@@ -18,6 +18,7 @@
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="../js/wrecks-data.js"></script>
 <script src="../js/site.js"></script>
 <script>
@@ -101,7 +102,6 @@
           <div class="wreck-breadcrumb"><a href="${ROOT}/index.html">Explore</a> / ${wreck.catalog}</div>
           <div class="wreck-catalog-num">${wreck.catalog}</div>
           <h1 class="wreck-title">${wreck.name}</h1>
-          <p class="wreck-tagline">${wreck.tagline}</p>
         </div>
       </div>
 
@@ -109,15 +109,11 @@
       <div class="wreck-data-bar">
         <div class="wreck-data-item">
           <div class="wreck-data-label">Type</div>
-          <div class="wreck-data-val">${wreck.type}</div>
+          <div class="wreck-data-val">${wreck.type || '—'}</div>
         </div>
         <div class="wreck-data-item">
-          <div class="wreck-data-label">Year sunk</div>
-          <div class="wreck-data-val">${yearDisplay(wreck)}</div>
-        </div>
-        <div class="wreck-data-item">
-          <div class="wreck-data-label">Depth</div>
-          <div class="wreck-data-val">${depthDisplay(wreck.depth)}</div>
+          <div class="wreck-data-label">Subtype</div>
+          <div class="wreck-data-val">${wreck.subtype || '—'}</div>
         </div>
         <div class="wreck-data-item">
           <div class="wreck-data-label">Status</div>
@@ -125,11 +121,14 @@
             <span class="status-dot status-${wreck.status}"></span>${statusLabel(wreck.status)}
           </div>
         </div>
-        ${wreck.dimensions ? `
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Depth</div>
+          <div class="wreck-data-val">${depthDisplay(wreck.depth)}</div>
+        </div>
         <div class="wreck-data-item">
           <div class="wreck-data-label">Dimensions</div>
-          <div class="wreck-data-val">${wreck.dimensions}</div>
-        </div>` : ''}
+          <div class="wreck-data-val">${wreck.dimensions || '—'}</div>
+        </div>
       </div>
 
       <!-- PRIMETIME IMAGE -->
@@ -140,15 +139,12 @@
         <div class="wreck-main">
           <div class="prose-section">
             <h3>Overview</h3>
-            <p>${wreck.summary}</p>
+            <p>Pending</p>
           </div>
           <div class="prose-section">
-            <h3>History</h3>
-            <p>${wreck.history}</p>
-          </div>
-          <div class="prose-section">
-            <h3>Discovery &amp; Documentation</h3>
-            <p>${wreck.discovery}</p>
+            <h3>Links &amp; Resources</h3>
+            <p><strong>Coastal Sensing &amp; Survey:</strong> ${wreck.css_url ? `<a href="${wreck.css_url}" target="_blank" rel="noopener">${wreck.css_url}</a>` : 'NA'}</p>
+            <p><strong>DCS Films:</strong> ${wreck.dcs_url ? `<a href="${wreck.dcs_url}" target="_blank" rel="noopener">${wreck.dcs_url}</a>` : 'NA'}</p>
           </div>
 
           <!-- GALLERY -->
@@ -197,11 +193,11 @@
     const galleryWrap    = document.getElementById('gallery-wrap');
 
     const extraPhotos = (wreck.images || []).map(f => `${ROOT}/img/wrecks/${wreck.id}/${f}`);
+    let primetimeUrl = null;
 
     (function resolvePrimetime(extIdx) {
       const ext = PRIMETIME_EXTS[extIdx];
       if (!ext) {
-        // No primetime found
         primetimeWrap.innerHTML = `
           <div class="wreck-img-placeholder">
             <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
@@ -215,6 +211,7 @@
       }
       const probe = new Image();
       probe.onload  = () => {
+        primetimeUrl = probe.src;
         primetimeWrap.innerHTML = `
           <div class="wreck-primetime-wrap">
             <img src="${probe.src}" alt="${wreck.name}">
@@ -228,7 +225,10 @@
     function renderGallery(photos) {
       if (!photos.length) return;
       galleryWrap.innerHTML = `
-        <div class="section-label" style="margin-top:40px;">Gallery</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:12px;">
+          <div class="section-label" style="margin-top:0;">Gallery</div>
+          <button id="gallery-download-btn" class="download-btn" style="font-size:12px;padding:10px 20px;">Download Images ↓</button>
+        </div>
         <div class="wreck-gallery">
           ${photos.map((src, i) => `<img src="${src}" alt="${wreck.name} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
         </div>`;
@@ -236,6 +236,36 @@
       galleryWrap.querySelectorAll('img[data-idx]').forEach(img => {
         img.addEventListener('click', () => openLightbox(photos, parseInt(img.dataset.idx)));
       });
+
+      document.getElementById('gallery-download-btn').addEventListener('click', () => {
+        const allPhotos = primetimeUrl ? [primetimeUrl, ...photos] : photos;
+        downloadImagesZip(wreck.id, allPhotos);
+      });
+    }
+
+    async function downloadImagesZip(id, photos) {
+      const btn = document.getElementById('gallery-download-btn');
+      btn.textContent = 'Preparing…';
+      btn.disabled = true;
+      try {
+        const zip = new JSZip();
+        await Promise.all(photos.map(async src => {
+          const res  = await fetch(src);
+          const blob = await res.blob();
+          zip.file(src.split('/').pop(), blob);
+        }));
+        const content = await zip.generateAsync({ type: 'blob' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(content);
+        a.download = `${id}-images.zip`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      } catch (e) {
+        alert('Download failed. Images may not be available yet.');
+      } finally {
+        btn.textContent = 'Download Images ↓';
+        btn.disabled = false;
+      }
     }
 
     // ── Lightbox ──────────────────────────────────────────────────────────────
@@ -243,9 +273,9 @@
     lb.id = 'lightbox';
     lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;';
     lb.innerHTML = `
-      <button id="lb-prev" style="position:absolute;left:0;top:0;bottom:0;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8592;</button>
+      <button id="lb-prev" style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8592;</button>
       <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:95vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);">
-      <button id="lb-next" style="position:absolute;right:0;top:0;bottom:0;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8594;</button>
+      <button id="lb-next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8594;</button>
       <div id="lb-counter" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.35);"></div>
     `;
     document.body.appendChild(lb);
@@ -293,13 +323,10 @@
         zoomControl: false,
         attributionControl: false
       });
-      const darkTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        subdomains: 'abcd', maxZoom: 19
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles © Esri'
       }).addTo(miniMap);
-      darkTile.on('load', () => {
-        miniMap.getPanes().tilePane.style.filter = 'brightness(1.6) contrast(1.1)';
-      });
-      miniMap.getPanes().tilePane.style.filter = 'brightness(1.6) contrast(1.1)';
       L.marker(wreck.coordinates, { icon: makeMarker(L, wreck) })
         .addTo(miniMap)
         .bindPopup(wreck.name)

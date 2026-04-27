@@ -755,9 +755,8 @@ a.section-label-link:hover { color: var(--text-primary); }
 
 .wreck-tagline {
   font-family: var(--font-serif);
-  font-style: italic;
   font-size: 16px;
-  color: var(--text-muted);
+  color: var(--text-primary);
   line-height: 1.8;
   max-width: 520px;
 }
@@ -779,12 +778,13 @@ a.section-label-link:hover { color: var(--text-primary); }
   font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-primary);
   margin-bottom: 4px;
 }
 .wreck-data-val {
   font-size: 20px;
-  color: var(--text-primary);
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .wreck-body {
