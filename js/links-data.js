@@ -70,20 +70,20 @@ const SUPPORTERS = [
     type: "marina",
     note: "Provided dock access for ROV dives on three wrecks along Westlake."
   },
-  {
+  /*{
     name: "Libbie B.",
     url:  null,
     logo: null,
     type: "individual",
     note: "Historical curator, community connector, and project advisor who opened doors and elevated this project well-beyond its original means."
-  },
-  {
+  },*/
+  /*{
     name: "George S.",
     url:  null,
     logo: null,
     type: "individual",
     note: "Captain of a 16' Whaler, who allowed us to deploy ROVs on wrecks in central Lake Union."
-  },
+  },*/
   {
     name: "Sean B.",
     url:  null,
