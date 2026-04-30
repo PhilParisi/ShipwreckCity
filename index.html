@@ -13,6 +13,19 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    .index-section-heading {
+      font-family: var(--font-display);
+      font-size: 42px;
+      letter-spacing: 1px;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+    .index-section-heading:hover { color: var(--accent); text-decoration: none; }
+  </style>
 </head>
 <body>
 
@@ -58,7 +71,7 @@
 <!-- MAP -->
 <section class="map-section">
   <div class="container">
-    <a id="map-section-label" class="section-label section-label-link">Target Map →</a>
+    <a id="map-section-label" class="index-section-heading">Target Map →</a>
     <div class="map-legend">
       <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Recently Explored</div>
       <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Previously Explored</div>
@@ -94,7 +107,7 @@
 <!-- SUPPORTERS -->
 <section class="supporters-section">
   <div class="container">
-    <a id="supporters-section-label" class="section-label section-label-link">Supporters →</a>
+    <a id="supporters-section-label" class="index-section-heading">Supporters →</a>
     <div class="supporters-grid" id="supporters-grid"></div>
   </div>
 </section>

@@ -65,7 +65,7 @@
       color: var(--accent);
     }
 
-    .support-aside .aside-label { font-size: 12px; }
+    .support-aside .aside-label { font-size: 16px; }
     .support-aside-block { margin-bottom: 36px; }
 
     .support-aside {
@@ -95,6 +95,51 @@
     @media (max-width: 700px) {
       .support-grid { grid-template-columns: 1fr; gap: 32px; }
     }
+
+    .los-section {
+      border-top: 1px solid var(--border);
+      padding: 64px 32px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .los-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .los-card {
+      border: 1px solid var(--border-mid);
+      background: var(--bg-card);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: background 0.2s, border-color 0.2s;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .los-card:hover {
+      background: var(--bg-hover);
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+    .los-card-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: var(--accent);
+    }
+    .los-card-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+    @media (max-width: 700px) {
+      .los-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -114,6 +159,7 @@
   <div class="support-grid">
     <div class="support-body">
 
+      <h2>Who's Lending a Hand?</h2>
       <p>
         Shipwreck City has been shaped by the kindness of individuals and organizations
         across the Seattle maritime community — people who opened their docks, lent their
@@ -169,7 +215,7 @@
       </div>
       <div class="support-aside-block">
         <div class="aside-label">Want to help?</div>
-        <p style="font-size:17px;color:var(--text-muted);line-height:1.7;">
+        <p style="font-family:var(--font-serif);font-size:17px;color:var(--text-muted);line-height:1.7;">
           We are are moved by the generosity of the community. Every donation moves the archive forward.
         </p>
         <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn" style="margin-top:16px;">
@@ -183,6 +229,11 @@
     </div>
   </div>
 </section>
+
+<div class="los-section">
+  <h2 style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);margin:0 0 24px;">Letters of Support</h2>
+  <div class="los-grid" id="los-grid"></div>
+</div>
 
 <div id="footer-mount"></div>
 
@@ -221,6 +272,17 @@
   } else {
     photoEl.style.display = 'none';
   }
+
+  const losItems = SUPPORTERS.filter(s => s.LOS);
+  document.getElementById('los-grid').innerHTML = losItems.map(s => {
+    const tag   = s.url ? `a href="${s.url}" target="_blank" rel="noopener"` : 'div';
+    const close = s.url ? 'a' : 'div';
+    return `
+      <${tag} class="los-card">
+        <div class="los-card-name">${s.name}</div>
+        <div class="los-card-text">"${s.LOS}"</div>
+      </${close}>`;
+  }).join('');
 
   if (SITE_CONFIG.social.email) {
     document.querySelector('.cta-email a').href = `mailto:${SITE_CONFIG.social.email}`;

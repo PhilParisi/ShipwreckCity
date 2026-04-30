@@ -19,7 +19,8 @@ const SUPPORTERS = [
     url:  "http://www.dcsfilms.com/Site_4/DCS_Website.html",
     logo: "img/supporters-logo/dcslogo.jpg",
     type: "organization",
-    note: "Advanced technical divers (Dan, Carl, and Scott) dedicated to underwater cinematography who shared their Seattle dive logs and shipwreck footage."
+    note: "Advanced technical divers (Dan, Carl, and Scott) dedicated to underwater cinematography who shared their Seattle dive logs and shipwreck footage.",
+    LOS: "This project will continue on the work of many local individuals to educate the future by diving into the past."
   },
   {
     name: "Coastal Sensing and Survey",
@@ -47,15 +48,17 @@ const SUPPORTERS = [
     url:  "https://mohai.org",
     logo: "img/supporters-logo/MOHAI-logo.png",
     type: "organization",
-    note: "Museum of History & Industry — letter of support acknowledging the archive's alignment with Seattle's broader maritime heritage mission."
+    note: "Museum of History & Industry — letter of support acknowledging the archive's alignment with Seattle's broader maritime heritage mission.",
+    LOS: "The Museum of History & Industry (MOHAI) supports the Shipwreck City Mapping Project for its contribution to documenting and preserving the layered history of Lake Union. The information gathered may serve as a valuable resource for future exhibitions, programming, and public interpretation. As a Lake Union Park institution, MOHAI is committed to the stewardship of this historical shared waterway and values projects that engage the community while expanding the historical record."
   },
-  /*{
+  {
     name: "Puget Soundkeeper Alliance",
     url:  "https://pugetsoundkeeper.org",
     logo: "img/supporters-logo/psk_logo.png",
     type: "organization",
-    note: "Letter of support recognizing the project's contribution to the documentation of Lake Union's environmental and historical record."
-  },*/
+    note: "Letter of support recognizing the project's contribution to the documentation of Lake Union's environmental and historical record.",
+    LOS: "Puget Soundkeeper Alliance supports Shipwreck City because documenting shipwrecks and other large objects submerged in Puget Sound both preserves maritime heritage and strengthens our understanding of underwater debris and its environmental impacts. Our collaboration with Phil Parisi in the past—identifying debris in South Lake Union and documenting sunken vessels in the Ship Canal—shows how exploration and storytelling can directly support more effective stewardship of Puget Sound."
+  },
     {
     name: "Chesapeake Technology: SonarWiz",
     url:  "https://chesapeaketech.com/",

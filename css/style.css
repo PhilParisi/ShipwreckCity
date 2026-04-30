@@ -13,7 +13,7 @@
   --accent-dim:  #2a6080;
   --text-primary:#e8e0cc;
   --text-mid:    #c8c4b4;
-  --text-muted:  #7a8a94;
+  --text-muted:  #c8c4b4; /*#7a8a94;    */
   --text-faint:  #4a6070;
   --green:       #5a8a6a;
   --font-display:'Bebas Neue', sans-serif;
