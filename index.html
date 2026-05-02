@@ -77,7 +77,8 @@
       <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Previously Explored</div>
       <div class="legend-item"><div class="legend-dot" style="background:#c87941;"></div> Never Explored</div>
     </div>
-    <div class="map-wrapper" id="map-wrapper">
+    <div style="display:flex;align-items:stretch;gap:0;">
+    <div class="map-wrapper" id="map-wrapper" style="flex:1;min-width:0;">
       <div id="wreck-map"></div>
       <button class="map-fullscreen-btn" id="map-fullscreen" aria-label="Toggle fullscreen">
         <svg class="icon-expand" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -91,6 +92,12 @@
           <polyline points="15,15 11,11"/><polyline points="1,15 5,11"/>
         </svg>
       </button>
+    </div>
+    <div id="map-progress-bar" style="width:60px;background:#0a0e14;display:flex;flex-direction:column;border:1px solid var(--border-mid);border-left:none;position:relative;overflow:hidden;">
+      <div style="flex:1;"></div>
+      <div id="map-progress-fill" style="width:100%;background:#4a9eba;transition:height 0.6s ease;height:0%;flex-shrink:0;"></div>
+      <div id="map-progress-label" style="position:absolute;bottom:50%;left:50%;transform:translateX(-50%) translateY(50%) rotate(-90deg);font-family:'Space Mono',monospace;font-size:14px;letter-spacing:2px;color:#ffffff;white-space:nowrap;transform-origin:center center;"></div>
+    </div>
     </div>
   </div>
 </section>
@@ -166,6 +173,12 @@
   const newTargetCount= WRECKS.filter(w => w.newTarget).length;
   const totalHours    = WRECKS.reduce((sum, w) => sum + (w.diveDuration || 0), 0);
   document.getElementById('hero-depth').textContent = `${minD} — ${maxD} ft`;
+
+  // Archive progress bar
+  const progressPct = WRECKS.length ? Math.round((recentCount / WRECKS.length) * 100) : 0;
+  const archiveDate = (ARCHIVE_CSV_FILENAME || '').replace('target_master_archive_', '').replace('.csv', '');
+  document.getElementById('map-progress-fill').style.height     = `${progressPct}%`;
+  document.getElementById('map-progress-label').textContent     = `${progressPct}% complete, as of ${archiveDate}`;
 
   document.getElementById('stats-bar').innerHTML = `
     <a class="stat" href="${ROOT}/archive.html" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
