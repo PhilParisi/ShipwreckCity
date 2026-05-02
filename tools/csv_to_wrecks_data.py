@@ -129,6 +129,22 @@ def make_location(row):
     """No dedicated location column — build from what we have."""
     return "Lake Union, Seattle"
 
+def make_footage_url(row):
+    """Convert sc_video_url watch URL to embed URL."""
+    v = clean(row.get('sc_video_url', ''))
+    if v is None:
+        return None
+    m = re.search(r'(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})', v)
+    if m:
+        return f'https://www.youtube.com/embed/{m.group(1)}'
+    return v
+
+def make_summary(row):
+    v = clean(row.get('target_description', ''))
+    if v and v.lower() not in ('unknown', 'na', 'shipwreck'):
+        return v
+    return None
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def find_csv():
@@ -200,11 +216,11 @@ def convert(csv_path):
                 "location":    make_location(row),
                 "status":      make_status(row),
                 "tagline":     make_tagline(row, name),
-                "summary":     "NA",
+                "summary":     make_summary(row),
                 "history":     "NA",
                 "discovery":   "NA",
                 "dimensions":  parse_dimensions(row.get('dimensions_ft')),
-                "footage":     None,
+                "footage":     make_footage_url(row),
                 "hasPrimetime": has_primetime,
                 "images":      images,
                 "featured":    False,
