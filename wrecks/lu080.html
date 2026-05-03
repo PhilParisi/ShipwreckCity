@@ -271,16 +271,30 @@
     // ── Lightbox ──────────────────────────────────────────────────────────────
     const lb = document.createElement('div');
     lb.id = 'lightbox';
-    lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;';
+    lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;overflow:hidden;';
     lb.innerHTML = `
-      <button id="lb-prev" style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8592;</button>
-      <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:95vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);">
-      <button id="lb-next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8594;</button>
-      <div id="lb-counter" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.35);"></div>
+      <button id="lb-prev" style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8592;</button>
+      <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:95vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);cursor:zoom-in;transform-origin:center center;transition:transform 0.15s ease;user-select:none;">
+      <button id="lb-next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8594;</button>
+      <div id="lb-counter" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.35);z-index:2;"></div>
+      <div id="lb-hint" style="position:absolute;top:16px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:2;">scroll or click to zoom · drag to pan</div>
     `;
     document.body.appendChild(lb);
 
     let lbPhotos = [], lbIdx = 0;
+    let lbScale = 1, lbTx = 0, lbTy = 0;
+    let lbDragging = false, lbDragX = 0, lbDragY = 0;
+
+    function lbApplyTransform() {
+      const img = document.getElementById('lb-img');
+      img.style.transform = `scale(${lbScale}) translate(${lbTx / lbScale}px, ${lbTy / lbScale}px)`;
+      img.style.cursor = lbScale > 1 ? (lbDragging ? 'grabbing' : 'grab') : 'zoom-in';
+    }
+
+    function lbResetZoom() {
+      lbScale = 1; lbTx = 0; lbTy = 0;
+      lbApplyTransform();
+    }
 
     function lbShow(i) {
       lbIdx = (i + lbPhotos.length) % lbPhotos.length;
@@ -288,6 +302,7 @@
       document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${lbPhotos.length}`;
       document.getElementById('lb-prev').style.opacity = lbPhotos.length > 1 ? '1' : '0';
       document.getElementById('lb-next').style.opacity = lbPhotos.length > 1 ? '1' : '0';
+      lbResetZoom();
     }
 
     function openLightbox(photos, idx) {
@@ -300,16 +315,54 @@
     function closeLightbox() {
       lb.style.display = 'none';
       document.body.style.overflow = '';
+      lbResetZoom();
     }
+
+    // Scroll to zoom
+    lb.addEventListener('wheel', e => {
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? 1.15 : 0.87;
+      lbScale = Math.max(1, Math.min(6, lbScale * factor));
+      if (lbScale === 1) { lbTx = 0; lbTy = 0; }
+      lbApplyTransform();
+    }, { passive: false });
+
+    // Click image to toggle zoom
+    document.getElementById('lb-img').addEventListener('click', e => {
+      e.stopPropagation();
+      if (lbScale > 1) { lbResetZoom(); }
+      else             { lbScale = 2.5; lbApplyTransform(); }
+    });
+
+    // Drag to pan
+    document.getElementById('lb-img').addEventListener('mousedown', e => {
+      if (lbScale <= 1) return;
+      e.preventDefault();
+      lbDragging = true;
+      lbDragX = e.clientX - lbTx;
+      lbDragY = e.clientY - lbTy;
+      lbApplyTransform();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!lbDragging) return;
+      lbTx = e.clientX - lbDragX;
+      lbTy = e.clientY - lbDragY;
+      lbApplyTransform();
+    });
+    document.addEventListener('mouseup', () => {
+      if (!lbDragging) return;
+      lbDragging = false;
+      lbApplyTransform();
+    });
 
     document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx - 1); });
     document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx + 1); });
-    lb.addEventListener('click', e => { if (e.target === lb || e.target === document.getElementById('lb-img')) closeLightbox(); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
     document.addEventListener('keydown', e => {
       if (lb.style.display === 'none') return;
-      if (e.key === 'ArrowLeft')  lbShow(lbIdx - 1);
-      if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
-      if (e.key === 'Escape')     closeLightbox();
+      if (e.key === 'ArrowLeft')  { lbShow(lbIdx - 1); }
+      if (e.key === 'ArrowRight') { lbShow(lbIdx + 1); }
+      if (e.key === 'Escape')     { closeLightbox(); }
     });
 
     // ── Mini map ──────────────────────────────────────────────────────────────

@@ -67,7 +67,7 @@ const SUPPORTERS = [
     note: "Sonar Data Processing - provided a free software license to process side scan sonar data to industry standards."
   },
   {
-    name: "Boat World Marinas",
+    name: "Boatworld Marinas",
     url:  "https://www.boatworldmarina.com/",
     logo: null,
     type: "marina",
