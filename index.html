@@ -138,6 +138,13 @@
           <div class="media-card-title">Shipwreck City — Lake Union Dive Footage</div>
         </div>
       </a>
+      <a class="media-card" href="https://www.foxnews.com/travel/underwater-robotics-expert-reveals-shipwreck-city-hiding-beneath-major-urban-lake" target="_blank" rel="noopener">
+        <img class="media-card-thumb" src="https://static.foxnews.com/foxnews.com/content/uploads/2026/05/WA-SEATTLE-ROBOT-CITY-LAKE-UNION-SHIPWRECKS-DISCOVERY-ARCHAEOLOGY-HISTORY-1.jpeg" alt="Fox News coverage" loading="lazy">
+        <div class="media-card-body">
+          <div class="media-card-source">Fox News</div>
+          <div class="media-card-title">Underwater robotics expert reveals 'shipwreck city' hiding beneath major urban lake</div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -209,25 +216,27 @@
   // Wreck grid — only wrecks that have photos
   const grid = document.getElementById('wrecks-grid');
   grid.innerHTML = WRECKS.filter(w => w.hasPrimetime || w.images.length > 0).map(w => `
-    <a class="wreck-card" href="${ROOT}/wrecks/${w.id}.html">
-      <div class="wreck-card-num">${w.catalog}</div>
-      <div class="wreck-card-name">${w.name}</div>
-      <div class="wreck-card-meta">
-        <span class="status-dot status-${w.status}"></span>${statusLabel(w.status)} · ${yearDisplay(w)} · ${depthDisplay(w.depth)}<br>
-        ${w.location}
-      </div>
-      <div class="wreck-card-tagline">${w.tagline}</div>
-      <div class="wreck-type-badge">${w.type}</div>
-    </a>
-    <a class="wreck-photo-tile" href="${ROOT}/wrecks/${w.id}.html">
-      <img src="${ROOT}/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
-           onload="this.nextElementSibling.style.display='none'"
-           onerror="tryPrimetimeExt(this,'${w.id}')">
-      <div class="wreck-photo-fallback">
-        <span>${w.catalog}</span>
-        <span>No image</span>
-      </div>
-    </a>
+    <div class="wreck-pair">
+      <a class="wreck-photo-tile" href="${ROOT}/wrecks/${w.id}.html">
+        <img src="${ROOT}/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
+             onload="this.nextElementSibling.style.display='none'"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+        <div class="wreck-photo-fallback">
+          <span>${w.catalog}</span>
+          <span>No image</span>
+        </div>
+      </a>
+      <a class="wreck-card" href="${ROOT}/wrecks/${w.id}.html">
+        <div class="wreck-card-num">${w.catalog}</div>
+        <div class="wreck-card-name">${w.name}</div>
+        <div class="wreck-card-meta">
+          <span class="status-dot status-${w.status}"></span>${statusLabel(w.status)} · ${yearDisplay(w)} · ${depthDisplay(w.depth)}<br>
+          ${w.location}
+        </div>
+        <div class="wreck-card-tagline">${w.tagline}</div>
+        <div class="wreck-type-badge">${w.type}</div>
+      </a>
+    </div>
   `).join('');
 
   // Map
@@ -276,17 +285,15 @@
   const btnLeft    = document.getElementById('scroll-left');
   const btnRight   = document.getElementById('scroll-right');
   const wreckScrollSection = track.closest('section');
-  const CARD_STEP  = 385; // card width + 1px gap
-
   function syncArrows() {
     btnLeft.disabled  = track.scrollLeft <= 0;
     btnRight.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
   }
-  const GROUP_STEP = CARD_STEP * 4; // 2 wreck cards + 2 photo tiles
+  const GROUP_STEP = () => track.clientWidth; // scroll exactly 2 pairs (full visible width)
   let autoTimer = null;
   function autoStep() {
     const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
-    track.scrollBy({ left: atEnd ? -track.scrollWidth : GROUP_STEP, behavior: 'smooth' });
+    track.scrollBy({ left: atEnd ? -track.scrollWidth : GROUP_STEP(), behavior: 'smooth' });
   }
   function startAuto() { if (!autoTimer) autoTimer = setInterval(autoStep, 6000); }
   function stopAuto()  { clearInterval(autoTimer); autoTimer = null; }
@@ -295,8 +302,8 @@
   wreckScrollSection.addEventListener('mouseenter', stopAuto);
   wreckScrollSection.addEventListener('mouseleave', startAuto);
 
-  btnLeft.addEventListener('click',  () => track.scrollBy({ left: -GROUP_STEP, behavior: 'smooth' }));
-  btnRight.addEventListener('click', () => track.scrollBy({ left:  GROUP_STEP, behavior: 'smooth' }));
+  btnLeft.addEventListener('click',  () => track.scrollBy({ left: -GROUP_STEP(), behavior: 'smooth' }));
+  btnRight.addEventListener('click', () => track.scrollBy({ left:  GROUP_STEP(), behavior: 'smooth' }));
   track.addEventListener('scroll', syncArrows);
   syncArrows();
 

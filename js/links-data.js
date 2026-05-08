@@ -113,6 +113,28 @@ const SUPPORTERS = [
     url:  null,
     logo: null,
     type: "individual",
-    note: "ROV copilot and ocean engineer who assisted with ROV deployments."
+    note: "ROV copilot and ocean engineer who assisted with ROV deployments and shootings stills."
+  },
+  {
+    name: "Nani W.",
+    url:  null,
+    logo: null,
+    type: "individual",
+    note: "Ocean advocate and earth scientist who assisted with ROV deployments and videography."
+  },
+  {
+    name: "Priya S.",
+    url:  null,
+    logo: null,
+    type: "individual",
+    note: "Software engineering consultant who assisted with ROV deployments and videography."
+  },
+  {
+    name: "Dalton D. and Nick G.",
+    url:  null,
+    logo: null,
+    type: "individual",
+    note: "News reporter and videographer who gave this project a voice far greater than our own."
   }
+
 ];
