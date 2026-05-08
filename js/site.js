@@ -23,9 +23,12 @@ function buildNav(activePage) {
 function buildFooter() {
   const year = new Date().getFullYear();
   return `
+  <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;transition:filter 0.2s;" onmouseover="this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+    <span style="font-family:var(--font-serif);font-size:16px;color:#7fc4d8;line-height:1.5;text-align:center;">— Support The Shipwreck City Project —</span>
+  </a>
   <footer class="site-footer">
     <div class="footer-logo">SHIPWRECK<span>CITY</span></div>
-    <div class="footer-copy">© ${year} Shipwreck City · Lake Union, Seattle</div>
+    <div class="footer-copy">© ${year} Shipwreck City · Seattle, WA, USA</div>
     <div class="footer-links">
       <a href="${ROOT}/index.html">Explore</a>
       <a href="${ROOT}/map.html">Map</a>

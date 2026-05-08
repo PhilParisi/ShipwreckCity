@@ -65,7 +65,8 @@
 </section>
 
 <!-- ARCHIVE STATUS BANNER -->
-<a id="archive-status-banner" href="archive.html" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='1.0';this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+<a id="archive-status-banner" href="archive.html" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;opacity:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='1.0';this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+  <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#4a9bbe;white-space:nowrap;">ℹ Update</span>
   <span style="font-family:var(--font-serif);font-size:22px;color:#7fc4d8;line-height:1.5;text-align:center;" id="index-archive-status">—</span>
 </a>
 
@@ -86,9 +87,9 @@
   <div class="container">
     <a id="map-section-label" class="index-section-heading">Target Map →</a>
     <div class="map-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Recently Explored</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Previously Explored</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c87941;"></div> Never Explored</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Shipwreck City Explored</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Historically Explored</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c87941;"></div> Not Yet Explored</div>
     </div>
     <div style="display:flex;align-items:stretch;gap:0;">
     <div class="map-wrapper" id="map-wrapper" style="flex:1;min-width:0;">
@@ -154,6 +155,17 @@
   <div class="container">
     <a id="supporters-section-label" class="index-section-heading">Supporters →</a>
     <div class="supporters-grid" id="supporters-grid"></div>
+    <div class="cta-block">
+      <p>
+        If you would like to support Shipwreck City — whether through dock access,
+        a letter of support, vessel time, financial support, or a connection in the community
+        — we would love to hear from you.
+      </p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+        <a id="cta-contact-btn" href="contact.html" class="download-btn">Contact the Team →</a>
+        <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -187,7 +199,7 @@
   const recentCount   = WRECKS.filter(w => w.status === 'recently-explored').length;
   const newTargetCount= WRECKS.filter(w => w.newTarget).length;
   const totalHours    = WRECKS.reduce((sum, w) => sum + (w.diveDuration || 0), 0);
-  document.getElementById('hero-depth').textContent = `${minD} — ${maxD} ft`;
+  document.getElementById('hero-depth').textContent = `${minD} — 50 ft`;
 
   // Archive progress bar
   const progressPct = WRECKS.length ? Math.round((recentCount / WRECKS.length) * 100) : 0;
