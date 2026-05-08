@@ -32,6 +32,7 @@
       font-size: 16px; color: var(--text-muted); vertical-align: middle;
     }
     .archive-table tr:hover td { background: var(--bg-hover); }
+    .archive-table tr:hover .td-name { color: #7fc4d8; }
     .archive-table .td-name {
       font-family: var(--font-display); font-size: 24px;
       color: var(--text-primary); letter-spacing: 1px;
@@ -122,13 +123,17 @@
   <div class="page-hero-content">
     <div class="hero-eyebrow">Complete record</div>
     <h1 class="page-title">WRECK<br>ARCHIVE</h1>
-    <p class="page-sub">All documented wrecks, sorted by catalog number. Filter by status or vessel type.</p>
+    <p class="page-sub">All documented targets, click on each to learn more and view photos.</p>
   </div>
 </div>
 
 <div style="background:#3a2a0a;border-top:1px solid #7a5a1a;border-bottom:1px solid #7a5a1a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
   <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c8952a;white-space:nowrap;">⚠ Caution</span>
-  <span style="font-family:var(--font-serif);font-size:15px;color:#d4a84b;line-height:1.5;">The Archive Dataset has not been fully verified and is a working document with inaccuracies. At the conclusion of the project, it will be reviewed for accuracy and officially released.</span>
+  <span style="font-family:var(--font-serif);font-size:15px;color:#d4a84b;line-height:1.5;">The Shipwreck City Archive Dataset has not been fully verified and is a working document with inaccuracies. At the conclusion of the project, it will be reviewed for accuracy and officially released.</span>
+</div>
+<div style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
+  <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#4a9bbe;white-space:nowrap;">ℹ Update</span>
+  <span style="font-family:var(--font-serif);font-size:15px;color:#7fc4d8;line-height:1.5;" id="archive-last-updated">The Shipwreck City Archive Dataset was last updated on: —</span>
 </div>
 
 <section class="section container" style="max-width:1750px;">
@@ -242,6 +247,13 @@
   if (typeof ARCHIVE_CSV_FILENAME !== 'undefined' && ARCHIVE_CSV_FILENAME) {
     csvBtn.href     = `${ROOT}/data/${ARCHIVE_CSV_FILENAME}`;
     csvBtn.download = ARCHIVE_CSV_FILENAME;
+    const m = ARCHIVE_CSV_FILENAME.match(/(\d+)([A-Za-z]+)(\d{4})/);
+    if (m) {
+      const explored = WRECKS.filter(w => w.status === 'recently-explored').length;
+      const pct = WRECKS.length ? Math.round(explored / WRECKS.length * 100) : 0;
+      document.getElementById('archive-last-updated').textContent =
+        `The Archive Dataset was last updated on: ${m[1]} ${m[2]} ${m[3]}. The Project is ${pct}% complete.`;
+    }
   }
 
   let activeFilter = 'all';
@@ -260,13 +272,13 @@
                    : WRECKS.filter(w => w.status === filter || w.type === filter);
     document.getElementById('archive-count').textContent = `${filtered.length} wreck${filtered.length !== 1 ? 's' : ''} — Lake Union`;
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
-      <tr>
+      <tr style="cursor:pointer;" onclick="location.href='${ROOT}/wrecks/${w.id}.html'">
         <td class="td-img">
           <img src="${ROOT}/img/wrecks/${w.id}/primetime.jpg" alt="${w.name}"
                onerror="tryPrimetimeExt(this,'${w.id}')">
         </td>
-        <td><a href="${ROOT}/wrecks/${w.id}.html">${w.catalog}</a></td>
-        <td><a href="${ROOT}/wrecks/${w.id}.html"><span class="td-name">${w.name}</span></a></td>
+        <td>${w.catalog}</td>
+        <td><span class="td-name">${w.name}</span></td>
         <td class="td-type">${w.type}</td>
         <td>${depthDisplay(w.depth)}</td>
         <td class="td-tagline">${w.tagline}</td>
