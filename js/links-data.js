@@ -17,7 +17,7 @@ const SUPPORTERS = [
   {
     name: "DCS Films",
     url:  "http://www.dcsfilms.com/Site_4/DCS_Website.html",
-    logo: "img/supporters-logo/dcslogo.jpg",
+    logo: "img/supporters-logo/dcslogo.webp",
     type: "organization",
     note: "Advanced technical divers (Dan, Carl, and Scott) dedicated to underwater cinematography who shared their Seattle dive logs and shipwreck footage.",
     LOS: "This project will continue on the work of many local individuals to educate the future by diving into the past."
@@ -25,28 +25,28 @@ const SUPPORTERS = [
   {
     name: "Coastal Sensing and Survey",
     url:  "https://www.coastalsensing.com/",
-    logo: "img/supporters-logo/css.png",
+    logo: "img/supporters-logo/css.webp",
     type: "organization",
     note: "Seattle-based survey company who established and made public the first comprehensive side scan sonar map of 98 targets in Lake Union."
   },  
   {
     name: "Blue Robotics",
     url:  "https://bluerobotics.com/",
-    logo: "img/supporters-logo/br-logo.png",
+    logo: "img/supporters-logo/br-logo.webp",
     type: "organization",
     note: "Creators of BlueROV2 and BlueBoat — enabling marine robotic exploration through essential equipment donations and financial support."
   },
   {
     name: "Cerulean Sonar",
     url:  "https://ceruleansonar.com/",
-    logo: "img/supporters-logo/cs-logo.png",
+    logo: "img/supporters-logo/cs-logo.webp",
     type: "organization",
     note: "Sonar Solution Experts — donated side scan and multibeam equipment to 'see' through murky waters, in addition to financial support."
   },
   {
     name: "MOHAI",
     url:  "https://mohai.org",
-    logo: "img/supporters-logo/MOHAI-logo.png",
+    logo: "img/supporters-logo/MOHAI-logo.webp",
     type: "organization",
     note: "Museum of History & Industry — letter of support acknowledging the archive's alignment with Seattle's broader maritime heritage mission.",
     LOS: "The Museum of History & Industry (MOHAI) supports the Shipwreck City Mapping Project for its contribution to documenting and preserving the layered history of Lake Union. The information gathered may serve as a valuable resource for future exhibitions, programming, and public interpretation. As a Lake Union Park institution, MOHAI is committed to the stewardship of this historical shared waterway and values projects that engage the community while expanding the historical record."
@@ -54,7 +54,7 @@ const SUPPORTERS = [
   {
     name: "Puget Soundkeeper Alliance",
     url:  "https://pugetsoundkeeper.org",
-    logo: "img/supporters-logo/psk_logo.png",
+    logo: "img/supporters-logo/psk_logo.webp",
     type: "organization",
     note: "Letter of support recognizing the project's contribution to the documentation of Lake Union's environmental and historical record.",
     LOS: "Puget Soundkeeper Alliance supports Shipwreck City because documenting shipwrecks and other large objects submerged in Puget Sound both preserves maritime heritage and strengthens our understanding of underwater debris and its environmental impacts. Our collaboration with Phil Parisi in the past—identifying debris in South Lake Union and documenting sunken vessels in the Ship Canal—shows how exploration and storytelling can directly support more effective stewardship of Puget Sound."
@@ -62,7 +62,7 @@ const SUPPORTERS = [
     {
     name: "Chesapeake Technology: SonarWiz",
     url:  "https://chesapeaketech.com/",
-    logo: "img/supporters-logo/sonarwiz.png",
+    logo: "img/supporters-logo/sonarwiz.webp",
     type: "organization",
     note: "Sonar Data Processing - provided a free software license to process side scan sonar data to industry standards."
   },

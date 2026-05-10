@@ -157,17 +157,27 @@ def find_csv():
 
 IMG_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp', '.gif'}
 
+def prefer_webp(filenames):
+    """Return one filename per basename, preferring .webp when both exist."""
+    by_base = {}
+    for fname in filenames:
+        base, ext = os.path.splitext(fname)
+        if ext.lower() not in IMG_EXTENSIONS:
+            continue
+        if base not in by_base or ext.lower() == '.webp':
+            by_base[base] = fname
+    return sorted(by_base.values())
+
 def scan_images(slug, script_dir):
     """Scan img/wrecks/{slug}/ and return (hasPrimetime, gallery_files)."""
     img_dir = os.path.normpath(os.path.join(script_dir, '..', 'img', 'wrecks', slug))
     if not os.path.isdir(img_dir):
         return False, []
+    deduped = prefer_webp(os.listdir(img_dir))
     has_primetime = False
     gallery = []
-    for fname in sorted(os.listdir(img_dir)):
-        name, ext = os.path.splitext(fname)
-        if ext.lower() not in IMG_EXTENSIONS:
-            continue
+    for fname in deduped:
+        name = os.path.splitext(fname)[0]
         if name.lower() == 'primetime':
             has_primetime = True
         else:
@@ -283,14 +293,11 @@ def site_config_to_js(cfg):
     return '\n'.join(lines)
 
 def scan_photo_dir(folder_name, script_dir):
-    """Return sorted list of image filenames in img/{folder_name}/."""
+    """Return sorted list of image filenames in img/{folder_name}/, preferring .webp."""
     img_dir = os.path.normpath(os.path.join(script_dir, '..', 'img', folder_name))
     if not os.path.isdir(img_dir):
         return []
-    return sorted(
-        f for f in os.listdir(img_dir)
-        if os.path.splitext(f)[1].lower() in IMG_EXTENSIONS
-    )
+    return prefer_webp(os.listdir(img_dir))
 
 def write_photos_js(script_dir, csv_path):
     fieldwork    = scan_photo_dir('main-fieldwork', script_dir)

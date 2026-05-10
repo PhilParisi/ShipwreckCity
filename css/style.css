@@ -1079,7 +1079,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 
 .media-section {
   border-top: 1px solid var(--border);
-  padding: 48px 32px;
+  padding: 48px 10%;
 }
 .media-grid {
   display: grid;
@@ -1132,7 +1132,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 
 .supporters-section {
   border-top: 1px solid var(--border);
-  padding: 48px 32px;
+  padding: 48px 10%;
 }
 .supporters-grid {
   display: flex;
@@ -1179,10 +1179,11 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 
 .cta-block {
-  margin-top: 56px;
+  margin: 56px auto 0;
   padding: 36px;
   border: 1px solid var(--border-mid);
   background: var(--bg-card);
+  max-width: 760px;
 }
 .cta-block p {
   font-family: var(--font-serif);

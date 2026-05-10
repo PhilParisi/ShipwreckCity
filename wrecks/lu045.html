@@ -196,12 +196,15 @@
     `;
 
     // ── Primetime image ───────────────────────────────────────────────────────
-    const PRIMETIME_EXTS = ['jpg','jpeg','png','webp'];
+    const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
     const primetimeWrap  = document.getElementById('primetime-wrap');
     const galleryWrap    = document.getElementById('gallery-wrap');
 
-    const extraPhotos = (wreck.images || []).map(f => `${ROOT}/img/wrecks/${wreck.id}/${f}`);
-    let primetimeUrl = null;
+    // Display array uses .webp; download array keeps originals from wrecks-data.js
+    const displayPhotos  = (wreck.images || []).map(f => `${ROOT}/img/wrecks/${wreck.id}/${f.replace(/\.(png|jpe?g)$/i, '.webp')}`);
+    const downloadPhotos = (wreck.images || []).map(f => `${ROOT}/img/wrecks/${wreck.id}/${f}`);
+    let primetimeUrl   = null;  // webp — used for display / lightbox
+    let primetimeDlUrl = null;  // original — used for download zip
 
     (function resolvePrimetime(extIdx) {
       const ext = PRIMETIME_EXTS[extIdx];
@@ -214,7 +217,7 @@
               <polyline points="10,64 28,44 42,56 54,42 70,64" stroke="#e8e0cc" stroke-width="1.2" fill="none"/>
             </svg>
           </div>`;
-        renderGallery(extraPhotos);
+        renderGallery(displayPhotos, downloadPhotos);
         return;
       }
       const probe = new Image();
@@ -224,13 +227,25 @@
           <div class="wreck-primetime-wrap">
             <img src="${probe.src}" alt="${wreck.name}">
           </div>`;
-        renderGallery(extraPhotos);
+        // Resolve original (non-webp) for the download zip
+        if (probe.src.endsWith('.webp')) {
+          (function tryDlExt(dlExts, i) {
+            if (i >= dlExts.length) { primetimeDlUrl = primetimeUrl; renderGallery(displayPhotos, downloadPhotos); return; }
+            const dp = new Image();
+            dp.onload  = () => { primetimeDlUrl = dp.src; renderGallery(displayPhotos, downloadPhotos); };
+            dp.onerror = () => tryDlExt(dlExts, i + 1);
+            dp.src = `${ROOT}/img/wrecks/${wreck.id}/primetime.${dlExts[i]}`;
+          })(['png','jpg','jpeg'], 0);
+        } else {
+          primetimeDlUrl = primetimeUrl;
+          renderGallery(displayPhotos, downloadPhotos);
+        }
       };
       probe.onerror = () => resolvePrimetime(extIdx + 1);
       probe.src = `${ROOT}/img/wrecks/${wreck.id}/primetime.${ext}`;
     })(0);
 
-    function renderGallery(photos) {
+    function renderGallery(photos, dlPhotos) {
       if (!photos.length) return;
       galleryWrap.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:12px;">
@@ -246,8 +261,8 @@
       });
 
       document.getElementById('gallery-download-btn').addEventListener('click', () => {
-        const allPhotos = primetimeUrl ? [primetimeUrl, ...photos] : photos;
-        downloadImagesZip(wreck.id, allPhotos);
+        const allDlPhotos = primetimeDlUrl ? [primetimeDlUrl, ...dlPhotos] : dlPhotos;
+        downloadImagesZip(wreck.id, allDlPhotos);
       });
     }
 
