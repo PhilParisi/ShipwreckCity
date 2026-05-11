@@ -150,10 +150,10 @@ def make_summary(row):
 def find_csv():
     archive_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'data', 'archive'))
     pattern     = os.path.join(archive_dir, 'target_master_archive_*.csv')
-    files       = sorted(glob.glob(pattern))
+    files       = glob.glob(pattern)
     if not files:
         raise FileNotFoundError("No target_master_archive_*.csv found in data/archive/.")
-    return files[-1]   # most recent by filename sort
+    return max(files, key=os.path.getmtime)  # most recent by modification time
 
 IMG_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp', '.gif'}
 

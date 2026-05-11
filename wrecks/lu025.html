@@ -230,15 +230,15 @@
         // Resolve original (non-webp) for the download zip
         if (probe.src.endsWith('.webp')) {
           (function tryDlExt(dlExts, i) {
-            if (i >= dlExts.length) { primetimeDlUrl = primetimeUrl; renderGallery(displayPhotos, downloadPhotos); return; }
+            if (i >= dlExts.length) { primetimeDlUrl = primetimeUrl; renderGallery([primetimeUrl, ...displayPhotos], [primetimeDlUrl, ...downloadPhotos]); return; }
             const dp = new Image();
-            dp.onload  = () => { primetimeDlUrl = dp.src; renderGallery(displayPhotos, downloadPhotos); };
+            dp.onload  = () => { primetimeDlUrl = dp.src; renderGallery([primetimeUrl, ...displayPhotos], [primetimeDlUrl, ...downloadPhotos]); };
             dp.onerror = () => tryDlExt(dlExts, i + 1);
             dp.src = `${ROOT}/img/wrecks/${wreck.id}/primetime.${dlExts[i]}`;
           })(['png','jpg','jpeg'], 0);
         } else {
           primetimeDlUrl = primetimeUrl;
-          renderGallery(displayPhotos, downloadPhotos);
+          renderGallery([primetimeUrl, ...displayPhotos], [primetimeDlUrl, ...downloadPhotos]);
         }
       };
       probe.onerror = () => resolvePrimetime(extIdx + 1);
@@ -261,8 +261,7 @@
       });
 
       document.getElementById('gallery-download-btn').addEventListener('click', () => {
-        const allDlPhotos = primetimeDlUrl ? [primetimeDlUrl, ...dlPhotos] : dlPhotos;
-        downloadImagesZip(wreck.id, allDlPhotos);
+        downloadImagesZip(wreck.id, dlPhotos);
       });
     }
 
