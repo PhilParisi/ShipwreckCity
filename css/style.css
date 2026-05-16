@@ -48,6 +48,9 @@ img { max-width: 100%; display: block; }
    NAV
    ============================================================ */
 
+/* Pre-allocate nav height to prevent layout shift before JS injects the nav */
+#nav-mount { min-height: 73px; }
+
 /* Site nav titles in top right */
    .site-nav {
   position: sticky;
@@ -1280,6 +1283,7 @@ a.section-label-link:hover { color: var(--text-primary); }
   .wrecks-grid { grid-template-columns: 1fr; }
   .wrecks-scroll-track .wreck-card { flex: 0 0 312px; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
+  #nav-mount { min-height: 65px; }
   .site-nav { padding: 14px 20px; }
   .nav-links { gap: 16px; }
   .section { padding: 32px 20px; }
