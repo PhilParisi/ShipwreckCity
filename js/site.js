@@ -9,7 +9,7 @@ const ROOT = location.hostname.includes('github.io') ? '/ShipwreckCity' : '';
 function buildNav(activePage) {
   return `
   <nav class="site-nav">
-    <a href="${ROOT}/index.html" class="nav-logo">SHIPWRECK<span>CITY</span></a>
+    <a href="${ROOT}/index.html" class="nav-logo">SHIPWRECK <span>CITY</span></a>
     <div class="nav-links">
       <a href="${ROOT}/index.html"  class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
       <a href="${ROOT}/map.html"    class="${activePage === 'map'    ? 'active' : ''}">Map</a>
@@ -27,7 +27,7 @@ function buildFooter() {
     <span style="font-family:var(--font-serif);font-size:16px;color:#7fc4d8;line-height:1.5;text-align:center;">— Support The Shipwreck City Project —</span>
   </a>
   <footer class="site-footer">
-    <div class="footer-logo">SHIPWRECK<span>CITY</span></div>
+    <div class="footer-logo">SHIPWRECK <span>CITY</span></div>
     <div class="footer-copy">© ${year} Shipwreck City · Seattle, WA, USA</div>
     <div class="footer-links">
       <a href="${ROOT}/index.html">Explore</a>
