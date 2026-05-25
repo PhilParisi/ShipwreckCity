@@ -512,7 +512,7 @@ a.section-label-link:hover { color: var(--text-primary); }
   z-index: 10;
   background: var(--bg-card);
   border: 1px solid var(--border-mid);
-  color: var(--accent);
+  color: var(--text-primary);
   width: 44px;
   height: 44px;
   cursor: pointer;
