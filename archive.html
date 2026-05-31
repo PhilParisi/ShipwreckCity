@@ -129,11 +129,11 @@
   </div>
 </div>
 
-<div style="background:#3a2a0a;border-top:1px solid #7a5a1a;border-bottom:1px solid #7a5a1a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
+<div id="archive-caution-banner" style="background:#3a2a0a;border-top:1px solid #7a5a1a;border-bottom:1px solid #7a5a1a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
   <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c8952a;white-space:nowrap;">⚠ Caution</span>
-  <span style="font-family:var(--font-serif);font-size:15px;color:#d4a84b;line-height:1.5;">The Shipwreck City Archive Dataset has not been fully verified and is a working document with inaccuracies. At the conclusion of the project, it will be reviewed for accuracy and officially released.</span>
+  <span id="archive-caution-text" style="font-family:var(--font-serif);font-size:15px;color:#d4a84b;line-height:1.5;">The Shipwreck City Archive Dataset has not been fully verified and is a working document with inaccuracies. At the conclusion of the project, it will be reviewed for accuracy and officially released.</span>
 </div>
-<div style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
+<div id="archive-update-banner" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
   <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#4a9bbe;white-space:nowrap;">ℹ Update</span>
   <span style="font-family:var(--font-serif);font-size:15px;color:#7fc4d8;line-height:1.5;" id="archive-last-updated">The Shipwreck City Archive Dataset was last updated on: —</span>
 </div>
@@ -145,7 +145,7 @@
     <thead>
       <tr>
         <th style="width:64px;"></th>
-        <th style="width:160px;">Catalog</th>
+        <th style="width:160px;">ID#</th>
         <th style="width:312px;">Name</th>
         <th style="width:260px;">Type</th>
         <th style="width:125px;">Depth</th>
@@ -272,7 +272,7 @@
     const filtered = filter === 'all'             ? WRECKS
                    : filter === 'newly-uncovered' ? WRECKS.filter(w => w.newTarget)
                    : WRECKS.filter(w => w.status === filter || w.type === filter);
-    document.getElementById('archive-count').textContent = `${filtered.length} wreck${filtered.length !== 1 ? 's' : ''} — Lake Union`;
+    document.getElementById('archive-count').textContent = `${filtered.length} Target${filtered.length !== 1 ? 's' : ''} — Lake Union`;
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
       <tr style="cursor:pointer;" onclick="location.href='${ROOT}/wrecks/${w.id}.html'">
         <td class="td-img">
@@ -315,6 +315,10 @@
     initialBtn.classList.add('active');
   }
   renderTable(initialFilter);
+  if (window.innerWidth <= 600) {
+    const ct = document.getElementById('archive-caution-text');
+    if (ct) ct.textContent = 'Wreck Archive is best viewed on desktop.';
+  }
 </script>
 </body>
 </html>

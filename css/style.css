@@ -1308,11 +1308,11 @@ a.section-label-link:hover { color: var(--text-primary); }
   .site-footer { flex-wrap: wrap; gap: 12px; }
   .footer-copy { width: 100%; text-align: left; order: 3; border-top: 1px solid var(--border); padding-top: 12px; }
   .footer-support-text { font-size: 12px !important; }
-  .map-legend { font-size: 8px; flex-wrap: wrap; gap: 12px; }
-  .cta-block { padding: 20px; }
-  .cta-block p { font-size: 10px; }
-  .cta-block .cta-email { font-size: 14px; }
-  .cta-block .download-btn { font-size: 7px; padding: 8px 16px; gap: 6px; }
+  .map-legend { font-size: 10px; flex-wrap: wrap; gap: 12px; }
+  .cta-block { padding: 20px !important; }
+  .cta-block p { font-size: 13px !important; }
+  .cta-block .cta-email { font-size: 18px !important; }
+  .cta-block .download-btn { font-size: 9px !important; padding: 10px 20px !important; gap: 6px !important; }
   .stat-num { font-size: 52px; }
   .stat-label { font-size: 10px; }
   .stat { padding: 16px; }
@@ -1321,16 +1321,22 @@ a.section-label-link:hover { color: var(--text-primary); }
   .wrecks-scroll-track .wreck-card { flex: 0 0 312px; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
   #nav-mount { min-height: 65px; }
-  .site-nav { padding: 14px 20px; flex-wrap: wrap; }
+  .site-nav { padding: 14px 20px; }
   .nav-hamburger { display: flex; }
   .nav-links {
     display: none;
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
-    width: 100%;
-    padding: 12px 0 4px;
-    border-top: 1px solid var(--border);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(10,14,20,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 4px 20px 8px;
+    z-index: 99;
   }
   .nav-links a {
     width: 100%;
@@ -1342,4 +1348,30 @@ a.section-label-link:hover { color: var(--text-primary); }
   .section { padding: 32px 20px; }
   .wreck-title { font-size: 44px; }
   .wreck-data-bar { flex-wrap: wrap; }
+  .page-title { font-size: 72px; }
+  #archive-caution-banner, #archive-update-banner { padding: 5px 12px !important; display: block !important; text-align: left !important; }
+  #archive-caution-banner span:first-child, #archive-update-banner span:first-child { display: none !important; }
+  .filter-bar, .download-section, .download-desc { display: none !important; }
+  #archive-body tr td:nth-child(4),
+  #archive-body tr td:nth-child(5),
+  #archive-body tr td:nth-child(6),
+  #archive-body tr td:nth-child(7),
+  #archive-table thead th:nth-child(4),
+  #archive-table thead th:nth-child(5),
+  #archive-table thead th:nth-child(6),
+  #archive-table thead th:nth-child(7) { display: none !important; }
+  #archive-table { table-layout: fixed !important; width: 100% !important; }
+  #archive-table thead th:nth-child(1) { width: 60px !important; }
+  #archive-table thead th:nth-child(2) { width: 25% !important; }
+  #archive-table thead th:nth-child(3) { width: auto !important; }
+  #archive-caution-banner span:last-child, #archive-last-updated { display: block !important; font-size: 9px !important; line-height: 1 !important; white-space: normal !important; }
+  #los-heading { font-size: 25px !important; }
+  .support-list .entry-name { font-size: 17px !important; }
+  .support-list .entry-note { font-size: 12px !important; }
+  .los-card-name { font-size: 17px !important; }
+  .los-card-text { font-size: 12px !important; }
+  .about-grid, .support-grid { grid-template-columns: 1fr !important; }
+  .about-aside, .support-aside { display: none !important; }
+  .about-body p, .support-body p { font-size: 12px !important; }
+  .about-body h2, .support-body h2 { font-size: 25px !important; }
 }
