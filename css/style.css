@@ -1316,6 +1316,12 @@ a.section-label-link:hover { color: var(--text-primary); }
   .stat-num { font-size: 52px; }
   .stat-label { font-size: 10px; }
   .stat { padding: 16px; }
+  .wreck-pair { flex: 0 0 100% !important; min-height: 120px; }
+  .wreck-photo-tile { flex: 0 0 45% !important; }
+  .wrecks-scroll-track .wreck-card { flex: 1 !important; padding: 14px !important; }
+  .wreck-card-name { font-size: 20px !important; }
+  .wreck-card-num { font-size: 11px !important; }
+  .wreck-card-meta { font-size: 13px !important; margin-bottom: 6px !important; }
   .hero-title { font-size: 52px; }
   .wrecks-grid { grid-template-columns: 1fr; }
   .wrecks-scroll-track .wreck-card { flex: 0 0 312px; }
