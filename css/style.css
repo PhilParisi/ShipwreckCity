@@ -75,6 +75,28 @@ img { max-width: 100%; display: block; }
 }
 .nav-logo span { color: var(--accent); }
 
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 101;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.site-nav.nav-open .nav-hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.site-nav.nav-open .nav-hamburger span:nth-child(2) { opacity: 0; }
+.site-nav.nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 .nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a {
   font-size: 16px;
@@ -540,7 +562,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 .wreck-card:hover { text-decoration: none; }
 
 .wreck-card-num {
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 3px;
   color: var(--accent);
   margin-bottom: 10px;
@@ -555,14 +577,14 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 .wreck-card-meta {
   font-size: 15px;
-  color: var(--text-faint);
+  color: var(--text-primary);
   line-height: 1.7;
   margin-bottom: 12px;
 }
 .wreck-card-tagline {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 12px;
+  font-size: 1px;
   color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 16px;
@@ -571,7 +593,7 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 .wreck-type-badge {
   display: inline-block;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2px;
   text-transform: uppercase;
   padding: 3px 10px;
@@ -1279,13 +1301,44 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 
 @media (max-width: 600px) {
+  #index-archive-status { font-size: 9px !important; }
+  #archive-status-banner { padding: 8px 16px !important; display: block !important; text-align: center; }
+  #archive-status-banner span:first-child { display: none !important; }
+  #index-archive-status { display: block !important; font-size: 9px !important; line-height: 1.5 !important; }
+  .site-footer { flex-wrap: wrap; gap: 12px; }
+  .footer-copy { width: 100%; text-align: left; order: 3; border-top: 1px solid var(--border); padding-top: 12px; }
+  .footer-support-text { font-size: 12px !important; }
+  .map-legend { font-size: 8px; flex-wrap: wrap; gap: 12px; }
+  .cta-block { padding: 20px; }
+  .cta-block p { font-size: 10px; }
+  .cta-block .cta-email { font-size: 14px; }
+  .cta-block .download-btn { font-size: 7px; padding: 8px 16px; gap: 6px; }
+  .stat-num { font-size: 52px; }
+  .stat-label { font-size: 10px; }
+  .stat { padding: 16px; }
   .hero-title { font-size: 52px; }
   .wrecks-grid { grid-template-columns: 1fr; }
   .wrecks-scroll-track .wreck-card { flex: 0 0 312px; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
   #nav-mount { min-height: 65px; }
-  .site-nav { padding: 14px 20px; }
-  .nav-links { gap: 16px; }
+  .site-nav { padding: 14px 20px; flex-wrap: wrap; }
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+    padding: 12px 0 4px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-links a {
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .site-nav.nav-open .nav-links { display: flex; }
   .section { padding: 32px 20px; }
   .wreck-title { font-size: 44px; }
   .wreck-data-bar { flex-wrap: wrap; }

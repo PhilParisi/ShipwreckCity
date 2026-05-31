@@ -8,23 +8,36 @@ const ROOT = location.hostname.includes('github.io') ? '/ShipwreckCity' : '';
 
 function buildNav(activePage) {
   return `
-  <nav class="site-nav">
+  <nav class="site-nav" id="site-nav">
     <a href="${ROOT}/index.html" class="nav-logo">SHIPWRECK <span>CITY</span></a>
-    <div class="nav-links">
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="${ROOT}/index.html"  class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
       <a href="${ROOT}/map.html"    class="${activePage === 'map'    ? 'active' : ''}">Map</a>
       <a href="${ROOT}/archive.html"class="${activePage === 'archive'? 'active' : ''}">Archive</a>
       <a href="${ROOT}/support.html" class="${activePage === 'support' ? 'active' : ''}">Support</a>
       <a href="${ROOT}/about.html"  class="${activePage === 'about'  ? 'active' : ''}">About</a>
     </div>
-  </nav>`;
+  </nav>
+  <script>
+    (function() {
+      const btn   = document.getElementById('nav-hamburger');
+      const links = document.getElementById('nav-links');
+      const nav   = document.getElementById('site-nav');
+      if (btn) btn.addEventListener('click', function() {
+        nav.classList.toggle('nav-open');
+      });
+    })();
+  </script>`;
 }
 
 function buildFooter() {
   const year = new Date().getFullYear();
   return `
   <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;transition:filter 0.2s;" onmouseover="this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
-    <span style="font-family:var(--font-serif);font-size:16px;color:#7fc4d8;line-height:1.5;text-align:center;">— Support The Shipwreck City Project —</span>
+    <span class="footer-support-text" style="font-family:var(--font-serif);font-size:16px;color:#7fc4d8;line-height:1.5;text-align:center;">— Support The Shipwreck City Project —</span>
   </a>
   <footer class="site-footer">
     <div class="footer-logo">SHIPWRECK <span>CITY</span></div>

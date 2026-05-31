@@ -289,10 +289,8 @@
         <div class="wreck-card-num">${w.catalog}</div>
         <div class="wreck-card-name">${w.name}</div>
         <div class="wreck-card-meta">
-          <span class="status-dot status-${w.status}"></span>${statusLabel(w.status)} · ${yearDisplay(w)} · ${depthDisplay(w.depth)}<br>
-          ${w.location}
+          ${w.dimensions ? `Dimensions: ${w.dimensions}<br>` : ''}Depth: ${depthDisplay(w.depth)}
         </div>
-        <div class="wreck-card-tagline">${w.tagline}</div>
         <div class="wreck-type-badge">${w.type}</div>
       </a>
     </div>
