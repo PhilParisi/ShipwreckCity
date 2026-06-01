@@ -312,7 +312,8 @@
     if (!w.coordinates) return;
     L.marker(w.coordinates, { icon: makeMarker(L, w) })
       .addTo(map)
-      .bindPopup(makePopup(w), { maxWidth: 440 });
+      .bindPopup(makePopup(w), { maxWidth: 440 })
+      .on('click', () => window.open(`${ROOT}/wrecks/${w.id}.html`, '_blank'));
   });
 
   // Map fullscreen toggle

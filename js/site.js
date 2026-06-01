@@ -144,6 +144,6 @@ function makePopup(wreck) {
     <div class="popup-name">${wreck.name}</div>
     <div class="popup-meta">${wreck.catalog} · ${wreck.type} · ${yr}</div>
     <div class="popup-meta">${wreck.location}</div>
-    <a class="popup-link" href="${ROOT}/wrecks/${wreck.id}.html">View record →</a>
+    <a class="popup-link" href="${ROOT}/wrecks/${wreck.id}.html" target="_blank" rel="noopener">View record →</a>
   `;
 }
