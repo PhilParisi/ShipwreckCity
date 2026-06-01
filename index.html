@@ -312,8 +312,7 @@
     if (!w.coordinates) return;
     L.marker(w.coordinates, { icon: makeMarker(L, w) })
       .addTo(map)
-      .bindPopup(makePopup(w), { maxWidth: 440 })
-      .on('click', () => window.open(`${ROOT}/wrecks/${w.id}.html`, '_blank'));
+      .bindPopup(makePopup(w), { maxWidth: 440 });
   });
 
   // Map fullscreen toggle
@@ -367,7 +366,9 @@
 
   // Field photos strip
   const FIELD_PHOTOS = FIELDWORK_PHOTOS;
-  const PHOTO_STEP = 481 * 4; // 4 tiles at a time
+  const photoStep = () => window.innerWidth <= 600
+    ? (fieldTrack.firstElementChild?.offsetWidth || 480)
+    : 481 * 4;
   const fieldTrack   = document.getElementById('field-photos-track');
   const fieldLeft    = document.getElementById('field-scroll-left');
   const fieldRight   = document.getElementById('field-scroll-right');
@@ -396,8 +397,8 @@
   fieldSection.addEventListener('mouseenter', stopFieldAuto);
   fieldSection.addEventListener('mouseleave', startFieldAuto);
 
-  fieldLeft.addEventListener('click',  () => fieldTrack.scrollBy({ left: -PHOTO_STEP, behavior: 'smooth' }));
-  fieldRight.addEventListener('click', () => fieldTrack.scrollBy({ left:  PHOTO_STEP, behavior: 'smooth' }));
+  fieldLeft.addEventListener('click',  () => fieldTrack.scrollBy({ left: -photoStep(), behavior: 'smooth' }));
+  fieldRight.addEventListener('click', () => fieldTrack.scrollBy({ left:  photoStep(), behavior: 'smooth' }));
   fieldTrack.addEventListener('scroll', syncFieldArrows);
   syncFieldArrows();
 </script>

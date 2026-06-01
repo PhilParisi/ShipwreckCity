@@ -139,11 +139,11 @@ function addTileToggle(L, map, tiles, defaultLayer = 'Dark') {
 }
 
 function makePopup(wreck) {
-  const yr = yearDisplay(wreck);
   return `
+    <div class="popup-catalog">${wreck.catalog}</div>
     <div class="popup-name">${wreck.name}</div>
-    <div class="popup-meta">${wreck.catalog} · ${wreck.type} · ${yr}</div>
-    <div class="popup-meta">${wreck.location}</div>
+    <div class="popup-meta">${wreck.dimensions ? `Dimensions: ${wreck.dimensions}<br>` : ''}Depth: ${depthDisplay(wreck.depth)}</div>
+    <div class="wreck-type-badge" style="margin:8px 0;">${wreck.type}</div>
     <a class="popup-link" href="${ROOT}/wrecks/${wreck.id}.html" target="_blank" rel="noopener">View record →</a>
   `;
 }
