@@ -251,7 +251,7 @@
       galleryWrap.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:12px;">
           <div class="section-label" style="margin-top:0;">Gallery</div>
-          <button id="gallery-download-btn" class="download-btn" style="font-size:12px;padding:10px 20px;">Download Images ↓</button>
+          <button id="gallery-download-btn" class="download-btn" style="font-size:12px;padding:10px 20px;">Download Raw .JPG Images ↓</button>
         </div>
         <div class="wreck-gallery">
           ${photos.map((src, i) => `<img src="${src}" alt="${wreck.name} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
@@ -286,7 +286,7 @@
       } catch (e) {
         alert('Download failed. Images may not be available yet.');
       } finally {
-        btn.textContent = 'Download Images ↓';
+        btn.textContent = 'Download Raw .JPG Images ↓';
         btn.disabled = false;
       }
     }

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57LGQFRM4Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-57LGQFRM4Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Press & Media — Shipwreck City</title>
+  <meta name="description" content="Press resources for Shipwreck City — project boilerplate, downloadable media photos, past coverage, and contact for media inquiries.">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .press-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; }
+    .press-body p {
+      font-family: var(--font-serif); font-size: 20px;
+      line-height: 1.95; color: var(--text-mid); margin-bottom: 24px;
+    }
+    .press-body h2 {
+      font-family: var(--font-display); font-size: 42px;
+      color: var(--text-primary); letter-spacing: 1px;
+      margin: 48px 0 16px;
+    }
+    .press-body h2:first-child { margin-top: 0; }
+
+    .press-quote {
+      border-left: 3px solid var(--accent);
+      padding: 20px 28px;
+      margin: 8px 0 32px;
+      background: var(--bg-card);
+    }
+    .press-quote blockquote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 20px;
+      color: var(--text-primary);
+      margin: 0 0 10px;
+      line-height: 1.7;
+    }
+    .press-quote cite {
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+    }
+
+    .cc-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px;
+      border: 1px solid var(--border-mid);
+      background: var(--bg-card);
+      margin: 8px 0 32px;
+    }
+    .cc-block img { flex-shrink: 0; margin-top: 4px; }
+    .cc-block p {
+      margin: 0 !important;
+      font-size: 16px !important;
+      line-height: 1.8 !important;
+    }
+
+    .press-boilerplate {
+      font-style: italic;
+      background: var(--bg-card);
+      padding: 24px 28px;
+      border-left: 3px solid var(--border-mid);
+      margin: 8px 0 32px;
+    }
+    .press-boilerplate p {
+      margin-bottom: 0 !important;
+      color: var(--text-primary) !important;
+    }
+
+    .press-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 56px;
+    }
+    .press-stat {
+      background: var(--bg-card);
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .press-stat-num {
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .press-stat-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .press-aside { display: flex; flex-direction: column; }
+    .press-aside-block { margin-bottom: 36px; }
+    .press-aside .aside-label { font-size: 16px; }
+
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 0;
+      margin-bottom: 64px;
+    }
+
+    @media (max-width: 700px) {
+      .press-grid { grid-template-columns: 1fr; gap: 32px; }
+      .press-stats { grid-template-columns: repeat(2, 1fr); }
+      .press-stat-num { font-size: 36px; }
+      .coverage-grid { grid-template-columns: 1fr; }
+      .cc-block { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="hero-bg-photo"><img src="img/wrecks/lu042/primetime.jpg" alt="" aria-hidden="true"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Press &amp; Media Resources</div>
+    <h1 class="page-title">PRESS<br>KIT</h1>
+    <p class="page-sub">All content is free to use with credit to ShipwreckCity.org.</p>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" style="color:#c87941;" id="press-total">—</div><div class="stat-label">Known Lakebed Targets</div></div>
+  <div class="stat"><div class="stat-num" style="color:#4a9eba;">61</div><div class="stat-label">Target Sites Explored</div></div>
+  <div class="stat"><div class="stat-num">40</div><div class="stat-label">Wreck Count</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-label">New Wrecks</div></div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">11</div><div class="stat-label">Field Days</div></div>
+  <div class="stat"><div class="stat-num">25hr</div><div class="stat-label">Hours Underwater</div></div>
+  <div class="stat"><div class="stat-num">171</div><div class="stat-label">Volunteer Hours</div></div>
+  <div class="stat"><div class="stat-num" style="white-space:nowrap;">3 June '26</div><div class="stat-label">Last Update</div></div>
+</div>
+
+<section class="section container">
+
+  <div class="press-grid">
+    <div class="press-body">
+
+      <h2>About the Project</h2>
+      <p>
+        Shipwreck City is a volunteer-led effort to document, film, and archive every sunken
+        vessel resting on the floor of Seattle's Lake Union and adjacent waterways. Using ROV technology — underwater
+        robots equipped with cameras and side-scan sonar — the team systematically locates,
+        films, and catalogs each target and publishes all findings openly online.
+      </p>
+      <p>
+        The project builds on a 2017 side-scan sonar survey by Coastal Sensing and Survey,
+        which first mapped approximately 100 submerged targets in Lake Union, as well as historical
+        efforts by DCS Films and the Lake Union Virtual Museum. Shipwreck City's
+        mission is to visit every target, capture high-resolution video
+        of the never-before-seen wrecks and debris, and preserve the historical record for public awareness and use.
+      </p>
+      <p>
+        All data, photography, and footage are published at ShipwreckCity.org as they are
+        acquired, at no cost to the public. The project actively seeks <a href="https://buymeacoffee.com/shipwreckcity">donations</a> to fund their efforts.
+      </p>
+
+      <h2>Boilerplate</h2>
+      <div class="press-boilerplate">
+        <p>
+          Shipwreck City is a volunteer-led ROV exploration project documenting the sunken
+          vessels of Seattle's Lake Union and adjcent waterways. Using underwater robots equipped with cameras and
+          side-scan sonar, the team is cataloging the 100+ submerged targets and releasing the
+          entire archive for free at <a href="https://shipwreckcity.org">ShipwreckCity.org</a>.
+        </p>
+      </div>
+
+      <h2>Quote for Use</h2>
+      <div class="press-quote">
+        <blockquote>"Lake Union is one of Seattle's most-visited lakes — and almost nobody knows what's beneath the surface. We're changing that."</blockquote>
+        <cite>— Phil Parisi, Founder and ROV Pilot, <a href="https://shipwreckcity.org">ShipwreckCity.org</a></cite>
+      </div>
+
+      <h2>Usage Rights</h2>
+      <div class="cc-block">
+        <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons Attribution 4.0 International">
+        <p>
+          All photos, video stills, data, and written content published on ShipwreckCity.org are
+          licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--accent);">Creative Commons Attribution 4.0 (CC BY 4.0)</a>.
+          You are free to share, reproduce, and adapt this material for any purpose — including
+          commercial use — as long as appropriate credit is given.<br><br>
+          <strong style="color:var(--text-primary);">Suggested credit line:</strong>
+          Photo courtesy of Shipwreck City / ShipwreckCity.org<br><br>
+          <strong style="color:var(--text-primary);">One request:</strong>
+          If you're writing a story, please send an email to <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>. 
+          We love to engage with coverage and will link your article on our site.
+        </p>
+      </div>
+
+      <h2>Past Coverage</h2>
+    </div>
+
+    <div class="press-aside">
+      <div class="press-aside-block">
+        <div class="aside-label" style="margin-top:0;">Download Photos</div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">
+          Primetime image from each documented wreck, packaged as a single ZIP. Free to use — credit ShipwreckCity.org.
+        </p>
+        <button id="press-download-btn" class="download-btn" style="width:100%;text-align:center;">
+          Download Press Photos ↓
+        </button>
+        <p style="font-family:var(--font-body);font-size:11px;letter-spacing:1px;color:var(--text-muted);margin-top:10px;line-height:1.8;">
+          <span id="press-photo-count">—</span> photos · ~45 MB · CC BY 4.0
+        </p>
+      </div>
+
+      <div class="press-aside-block">
+        <div class="aside-label">Media Inquiries</div>
+        <p style="font-family:var(--font-serif);font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:4px;">
+          Phil Parisi<br>Founder, Shipwreck City
+        </p>
+        <a href="mailto:phil@shipwreckcity.org" style="font-family:var(--font-display);font-size:18px;letter-spacing:1px;color:var(--accent);text-decoration:none;display:block;margin-bottom:16px;">
+          phil@shipwreckcity.org
+        </a>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:0;">
+          Interviews, hi-res assets, dive site visits, or questions about the project.
+        </p>
+      </div>
+
+      <div class="press-aside-block">
+        <div class="aside-label">Quick Facts</div>
+        <div style="font-family:var(--font-serif);font-size:14px;color:var(--text-muted);line-height:2.4;">
+          <div><strong style="color:var(--text-primary);">Location</strong><br>Lake Union, Seattle, WA</div>
+          <div style="margin-top:10px;"><strong style="color:var(--text-primary);">Coordinates</strong><br>47°37'N 122°20'W</div>
+          <div style="margin-top:10px;"><strong style="color:var(--text-primary);">ROV Platform</strong><br><a href="https://bluerobotics.com/store/rov/bluerov2/" target="_blank" rel="noopener" style="color:var(--accent);">Blue Robotics BlueROV2</a></div>
+          <div style="margin-top:10px;"><strong style="color:var(--text-primary);">Sonar</strong><br><a href="https://ceruleansonar.com/product/omniscan-450fs-100m-rated/" target="_blank" rel="noopener" style="color:var(--accent);">Cerulean FS450 Side Scan</a></div>
+          <div style="margin-top:10px;"><strong style="color:var(--text-primary);">License</strong><br>CC BY 4.0</div>
+        </div>
+      </div>
+
+      <div class="press-aside-block">
+        <div class="aside-label">Full Archive</div>
+        <a href="archive.html" class="download-btn" style="width:100%;text-align:center;margin-top:8px;">
+          View the Archive →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="coverage-grid" id="coverage-grid"></div>
+
+</section>
+
+<div class="container" style="padding-top:0; padding-bottom:64px;">
+  <div class="cta-block">
+    <p>
+      For interview requests, additional high-resolution assets, or to arrange an
+      on-site visit during a dive, reach out directly to Phil Parisi at
+      <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>.
+    </p>
+    <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+      <a href="mailto:phil@shipwreckcity.org" class="download-btn">Email Phil →</a>
+      <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
+    </div>
+  </div>
+</div>
+
+<div id="footer-mount"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="js/wrecks-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  document.getElementById('press-total').textContent = WRECKS.length;
+  document.getElementById('press-photo-count').textContent = WRECKS.filter(w => w.status !== 'never-explored').length;
+
+  const COVERAGE = [
+    { source: 'KING5 News',               title: 'Inside the effort to build Lake Union\'s underwater archive of shipwrecks',                                                          href: 'https://www.king5.com/article/news/local/lake-union-underwater-archive-shipwrecks/281-0b2512c8-e577-4960-81d3-2bb709367f81',                                                        thumb: 'img/thumbnails/king5_videoarticle.webp' },
+    { source: 'Smithsonian Magazine',      title: 'An underwater robot explores the hidden shipwreck city beneath this popular urban lake',                                            href: 'https://www.smithsonianmag.com/smart-news/an-underwater-robot-explores-the-hidden-shipwreck-city-beneath-the-surface-of-this-popular-urban-lake-in-the-pacific-northwest-180988799/', thumb: 'https://th-thumbnailer.cdn-si-edu.com/g9h8iByn4xqVIn09wgSrw_WMkzk=/1026x684/filters:no_upscale():focal(1920x1097:1921x1098)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/a1/08/a108bb08-6683-484f-9279-c78df22bf661/wreck_0020.webp' },
+    { source: 'YouTube',                  title: 'Shipwreck City — Lake Union Dive Footage',                                                                                         href: 'https://www.youtube.com/watch?v=MPLPYdXKrpQ',                                                                                                                                        thumb: 'https://img.youtube.com/vi/MPLPYdXKrpQ/maxresdefault.jpg' },
+    { source: 'New York Post',            title: 'Underwater robotics expert reveals \'shipwreck city\' hidden beneath major West Coast lake',                                        href: 'https://nypost.com/2026/05/05/us-news/underwater-robotics-expert-reveals-shipwreck-city-hidden-beneath-major-west-coast-lake/',                                                      thumb: 'img/wrecks/lu101/primetime.webp' },
+    { source: 'KING5 News',               title: 'Hidden in plain sight: Robots reveal \'shipwreck city\' beneath Lake Union',                                                        href: 'https://www.king5.com/article/news/local/remote-vehicles-shipwreck-city-lake-union-seattle/281-b3ad2d78-a84d-418e-90f0-09800fda29f7',                                                thumb: 'https://media.king5.com/assets/KING/images/faec77dd-9e20-4890-8454-d084d4ff62bb/20260412T012929/faec77dd-9e20-4890-8454-d084d4ff62bb_1140x641.jpg' },
+    { source: 'Fox News',                 title: 'Underwater robotics expert reveals \'shipwreck city\' hiding beneath major urban lake',                                             href: 'https://www.foxnews.com/travel/underwater-robotics-expert-reveals-shipwreck-city-hiding-beneath-major-urban-lake',                                                                  thumb: 'https://static.foxnews.com/foxnews.com/content/uploads/2026/05/WA-SEATTLE-ROBOT-CITY-LAKE-UNION-SHIPWRECKS-DISCOVERY-ARCHAEOLOGY-HISTORY-1.jpeg' },
+    { source: 'MSN',                      title: 'Underwater robots uncover shipwreck city in Seattle lake',                                                                          href: 'https://www.msn.com/en-us/news/other/underwater-robots-uncover-shipwreck-city-in-seattle-lake/gm-GMCEC0F3A2',                                                                        thumb: 'img/main-fieldwork/IMG_4395.webp' },
+    { source: 'KTVB News',                title: 'Underwater robots and sonar reveal hidden shipwrecks in Seattle\'s Lake Union',                                                     href: 'https://www.ktvb.com/article/news/nation-world/robotics-underwater-detection-shipwrecks-sonar-survey-remote-operated-vehicle-washington-lake-union/507-d5e09930-31c1-491f-8c8b-01f9fcbba5b8', thumb: 'img/wrecks/lu009/shipwreck2_5.webp' },
+    { source: 'The Daily Galaxy',         title: 'Seattle\'s Lake Union Shipwreck City: The Sunken Vessels Hiding Beneath an Urban Lake',                                            href: 'https://dailygalaxy.com/2026/05/seattle-lake-union-shipwreck-city-sunken-vessels/',                                                                                                   thumb: 'https://dailygalaxy.com/wp-content/uploads/2026/05/A-robot-just-found-a-lost-fleet-of-warships-no-one-remembered-1200x727.jpg.webp' },
+    { source: 'EcoPortal',                title: 'Seattle\'s most-visited lake has been hiding a Shipwreck City — and a robot named Finn is finally mapping it',                     href: 'https://www.ecoportal.net/en/seattle-shipwreck-city-mapping/22669/',                                                                                                               thumb: 'https://www.ecoportal.net/en/wp-content/uploads/2026/05/16.-INTERNAL-Seattle-s-most-visited-lake-has-been-hiding-a-Shipwreck-City-on-its-floor-—-and-a-robot-named-Finn-is-finally-mapping-it-750x422.jpg' },
+    { source: 'Lake Washington Rowing Club', title: 'What Lies Beneath — Lake Union\'s History',                                                                                     href: 'img/thumbnails/MakingWavesJune26Lo-Res.pdf',                                                                                                                                        thumb: 'img/wrecks/lu078/frame_0011.webp' },
+  ];
+
+  document.getElementById('coverage-grid').innerHTML = COVERAGE.map(c => `
+    <a class="media-card" href="${c.href}" target="_blank" rel="noopener">
+      <img class="media-card-thumb" src="${c.thumb}" alt="${c.source} coverage" loading="lazy">
+      <div class="media-card-body">
+        <div class="media-card-source">${c.source}</div>
+        <div class="media-card-title">${c.title}</div>
+      </div>
+    </a>
+  `).join('');
+
+  // Press photo bulk download
+  document.getElementById('press-download-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('press-download-btn');
+    btn.textContent = 'Preparing download…';
+    btn.disabled = true;
+    try {
+      const zip = new JSZip();
+      const folder = zip.folder('shipwreck-city-press-photos');
+      const EXTS = ['jpg', 'webp', 'png'];
+
+      await Promise.all(WRECKS.map(async w => {
+        for (const ext of EXTS) {
+          const url = `${ROOT}/img/wrecks/${w.id}/primetime.${ext}`;
+          try {
+            const res = await fetch(url);
+            if (!res.ok) continue;
+            const blob = await res.blob();
+            const safeName = w.name.replace(/[^a-zA-Z0-9 _-]/g, '').trim().replace(/\s+/g, '-');
+            folder.file(`${w.catalog}-${safeName}.${ext}`, blob);
+            break;
+          } catch { continue; }
+        }
+      }));
+
+      const content = await zip.generateAsync({ type: 'blob' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(content);
+      a.download = 'shipwreck-city-press-photos.zip';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } catch {
+      alert('Download failed. Please try again or contact the team.');
+    } finally {
+      btn.textContent = 'Download Press Photos ↓';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

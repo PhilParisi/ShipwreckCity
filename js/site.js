@@ -37,6 +37,7 @@ function buildFooter() {
       <a href="${ROOT}/map.html">Map</a>
       <a href="${ROOT}/about.html">About</a>
       <a href="${ROOT}/support.html">Support</a>
+      <a href="${ROOT}/press.html">Press</a>
     </div>
   </footer>`;
 }
@@ -137,6 +138,64 @@ function addTileToggle(L, map, tiles, defaultLayer = 'Dark') {
   });
   new TileToggle({ position: 'topright' }).addTo(map);
 }
+
+// ── Credit toast ─────────────────────────────────────────────────────────────
+(function () {
+  const style = document.createElement('style');
+  style.textContent = `
+    #gallery-download-btn,
+    #press-download-btn,
+    #csv-download-btn { position: relative; }
+    #gallery-download-btn::after,
+    #press-download-btn::after,
+    #csv-download-btn::after {
+      content: 'Please credit ShipwreckCity.org';
+      position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%);
+      background: #0a1f2e; border: 1px solid #4a9eba; color: #e8e0cc;
+      font-family: var(--font-body); font-size: 11px; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 8px 14px;
+      white-space: nowrap; pointer-events: none;
+      opacity: 0; transition: opacity 0.2s ease;
+      z-index: 100;
+    }
+    #gallery-download-btn:hover::after,
+    #press-download-btn:hover::after,
+    #csv-download-btn:hover::after { opacity: 1; }
+    #credit-toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: #0a1f2e; border: 1px solid #4a9eba; color: #e8e0cc;
+      font-family: var(--font-body); font-size: 13px; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 14px 28px; z-index: 9999;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      white-space: nowrap;
+    }
+    #credit-toast.show {
+      opacity: 1; transform: translateX(-50%) translateY(0);
+    }
+  `;
+  document.head.appendChild(style);
+
+  const toast = document.createElement('div');
+  toast.id = 'credit-toast';
+  toast.textContent = 'Please credit ShipwreckCity.org when using these images';
+  document.body.appendChild(toast);
+
+  let hideTimer;
+  function showCreditToast() {
+    clearTimeout(hideTimer);
+    toast.classList.add('show');
+    hideTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  const DOWNLOAD_IDS = new Set(['gallery-download-btn', 'press-download-btn', 'csv-download-btn']);
+
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('button, a');
+    if (btn && DOWNLOAD_IDS.has(btn.id)) showCreditToast();
+  }, true);
+})();
 
 function makePopup(wreck) {
   return `

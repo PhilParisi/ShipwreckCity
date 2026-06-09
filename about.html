@@ -58,6 +58,20 @@
   </div>
 </div>
 
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" style="color:#c87941;" id="about-total">—</div><div class="stat-label">Known Lakebed Targets</div></div>
+  <div class="stat"><div class="stat-num" style="color:#4a9eba;">61</div><div class="stat-label">Target Sites Explored</div></div>
+  <div class="stat"><div class="stat-num">40</div><div class="stat-label">Wreck Count</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-label">New Wrecks</div></div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">11</div><div class="stat-label">Field Days</div></div>
+  <div class="stat"><div class="stat-num">25hr</div><div class="stat-label">Hours Underwater</div></div>
+  <div class="stat"><div class="stat-num">171</div><div class="stat-label">Volunteer Hours</div></div>
+  <div class="stat"><div class="stat-num" style="white-space:nowrap;">3 June '26</div><div class="stat-label">Last Update</div></div>
+</div>
+
 <section class="section container">
   <div class="about-grid">
     <div class="about-body">
@@ -189,12 +203,15 @@
         </p>
       </div>
       <div class="about-aside-block">
-        <div class="aside-label">Updated Targets</div>
-        <div style="font-family:var(--font-display);font-size:62px;color:var(--text-primary);" id="about-count">—</div>
-      </div>
-      <div class="about-aside-block">
         <div class="aside-label">Contact</div>
         <a id="about-contact-btn" href="#" class="download-btn" style="margin-top:8px;">Contact the Team →</a>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Press &amp; Media</div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
+          Photos, boilerplate, and media inquiries.
+        </p>
+        <a href="press.html" class="download-btn" style="margin-top:4px;">Press Kit →</a>
       </div>
       <div class="about-aside-block">
         <div class="aside-label">Built with</div>
@@ -217,7 +234,7 @@
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('about');
   document.getElementById('footer-mount').innerHTML = buildFooter();
-  document.getElementById('about-count').textContent = WRECKS.filter(w => w.status === 'recently-explored').length;
+  document.getElementById('about-total').textContent = WRECKS.length;
   document.getElementById('about-contact-btn').href = `${ROOT}/contact.html`;
 </script>
 </body>

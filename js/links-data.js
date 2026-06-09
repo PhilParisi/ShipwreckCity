@@ -88,6 +88,13 @@ const SUPPORTERS = [
     note: "Captain of a 16' Whaler, who allowed us to deploy ROVs on wrecks in central Lake Union."
   },*/
   {
+    name: "David B. Williams",
+    url:  null,
+    logo: null,
+    type: "individual",
+    note: "Renowned Seattle author who assisted with ROV deployments and shared our story in his newsletter."
+  },  
+  {
     name: "Sean B.",
     url:  null,
     logo: null,
@@ -134,7 +141,20 @@ const SUPPORTERS = [
     url:  null,
     logo: null,
     type: "individual",
-    note: "News reporter and videographer who gave this project a voice far greater than our own."
-  }
-
+    note: "News reporter and videographer from Seattle's King 5 News who gave this project a voice far greater than our own."
+  },
+  {
+    name: "Rick .",
+    url:  null,
+    logo: null,
+    type: "individual",
+    note: "Local Lake Union rower and retired investigative journalist who featured our work in a Seattle newsletter." 
+  },
+  {
+    name: "Luka O.",
+    url:  null,
+    logo: null,
+    type: "individual",
+    note: "ROV copilot and University of Washington engineering student who assited with ROV deployments."
+  },
 ];

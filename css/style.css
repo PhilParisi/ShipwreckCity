@@ -399,11 +399,11 @@ img { max-width: 100%; display: block; }
 .stat {
   background: var(--bg-dark);
   padding: 22px 28px;
-  transition: opacity 0.2s, filter 0.2s;
+  transition: background 0.2s, filter 0.2s;
 }
 a.stat:hover {
-  opacity: 0.75;
-  filter: brightness(1.2);
+  background: var(--bg-hover);
+  filter: brightness(1.5);
 }
 .stat-num {
   font-family: var(--font-display);
@@ -1189,19 +1189,20 @@ a.section-label-link:hover { color: var(--text-primary); }
   gap: 12px;
   padding: 16px 32px;
   background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
+  border: 1px solid #e8e0cc;
+  color: #e8e0cc;
   font-family: var(--font-body);
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 .download-btn:hover {
-  background: var(--accent);
-  color: var(--bg-deep);
+  background: #e8e0cc;
+  border-color: #e8e0cc;
+  color: #0a1f2e;
   text-decoration: none;
 }
 
