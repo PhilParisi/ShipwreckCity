@@ -30,6 +30,15 @@
     }
     .map-wrap { position: relative; }
     /* legend styles are in shared style.css */
+    #map-primetime-left, #map-primetime-right { height: 88px; }
+    #map-primetime-track .field-photo-tile img,
+    #map-primetime-track-2 .field-photo-tile img {
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    #map-primetime-track .field-photo-tile:hover img,
+    #map-primetime-track-2 .field-photo-tile:hover img {
+      filter: brightness(1.1) contrast(1.08) saturate(1.2);
+    }
   </style>
 </head>
 <body>
@@ -41,12 +50,12 @@
   <div class="page-hero-grid"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">Lake Union · Seattle</div>
-    <h1 class="page-title">WRECK<br>MAP</h1>
-    <p class="page-sub">All documented wrecks plotted by GPS coordinates. Click any marker to view the record.</p>
+    <h1 class="page-title">TARGET<br>MAP</h1>
+    <p class="page-sub">All targets (wrecks and other debris) plotted by GPS coordinates. Click any marker to view the record.</p>
   </div>
 </div>
 
-<div class="container">
+<div class="container" style="max-width:1320px;">
   <div class="map-legend">
     <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Shipwreck City Explored</div>
     <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Historically Explored</div>
@@ -54,7 +63,7 @@
   </div>
 </div>
 
-<div class="map-wrap container" style="position:relative;margin-bottom:32px;">
+<div class="map-wrap container" style="position:relative;margin-bottom:32px;max-width:1320px;">
   <div style="display:flex;align-items:stretch;gap:0;">
   <div class="map-wrapper" id="map-wrapper" style="flex:1;min-width:0;">
     <div id="full-map"></div>
@@ -73,6 +82,21 @@
   </div>
   </div>
 </div>
+
+<!-- PRIMETIME GALLERY -->
+<section style="padding:48px 10% 0;">
+  <a href="${ROOT}/archive.html" class="index-section-heading" style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);text-decoration:none;display:block;margin-bottom:24px;" id="map-gallery-label">Gallery: Click to Explore</a>
+</section>
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="map-primetime-left" aria-label="Scroll left">&#8592;</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1px;overflow:hidden;">
+      <div class="field-scroll-track" id="map-primetime-track"></div>
+      <div class="field-scroll-track" id="map-primetime-track-2"></div>
+    </div>
+    <button class="scroll-arrow scroll-arrow-right" id="map-primetime-right" aria-label="Scroll right">&#8594;</button>
+  </div>
+</section>
 
 <div id="footer-mount"></div>
 
@@ -122,6 +146,61 @@
     mapEl.style.height = isFs ? window.innerHeight + 'px' : '';
     setTimeout(() => map.invalidateSize(), 50);
   });
+
+  // Gallery
+  document.getElementById('map-gallery-label').href = `${ROOT}/archive.html`;
+
+  const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
+  function tryPrimetimeExt(img, id) {
+    const cur  = img.src.split('.').pop();
+    const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
+    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
+    else       { img.closest('a').style.display = 'none'; }
+  }
+
+  const allPrimetime = WRECKS.filter(w => w.hasPrimetime);
+  const half         = Math.ceil(allPrimetime.length / 2);
+
+  function makePrimetimeTiles(wrecks) {
+    return wrecks.map(w => `
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+      </a>`).join('');
+  }
+
+  const mpt1     = document.getElementById('map-primetime-track');
+  const mpt2     = document.getElementById('map-primetime-track-2');
+  const mptLeft  = document.getElementById('map-primetime-left');
+  const mptRight = document.getElementById('map-primetime-right');
+  const mptSect  = mpt1.closest('section');
+
+  mpt1.innerHTML = makePrimetimeTiles(allPrimetime.slice(0, half));
+  mpt2.innerHTML = makePrimetimeTiles(allPrimetime.slice(half));
+
+  const mptStep = () => mpt1.clientWidth;
+  function syncMptArrows() {
+    mptLeft.disabled  = mpt1.scrollLeft <= 0;
+    mptRight.disabled = mpt1.scrollLeft >= mpt1.scrollWidth - mpt1.clientWidth - 1;
+  }
+  function scrollBothMpt(delta) {
+    mpt1.scrollBy({ left: delta, behavior: 'smooth' });
+    mpt2.scrollBy({ left: delta, behavior: 'smooth' });
+  }
+  let mptTimer = null;
+  function mptAutoStep() {
+    const atEnd = mpt1.scrollLeft >= mpt1.scrollWidth - mpt1.clientWidth - 1;
+    scrollBothMpt(atEnd ? -mpt1.scrollWidth : mptStep());
+  }
+  function startMptAuto() { if (!mptTimer) mptTimer = setInterval(mptAutoStep, 6000); }
+  function stopMptAuto()  { clearInterval(mptTimer); mptTimer = null; }
+  startMptAuto();
+  mptSect.addEventListener('mouseenter', stopMptAuto);
+  mptSect.addEventListener('mouseleave', startMptAuto);
+  mptLeft.addEventListener('click',  () => scrollBothMpt(-mptStep()));
+  mptRight.addEventListener('click', () => scrollBothMpt( mptStep()));
+  mpt1.addEventListener('scroll', syncMptArrows);
+  syncMptArrows();
 </script>
 </body>
 </html>

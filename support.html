@@ -104,6 +104,21 @@
     @media (max-width: 700px) {
       .support-grid { grid-template-columns: 1fr; gap: 32px; }
     }
+    .support-gallery-heading {
+      font-family: var(--font-display); font-size: 42px; letter-spacing: 1px;
+      color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+    .support-gallery-heading:hover { color: var(--accent); }
+    #sup-primetime-left, #sup-primetime-right { height: 88px; }
+    #sup-primetime-track .field-photo-tile img,
+    #sup-primetime-track-2 .field-photo-tile img {
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    #sup-primetime-track .field-photo-tile:hover img,
+    #sup-primetime-track-2 .field-photo-tile:hover img {
+      filter: brightness(1.1) contrast(1.08) saturate(1.2);
+    }
 
     .los-section {
       border-top: 1px solid var(--border);
@@ -273,6 +288,21 @@
   </div>
 </div>
 
+<!-- GALLERY -->
+<section style="padding:48px 10% 0;">
+  <a class="support-gallery-heading" id="sup-gallery-label">Gallery: Click to Explore</a>
+</section>
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="sup-primetime-left" aria-label="Scroll left">&#8592;</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1px;overflow:hidden;">
+      <div class="field-scroll-track" id="sup-primetime-track"></div>
+      <div class="field-scroll-track" id="sup-primetime-track-2"></div>
+    </div>
+    <button class="scroll-arrow scroll-arrow-right" id="sup-primetime-right" aria-label="Scroll right">&#8594;</button>
+  </div>
+</section>
+
 <div id="footer-mount"></div>
 
 <script src="js/wrecks-data.js"></script>
@@ -323,10 +353,60 @@
       </${close}>`;
   }).join('');
 
-  if (SITE_CONFIG.social.email) {
-    document.querySelector('.cta-email a').href = `mailto:${SITE_CONFIG.social.email}`;
-    document.querySelector('.cta-email a').textContent = `${SITE_CONFIG.social.email} →`;
+  // Gallery
+  document.getElementById('sup-gallery-label').href = `${ROOT}/archive.html`;
+
+  const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
+  function tryPrimetimeExt(img, id) {
+    const cur  = img.src.split('.').pop();
+    const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
+    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
+    else       { img.closest('a').style.display = 'none'; }
   }
+
+  const supAllPrimetime = WRECKS.filter(w => w.hasPrimetime);
+  const supHalf         = Math.ceil(supAllPrimetime.length / 2);
+
+  function makeSupTiles(wrecks) {
+    return wrecks.map(w => `
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+      </a>`).join('');
+  }
+
+  const spt1     = document.getElementById('sup-primetime-track');
+  const spt2     = document.getElementById('sup-primetime-track-2');
+  const sptLeft  = document.getElementById('sup-primetime-left');
+  const sptRight = document.getElementById('sup-primetime-right');
+  const sptSect  = spt1.closest('section');
+
+  spt1.innerHTML = makeSupTiles(supAllPrimetime.slice(0, supHalf));
+  spt2.innerHTML = makeSupTiles(supAllPrimetime.slice(supHalf));
+
+  const sptStep = () => spt1.clientWidth;
+  function syncSptArrows() {
+    sptLeft.disabled  = spt1.scrollLeft <= 0;
+    sptRight.disabled = spt1.scrollLeft >= spt1.scrollWidth - spt1.clientWidth - 1;
+  }
+  function scrollBothSpt(delta) {
+    spt1.scrollBy({ left: delta, behavior: 'smooth' });
+    spt2.scrollBy({ left: delta, behavior: 'smooth' });
+  }
+  let sptTimer = null;
+  function sptAutoStep() {
+    const atEnd = spt1.scrollLeft >= spt1.scrollWidth - spt1.clientWidth - 1;
+    scrollBothSpt(atEnd ? -spt1.scrollWidth : sptStep());
+  }
+  function startSptAuto() { if (!sptTimer) sptTimer = setInterval(sptAutoStep, 6000); }
+  function stopSptAuto()  { clearInterval(sptTimer); sptTimer = null; }
+  startSptAuto();
+  sptSect.addEventListener('mouseenter', stopSptAuto);
+  sptSect.addEventListener('mouseleave', startSptAuto);
+  sptLeft.addEventListener('click',  () => scrollBothSpt(-sptStep()));
+  sptRight.addEventListener('click', () => scrollBothSpt( sptStep()));
+  spt1.addEventListener('scroll', syncSptArrows);
+  syncSptArrows();
 </script>
 </body>
 </html>

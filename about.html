@@ -57,6 +57,21 @@
       background: var(--bg-card);
     }
     .cta-block p { margin-bottom: 20px; }
+    .about-gallery-heading {
+      font-family: var(--font-display); font-size: 42px; letter-spacing: 1px;
+      color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+    .about-gallery-heading:hover { color: var(--accent); }
+    #abt-primetime-left, #abt-primetime-right { height: 88px; }
+    #abt-primetime-track .field-photo-tile img,
+    #abt-primetime-track-2 .field-photo-tile img {
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    #abt-primetime-track .field-photo-tile:hover img,
+    #abt-primetime-track-2 .field-photo-tile:hover img {
+      filter: brightness(1.1) contrast(1.08) saturate(1.2);
+    }
     @media (max-width: 700px) {
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
     }
@@ -256,6 +271,21 @@
 
 </section>
 
+<!-- GALLERY -->
+<section style="padding:48px 10% 0;">
+  <a class="about-gallery-heading" id="abt-gallery-label">Gallery: Click to Explore</a>
+</section>
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="abt-primetime-left" aria-label="Scroll left">&#8592;</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1px;overflow:hidden;">
+      <div class="field-scroll-track" id="abt-primetime-track"></div>
+      <div class="field-scroll-track" id="abt-primetime-track-2"></div>
+    </div>
+    <button class="scroll-arrow scroll-arrow-right" id="abt-primetime-right" aria-label="Scroll right">&#8594;</button>
+  </div>
+</section>
+
 <div id="footer-mount"></div>
 
 <script src="js/wrecks-data.js"></script>
@@ -274,6 +304,61 @@
         <img src="${ROOT}/img/about-page/${f}" alt="From the field" loading="lazy">
       </div>`).join('');
   }
+
+  // Gallery
+  document.getElementById('abt-gallery-label').href = `${ROOT}/archive.html`;
+
+  const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
+  function tryPrimetimeExt(img, id) {
+    const cur  = img.src.split('.').pop();
+    const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
+    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
+    else       { img.closest('a').style.display = 'none'; }
+  }
+
+  const abtAllPrimetime = WRECKS.filter(w => w.hasPrimetime);
+  const abtHalf         = Math.ceil(abtAllPrimetime.length / 2);
+
+  function makeAbtTiles(wrecks) {
+    return wrecks.map(w => `
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+      </a>`).join('');
+  }
+
+  const abtt1     = document.getElementById('abt-primetime-track');
+  const abtt2     = document.getElementById('abt-primetime-track-2');
+  const abtLeft   = document.getElementById('abt-primetime-left');
+  const abtRight  = document.getElementById('abt-primetime-right');
+  const abtSect   = abtt1.closest('section');
+
+  abtt1.innerHTML = makeAbtTiles(abtAllPrimetime.slice(0, abtHalf));
+  abtt2.innerHTML = makeAbtTiles(abtAllPrimetime.slice(abtHalf));
+
+  const abtStep = () => abtt1.clientWidth;
+  function syncAbtArrows() {
+    abtLeft.disabled  = abtt1.scrollLeft <= 0;
+    abtRight.disabled = abtt1.scrollLeft >= abtt1.scrollWidth - abtt1.clientWidth - 1;
+  }
+  function scrollBothAbt(delta) {
+    abtt1.scrollBy({ left: delta, behavior: 'smooth' });
+    abtt2.scrollBy({ left: delta, behavior: 'smooth' });
+  }
+  let abtTimer = null;
+  function abtAutoStep() {
+    const atEnd = abtt1.scrollLeft >= abtt1.scrollWidth - abtt1.clientWidth - 1;
+    scrollBothAbt(atEnd ? -abtt1.scrollWidth : abtStep());
+  }
+  function startAbtAuto() { if (!abtTimer) abtTimer = setInterval(abtAutoStep, 6000); }
+  function stopAbtAuto()  { clearInterval(abtTimer); abtTimer = null; }
+  startAbtAuto();
+  abtSect.addEventListener('mouseenter', stopAbtAuto);
+  abtSect.addEventListener('mouseleave', startAbtAuto);
+  abtLeft.addEventListener('click',  () => scrollBothAbt(-abtStep()));
+  abtRight.addEventListener('click', () => scrollBothAbt( abtStep()));
+  abtt1.addEventListener('scroll', syncAbtArrows);
+  syncAbtArrows();
 </script>
 </body>
 </html>

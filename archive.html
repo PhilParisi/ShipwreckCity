@@ -114,6 +114,21 @@
     @media (max-width: 800px) {
       .download-section { grid-template-columns: 1fr; gap: 40px; }
     }
+    .archive-gallery-heading {
+      font-family: var(--font-display); font-size: 42px; letter-spacing: 1px;
+      color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+    .archive-gallery-heading:hover { color: var(--accent); }
+    #arc-primetime-left, #arc-primetime-right { height: 88px; }
+    #arc-primetime-track .field-photo-tile img,
+    #arc-primetime-track-2 .field-photo-tile img {
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    #arc-primetime-track .field-photo-tile:hover img,
+    #arc-primetime-track-2 .field-photo-tile:hover img {
+      filter: brightness(1.1) contrast(1.08) saturate(1.2);
+    }
   </style>
 </head>
 <body>
@@ -125,7 +140,7 @@
   <div class="page-hero-grid"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">Updated Records</div>
-    <h1 class="page-title">WRECK<br>ARCHIVE</h1>
+    <h1 class="page-title">TARGET<br>ARCHIVE</h1>
     <p class="page-sub">All documented targets, click on each to learn more and view photos.</p>
   </div>
 </div>
@@ -156,6 +171,21 @@
     </thead>
     <tbody id="archive-body"></tbody>
   </table>
+</section>
+
+<!-- GALLERY -->
+<section style="padding:48px 10% 0;">
+  <a class="archive-gallery-heading" id="arc-gallery-label">Gallery: Click to Explore</a>
+</section>
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="arc-primetime-left" aria-label="Scroll left">&#8592;</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1px;overflow:hidden;">
+      <div class="field-scroll-track" id="arc-primetime-track"></div>
+      <div class="field-scroll-track" id="arc-primetime-track-2"></div>
+    </div>
+    <button class="scroll-arrow scroll-arrow-right" id="arc-primetime-right" aria-label="Scroll right">&#8594;</button>
+  </div>
 </section>
 
 <!-- DOWNLOAD + FIELD REFERENCE -->
@@ -319,6 +349,53 @@
     const ct = document.getElementById('archive-caution-text');
     if (ct) ct.textContent = 'Wreck Archive is best viewed on desktop.';
   }
+
+  // Gallery
+  document.getElementById('arc-gallery-label').href = `${ROOT}/archive.html`;
+
+  const arcAllPrimetime = WRECKS.filter(w => w.hasPrimetime);
+  const arcHalf         = Math.ceil(arcAllPrimetime.length / 2);
+
+  function makeArcTiles(wrecks) {
+    return wrecks.map(w => `
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+      </a>`).join('');
+  }
+
+  const apt1     = document.getElementById('arc-primetime-track');
+  const apt2     = document.getElementById('arc-primetime-track-2');
+  const aptLeft  = document.getElementById('arc-primetime-left');
+  const aptRight = document.getElementById('arc-primetime-right');
+  const aptSect  = apt1.closest('section');
+
+  apt1.innerHTML = makeArcTiles(arcAllPrimetime.slice(0, arcHalf));
+  apt2.innerHTML = makeArcTiles(arcAllPrimetime.slice(arcHalf));
+
+  const aptStep = () => apt1.clientWidth;
+  function syncAptArrows() {
+    aptLeft.disabled  = apt1.scrollLeft <= 0;
+    aptRight.disabled = apt1.scrollLeft >= apt1.scrollWidth - apt1.clientWidth - 1;
+  }
+  function scrollBothApt(delta) {
+    apt1.scrollBy({ left: delta, behavior: 'smooth' });
+    apt2.scrollBy({ left: delta, behavior: 'smooth' });
+  }
+  let aptTimer = null;
+  function aptAutoStep() {
+    const atEnd = apt1.scrollLeft >= apt1.scrollWidth - apt1.clientWidth - 1;
+    scrollBothApt(atEnd ? -apt1.scrollWidth : aptStep());
+  }
+  function startAptAuto() { if (!aptTimer) aptTimer = setInterval(aptAutoStep, 6000); }
+  function stopAptAuto()  { clearInterval(aptTimer); aptTimer = null; }
+  startAptAuto();
+  aptSect.addEventListener('mouseenter', stopAptAuto);
+  aptSect.addEventListener('mouseleave', startAptAuto);
+  aptLeft.addEventListener('click',  () => scrollBothApt(-aptStep()));
+  aptRight.addEventListener('click', () => scrollBothApt( aptStep()));
+  apt1.addEventListener('scroll', syncAptArrows);
+  syncAptArrows();
 </script>
 </body>
 </html>
