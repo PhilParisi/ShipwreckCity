@@ -34,6 +34,18 @@
       transition: color 0.15s;
     }
     .index-section-heading:hover { color: var(--accent); text-decoration: none; }
+
+    #primetime-left, #primetime-right {
+      height: 88px;
+    }
+    #primetime-track .field-photo-tile img,
+    #primetime-track-2 .field-photo-tile img {
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    #primetime-track .field-photo-tile:hover img,
+    #primetime-track-2 .field-photo-tile:hover img {
+      filter: brightness(1.1) contrast(1.08) saturate(1.2);
+    }
   </style>
 </head>
 <body>
@@ -81,8 +93,10 @@
 
 <!-- MAP -->
 <section class="map-section">
+  <div style="padding:0 10%;">
+    <a id="map-section-label" class="index-section-heading">Target Map</a>
+  </div>
   <div class="container">
-    <a id="map-section-label" class="index-section-heading">Target Map →</a>
     <div class="map-legend">
       <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Shipwreck City Explored</div>
       <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Historically Explored</div>
@@ -108,12 +122,18 @@
   </div>
 </section>
 
-<!-- FIELD PHOTOS -->
+<!-- PRIMETIME GALLERY -->
+<section style="padding:48px 10% 0;">
+  <a id="primetime-section-label" class="index-section-heading">Gallery - Click to Explore</a>
+</section>
 <section class="wrecks-scroll-section">
   <div class="wrecks-scroll-wrapper">
-    <button class="scroll-arrow scroll-arrow-left" id="field-scroll-left" aria-label="Scroll left">&#8592;</button>
-    <div class="field-scroll-track" id="field-photos-track"></div>
-    <button class="scroll-arrow scroll-arrow-right" id="field-scroll-right" aria-label="Scroll right">&#8594;</button>
+    <button class="scroll-arrow scroll-arrow-left" id="primetime-left" aria-label="Scroll left">&#8592;</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1px;overflow:hidden;">
+      <div class="field-scroll-track" id="primetime-track"></div>
+      <div class="field-scroll-track" id="primetime-track-2"></div>
+    </div>
+    <button class="scroll-arrow scroll-arrow-right" id="primetime-right" aria-label="Scroll right">&#8594;</button>
   </div>
 </section>
 
@@ -201,9 +221,18 @@
     </div>
 </section>
 
+<!-- FIELD PHOTOS -->
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="field-scroll-left" aria-label="Scroll left">&#8592;</button>
+    <div class="field-scroll-track" id="field-photos-track"></div>
+    <button class="scroll-arrow scroll-arrow-right" id="field-scroll-right" aria-label="Scroll right">&#8594;</button>
+  </div>
+</section>
+
 <!-- SUPPORTERS -->
 <section class="supporters-section">
-    <a id="supporters-section-label" class="index-section-heading">Supporters →</a>
+    <a id="supporters-section-label" class="index-section-heading">Supporters</a>
     <div class="supporters-grid" id="supporters-grid"></div>
     <div class="cta-block">
       <p>
@@ -408,6 +437,58 @@
   fieldRight.addEventListener('click', () => fieldTrack.scrollBy({ left:  photoStep(), behavior: 'smooth' }));
   fieldTrack.addEventListener('scroll', syncFieldArrows);
   syncFieldArrows();
+
+  // Primetime gallery — two rows, shared arrows
+  document.getElementById('primetime-section-label').href = `${ROOT}/archive.html`;
+
+  const allPrimetime = WRECKS.filter(w => w.hasPrimetime);
+  const half         = Math.ceil(allPrimetime.length / 2);
+
+  function makePrimetimeTiles(wrecks) {
+    return wrecks.map(w => `
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+      </a>`).join('');
+  }
+
+  const pt1      = document.getElementById('primetime-track');
+  const pt2      = document.getElementById('primetime-track-2');
+  const ptLeft   = document.getElementById('primetime-left');
+  const ptRight  = document.getElementById('primetime-right');
+  const ptSection = pt1.closest('section');
+
+  pt1.innerHTML = makePrimetimeTiles(allPrimetime.slice(0, half));
+  pt2.innerHTML = makePrimetimeTiles(allPrimetime.slice(half));
+
+  const ptStep = () => pt1.clientWidth;
+
+  function syncPtArrows() {
+    ptLeft.disabled  = pt1.scrollLeft <= 0;
+    ptRight.disabled = pt1.scrollLeft >= pt1.scrollWidth - pt1.clientWidth - 1;
+  }
+
+  function scrollBothPt(delta) {
+    pt1.scrollBy({ left: delta, behavior: 'smooth' });
+    pt2.scrollBy({ left: delta, behavior: 'smooth' });
+  }
+
+  let ptTimer = null;
+  function ptAutoStep() {
+    const atEnd = pt1.scrollLeft >= pt1.scrollWidth - pt1.clientWidth - 1;
+    scrollBothPt(atEnd ? -pt1.scrollWidth : ptStep());
+  }
+  function startPtAuto() { if (!ptTimer) ptTimer = setInterval(ptAutoStep, 6000); }
+  function stopPtAuto()  { clearInterval(ptTimer); ptTimer = null; }
+
+  startPtAuto();
+  ptSection.addEventListener('mouseenter', stopPtAuto);
+  ptSection.addEventListener('mouseleave', startPtAuto);
+
+  ptLeft.addEventListener('click',  () => scrollBothPt(-ptStep()));
+  ptRight.addEventListener('click', () => scrollBothPt( ptStep()));
+  pt1.addEventListener('scroll', syncPtArrows);
+  syncPtArrows();
 </script>
 </body>
 </html>

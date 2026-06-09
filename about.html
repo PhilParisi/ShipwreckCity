@@ -32,6 +32,24 @@
     }
     .about-aside .aside-label { font-size: 16px; }
     .about-aside-block { margin-bottom: 36px; }
+    .about-aside {
+      display: flex; flex-direction: column; height: 100%;
+    }
+    .about-aside-block:last-child {
+      flex: 1; min-height: 0; display: flex; flex-direction: column; margin-bottom: 0;
+    }
+    .about-journey-photos {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+      overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .about-journey-photos:hover { overflow-y: auto; }
+    .about-journey-photos div { display: block; overflow: hidden; flex-shrink: 0; }
+    .about-journey-photos img {
+      width: 100%; display: block; object-fit: cover;
+      transition: transform 0.3s ease; filter: brightness(0.85);
+    }
+    .about-journey-photos div:hover img { transform: scale(1.03); filter: brightness(1); }
     .cta-block {
       margin-top: 56px;
       padding: 36px;
@@ -207,6 +225,13 @@
         <a id="about-contact-btn" href="#" class="download-btn" style="margin-top:8px;">Contact the Team →</a>
       </div>
       <div class="about-aside-block">
+        <div class="aside-label">Want to Help?</div>
+        <p style="font-family:var(--font-serif);font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
+          We are moved by the generosity of the community. Every donation moves the archive forward.
+        </p>
+        <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Support the Project →</a>
+      </div>
+      <div class="about-aside-block">
         <div class="aside-label">Press &amp; Media</div>
         <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
           Photos, boilerplate, and media inquiries.
@@ -222,6 +247,10 @@
           Hosted on GitHub Pages
         </p>
       </div>
+      <div class="about-aside-block">
+        <div class="aside-label">The Team</div>
+        <div class="about-journey-photos" id="about-journey-photos"></div>
+      </div>
     </div>
   </div>
 
@@ -230,12 +259,21 @@
 <div id="footer-mount"></div>
 
 <script src="js/wrecks-data.js"></script>
+<script src="js/photos-data.js"></script>
 <script src="js/site.js"></script>
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('about');
   document.getElementById('footer-mount').innerHTML = buildFooter();
   document.getElementById('about-total').textContent = WRECKS.length;
   document.getElementById('about-contact-btn').href = `${ROOT}/contact.html`;
+
+  const photoEl = document.getElementById('about-journey-photos');
+  if (ABOUT_PHOTOS.length) {
+    photoEl.innerHTML = ABOUT_PHOTOS.map(f => `
+      <div>
+        <img src="${ROOT}/img/about-page/${f}" alt="From the field" loading="lazy">
+      </div>`).join('');
+  }
 </script>
 </body>
 </html>

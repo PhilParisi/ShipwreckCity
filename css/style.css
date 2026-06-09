@@ -621,7 +621,7 @@ a.section-label-link:hover { color: var(--text-primary); }
   border-bottom: 1px solid var(--border);
   padding: 48px 0;
 }
-.map-section .container { padding: 0 32px; }
+.map-section .container { padding: 0 32px; max-width: 1320px; }
 
 .map-wrapper {
   position: relative;

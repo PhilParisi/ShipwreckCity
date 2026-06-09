@@ -92,14 +92,14 @@
       scrollbar-width: thin; scrollbar-color: var(--border) transparent;
     }
     .journey-photos:hover { overflow-y: auto; }
-    .journey-photos a { display: block; overflow: hidden; flex-shrink: 0; }
+    .journey-photos div { display: block; overflow: hidden; flex-shrink: 0; }
     .journey-photos img {
       width: 100%; display: block;
       object-fit: cover;
       transition: transform 0.3s ease;
       filter: brightness(0.85);
     }
-    .journey-photos a:hover img { transform: scale(1.03); filter: brightness(1); }
+    .journey-photos div:hover img { transform: scale(1.03); filter: brightness(1); }
 
     @media (max-width: 700px) {
       .support-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -145,6 +145,15 @@
       font-size: 17px;
       color: var(--text-muted);
       line-height: 1.75;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+    }
+    .los-card-cite {
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      padding-left: 23px;
     }
     @media (max-width: 700px) {
       .los-grid { grid-template-columns: 1fr; }
@@ -167,15 +176,56 @@
 
 <section class="section container">
   <div class="support-grid">
-    <div class="support-body">
 
-      <h2>Who's Lending a Hand?</h2>
-      <p>
+    <!-- Left: intro text -->
+    <div>
+      <h2 style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);margin:0 0 16px;">Who's Lending a Hand?</h2>
+      <p style="font-family:var(--font-serif);font-size:20px;color:var(--text-mid);line-height:1.95;margin:0 0 48px;">
         Shipwreck City has been shaped by the kindness of individuals and organizations
         across the Seattle maritime community — people who opened their docks, lent their
         vessels, wrote letters on our behalf, and introduced us to the right people at the
         right time. This page is a record of that generosity.
       </p>
+
+      <h2 id="los-heading" style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);margin:0 0 12px;">Letters of Support</h2>
+      <p style="font-family:var(--font-serif);font-size:20px;color:var(--text-mid);line-height:1.95;margin:0;">
+        These letters represent formal endorsements from Seattle's maritime, cultural, and environmental community. Each organization has reviewed our work firsthand and chosen to stand behind it — lending credibility, opening doors, and strengthening the case that this archive matters.
+      </p>
+    </div>
+
+    <!-- Right: Project area + Supporters -->
+    <div class="support-aside">
+      <div class="support-aside-block">
+        <div class="aside-label" style="margin-top:0;">Project area</div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:17px;color:var(--text-muted);line-height:1.7;">
+          Lake Union &amp; Connecting Waterways<br>Seattle, Washington<br>47°37'N 122°20'W
+        </p>
+      </div>
+      <div class="support-aside-block">
+        <div class="aside-label">Volunteers and Supporters</div>
+        <div id="supporter-count" style="font-family:var(--font-display);font-size:62px;color:var(--text-primary);">—</div>
+      </div>
+      <div class="support-aside-block">
+        <div class="aside-label">Want to help?</div>
+        <p style="font-family:var(--font-serif);font-size:17px;color:var(--text-muted);line-height:1.7;">
+          We are moved by the generosity of the community. Every donation moves the archive forward.
+        </p>
+        <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn" style="margin-top:16px;">
+          Support the project →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="los-section" style="padding-top:0;">
+  <div class="los-grid" id="los-grid"></div>
+</div>
+
+<section class="section container" style="padding-top:0;">
+  <div class="support-grid">
+    <div class="support-body">
 
       <h2>Organizations</h2>
       <p>
@@ -202,38 +252,12 @@
 
     <div class="support-aside">
       <div class="support-aside-block">
-        <div class="aside-label" style="margin-top:0;">Project area</div>
-        <p style="font-family:var(--font-serif);font-style:italic;font-size:17px;color:var(--text-muted);line-height:1.7;">
-          Lake Uniom & Connecting Waterways<br>Seattle, Washington<br>47°37'N 122°20'W
-        </p>
-      </div>
-      <div class="support-aside-block">
-        <div class="aside-label">Supporters</div>
-        <div id="supporter-count" style="font-family:var(--font-display);font-size:62px;color:var(--text-primary);">—</div>
-      </div>
-      <div class="support-aside-block">
-        <div class="aside-label">Want to help?</div>
-        <p style="font-family:var(--font-serif);font-size:17px;color:var(--text-muted);line-height:1.7;">
-          We are are moved by the generosity of the community. Every donation moves the archive forward.
-        </p>
-        <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn" style="margin-top:16px;">
-          Support the project →
-        </a>
-      </div>
-      <div class="support-aside-block">
         <div class="aside-label">From the field</div>
         <div class="journey-photos" id="journey-photos"></div>
       </div>
     </div>
   </div>
 </section>
-
-<div class="los-section">
-  <div class="container" style="padding:0;">
-    <h2 id="los-heading" style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);margin:0 0 24px;">Letters of Support</h2>
-  </div>
-  <div class="los-grid" id="los-grid"></div>
-</div>
 
 <div class="container" style="padding-top:0; padding-bottom:64px;">
   <div class="cta-block">
@@ -295,6 +319,7 @@
       <${tag} class="los-card">
         <div class="los-card-name">${s.name}</div>
         <div class="los-card-text">"${s.LOS}"</div>
+        ${s.LOSAttrib ? `<cite class="los-card-cite">— ${s.LOSAttrib}</cite>` : ''}
       </${close}>`;
   }).join('');
 
