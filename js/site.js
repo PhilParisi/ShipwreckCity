@@ -197,6 +197,43 @@ function addTileToggle(L, map, tiles, defaultLayer = 'Dark') {
   }, true);
 })();
 
+// ── License modal (shared across all download buttons) ───────────────────────
+function showLicenseModal(onAccept) {
+  let modal = document.getElementById('sc-license-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'sc-license-modal';
+    modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;';
+    modal.innerHTML = `
+      <div style="background:var(--bg-card);border:1px solid var(--border-mid);max-width:480px;width:90%;padding:36px;position:relative;">
+        <div style="font-family:var(--font-display);font-size:28px;letter-spacing:1px;color:var(--text-primary);margin-bottom:16px;">LICENSE TERMS</div>
+        <div style="font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:var(--accent);margin-bottom:20px;">CC BY-NC 4.0 — CREATIVE COMMONS</div>
+        <div style="font-family:var(--font-serif);font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:24px;">
+          These photos are free to use under the following terms:
+          <ul style="margin:12px 0 0 20px;padding:0;">
+            <li style="margin-bottom:8px;"><strong style="color:var(--text-primary);">Credit required</strong> — attribute ShipwreckCity.org</li>
+            <li><strong style="color:var(--text-primary);">Non-commercial only</strong> — no advertising, stock sales, or paid publications</li>
+          </ul>
+        </div>
+        <div style="font-family:var(--font-serif);font-size:13px;color:var(--text-muted);margin-bottom:28px;">
+          For commercial use or licensing, contact <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>.
+        </div>
+        <div style="display:flex;gap:12px;">
+          <button id="sc-license-accept" class="download-btn" style="flex:1;text-align:center;">Accept &amp; Download ↓</button>
+          <button id="sc-license-cancel" style="flex:0 0 auto;font-family:var(--font-body);font-size:11px;letter-spacing:1px;background:none;border:1px solid var(--border-mid);color:var(--text-muted);padding:12px 20px;cursor:pointer;">Cancel</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    document.getElementById('sc-license-cancel').addEventListener('click', () => { modal.style.display = 'none'; });
+    modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+  }
+  const old = document.getElementById('sc-license-accept');
+  const fresh = old.cloneNode(true);
+  old.parentNode.replaceChild(fresh, old);
+  fresh.addEventListener('click', () => { modal.style.display = 'none'; onAccept(); });
+  modal.style.display = 'flex';
+}
+
 function makePopup(wreck) {
   return `
     <div class="popup-catalog">${wreck.catalog}</div>

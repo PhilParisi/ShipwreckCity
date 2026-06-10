@@ -185,30 +185,34 @@
       <div class="press-boilerplate">
         <p>
           Shipwreck City is a volunteer-led ROV exploration project documenting the sunken
-          vessels of Seattle's Lake Union and adjcent waterways. Using underwater robots equipped with cameras and
+          vessels of Seattle's Lake Union and adjacent waterways. Using underwater robots equipped with cameras and
           side-scan sonar, the team is cataloging the 100+ submerged targets and releasing the
           entire archive for free at <a href="https://shipwreckcity.org">ShipwreckCity.org</a>.
         </p>
       </div>
 
-      <h2>Quote for Use</h2>
+      <h2>Quotes for Use</h2>
       <div class="press-quote">
         <blockquote>"Lake Union is one of Seattle's most-visited lakes — and almost nobody knows what's beneath the surface. We're changing that."</blockquote>
         <cite>— Phil Parisi, Founder and ROV Pilot, <a href="https://shipwreckcity.org">ShipwreckCity.org</a></cite>
       </div>
+      <div class="press-quote">
+        <blockquote>"Every ROV dive into Lake Union is a mystery. We go down never knowing exactly what we're going to find, and that's the best part."</blockquote>
+        <cite>— Captain George Spano, Boat Captain, <a href="https://shipwreckcity.org">ShipwreckCity.org</a></cite>
+      </div>
 
       <h2>Usage Rights</h2>
       <div class="cc-block">
-        <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons Attribution 4.0 International">
+        <img src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" alt="Creative Commons Attribution-NonCommercial 4.0 International">
         <p>
           All photos, video stills, data, and written content published on ShipwreckCity.org are
-          licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--accent);">Creative Commons Attribution 4.0 (CC BY 4.0)</a>.
-          You are free to share, reproduce, and adapt this material for any purpose — including
-          commercial use — as long as appropriate credit is given.<br><br>
+          licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener" style="color:var(--accent);">Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)</a>.
+          You are free to share, reproduce, and adapt this material for non-commercial purposes,
+          as long as appropriate credit is given.<br><br>
           <strong style="color:var(--text-primary);">Suggested credit line:</strong>
           Photo courtesy of Shipwreck City / ShipwreckCity.org<br><br>
-          <strong style="color:var(--text-primary);">One request:</strong>
-          If you're writing a story, please send an email to <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>. 
+          <strong style="color:var(--text-primary);">Uses:</strong>
+          If you're writing a story or article, please send an email to <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>. 
           We love to engage with coverage and will link your article on our site.
         </p>
       </div>
@@ -220,13 +224,13 @@
       <div class="press-aside-block">
         <div class="aside-label" style="margin-top:0;">Download Photos</div>
         <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:16px;">
-          Primetime image from each documented wreck, packaged as a single ZIP. Free to use — credit ShipwreckCity.org.
+          Primetime image from each documented wreck, packaged as a single ZIP. Free for non-commercial use — credit ShipwreckCity.org.
         </p>
         <button id="press-download-btn" class="download-btn" style="width:100%;text-align:center;">
           Download Press Photos ↓
         </button>
         <p style="font-family:var(--font-body);font-size:11px;letter-spacing:1px;color:var(--text-muted);margin-top:10px;line-height:1.8;">
-          <span id="press-photo-count">—</span> photos · ~45 MB · CC BY 4.0
+          <span id="press-photo-count">—</span> photos · ~45 MB · CC BY-NC 4.0
         </p>
       </div>
 
@@ -250,7 +254,7 @@
           <div style="margin-top:10px;"><strong style="color:var(--text-primary);">Coordinates</strong><br>47°37'N 122°20'W</div>
           <div style="margin-top:10px;"><strong style="color:var(--text-primary);">ROV Platform</strong><br><a href="https://bluerobotics.com/store/rov/bluerov2/" target="_blank" rel="noopener" style="color:var(--accent);">Blue Robotics BlueROV2</a></div>
           <div style="margin-top:10px;"><strong style="color:var(--text-primary);">Sonar</strong><br><a href="https://ceruleansonar.com/product/omniscan-450fs-100m-rated/" target="_blank" rel="noopener" style="color:var(--accent);">Cerulean FS450 Side Scan</a></div>
-          <div style="margin-top:10px;"><strong style="color:var(--text-primary);">License</strong><br>CC BY 4.0</div>
+          <div style="margin-top:10px;"><strong style="color:var(--text-primary);">License</strong><br>CC BY-NC 4.0</div>
         </div>
       </div>
 
@@ -277,6 +281,27 @@
     <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
       <a href="mailto:phil@shipwreckcity.org" class="download-btn">Email Phil →</a>
       <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
+    </div>
+  </div>
+</div>
+
+<div id="license-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:var(--bg-card);border:1px solid var(--border-mid);max-width:480px;width:90%;padding:36px;position:relative;">
+    <div style="font-family:var(--font-display);font-size:28px;letter-spacing:1px;color:var(--text-primary);margin-bottom:16px;">LICENSE TERMS</div>
+    <div style="font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:var(--accent);margin-bottom:20px;">CC BY-NC 4.0 — CREATIVE COMMONS</div>
+    <div style="font-family:var(--font-serif);font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:24px;">
+      These photos are free to use under the following terms:
+      <ul style="margin:12px 0 0 20px;padding:0;">
+        <li style="margin-bottom:8px;"><strong style="color:var(--text-primary);">Credit required</strong> — attribute ShipwreckCity.org</li>
+        <li><strong style="color:var(--text-primary);">Non-commercial only</strong> — no advertising, stock sales, or paid publications</li>
+      </ul>
+    </div>
+    <div style="font-family:var(--font-serif);font-size:13px;color:var(--text-muted);margin-bottom:28px;">
+      For commercial use or licensing, contact <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>.
+    </div>
+    <div style="display:flex;gap:12px;">
+      <button id="license-accept-btn" class="download-btn" style="flex:1;text-align:center;">Accept &amp; Download ↓</button>
+      <button id="license-cancel-btn" style="flex:0 0 auto;font-family:var(--font-body);font-size:11px;letter-spacing:1px;background:none;border:1px solid var(--border-mid);color:var(--text-muted);padding:12px 20px;cursor:pointer;">Cancel</button>
     </div>
   </div>
 </div>
@@ -318,7 +343,22 @@
   `).join('');
 
   // Press photo bulk download
-  document.getElementById('press-download-btn').addEventListener('click', async () => {
+  const modal = document.getElementById('license-modal');
+
+  document.getElementById('press-download-btn').addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+
+  document.getElementById('license-cancel-btn').addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+
+  document.getElementById('license-accept-btn').addEventListener('click', async () => {
+    modal.style.display = 'none';
     const btn = document.getElementById('press-download-btn');
     btn.textContent = 'Preparing download…';
     btn.disabled = true;

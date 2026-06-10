@@ -278,8 +278,13 @@
   // Wire download button to the dated CSV filename from photos-data.js
   const csvBtn = document.getElementById('csv-download-btn');
   if (typeof ARCHIVE_CSV_FILENAME !== 'undefined' && ARCHIVE_CSV_FILENAME) {
-    csvBtn.href     = `${ROOT}/data/${ARCHIVE_CSV_FILENAME}`;
+    const csvHref = `${ROOT}/data/${ARCHIVE_CSV_FILENAME}`;
+    csvBtn.href     = '#';
     csvBtn.download = ARCHIVE_CSV_FILENAME;
+    csvBtn.addEventListener('click', e => {
+      e.preventDefault();
+      showLicenseModal(() => { window.location.href = csvHref; });
+    });
     const m = ARCHIVE_CSV_FILENAME.match(/(\d+)([A-Za-z]+)(\d{4})/);
     if (m) {
       const pct = WRECKS.length ? Math.round(61 / WRECKS.length * 100) : 0;
@@ -298,9 +303,34 @@
     else       { img.closest('.td-img').style.background = 'var(--bg-deep)'; img.style.display = 'none'; }
   }
 
+  const WRECK_TYPES = new Set([
+    'Shipwreck','Barge','Small wooden boat','Landing Craft','Pleasure craft',
+    'Cruising Vessel','Wooden Barge with special purpose','Wooden Barge',
+    'Shipwreck (longboat style hull)','Small wood work barge','Boat',
+    'Shipwreck Under Docks','Large wood boat/Tug','Cabin Cruiser','Wood Craft',
+    'Possible Barge Under Silt','Steel Workboat','Metal fire Boat','Small wood barge',
+    'Bowsprit Boat','Large Sailboat','Fishing Vessel','Patrol Craft',
+    'Big Wooden (sternwheeler)','Sailboat','Wooden Shipwreck','Barge or Dock',
+    'Yard Class Minesweeper','Double Ended Sailer','Wooden Pleasure Craft',
+    'Cannery Tender','Likely Barge','Boat Partially in Mud','Bulwarks Boat',
+    'Fiberglass boat with cabin',"35' wooden vessel with cabin",
+    'Small Metal Boat with sunken docks nearby','Kayak',
+    'Large vessel under dock possible sailboat','Shipwreck - Odd angle on sonar',
+    'Shipwreck - Small tender','Unknown Fiberglass Rowboat / Canoe',
+    'Wooden boat','Fiberglass boat','Coast Guard Cutter (light ice breaker)',
+    'Metal Hull','Personal Liveaboard','Draft Marker Boat',
+    "45' wooden boat. Possible Name Lettering \\",
+    'Unknown work boat, with wood / concrete dock adjacent',
+    'Barge and Debris Against Bulkhead',
+    'Barge near end of Dock Pilings & Stormwater Outfall',
+    'Stated to have been removed along with unnamed partial Barge with Bridge repair',
+    'Small barge, trailer, debris field',
+  ]);
+
   function renderTable(filter) {
     const filtered = filter === 'all'             ? WRECKS
                    : filter === 'newly-uncovered' ? WRECKS.filter(w => w.newTarget)
+                   : filter === 'wrecks'          ? WRECKS.filter(w => WRECK_TYPES.has(w.type))
                    : WRECKS.filter(w => w.status === filter || w.type === filter);
     document.getElementById('archive-count').textContent = `${filtered.length} Target${filtered.length !== 1 ? 's' : ''} — Lake Union`;
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
@@ -321,12 +351,12 @@
     `).join('');
   }
 
-  // Build filter buttons from unique statuses + newly uncovered
-  const statuses = ['all', ...new Set(WRECKS.map(w => w.status)), 'newly-uncovered'];
+  // Build filter buttons from unique statuses + wrecks + newly uncovered
+  const statuses = ['all', 'wrecks', ...new Set(WRECKS.map(w => w.status)), 'newly-uncovered'];
   const filterBar = document.getElementById('filter-bar');
   filterBar.innerHTML = statuses.map(s => `
     <button class="filter-btn ${s === 'all' ? 'active' : ''}" data-filter="${s}">
-      ${s === 'all' ? 'All wrecks' : s === 'newly-uncovered' ? 'Newly Uncovered' : statusLabel(s)}
+      ${s === 'all' ? 'All Targets' : s === 'wrecks' ? 'Wrecks' : s === 'newly-uncovered' ? 'Newly Uncovered' : statusLabel(s)}
     </button>
   `).join('');
 

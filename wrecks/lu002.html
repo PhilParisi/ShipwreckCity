@@ -176,16 +176,16 @@
           ${wreck.dimensions ? `<div class="aside-detail-row"><span>Dimensions</span><span>${wreck.dimensions}</span></div>` : ''}
           <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
 
-          <div class="aside-label" style="margin-top:28px;">All wrecks</div>
+          <a class="aside-label" href="${ROOT}/archive.html" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
           <div style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
           ${WRECKS.map(w => `
             <a href="${ROOT}/wrecks/${w.id}.html" style="
               display:block;padding:10px 0;border-bottom:1px solid var(--border);
-              color:${w.id === wreck.id ? 'var(--text-primary)' : 'var(--text-faint)'};
-              text-decoration:none;font-size:17px;letter-spacing:1px;
+              color:${w.id === wreck.id ? 'var(--accent)' : 'var(--text-primary)'};
+              text-decoration:none;font-size:14px;letter-spacing:1px;
               ${w.id === wreck.id ? 'pointer-events:none;' : ''}
             ">
-              <span style="color:var(--accent);margin-right:8px;font-size:17px;">${w.catalog}</span>${w.name}
+              <span style="color:var(--accent);margin-right:8px;font-size:14px;">${w.catalog}</span>${w.name}
             </a>
           `).join('')}
           </div>
@@ -262,7 +262,7 @@
       });
 
       document.getElementById('gallery-download-btn').addEventListener('click', () => {
-        downloadImagesZip(wreck.id, dlPhotos);
+        showLicenseModal(() => downloadImagesZip(wreck.id, dlPhotos));
       });
     }
 
