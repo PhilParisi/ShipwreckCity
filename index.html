@@ -50,6 +50,33 @@
     #primetime-track-2 .field-photo-tile:hover img {
       filter: brightness(1.1) contrast(1.08) saturate(1.2);
     }
+    .index-los-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    .los-card {
+      border: 1px solid var(--border-mid);
+      background: var(--bg-card);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: background 0.2s, border-color 0.2s;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .los-card:hover {
+      background: var(--bg-hover);
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+    .los-card-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--accent); }
+    .los-card-text { font-family: var(--font-serif); font-style: italic; font-size: 17px; color: var(--text-muted); line-height: 1.75; border-left: 3px solid var(--accent); padding-left: 20px; }
+    .los-card-cite { font-family: var(--font-body); font-size: 14px; letter-spacing: 1.5px; color: var(--text-muted); padding-left: 23px; }
+    @media (max-width: 900px) { .index-los-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -93,6 +120,14 @@
     <div class="wrecks-scroll-track" id="wrecks-grid"></div>
     <button class="scroll-arrow scroll-arrow-right" id="scroll-right" aria-label="Scroll right">&#8594;</button>
   </div>
+</section>
+
+<!-- MISSION STATEMENT -->
+<section style="padding:48px 10%;border-top:1px solid var(--text-primary);border-bottom:1px solid var(--text-primary);">
+  <div style="font-family:var(--font-display);font-size:28px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);text-align:center;margin-bottom:24px;">Our Mission</div>
+  <p style="font-family:var(--font-serif);font-size:31px;line-height:1.8;color:var(--text-primary);max-width:1200px;margin:0 auto;text-align:center;">
+    <a href="about.html" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">Shipwreck City</a> is a volunteer effort to <span style="color:var(--accent);">find</span>, <span style="color:var(--accent);">film</span>, <span style="color:var(--accent);">archive</span>, and <span style="color:var(--accent);">share</span> every <a href="archive.html" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">sunken vessel</a> in Lake Union, one of Seattle's most treasured waterways.
+  </p>
 </section>
 
 <!-- MAP -->
@@ -245,6 +280,7 @@
 <section class="supporters-section">
     <a id="supporters-section-label" class="index-section-heading">Supporters</a>
     <div class="supporters-grid" id="supporters-grid"></div>
+    <div class="index-los-grid" id="index-los-grid"></div>
     <div class="cta-block">
       <p>
         If you would like to support Shipwreck City — whether through dock access,
@@ -266,6 +302,17 @@
 <script src="js/links-data.js"></script>
 <script src="js/site.js"></script>
 <script>
+  // Letters of Support
+  document.getElementById('index-los-grid').innerHTML = SUPPORTERS.filter(s => s.LOS).map(s => {
+    const tag   = s.url ? `a href="${s.url}" target="_blank" rel="noopener"` : 'div';
+    const close = s.url ? 'a' : 'div';
+    return `<${tag} class="los-card">
+      <div class="los-card-name">${s.name}</div>
+      <div class="los-card-text">"${s.LOS}"</div>
+      ${s.LOSAttrib ? `<cite class="los-card-cite">— ${s.LOSAttrib}</cite>` : ''}
+    </${close}>`;
+  }).join('');
+
   // Supporter logos
   document.getElementById('supporters-grid').innerHTML = SUPPORTERS
     .filter(s => s.logo)

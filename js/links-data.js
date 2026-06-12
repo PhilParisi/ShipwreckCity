@@ -15,13 +15,13 @@
 
 const SUPPORTERS = [
   {
-    name: "DCS Films",
-    url:  "http://www.dcsfilms.com/Site_4/DCS_Website.html",
-    logo: "img/supporters-logo/dcslogo.webp",
+    name: "Lake Union Virtual Museum",
+    url:  "https://lakeunionvirtualmuseum.org",
+    logo: "img/supporters-logo/luvm.webp",
     type: "organization",
-    note: "Advanced technical divers (Dan, Carl, and Scott) dedicated to underwater cinematography who shared their Seattle dive logs and shipwreck footage.",
-    LOS: "This project will continue on the work of many local individuals to educate the future by diving into the past.",
-    LOSAttrib: "Dan Warter, President"
+    note: "Online museum dedicated to the history of Lake Union — a foundational inspiration for Shipwreck City's mission to document the lake's sunken heritage.",
+    LOS:  "I am excited to see that Phil Parisi and Shipwreck City are continuing the work of exploring the shipwrecks of Lake Union. They are bringing passion and curiosity, together with expertise in un-manned submersibles, to document these shipwrecks and the lake bottom more thoroughly and vividly than has ever been done before. I look forward to new discoveries and new videos from Shipwreck City.",
+    LOSAttrib: "Vaun Raymond, Creator"
   },
   {
     name: "United Indians of All Tribes Foundation",
@@ -31,6 +31,15 @@ const SUPPORTERS = [
     note: "Stewards of the Northwest Native Canoe Center in South Lake Union — formally endorsed Shipwreck City's work mapping the environmental and cultural history of the lake.",
     LOS:  "As the stewards of the Northwest Native Canoe Center in South Lake Union, the United Indians of All Tribes Foundation is committed to working with all willing community stakeholders to gain an evolving understanding of current environmental conditions around the lake. We fully support Shipwreck City for mapping the lake like nobody else has.",
     LOSAttrib: "Michael Tulee, CEO"
+  },
+  {
+    name: "DCS Films",
+    url:  "http://www.dcsfilms.com/Site_4/DCS_Website.html",
+    logo: "img/supporters-logo/dcslogo.webp",
+    type: "organization",
+    note: "Advanced technical divers (Dan, Carl, and Scott) dedicated to underwater cinematography who shared their Seattle dive logs and shipwreck footage.",
+    LOS: "This project will continue on the work of many local individuals to educate the future by diving into the past.",
+    LOSAttrib: "Dan Warter, President"
   },
   {
     name: "Museum of History & Industry (MOHAI)",
