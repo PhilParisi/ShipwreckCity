@@ -164,7 +164,15 @@
         </div>
 
         <div class="wreck-aside">
-          <div class="aside-label">Location</div>
+          <div class="aside-label" style="display:flex;align-items:center;gap:8px;">
+            <span>Location</span>
+            <span id="maps-link"
+               style="display:none;color:#fff;opacity:0.55;line-height:1;transition:opacity 0.15s;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+            </span>
+          </div>
           <div class="aside-coord" id="coord-display">—</div>
           <div id="wreck-detail-map"></div>
 
@@ -392,6 +400,28 @@
     if (wreck.coordinates) {
       const coordEl = document.getElementById('coord-display');
       coordEl.innerHTML = coordDisplay(wreck.coordinates);
+      const mapsUrl = `https://www.google.com/maps?q=${wreck.coordinates[0]},${wreck.coordinates[1]}`;
+      coordEl.style.cssText += ';cursor:pointer;transition:color 0.15s;';
+      coordEl.addEventListener('mouseover', () => coordEl.style.color = '#fff');
+      coordEl.addEventListener('mouseout',  () => coordEl.style.color = '');
+      coordEl.addEventListener('click',     () => window.open(mapsUrl, '_blank'));
+
+      const mapsLink = document.getElementById('maps-link');
+      mapsLink.style.display = 'inline-flex';
+
+      const locationRow = mapsLink.parentElement;
+      const locationSpan = locationRow.querySelector('span');
+      locationSpan.style.transition = 'color 0.15s';
+      locationRow.style.cursor = 'pointer';
+      locationRow.addEventListener('click',     () => window.open(mapsUrl, '_blank'));
+      locationRow.addEventListener('mouseover', () => {
+        locationSpan.style.color = '#fff';
+        mapsLink.style.opacity = '1';
+      });
+      locationRow.addEventListener('mouseout', () => {
+        locationSpan.style.color = '';
+        mapsLink.style.opacity = '0.55';
+      });
 
       const miniMap = L.map('wreck-detail-map', {
         center: wreck.coordinates,
@@ -407,6 +437,9 @@
         .addTo(miniMap)
         .bindPopup(wreck.name)
         .openPopup();
+
+      miniMap.on('click', () => window.open(mapsUrl, '_blank'));
+      document.getElementById('wreck-detail-map').style.cursor = 'pointer';
     }
   }
 </script>

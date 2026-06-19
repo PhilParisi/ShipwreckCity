@@ -16,7 +16,7 @@
 const SUPPORTERS = [
   {
     name: "Lake Union Virtual Museum",
-    url:  "https://lakeunionvirtualmuseum.org",
+    url:  "http://www.lakeunionhistory.org/Home.html",
     logo: "img/supporters-logo/luvm.webp",
     type: "organization",
     note: "Online museum dedicated to the history of Lake Union — a foundational inspiration for Shipwreck City's mission to document the lake's sunken heritage.",
