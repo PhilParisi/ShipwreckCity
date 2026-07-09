@@ -234,7 +234,7 @@ def convert(csv_path):
                 "hasPrimetime": has_primetime,
                 "images":      images,
                 "featured":    False,
-                "newTarget":   (row.get('sc_newly_uncovered') or '').strip().lower() == 'yes',
+                "newTarget":   (row.get('sc_newly_uncovered_wreck') or '').strip().lower() == 'yes',
                 "diveDuration": (lambda v: float(v) if v else None)(clean(row.get('sc_rov_dive_duration'))),
                 "css_url":     clean(row.get('css_url')),
                 "dcs_url":     clean(row.get('dcs_url')),

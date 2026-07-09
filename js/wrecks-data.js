@@ -2799,7 +2799,7 @@ const WRECKS = [
     hasPrimetime: true,
     images: ["frame_0016.webp", "frame_0017.webp", "frame_0018.webp", "frame_0019.webp", "frame_0020.webp", "frame_0021.webp", "frame_0022.webp", "frame_0023.webp", "frame_0024.webp", "frame_0025.webp", "frame_0026.webp", "frame_0027.webp", "frame_0028.webp", "frame_0030.webp", "frame_0031.webp", "frame_0032.webp", "frame_0033.webp", "frame_0034.webp", "frame_0035.webp", "primetime.webp", "ss1.webp"],
     featured: false,
-    newTarget: false,
+    newTarget: true,
     diveDuration: null,
     css_url: null,
     dcs_url: null,
