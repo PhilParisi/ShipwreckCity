@@ -282,23 +282,33 @@
   document.getElementById('nav-mount').innerHTML    = buildNav('archive');
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
-  // Wire download button to the dated CSV filename from photos-data.js
+  // Dynamically find whichever .csv or .xlsx is in the data/ folder
   const csvBtn = document.getElementById('csv-download-btn');
-  if (typeof ARCHIVE_CSV_FILENAME !== 'undefined' && ARCHIVE_CSV_FILENAME) {
-    const csvHref = `${ROOT}/data/${ARCHIVE_CSV_FILENAME}`;
+  (async () => {
+    let filename = null;
+    try {
+      const res  = await fetch(`${ROOT}/data/`);
+      const html = await res.text();
+      const matches = [...html.matchAll(/href="([^"?#]*\.(csv|xlsx))"/gi)];
+      if (matches.length) filename = matches[matches.length - 1][1].split('/').pop();
+    } catch (e) {}
+    // Fallback to the constant defined in photos-data.js
+    if (!filename && typeof ARCHIVE_CSV_FILENAME !== 'undefined') filename = ARCHIVE_CSV_FILENAME;
+    if (!filename) return;
+
     csvBtn.href     = '#';
-    csvBtn.download = ARCHIVE_CSV_FILENAME;
+    csvBtn.download = filename;
     csvBtn.addEventListener('click', e => {
       e.preventDefault();
-      showLicenseModal(() => { window.location.href = csvHref; });
+      showLicenseModal(() => { window.location.href = `${ROOT}/data/${filename}`; });
     });
-    const m = ARCHIVE_CSV_FILENAME.match(/(\d+)([A-Za-z]+)(\d{4})/);
+    const m = filename.match(/(\d+)([A-Za-z]+)(\d{4})/);
     if (m) {
       const pct = WRECKS.length ? Math.round(62 / WRECKS.length * 100) : 0;
       document.getElementById('archive-last-updated').textContent =
         `The Archive Dataset was last updated on: ${m[1]} ${m[2]} ${m[3]}. The Project is ${pct}% complete.`;
     }
-  }
+  })();
 
   let activeFilter = 'all';
 
