@@ -117,7 +117,8 @@ const WRECKS = [
     newTarget: false,
     diveDuration: 0.5,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU03",
-    dcs_url: null,
+    dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_Survey.html",
+    luvm_url: "http://www.lakeunionhistory.org/Old_Barge.html",
   },
   {
     id: "lu004",
@@ -196,6 +197,7 @@ const WRECKS = [
     diveDuration: 0.5,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU06",
     dcs_url: "http://www.dcsfilms.com/Site_4/Higgins_Boat.html",
+    luvm_url: "http://www.lakeunionhistory.org/Higgins_Boat.html",
   },
   {
     id: "lu007",
@@ -222,6 +224,7 @@ const WRECKS = [
     diveDuration: 1.0,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU07",
     dcs_url: "http://www.dcsfilms.com/Site_4/FOSS_54_Lake_Union.html",
+    luvm_url: "http://www.lakeunionhistory.org/Foss_Barge.html",
   },
   {
     id: "lu008",
@@ -248,6 +251,7 @@ const WRECKS = [
     diveDuration: 0.5,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU08",
     dcs_url: "http://www.dcsfilms.com/Site_4/Irene_Lake_Union.html",
+    luvm_url: "http://www.lakeunionhistory.org/Irene.html",
   },
   {
     id: "lu009",
@@ -274,6 +278,7 @@ const WRECKS = [
     diveDuration: 1.0,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU09",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_Targets.html",
+    luvm_url: "http://www.lakeunionhistory.org/Converted_Landing_Craft.html",
   },
   {
     id: "lu010",
@@ -588,6 +593,7 @@ const WRECKS = [
     diveDuration: 0.5,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU21",
     dcs_url: null,
+    luvm_url: "http://www.lakeunionhistory.org/Steel_Workboat.html",
   },
   {
     id: "lu022",
@@ -825,6 +831,7 @@ const WRECKS = [
     diveDuration: null,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU30",
     dcs_url: null,
+    luvm_url: "http://www.lakeunionhistory.org/Large_Sailboat.html",
   },
   {
     id: "lu031",
@@ -876,7 +883,7 @@ const WRECKS = [
     newTarget: false,
     diveDuration: 1.5,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU32",
-    dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_Survey.html",
+    dcs_url: null,
   },
   {
     id: "lu033",
@@ -955,6 +962,7 @@ const WRECKS = [
     diveDuration: null,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU35",
     dcs_url: "http://www.dcsfilms.com/Site_4/Jeanette_Lake_Union.html",
+    luvm_url: "http://www.lakeunionhistory.org/Jeanette.html",
   },
   {
     id: "lu036",
@@ -1035,6 +1043,7 @@ const WRECKS = [
     diveDuration: null,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU38",
     dcs_url: "http://www.dcsfilms.com/Site_4/PC_1138_Lake_Union.html",
+    luvm_url: "http://www.lakeunionhistory.org/Lapeer.html",
   },
   {
     id: "lu039",
@@ -1087,6 +1096,7 @@ const WRECKS = [
     diveDuration: null,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU40",
     dcs_url: null,
+    luvm_url: "http://www.lakeunionhistory.org/Sternwheeler.html",
   },
   {
     id: "lu041",
@@ -1140,6 +1150,7 @@ const WRECKS = [
     diveDuration: null,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU42",
     dcs_url: "http://www.dcsfilms.com/Site_4/JE_Boyden.html",
+    luvm_url: "http://www.lakeunionhistory.org/Boyden.html",
   },
   {
     id: "lu043",
@@ -1665,6 +1676,7 @@ const WRECKS = [
     diveDuration: null,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU62",
     dcs_url: "http://www.dcsfilms.com/Site_4/YMS_105.html",
+    luvm_url: "http://www.lakeunionhistory.org/Gypsy_Queen.html",
   },
   {
     id: "lu063",
@@ -1743,6 +1755,7 @@ const WRECKS = [
     diveDuration: null,
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU65",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_cannery_tender.html",
+    luvm_url: "http://www.lakeunionhistory.org/Cannery_Tender.html",
   },
   {
     id: "lu066",
@@ -2787,6 +2800,32 @@ const WRECKS = [
     images: ["frame_0016.webp", "frame_0017.webp", "frame_0018.webp", "frame_0019.webp", "frame_0020.webp", "frame_0021.webp", "frame_0022.webp", "frame_0023.webp", "frame_0024.webp", "frame_0025.webp", "frame_0026.webp", "frame_0027.webp", "frame_0028.webp", "frame_0030.webp", "frame_0031.webp", "frame_0032.webp", "frame_0033.webp", "frame_0034.webp", "frame_0035.webp", "primetime.webp", "ss1.webp"],
     featured: false,
     newTarget: false,
+    diveDuration: null,
+    css_url: null,
+    dcs_url: null,
+  },
+  {
+    id: "lu106",
+    name: "Wooden Wreck (Unknown)",
+    catalog: "#LU106",
+    type: "Shipwreck",
+    subtype: "Wooden boat",
+    year: null,
+    yearNote: null,
+    depth: 3,
+    coordinates: [47.648319, -122.345848],
+    location: "Seacraft Yacht Docks, Seattle",
+    status: "recently-explored",
+    tagline: "Wooden wreck discovered with the help of a tip from Finn Cady.",
+    summary: "Finn Cady contacted us to look at this wreck — they'd known about it for years. Found near Seacraft Yacht Docks in just 3 feet of water.",
+    history: "NA",
+    discovery: "NA",
+    dimensions: "22' x 8'",
+    footage: null,
+    hasPrimetime: true,
+    images: ["frame0_0007.webp", "frame0_0008.webp", "frame0_0009.webp", "frame0_0010.webp", "frame0_0011.webp", "frame0_0012.webp", "frame0_0013.webp", "frame_0001.webp", "frame_0002.webp", "frame_0003.webp", "frame_0004.webp", "frame_0006.webp", "frame_0007.webp", "frame_0008.webp", "frame_0009.webp", "frame_0010.webp", "frame_0011.webp", "frame_0012.webp", "frame_0013.webp", "frame_0014.webp", "frame_0015.webp", "frame_0016.webp", "frame_0017.webp", "frame_0018.webp", "frame_0019.webp", "frame_0020.webp", "frame_0021.webp", "frame_0022.webp", "frame_0023.webp", "frame_0024.webp", "frame_0025.webp", "frame_0026.webp", "frame_0027.webp", "frame_0028.webp", "frame_0029.webp", "frame_0030.webp", "frame_0031.webp"],
+    featured: false,
+    newTarget: true,
     diveDuration: null,
     css_url: null,
     dcs_url: null,

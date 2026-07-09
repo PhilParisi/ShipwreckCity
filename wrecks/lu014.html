@@ -154,6 +154,7 @@
             <h3>Links &amp; Resources</h3>
             <p><strong>Coastal Sensing &amp; Survey:</strong> ${wreck.css_url ? `<a href="${wreck.css_url}" target="_blank" rel="noopener">${wreck.css_url}</a>` : 'NA'}</p>
             <p><strong>DCS Films:</strong> ${wreck.dcs_url ? `<a href="${wreck.dcs_url}" target="_blank" rel="noopener">${wreck.dcs_url}</a>` : 'NA'}</p>
+            <p><strong>Lake Union Virtual Museum:</strong> ${wreck.luvm_url ? `<a href="${wreck.luvm_url}" target="_blank" rel="noopener">${wreck.luvm_url}</a>` : 'NA'}</p>
           </div>
 
           <!-- GALLERY -->
@@ -185,9 +186,9 @@
           <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
 
           <a class="aside-label" href="${ROOT}/archive.html" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
-          <div style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
+          <div id="archive-scroll" style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
           ${WRECKS.map(w => `
-            <a href="${ROOT}/wrecks/${w.id}.html" style="
+            <a ${w.id === wreck.id ? 'id="archive-current"' : ''} href="${ROOT}/wrecks/${w.id}.html" class="archive-item" style="
               display:block;padding:10px 0;border-bottom:1px solid var(--border);
               color:${w.id === wreck.id ? 'var(--accent)' : 'var(--text-primary)'};
               text-decoration:none;font-size:14px;letter-spacing:1px;
@@ -203,6 +204,13 @@
       <!-- WRECK NAV -->
       ${navHtml}
     `;
+
+    // Scroll archive list so current wreck is at the top
+    const archiveScroll  = document.getElementById('archive-scroll');
+    const archiveCurrent = document.getElementById('archive-current');
+    if (archiveScroll && archiveCurrent) {
+      archiveScroll.scrollTop = archiveCurrent.offsetTop - archiveScroll.offsetTop;
+    }
 
     // ── Primetime image ───────────────────────────────────────────────────────
     const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];

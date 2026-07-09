@@ -878,6 +878,13 @@ a.section-label-link:hover { color: var(--text-primary); }
 }
 .aside-detail-row span:last-child { color: var(--text-primary); }
 
+.archive-item {
+  transition: background 0.15s;
+}
+.archive-item:hover {
+  background: var(--bg-hover);
+}
+
 .footage-embed {
   margin-top: 32px;
   width: 50%;
