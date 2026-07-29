@@ -221,7 +221,7 @@
       <p>
         We are currently focused on Lake Union and the connecting waterways. Future phases may expand to Lake
         Washington, and greater Puget Sound. If you have information about
-        a wreck not in our archive, we want to <a href="contact.html">hear from you</a>!
+        a wreck not in our archive, we want to <a href="contact">hear from you</a>!
       </p>
 
       <div class="cta-block">
@@ -231,7 +231,7 @@
           — we would love to hear from you.
         </p>
         <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
-          <a href="contact.html" class="download-btn">Contact the Team →</a>
+          <a href="contact" class="download-btn">Contact the Team →</a>
           <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
         </div>
       </div>
@@ -260,7 +260,7 @@
         <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
           Photos, boilerplate, and media inquiries.
         </p>
-        <a href="press.html" class="download-btn" style="margin-top:4px;">Press Kit →</a>
+        <a href="press" class="download-btn" style="margin-top:4px;">Press Kit →</a>
       </div>
       <div class="about-aside-block">
         <div class="aside-label">Built with</div>
@@ -304,7 +304,7 @@
   document.getElementById('nav-mount').innerHTML    = buildNav('about');
   document.getElementById('footer-mount').innerHTML = buildFooter();
   document.getElementById('about-total').textContent = WRECKS.length;
-  document.getElementById('about-contact-btn').href = `${ROOT}/contact.html`;
+  document.getElementById('about-contact-btn').href = `${ROOT}/contact`;
 
   const photoEl = document.getElementById('about-journey-photos');
   if (ABOUT_PHOTOS.length) {
@@ -315,7 +315,7 @@
   }
 
   // Gallery
-  document.getElementById('abt-gallery-label').href = `${ROOT}/archive.html`;
+  document.getElementById('abt-gallery-label').href = `${ROOT}/archive`;
 
   const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
   function tryPrimetimeExt(img, id) {
@@ -330,7 +330,7 @@
 
   function makeAbtTiles(wrecks) {
     return wrecks.map(w => `
-      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
         <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
              onerror="tryPrimetimeExt(this,'${w.id}')">
       </a>`).join('');

@@ -9,16 +9,16 @@ const ROOT = location.hostname.includes('github.io') ? '/ShipwreckCity' : '';
 function buildNav(activePage) {
   return `
   <nav class="site-nav" id="site-nav">
-    <a href="${ROOT}/index.html" class="nav-logo">SHIPWRECK <span>CITY</span></a>
+    <a href="${ROOT}/" class="nav-logo">SHIPWRECK <span>CITY</span></a>
     <button class="nav-hamburger" aria-label="Toggle menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
-      <a href="${ROOT}/index.html"  class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
-      <a href="${ROOT}/map.html"    class="${activePage === 'map'    ? 'active' : ''}">Map</a>
-      <a href="${ROOT}/archive.html"class="${activePage === 'archive'? 'active' : ''}">Archive</a>
-      <a href="${ROOT}/support.html" class="${activePage === 'support' ? 'active' : ''}">Support</a>
-      <a href="${ROOT}/about.html"  class="${activePage === 'about'  ? 'active' : ''}">About</a>
+      <a href="${ROOT}/"            class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
+      <a href="${ROOT}/map"         class="${activePage === 'map'    ? 'active' : ''}">Map</a>
+      <a href="${ROOT}/archive"     class="${activePage === 'archive'? 'active' : ''}">Archive</a>
+      <a href="${ROOT}/support"     class="${activePage === 'support' ? 'active' : ''}">Support</a>
+      <a href="${ROOT}/about"       class="${activePage === 'about'  ? 'active' : ''}">About</a>
     </div>
   </nav>`;
 }
@@ -33,11 +33,11 @@ function buildFooter() {
     <div class="footer-logo">SHIPWRECK <span>CITY</span></div>
     <div class="footer-copy">© ${year} Shipwreck City · Seattle, WA, USA</div>
     <div class="footer-links">
-      <a href="${ROOT}/index.html">Explore</a>
-      <a href="${ROOT}/map.html">Map</a>
-      <a href="${ROOT}/about.html">About</a>
-      <a href="${ROOT}/support.html">Support</a>
-      <a href="${ROOT}/press.html">Press</a>
+      <a href="${ROOT}/">Explore</a>
+      <a href="${ROOT}/map">Map</a>
+      <a href="${ROOT}/about">About</a>
+      <a href="${ROOT}/support">Support</a>
+      <a href="${ROOT}/press">Press</a>
     </div>
   </footer>`;
 }
@@ -235,11 +235,20 @@ function showLicenseModal(onAccept) {
 }
 
 function makePopup(wreck) {
+  const overlayLines = [
+    wreck.depth      ? `Depth  ${depthDisplay(wreck.depth)}` : null,
+    wreck.dimensions ? `Dimensions  ${wreck.dimensions}`     : null,
+  ].filter(Boolean).join('<br>');
   return `
-    <div class="popup-catalog">${wreck.catalog}</div>
-    <div class="popup-name">${wreck.name}</div>
-    <div class="popup-meta">${wreck.dimensions ? `Dimensions: ${wreck.dimensions}<br>` : ''}Depth: ${depthDisplay(wreck.depth)}</div>
-    <div class="wreck-type-badge" style="margin:8px 0;">${wreck.type}</div>
-    <a class="popup-link" href="${ROOT}/wrecks/${wreck.id}.html" target="_blank" rel="noopener">View record →</a>
+    <div>
+      <div class="popup-catalog">${wreck.catalog}</div>
+      <div class="popup-name">${wreck.name}</div>
+      <div class="popup-img-wrap">
+        <img src="${ROOT}/img/wrecks/${wreck.id}/primetime.webp" alt="${wreck.name}" onerror="this.closest('.popup-img-wrap').style.display='none'">
+        ${overlayLines ? `<div class="popup-img-overlay">${overlayLines}</div>` : ''}
+      </div>
+      <div class="wreck-type-badge" style="margin:8px 0;">${wreck.type}</div>
+      <div class="popup-link" data-href="${ROOT}/wrecks/${wreck.id}">View record →</div>
+    </div>
   `;
 }

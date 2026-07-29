@@ -105,7 +105,7 @@
 </section>
 
 <!-- ARCHIVE STATUS BANNER -->
-<a id="archive-status-banner" href="archive.html" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;opacity:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='1.0';this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+<a id="archive-status-banner" href="archive" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;opacity:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='1.0';this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
   <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#4a9bbe;white-space:nowrap;">ℹ Update</span>
   <span style="font-family:var(--font-serif);font-size:22px;color:#7fc4d8;line-height:1.5;text-align:center;" id="index-archive-status">—</span>
 </a>
@@ -126,7 +126,7 @@
 <section style="padding:48px 10%;border-top:1px solid var(--text-primary);border-bottom:1px solid var(--text-primary);">
   <div style="font-family:var(--font-display);font-size:28px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);text-align:center;margin-bottom:24px;">Our Mission</div>
   <p style="font-family:var(--font-serif);font-size:31px;line-height:1.8;color:var(--text-primary);max-width:1200px;margin:0 auto;text-align:center;">
-    <a href="about.html" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">Shipwreck City</a> is a volunteer effort to <span style="color:var(--accent);">find</span>, <span style="color:var(--accent);">film</span>, <span style="color:var(--accent);">archive</span>, and <span style="color:var(--accent);">share</span> every <a href="archive.html" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">sunken vessel</a> in Lake Union, one of Seattle's most treasured waterways.
+    <a href="about" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">Shipwreck City</a> is a volunteer effort to <span style="color:var(--accent);">find</span>, <span style="color:var(--accent);">film</span>, <span style="color:var(--accent);">archive</span>, and <span style="color:var(--accent);">share</span> every <a href="archive" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">sunken vessel</a> in Lake Union, one of Seattle's most treasured waterways.
   </p>
 </section>
 
@@ -295,7 +295,7 @@
         — we would love to hear from you.
       </p>
       <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
-        <a id="cta-contact-btn" href="contact.html" class="download-btn">Contact the Team →</a>
+        <a id="cta-contact-btn" href="contact" class="download-btn">Contact the Team →</a>
         <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
       </div>
     </div>
@@ -332,8 +332,8 @@
   document.getElementById('nav-mount').innerHTML   = buildNav('home');
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
-  document.getElementById('map-section-label').href       = `${ROOT}/map.html`;
-  document.getElementById('supporters-section-label').href = `${ROOT}/support.html`;
+  document.getElementById('map-section-label').href       = `${ROOT}/map`;
+  document.getElementById('supporters-section-label').href = `${ROOT}/support`;
 
   // Stats
   const depths        = WRECKS.map(w => w.depth).filter(Boolean);
@@ -351,10 +351,10 @@
   document.getElementById('index-archive-status').textContent   = `The Shipwreck City Archive Dataset was last updated on: ${archiveDate}. The Project is ${progressPct}% complete.`;
 
   document.getElementById('stats-bar').innerHTML = `
-    <a class="stat" href="${ROOT}/archive.html" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
-    <a class="stat" href="${ROOT}/archive.html#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">62</div><div class="stat-label">Targets Cleared</div></a>
-    <a class="stat" href="${ROOT}/archive.html" style="text-decoration:none;cursor:pointer;"><div class="stat-num">41</div><div class="stat-label">Wrecks Confirmed</div></a>
-    <a class="stat" href="${ROOT}/archive.html#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">4</div><div class="stat-label">New Wrecks</div></a>
+    <a class="stat" href="${ROOT}/archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
+    <a class="stat" href="${ROOT}/archive#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">62</div><div class="stat-label">Targets Cleared</div></a>
+    <a class="stat" href="${ROOT}/archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num">41</div><div class="stat-label">Wrecks Confirmed</div></a>
+    <a class="stat" href="${ROOT}/archive#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">4</div><div class="stat-label">New Wrecks</div></a>
   `;
 
   //<div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>
@@ -377,7 +377,7 @@
   }
   grid.innerHTML = gridWrecks.map(w => `
     <div class="wreck-pair">
-      <a class="wreck-photo-tile" href="${ROOT}/wrecks/${w.id}.html">
+      <a class="wreck-photo-tile" href="${ROOT}/wrecks/${w.id}">
         <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
              onload="this.nextElementSibling.style.display='none'"
              onerror="tryPrimetimeExt(this,'${w.id}')">
@@ -386,7 +386,7 @@
           <span>No image</span>
         </div>
       </a>
-      <a class="wreck-card" href="${ROOT}/wrecks/${w.id}.html">
+      <a class="wreck-card" href="${ROOT}/wrecks/${w.id}">
         <div class="wreck-card-num">${w.catalog}</div>
         <div class="wreck-card-name">${w.name}</div>
         <div class="wreck-card-meta">
@@ -413,7 +413,18 @@
     if (!w.coordinates) return;
     L.marker(w.coordinates, { icon: makeMarker(L, w) })
       .addTo(map)
-      .bindPopup(makePopup(w), { maxWidth: 440 });
+      .bindPopup(makePopup(w), { minWidth: 280, maxWidth: 320 });
+  });
+
+  map.on('popupopen', e => {
+    const content = e.popup.getElement().querySelector('.leaflet-popup-content');
+    if (content) {
+      content.style.cursor = 'pointer';
+      content.addEventListener('click', () => {
+        const link = content.querySelector('.popup-link');
+        if (link) window.location.href = link.dataset.href;
+      });
+    }
   });
 
   // Map fullscreen toggle
@@ -504,14 +515,14 @@
   syncFieldArrows();
 
   // Primetime gallery — two rows, shared arrows
-  document.getElementById('primetime-section-label').href = `${ROOT}/archive.html`;
+  document.getElementById('primetime-section-label').href = `${ROOT}/archive`;
 
   const allPrimetime = WRECKS.filter(w => w.hasPrimetime);
   const half         = Math.ceil(allPrimetime.length / 2);
 
   function makePrimetimeTiles(wrecks) {
     return wrecks.map(w => `
-      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
         <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
              onerror="tryPrimetimeExt(this,'${w.id}')">
       </a>`).join('');

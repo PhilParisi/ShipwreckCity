@@ -42,7 +42,7 @@
       <div class="section container" style="padding-top:80px;">
         <div class="section-label">Error</div>
         <p style="font-family:var(--font-serif);font-style:italic;color:var(--text-muted);">
-          Wreck record not found. <a href="${ROOT}/index.html">Return to explore →</a>
+          Wreck record not found. <a href="${ROOT}/">Return to explore →</a>
         </p>
       </div>`;
     document.title = 'Not Found — Shipwreck City';
@@ -69,7 +69,7 @@
     const navHtml = `
       <div class="wreck-nav">
         ${prev
-          ? `<a class="wreck-nav-item prev" href="${ROOT}/wrecks/${prev.id}.html">
+          ? `<a class="wreck-nav-item prev" href="${ROOT}/wrecks/${prev.id}">
               <div class="wreck-nav-dir">← Previous</div>
               <div class="wreck-nav-name">${prev.name}</div>
              </a>`
@@ -79,7 +79,7 @@
              </div>`
         }
         ${next
-          ? `<a class="wreck-nav-item next" href="${ROOT}/wrecks/${next.id}.html">
+          ? `<a class="wreck-nav-item next" href="${ROOT}/wrecks/${next.id}">
               <div class="wreck-nav-dir">Next →</div>
               <div class="wreck-nav-name">${next.name}</div>
              </a>`
@@ -108,7 +108,7 @@
       <div class="wreck-hero">
         <div class="wreck-hero-grid"></div>
         <div class="wreck-hero-content">
-          <div class="wreck-breadcrumb"><a href="${ROOT}/index.html">Explore</a> / ${wreck.catalog}</div>
+          <div class="wreck-breadcrumb"><a href="${ROOT}/">Explore</a> / ${wreck.catalog}</div>
           <div class="wreck-catalog-num">${wreck.catalog}</div>
           <h1 class="wreck-title">${wreck.name}</h1>
         </div>
@@ -185,10 +185,10 @@
           ${wreck.dimensions ? `<div class="aside-detail-row"><span>Dimensions</span><span>${wreck.dimensions}</span></div>` : ''}
           <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
 
-          <a class="aside-label" href="${ROOT}/archive.html" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+          <a class="aside-label" href="${ROOT}/archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
           <div id="archive-scroll" style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
           ${WRECKS.map(w => `
-            <a ${w.id === wreck.id ? 'id="archive-current"' : ''} href="${ROOT}/wrecks/${w.id}.html" class="archive-item" style="
+            <a ${w.id === wreck.id ? 'id="archive-current"' : ''} href="${ROOT}/wrecks/${w.id}" class="archive-item" style="
               display:block;padding:10px 0;border-bottom:1px solid var(--border);
               color:${w.id === wreck.id ? 'var(--accent)' : 'var(--text-primary)'};
               text-decoration:none;font-size:14px;letter-spacing:1px;

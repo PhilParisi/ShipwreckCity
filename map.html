@@ -92,7 +92,7 @@
 
 <!-- PRIMETIME GALLERY -->
 <section style="padding:48px 10% 0;">
-  <a href="${ROOT}/archive.html" class="index-section-heading" style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);text-decoration:none;display:block;margin-bottom:24px;" id="map-gallery-label">Gallery: Click to Explore</a>
+  <a href="${ROOT}/archive" class="index-section-heading" style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);text-decoration:none;display:block;margin-bottom:24px;" id="map-gallery-label">Gallery: Click to Explore</a>
 </section>
 <section class="wrecks-scroll-section">
   <div class="wrecks-scroll-wrapper">
@@ -132,7 +132,18 @@
     if (!w.coordinates) return;
     L.marker(w.coordinates, { icon: makeMarker(L, w) })
       .addTo(map)
-      .bindPopup(makePopup(w), { maxWidth: 440 });
+      .bindPopup(makePopup(w), { minWidth: 280, maxWidth: 320 });
+  });
+
+  map.on('popupopen', e => {
+    const content = e.popup.getElement().querySelector('.leaflet-popup-content');
+    if (content) {
+      content.style.cursor = 'pointer';
+      content.addEventListener('click', () => {
+        const link = content.querySelector('.popup-link');
+        if (link) window.location.href = link.dataset.href;
+      });
+    }
   });
 
   // Fullscreen toggle
@@ -155,7 +166,7 @@
   });
 
   // Gallery
-  document.getElementById('map-gallery-label').href = `${ROOT}/archive.html`;
+  document.getElementById('map-gallery-label').href = `${ROOT}/archive`;
 
   const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
   function tryPrimetimeExt(img, id) {
@@ -170,7 +181,7 @@
 
   function makePrimetimeTiles(wrecks) {
     return wrecks.map(w => `
-      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
         <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
              onerror="tryPrimetimeExt(this,'${w.id}')">
       </a>`).join('');

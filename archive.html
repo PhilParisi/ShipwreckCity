@@ -351,7 +351,7 @@
                    : WRECKS.filter(w => w.status === filter || w.type === filter);
     document.getElementById('archive-count').textContent = `${filtered.length} Target${filtered.length !== 1 ? 's' : ''} — Lake Union`;
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
-      <tr style="cursor:pointer;" onclick="location.href='${ROOT}/wrecks/${w.id}.html'">
+      <tr style="cursor:pointer;" onclick="location.href='${ROOT}/wrecks/${w.id}'">
         <td class="td-img">
           <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
                onerror="tryPrimetimeExt(this,'${w.id}')">
@@ -398,14 +398,14 @@
   }
 
   // Gallery
-  document.getElementById('arc-gallery-label').href = `${ROOT}/archive.html`;
+  document.getElementById('arc-gallery-label').href = `${ROOT}/archive`;
 
   const arcAllPrimetime = WRECKS.filter(w => w.hasPrimetime);
   const arcHalf         = Math.ceil(arcAllPrimetime.length / 2);
 
   function makeArcTiles(wrecks) {
     return wrecks.map(w => `
-      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}.html" target="_blank" rel="noopener" style="cursor:pointer;">
+      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
         <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
              onerror="tryPrimetimeExt(this,'${w.id}')">
       </a>`).join('');
