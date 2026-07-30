@@ -13,6 +13,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.path = '/' + candidate
         super().do_GET()
 
+    def end_headers(self):
+        self.send_header('Cache-Control', 'no-store')
+        super().end_headers()
+
     def log_message(self, fmt, *args):
         pass  # silence request log noise
 
