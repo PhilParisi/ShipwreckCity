@@ -1328,6 +1328,8 @@ a.section-label-link:hover { color: var(--text-primary); }
   .wreck-body { grid-template-columns: 1fr; }
   .wreck-aside { border-top: 1px solid var(--border); }
   .wreck-title { font-size: 60px; }
+  .wreck-hero-right { display: none; }
+  .wreck-hero-content.split { display: block; }
 }
 
 @media (max-width: 600px) {
