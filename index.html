@@ -339,8 +339,6 @@
   const depths        = WRECKS.map(w => w.depth).filter(Boolean);
   const maxD          = depths.length ? Math.max(...depths) : 0;
   const minD          = depths.length ? Math.min(...depths) : 0;
-  const recentCount   = WRECKS.filter(w => w.status === 'recently-explored').length;
-  const newTargetCount= WRECKS.filter(w => w.newTarget).length;
   const totalHours    = WRECKS.reduce((sum, w) => sum + (w.diveDuration || 0), 0);
   const depthEl = document.getElementById('hero-depth');
   if (depthEl) depthEl.textContent = `${minD} — 50 ft`;

@@ -58,7 +58,7 @@
 
     const ogDesc = document.createElement('meta');
     ogDesc.setAttribute('property','og:description');
-    ogDesc.setAttribute('content', wreck.summary);
+    ogDesc.setAttribute('content', wreck.tagline);
     document.head.appendChild(ogDesc);
 
     // Prev/next navigation
@@ -90,9 +90,21 @@
         }
       </div>`;
 
+    // Overview — descriptions held back until team finishes review; flip to true to restore.
+    const SHOW_REAL_DESCRIPTIONS = false;
+    const overviewHtml = SHOW_REAL_DESCRIPTIONS && wreck.summarySections && wreck.summarySections.length
+      ? wreck.summarySections.map(s => `
+          ${s.heading ? `<div class="overview-subhead">${s.heading}</div>` : ''}
+          <p>${s.body}</p>
+        `).join('')
+      : '<p>Descriptions coming August 31, 2026</p>';
+
     // Footage section
-    const footageHtml = wreck.footage
-      ? `<div class="footage-embed"><iframe src="${wreck.footage}" allowfullscreen title="${wreck.name} dive footage"></iframe></div>`
+    const footageHtml = (wreck.footageItems && wreck.footageItems.length)
+      ? wreck.footageItems.map((item, i) => `
+          ${wreck.footageItems.length > 1 ? `<div class="footage-source-label" style="margin-top:${i === 0 ? '32px' : '20px'};">${item.label}</div>` : ''}
+          <div class="footage-embed"${wreck.footageItems.length > 1 ? ' style="margin-top:0;"' : ''}><iframe src="${item.url}" allowfullscreen title="${wreck.name} — ${item.label}"></iframe></div>
+        `).join('')
       : `<div class="footage-embed" style="height:200px;">
            <div class="footage-placeholder">
              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -107,6 +119,9 @@
       <!-- WRECK HERO -->
       <div class="wreck-hero">
         <div class="wreck-hero-grid"></div>
+        ${prev
+          ? `<a class="wreck-back-arrow" href="${ROOT}/wrecks/${prev.id}" aria-label="Previous: ${prev.name}"><span>&#8249;</span></a>`
+          : `<a class="wreck-back-arrow" href="${ROOT}/" aria-label="Back to Explore"><span>&#8249;</span></a>`}
         <div class="wreck-hero-content split">
           <div class="wreck-hero-left">
             <div class="wreck-breadcrumb"><a href="${ROOT}/">Explore</a> / ${wreck.catalog}</div>
@@ -127,11 +142,11 @@
       <div class="wreck-data-bar">
         <div class="wreck-data-item">
           <div class="wreck-data-label">Type</div>
-          <div class="wreck-data-val">${wreck.type || '—'}</div>
+          <div class="wreck-data-val">${wreck.type}</div>
         </div>
         <div class="wreck-data-item">
-          <div class="wreck-data-label">Subtype</div>
-          <div class="wreck-data-val">${wreck.subtype || '—'}</div>
+          <div class="wreck-data-label">Class</div>
+          <div class="wreck-data-val">${wreck.class}</div>
         </div>
         <div class="wreck-data-item">
           <div class="wreck-data-label">Status</div>
@@ -150,14 +165,14 @@
       </div>
 
       <!-- PRIMETIME IMAGE -->
-      <div id="primetime-wrap"></div>
+      <div id="primetime-wrap" style="height:${wreck.hasPrimetime ? '100vh' : '380px'};background:${wreck.hasPrimetime ? '#020810' : 'var(--bg-deep)'};"></div>
 
       <!-- BODY -->
       <div class="wreck-body">
         <div class="wreck-main">
           <div class="prose-section">
             <h3>Overview</h3>
-            <p>${wreck.summary || 'Pending'}</p>
+            ${overviewHtml}
           </div>
           <div class="prose-section">
             <h3>Links &amp; Resources</h3>
@@ -189,6 +204,7 @@
           <div class="aside-label" style="margin-top:28px;">Field data</div>
           <div class="aside-detail-row"><span>Catalog</span><span>${wreck.catalog}</span></div>
           <div class="aside-detail-row"><span>Vessel type</span><span>${wreck.type}</span></div>
+          <div class="aside-detail-row"><span>Material</span><span>${wreck.material}</span></div>
           <div class="aside-detail-row"><span>Status</span><span>${statusLabel(wreck.status)}</span></div>
           ${wreck.depth ? `<div class="aside-detail-row"><span>Depth</span><span>${wreck.depth} ft</span></div>` : ''}
           ${wreck.dimensions ? `<div class="aside-detail-row"><span>Dimensions</span><span>${wreck.dimensions}</span></div>` : ''}

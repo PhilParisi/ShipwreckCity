@@ -39,6 +39,16 @@ FOOTAGE_STATUS_MAP = {
     "no footage":       "never-explored",
 }
 
+# target_description is written in these named sections, in this order.
+# Any leading "Name: X (LU013)" / "Type: A | Class: B | Subclass: C" lines
+# are front matter — redundant with the name/type already shown elsewhere
+# on the page — and get stripped before the sections are split out.
+SECTION_LABELS = ['Shipwreck City Data', 'Prior Research and Theories', 'Additional Context']
+
+# Shown on the site whenever a spreadsheet cell is missing/NA, so the UI
+# never has to special-case a blank field.
+DASH = '—'
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def slugify(text):
@@ -86,6 +96,67 @@ def parse_dimensions(val):
     v = re.sub(r"\s*[xX×]\s*", " × ", v)
     return v
 
+def strip_description_frontmatter(text):
+    """Drop leading 'Name: X (LU013)' / 'Type: A | Class: B | Subclass: C' lines,
+    stopping at the first real section label or prose line."""
+    lines = text.split('\n')
+    i = 0
+    while i < len(lines):
+        line = lines[i].strip()
+        if not line:
+            i += 1
+            continue
+        if line in SECTION_LABELS:
+            break
+        if re.match(r'^Type:.*Subclass:', line):
+            i += 1
+            continue
+        if re.search(r'\(LU\d+\)\s*$', line) or re.match(r'^LU\d+\s*[—-]', line):
+            i += 1
+            continue
+        break
+    return '\n'.join(lines[i:]).strip()
+
+def make_short_blurb(text, limit=160):
+    """First sentence of the given text, capped at `limit` chars."""
+    lines = text.split('\n')
+    i = 0
+    while i < len(lines) and (not lines[i].strip() or lines[i].strip() in SECTION_LABELS):
+        i += 1
+    remainder = re.sub(r'\s+', ' ', '\n'.join(lines[i:])).strip()
+    if not remainder:
+        return None
+    m = re.search(r'^.*?[.!?](?=\s|$)', remainder)
+    sentence = m.group(0) if m else remainder
+    if len(sentence) > limit:
+        return sentence[:limit].rsplit(' ', 1)[0] + '…'
+    return sentence
+
+def make_summary_sections(row):
+    """Split target_description into [{heading, body}] using SECTION_LABELS.
+    Falls back to a single unlabeled section for plain/placeholder text."""
+    desc = clean(row.get('target_description', ''))
+    if not desc or desc.lower() in ('unknown', 'na', 'shipwreck'):
+        return []
+    body = strip_description_frontmatter(desc)
+    pattern = re.compile(r'^(' + '|'.join(re.escape(l) for l in SECTION_LABELS) + r')\s*$', re.MULTILINE)
+    matches = list(pattern.finditer(body))
+    if not matches:
+        text = re.sub(r'\s+', ' ', body).strip()
+        return [{"heading": None, "body": text}] if text else []
+    sections = []
+    if matches[0].start() > 0:
+        lead = re.sub(r'\s+', ' ', body[:matches[0].start()]).strip()
+        if lead:
+            sections.append({"heading": None, "body": lead})
+    for idx, m in enumerate(matches):
+        start = m.end()
+        end = matches[idx + 1].start() if idx + 1 < len(matches) else len(body)
+        text = re.sub(r'\s+', ' ', body[start:end]).strip()
+        if text:
+            sections.append({"heading": m.group(1), "body": text})
+    return sections
+
 def make_name(row):
     """Best display name: known target name → subtype → target_no."""
     name = clean(row.get('target_name', ''))
@@ -103,41 +174,58 @@ def make_id(row, name):
     return row.get('target_no', '').lower().replace(' ', '-')
 
 def make_type(row):
-    """Use subtype if informative, else type column."""
-    sub = clean(row.get('subtype', ''))
-    typ = clean(row.get('type', ''))
-    if sub and sub.lower() not in ('unknown', 'shipwreck'):
-        return sub
-    return typ or 'Unknown'
+    """Type (New) column value, or None if missing/NA."""
+    return clean(row.get('Type (New)'))
 
 def make_status(row):
     fs = (row.get('sc_current_footage_status') or '').strip().lower()
     return FOOTAGE_STATUS_MAP.get(fs, 'never-explored')
 
 def make_tagline(row, name):
-    """Short one-liner for cards."""
+    """Short one-sentence blurb, used for the page's meta/og description only
+    (not shown on cards — target_description is now full multi-paragraph text)."""
     desc = clean(row.get('target_description', ''))
-    sub  = clean(row.get('subtype', ''))
-    css  = clean(row.get('css_notes', ''))
-    # prefer the most descriptive available field
-    for candidate in (desc, css, sub):
-        if candidate and candidate.lower() not in ('unknown', 'na', 'shipwreck'):
-            return candidate
-    return f"{name} — {make_type(row)}"
+    if desc and desc.lower() not in ('unknown', 'na', 'shipwreck'):
+        blurb = make_short_blurb(strip_description_frontmatter(desc))
+        if blurb:
+            return blurb
+    css = clean(row.get('css_description', ''))
+    if css and css.lower() not in ('unknown', 'na', 'shipwreck'):
+        blurb = make_short_blurb(css)
+        if blurb:
+            return blurb
+    sub = clean(row.get('Class (New)', ''))
+    if sub and sub.lower() not in ('unknown', 'na', 'shipwreck'):
+        return sub
+    return f"{name} — {make_type(row) or 'Unknown'}"
 
 def make_location(row):
     """No dedicated location column — build from what we have."""
     return "Lake Union, Seattle"
 
-def make_footage_url(row):
-    """Convert sc_video_url watch URL to embed URL."""
-    v = clean(row.get('sc_video_url', ''))
-    if v is None:
-        return None
-    m = re.search(r'(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})', v)
+def make_embed_url(url):
+    """Convert a YouTube or Vimeo watch URL into an embeddable URL."""
+    m = re.search(r'(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})', url)
     if m:
         return f'https://www.youtube.com/embed/{m.group(1)}'
-    return v
+    m = re.search(r'vimeo\.com/(\d+)', url)
+    if m:
+        return f'https://player.vimeo.com/video/{m.group(1)}'
+    return url
+
+def make_footage_items(row):
+    """Return a list of {label, url} embeds: Shipwreck City footage, then DCS scuba footage."""
+    items = []
+    sc = clean(row.get('sc_video_url', ''))
+    if sc:
+        items.append({"label": "Shipwreck City Footage", "url": make_embed_url(sc)})
+    dcs = clean(row.get('dcs_video_url', ''))
+    if dcs:
+        for part in dcs.split(','):
+            part = part.strip()
+            if part:
+                items.append({"label": "DCS Scuba Footage", "url": make_embed_url(part)})
+    return items
 
 def make_summary(row):
     v = clean(row.get('target_description', ''))
@@ -217,27 +305,27 @@ def convert(csv_path):
                 "id":          slug,
                 "name":        name,
                 "catalog":     catalog,
-                "type":        make_type(row),
-                "subtype":     clean(row.get('subtype')),
+                "type":        make_type(row) or DASH,
+                "class":       clean(row.get('Class (New)')) or DASH,
+                "material":    clean(row.get('Subclass (New)')) or DASH,
                 "year":        None,
                 "yearNote":    None,
-                "depth":       parse_depth(row.get('depth_ft')),
+                "depth":       parse_depth(row.get('water_depth_ft')),
                 "coordinates": coords,
                 "location":    make_location(row),
                 "status":      make_status(row),
                 "tagline":     make_tagline(row, name),
                 "summary":     make_summary(row),
-                "history":     "NA",
-                "discovery":   "NA",
+                "summarySections": make_summary_sections(row),
                 "dimensions":  parse_dimensions(row.get('dimensions_ft')),
-                "footage":     make_footage_url(row),
+                "footageItems": make_footage_items(row),
                 "hasPrimetime": has_primetime,
                 "images":      images,
-                "featured":    False,
-                "newTarget":   (row.get('sc_newly_uncovered_wreck') or '').strip().lower() == 'yes',
+                "newTarget":   (row.get('sc_newly_uncovered') or '').strip().lower() == 'yes',
                 "diveDuration": (lambda v: float(v) if v else None)(clean(row.get('sc_rov_dive_duration'))),
                 "css_url":     clean(row.get('css_url')),
-                "dcs_url":     clean(row.get('dcs_url')),
+                "dcs_url":     clean(row.get('dcs_history_url')),
+                "luvm_url":    clean(row.get('luvm_url')),
             }
             wrecks.append(wreck)
 
@@ -253,23 +341,27 @@ def js_value(v, indent=6):
     if isinstance(v, (int, float)):
         return repr(v)
     if isinstance(v, str):
-        escaped = v.replace('\\', '\\\\').replace('"', '\\"').replace('`', '\\`').replace('${', '\\${')
+        escaped = (v.replace('\\', '\\\\').replace('"', '\\"').replace('`', '\\`').replace('${', '\\${')
+                    .replace('\r\n', '\\n').replace('\n', '\\n').replace('\r', '\\n'))
         return f'"{escaped}"'
     if isinstance(v, list):
         if not v:
             return '[]'
         inner = ', '.join(js_value(i) for i in v)
         return f'[{inner}]'
+    if isinstance(v, dict):
+        inner = ', '.join(f'{k}: {js_value(val)}' for k, val in v.items())
+        return f'{{{inner}}}'
     return repr(v)
 
 def wreck_to_js(w):
     lines = ['  {']
     fields = [
-        'id', 'name', 'catalog', 'type', 'subtype', 'year', 'yearNote',
+        'id', 'name', 'catalog', 'type', 'class', 'material', 'year', 'yearNote',
         'depth', 'coordinates', 'location', 'status', 'tagline',
-        'summary', 'history', 'discovery', 'dimensions',
-        'footage', 'hasPrimetime', 'images', 'featured', 'newTarget', 'diveDuration',
-        'css_url', 'dcs_url',
+        'summary', 'summarySections', 'dimensions',
+        'footageItems', 'hasPrimetime', 'images', 'newTarget', 'diveDuration',
+        'css_url', 'dcs_url', 'luvm_url',
     ]
     for key in fields:
         val = w.get(key)
@@ -339,22 +431,23 @@ def main():
  *  id          — unique slug, used in URLs: /wrecks/your-id.html
  *  name        — display name of the wreck
  *  catalog     — catalog number shown on cards (e.g. "WR — LU001")
- *  type        — vessel type label
+ *  type        — CSV "Type (New)" column, or "—" if missing/NA
+ *  class       — CSV "Class (New)" column, or "—" if missing/NA
+ *  material    — CSV "Subclass (New)" column, or "—" if missing/NA
  *  year        — year sunk (or estimated)
  *  yearNote    — optional note like "est." or "c."
  *  depth       — depth in feet
  *  coordinates — [lat, lng] for map pin (decimal degrees)
  *  location    — human-readable location description
  *  status      — "documented" | "unidentified" | "partial"
- *  tagline     — one-line description shown on cards
- *  summary     — longer paragraph for the wreck's detail page
- *  history     — background/historical context paragraph
- *  discovery   — how/when it was found paragraph
+ *  tagline     — one-sentence blurb used for meta/og description tags only
+ *  summary     — full raw target_description text
+ *  summarySections — target_description split into [{heading, body}] for the
+ *               detail page's Overview (heading is null for unstructured text)
  *  dimensions  — e.g. "62ft × 18ft" or null
- *  footage     — YouTube or Vimeo embed URL, or null
+ *  footageItems — list of {label, url} YouTube/Vimeo embeds, or []
  *  images      — gallery filenames inside img/wrecks/{id}/ (e.g. ["01.jpg","02.jpg"])
  *               Homepage tile uses primetime.{jpg|png|webp} automatically — no entry needed here.
- *  featured    — true = shown in homepage spotlight
  */
 """
 
