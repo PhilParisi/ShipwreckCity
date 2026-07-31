@@ -42,7 +42,7 @@
       <div class="section container" style="padding-top:80px;">
         <div class="section-label">Error</div>
         <p style="font-family:var(--font-serif);font-style:italic;color:var(--text-muted);">
-          Wreck record not found. <a href="${ROOT}/">Return to explore →</a>
+          Wreck record not found. <a href="${ROOT}/index.html">Return to explore →</a>
         </p>
       </div>`;
     document.title = 'Not Found — Shipwreck City';
@@ -69,7 +69,7 @@
     const navHtml = `
       <div class="wreck-nav">
         ${prev
-          ? `<a class="wreck-nav-item prev${prev.hasPrimetime ? ' has-image' : ''}" href="${ROOT}/wrecks/${prev.id}" ${prev.hasPrimetime ? `style="background-image:url('${ROOT}/img/wrecks/${prev.id}/primetime.webp')"` : ''}>
+          ? `<a class="wreck-nav-item prev" href="${ROOT}/wrecks/${prev.id}.html">
               <div class="wreck-nav-dir">← Previous</div>
               <div class="wreck-nav-name">${prev.name}</div>
              </a>`
@@ -79,7 +79,7 @@
              </div>`
         }
         ${next
-          ? `<a class="wreck-nav-item next${next.hasPrimetime ? ' has-image' : ''}" href="${ROOT}/wrecks/${next.id}" ${next.hasPrimetime ? `style="background-image:url('${ROOT}/img/wrecks/${next.id}/primetime.webp')"` : ''}>
+          ? `<a class="wreck-nav-item next" href="${ROOT}/wrecks/${next.id}.html">
               <div class="wreck-nav-dir">Next →</div>
               <div class="wreck-nav-name">${next.name}</div>
              </a>`
@@ -107,19 +107,10 @@
       <!-- WRECK HERO -->
       <div class="wreck-hero">
         <div class="wreck-hero-grid"></div>
-        <div class="wreck-hero-content split">
-          <div class="wreck-hero-left">
-            <div class="wreck-breadcrumb"><a href="${ROOT}/">Explore</a> / ${wreck.catalog}</div>
-            <div class="wreck-catalog-num">${wreck.catalog}</div>
-            <h1 class="wreck-title">${wreck.name}</h1>
-          </div>
-          ${next ? `
-          <div class="wreck-hero-right" onclick="window.location.href='${ROOT}/wrecks/${next.id}'" ${next.hasPrimetime ? `style="background-image:url('${ROOT}/img/wrecks/${next.id}/primetime.webp')"` : ''}>
-            <div class="wreck-hero-right-inner">
-              <div class="wreck-next-label">NEXT</div>
-              <a class="wreck-next-name" href="${ROOT}/wrecks/${next.id}">${next.name}</a>
-            </div>
-          </div>` : ''}
+        <div class="wreck-hero-content">
+          <div class="wreck-breadcrumb"><a href="${ROOT}/index.html">Explore</a> / ${wreck.catalog}</div>
+          <div class="wreck-catalog-num">${wreck.catalog}</div>
+          <h1 class="wreck-title">${wreck.name}</h1>
         </div>
       </div>
 
@@ -163,7 +154,6 @@
             <h3>Links &amp; Resources</h3>
             <p><strong>Coastal Sensing &amp; Survey:</strong> ${wreck.css_url ? `<a href="${wreck.css_url}" target="_blank" rel="noopener">${wreck.css_url}</a>` : 'NA'}</p>
             <p><strong>DCS Films:</strong> ${wreck.dcs_url ? `<a href="${wreck.dcs_url}" target="_blank" rel="noopener">${wreck.dcs_url}</a>` : 'NA'}</p>
-            <p><strong>Lake Union Virtual Museum:</strong> ${wreck.luvm_url ? `<a href="${wreck.luvm_url}" target="_blank" rel="noopener">${wreck.luvm_url}</a>` : 'NA'}</p>
           </div>
 
           <!-- GALLERY -->
@@ -194,10 +184,10 @@
           ${wreck.dimensions ? `<div class="aside-detail-row"><span>Dimensions</span><span>${wreck.dimensions}</span></div>` : ''}
           <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
 
-          <a class="aside-label" href="${ROOT}/archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
-          <div id="archive-scroll" style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
+          <a class="aside-label" href="${ROOT}/archive.html" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+          <div style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
           ${WRECKS.map(w => `
-            <a ${w.id === wreck.id ? 'id="archive-current"' : ''} href="${ROOT}/wrecks/${w.id}" class="archive-item" style="
+            <a href="${ROOT}/wrecks/${w.id}.html" style="
               display:block;padding:10px 0;border-bottom:1px solid var(--border);
               color:${w.id === wreck.id ? 'var(--accent)' : 'var(--text-primary)'};
               text-decoration:none;font-size:14px;letter-spacing:1px;
@@ -213,13 +203,6 @@
       <!-- WRECK NAV -->
       ${navHtml}
     `;
-
-    // Scroll archive list so current wreck is at the top
-    const archiveScroll  = document.getElementById('archive-scroll');
-    const archiveCurrent = document.getElementById('archive-current');
-    if (archiveScroll && archiveCurrent) {
-      archiveScroll.scrollTop = archiveCurrent.offsetTop - archiveScroll.offsetTop;
-    }
 
     // ── Primetime image ───────────────────────────────────────────────────────
     const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
@@ -324,14 +307,13 @@
       <button id="lb-prev" style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8592;</button>
       <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:95vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);cursor:zoom-in;transform-origin:center center;transition:transform 0.15s ease;user-select:none;">
       <button id="lb-next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8594;</button>
-      <div id="lb-counter" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.35);z-index:2;"></div>
-      <div id="lb-hint" style="position:absolute;top:16px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:2;">scroll or click to zoom · drag to pan</div>
+      <div id="lb-hint" style="position:absolute;top:3vh;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:2;">scroll or click to zoom · drag to pan</div>
     `;
     document.body.appendChild(lb);
 
     let lbPhotos = [], lbIdx = 0;
     let lbScale = 1, lbTx = 0, lbTy = 0;
-    let lbDragging = false, lbDragX = 0, lbDragY = 0;
+    let lbDragging = false, lbDragX = 0, lbDragY = 0, lbMoved = false;
 
     function lbApplyTransform() {
       const img = document.getElementById('lb-img');
@@ -347,7 +329,6 @@
     function lbShow(i) {
       lbIdx = (i + lbPhotos.length) % lbPhotos.length;
       document.getElementById('lb-img').src = lbPhotos[lbIdx];
-      document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${lbPhotos.length}`;
       document.getElementById('lb-prev').style.opacity = lbPhotos.length > 1 ? '1' : '0';
       document.getElementById('lb-next').style.opacity = lbPhotos.length > 1 ? '1' : '0';
       lbResetZoom();
@@ -378,26 +359,53 @@
     // Click image to toggle zoom
     document.getElementById('lb-img').addEventListener('click', e => {
       e.stopPropagation();
+      if (lbMoved) { lbMoved = false; return; }
       if (lbScale > 1) { lbResetZoom(); }
       else             { lbScale = 2.5; lbApplyTransform(); }
     });
 
-    // Drag to pan
+    // Drag to pan (mouse)
     document.getElementById('lb-img').addEventListener('mousedown', e => {
       if (lbScale <= 1) return;
       e.preventDefault();
       lbDragging = true;
+      lbMoved = false;
       lbDragX = e.clientX - lbTx;
       lbDragY = e.clientY - lbTy;
       lbApplyTransform();
     });
     document.addEventListener('mousemove', e => {
       if (!lbDragging) return;
+      lbMoved = true;
       lbTx = e.clientX - lbDragX;
       lbTy = e.clientY - lbDragY;
       lbApplyTransform();
     });
     document.addEventListener('mouseup', () => {
+      if (!lbDragging) return;
+      lbDragging = false;
+      lbApplyTransform();
+    });
+
+    // Drag to pan (touch)
+    document.getElementById('lb-img').addEventListener('touchstart', e => {
+      if (lbScale <= 1 || e.touches.length !== 1) return;
+      lbDragging = true;
+      lbMoved = false;
+      const t = e.touches[0];
+      lbDragX = t.clientX - lbTx;
+      lbDragY = t.clientY - lbTy;
+    }, { passive: true });
+    document.addEventListener('touchmove', e => {
+      if (!lbDragging || e.touches.length !== 1) return;
+      e.preventDefault();
+      lbMoved = true;
+      const t = e.touches[0];
+      lbTx = t.clientX - lbDragX;
+      lbTy = t.clientY - lbDragY;
+      lbApplyTransform();
+    }, { passive: false });
+    document.addEventListener('touchend', () => {
       if (!lbDragging) return;
       lbDragging = false;
       lbApplyTransform();
