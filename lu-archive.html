@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57LGQFRM4Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-57LGQFRM4Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seattle Shipwrecks — Lake Union Wreck Archive</title>
+  <meta name="description" content="Browse the complete archive of documented shipwrecks, barges, and debris on the bottom of Seattle's Lake Union — with dive footage, sonar data, and field notes.">
+  <meta property="og:title" content="Shipwreck City | Mapping Seattle's Sunken Fleet">
+  <meta property="og:description" content="Underwater robots are mapping 100+ wreck and debris sites beneath Seattle's most-visited lake — and publishing everything for free at ShipwreckCity.org.">
+  <meta property="og:image" content="https://shipwreckcity.org/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shipwreckcity.org">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .archive-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .archive-table thead tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .archive-table th {
+      font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); padding: 12px 16px; text-align: left;
+      font-weight: 400;
+    }
+    .archive-table td {
+      padding: 12px 16px; border-bottom: 1px solid var(--border);
+      font-size: 16px; color: var(--text-muted); vertical-align: middle;
+    }
+    .archive-table tr:hover td { background: var(--bg-hover); }
+    .archive-table tr:hover .td-name { color: #7fc4d8; }
+    .archive-table .td-name {
+      font-family: var(--font-display); font-size: 24px;
+      color: var(--text-primary); letter-spacing: 1px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
+    }
+    .archive-table a { color: inherit; text-decoration: none; }
+    .archive-table a:hover .td-name { color: var(--accent); }
+    .td-img { width: 96px; padding: 4px 8px 4px 0; }
+    .td-img img { width: 96px; height: 96px; object-fit: cover; display: block; background: var(--bg-deep); }
+    .td-catalog { width: 52px; white-space: nowrap; font-size: 13px; padding-right: 8px; }
+    .td-type { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .filter-bar { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .filter-btn {
+      font-family: var(--font-body); font-size: 16px; letter-spacing: 2px;
+      text-transform: uppercase; padding: 10px 28px;
+      background: transparent; border: 1px solid #e8e0cc;
+      color: #e8e0cc; cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #e8e0cc; border-color: #e8e0cc; color: #0a1f2e;
+    }
+
+    /* Download section */
+    .download-section {
+      margin-top: 80px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .download-desc {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-top: 16px;
+    }
+    .field-ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .field-ref-table th {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 400;
+      border-bottom: 1px solid var(--border);
+    }
+    .field-ref-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .field-ref-table td:first-child {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      font-size: 13px;
+      white-space: nowrap;
+      padding-right: 20px;
+    }
+    .field-group-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 16px 12px 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (max-width: 800px) {
+      .download-section { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .archive-gallery-heading {
+      font-family: var(--font-display); font-size: 42px; letter-spacing: 1px;
+      color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+    .archive-gallery-heading:hover { color: var(--accent); }
+    #arc-primetime-left, #arc-primetime-right { height: 88px; }
+    #arc-primetime-track .field-photo-tile img,
+    #arc-primetime-track-2 .field-photo-tile img {
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    #arc-primetime-track .field-photo-tile:hover img,
+    #arc-primetime-track-2 .field-photo-tile:hover img {
+      filter: brightness(1.1) contrast(1.08) saturate(1.2);
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="hero-bg-photo"><img src="img/targets/lu076/primetime.webp" alt="" aria-hidden="true"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Lake Union, Seattle, WA</div>
+    <h1 class="page-title">TARGET<br>ARCHIVE</h1>
+    <p class="page-sub">All documented targets, from shipwrecks to cars to oil drums. Click on a target to view history, photos, and dive videos.</p>
+  </div>
+</div>
+
+<div id="archive-caution-banner" style="background:#3a2a0a;border-top:1px solid #7a5a1a;border-bottom:1px solid #7a5a1a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
+  <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c8952a;white-space:nowrap;">⚠ Caution</span>
+  <span id="archive-caution-text" style="font-family:var(--font-serif);font-size:15px;color:#d4a84b;line-height:1.5;">The Shipwreck City Archive Dataset has not been fully verified and is a working document with inaccuracies. At the conclusion of the project, it will be reviewed for accuracy and officially released.</span>
+</div>
+<div id="archive-update-banner" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;gap:12px;">
+  <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#4a9bbe;white-space:nowrap;">ℹ Update</span>
+  <span style="font-family:var(--font-serif);font-size:15px;color:#7fc4d8;line-height:1.5;" id="archive-last-updated">The Shipwreck City Archive Dataset was last updated on: —</span>
+</div>
+
+<section class="section container" style="max-width:1750px;">
+  <div class="filter-bar" id="filter-bar"></div>
+  <div class="section-label" id="archive-count"></div>
+  <table class="archive-table" id="archive-table">
+    <thead>
+      <tr>
+        <th style="width:110px;"></th>
+        <th style="width:80px;">ID#</th>
+        <th style="width:312px;">Name</th>
+        <th style="width:260px;">Type</th>
+        <th style="width:125px;">Depth</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="archive-body"></tbody>
+  </table>
+</section>
+
+<!-- GALLERY -->
+<section style="padding:48px 10% 0;">
+  <a class="archive-gallery-heading" id="arc-gallery-label">Gallery: Click to Explore</a>
+</section>
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="arc-primetime-left" aria-label="Scroll left">&#8592;</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1px;overflow:hidden;">
+      <div class="field-scroll-track" id="arc-primetime-track"></div>
+      <div class="field-scroll-track" id="arc-primetime-track-2"></div>
+    </div>
+    <button class="scroll-arrow scroll-arrow-right" id="arc-primetime-right" aria-label="Scroll right">&#8594;</button>
+  </div>
+</section>
+
+<!-- DOWNLOAD + FIELD REFERENCE -->
+<section class="section container" style="max-width:1750px;">
+  <div class="download-section">
+
+    <div>
+      <div class="section-label">Data Download</div>
+      <p class="download-desc">
+        The master archive is maintained as a structured CSV spreadsheet and updated
+        as new data is available. It includes all survey data, source references,
+        footage status, and field notes for every cataloged target in Lake Union and connected waterways.
+      </p>
+      <p class="download-desc">
+        The Archive Dataset has not been fully verified and is a working document with inaccuracies. 
+        At the end of the document, it will be reviewed for accuracy and officially released.
+      </p>
+      <div style="margin-top: 20px;"></div>
+      <a class="download-btn" id="csv-download-btn" href="#">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="8,2 8,11"/><polyline points="4,8 8,12 12,8"/>
+          <polyline points="2,14 14,14"/>
+        </svg>
+        Download CSV
+      </a>
+    </div>
+
+    <div>
+      <div class="section-label">Field Reference</div>
+      <table class="field-ref-table">
+        <thead>
+          <tr><th>Field</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="2" class="field-group-label">Target Identity</td></tr>
+          <tr><td>target_no</td><td>Unique catalog number (e.g. LU001). Assigned sequentially from the CSS sonar survey baseline.</td></tr>
+          <tr><td>target_name</td><td>Known vessel name, if positively identified. Nicknames indicated with '***'. Otherwise Unknown.</td></tr>
+          <tr><td>type</td><td>General vessel category (Shipwreck, Debris, Infrastructure, Vehicle, or Unknown).</td></tr>
+          <tr><td>subtype</td><td>More specific classification where known (e.g. Landing Craft, Sailboat, Dock section).</td></tr>
+          <tr><td>material</td><td>Hull construction material (Wood, Metal, Fiberglass, Unknown, etc.).</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">Location & Physical</td></tr>
+          <tr><td>longitude</td><td>GPS coordinate in decimal degrees (WGS84). Derived from sonar survey centroid.</td></tr>
+          <tr><td>latitude</td><td>GPS coordinate in decimal degrees (WGS84). Derived from sonar survey centroid.</td></tr>
+          <tr><td>depth_ft</td><td>Depth to wreck in feet, measured at the shallowest point of the hull.</td></tr>
+          <tr><td>dimensions_ft</td><td>Estimated length × beam (width) in feet. Diver measurements or side scan estimate (where both are available, diver taken as truth). ROV surveys did not contribute to dimensions.</td></tr>
+          <tr><td>target_description</td><td>Brief free-text summary description of the target.</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">Coastal Sensing and Survey (High-Resolution Side Scan Survey)</td></tr>
+          <tr><td>css_surveyed</td><td>Whether this target appeared in the CSS side-scan sonar survey of Lake Union.</td></tr>
+          <tr><td>css_survey_date</td><td>Date the CSS sonar survey was conducted for this target.</td></tr>
+          <tr><td>css_dimensions</td><td>Dimensions as measured from CSS sonar data.</td></tr>
+          <tr><td>css_historically_explored</td><td>Whether CSS records indicate prior historical exploration of this target (CSS themselves only explored JE Boyden with an ROV).</td></tr>
+          <tr><td>css_description</td><td>These are the original target names from the CSS survey log.</td></tr>
+          <tr><td>css_url</td><td>Link to the CSS public survey record for this target.</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">DCS Films (Scuba Dive Records)</td></tr>
+          <tr><td>dcs_target_no</td><td>DCS Films' internal target reference number, where applicable.</td></tr>
+          <tr><td>dcs_scuba_footage</td><td>Whether DCS Films captured scuba dive footage of this target.</td></tr>
+          <tr><td>dcs_scuba_date</td><td>Date DCS Films conducted their scuba dive on this target.</td></tr>
+          <tr><td>dcs_dimensions</td><td>Dimensions recorded by DCS divers during in-water survey. The values are considered more accurate than side scan measurement.</td></tr>
+          <tr><td>dcs_notes</td><td>Notes of names and dimensions from start of DCS Films videos (more information exists at their url).</td></tr>
+          <tr><td>dcs_url</td><td>Link to DCS Films footage and/or historical documentation for this target.</td></tr>
+
+          <tr><td colspan="2" class="field-group-label">Shipwreck City (ROV Dives)</td></tr>
+          <tr><td>sc_current_footage_status</td><td>Current exploration status: No Footage (no public footage is available or known), Historical Footage (footage available from DCS or other source), Updated Footage (SC completed an ROV dive to update Historical Footage), First Footage (SC completed an ROV dive where no footage was available).</em>.</td></tr>
+          <tr><td>sc_initial_footage_status</td><td>Footage status before Shipwreck City involvement — establishes the baseline before work started.</td></tr>
+          <tr><td>sc_newly_uncovered</td><td>Yes if this target was not present in any prior survey and was first logged by the Shipwreck City effort.</td></tr>
+          <tr><td>sc_rov_dive_duration</td><td>Duration of Shipwreck City ROV dive in hours.</td></tr>
+          <tr><td>sc_rov_dive_date</td><td>Date of the Shipwreck City ROV dive.</td></tr>
+          <tr><td>sc_notes</td><td>Shipwreck City field notes, observations, and identification context.</td></tr>
+          <tr><td>sc_url</td><td>Link to Shipwreck City footage or documentation for this target.</td></tr>
+          <tr><td>sc_howto_access</td><td>Nearest access point to visit target (Specific marina or via Boat).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/wrecks-data.js"></script>
+<script src="js/photos-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('lu-archive');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  // Dynamically find whichever .csv or .xlsx is in the data/ folder
+  const csvBtn = document.getElementById('csv-download-btn');
+  (async () => {
+    let filename = null;
+    try {
+      const res  = await fetch(`${ROOT}/data/`);
+      const html = await res.text();
+      const matches = [...html.matchAll(/href="([^"?#]*\.(csv|xlsx))"/gi)];
+      if (matches.length) filename = matches[matches.length - 1][1].split('/').pop();
+    } catch (e) {}
+    // Fallback to the constant defined in photos-data.js
+    if (!filename && typeof ARCHIVE_CSV_FILENAME !== 'undefined') filename = ARCHIVE_CSV_FILENAME;
+    if (!filename) return;
+
+    csvBtn.href     = '#';
+    csvBtn.download = filename;
+    csvBtn.addEventListener('click', e => {
+      e.preventDefault();
+      showLicenseModal(() => { window.location.href = `${ROOT}/data/${filename}`; });
+    });
+    const m = filename.match(/(\d+)([A-Za-z]+)(\d{4})/);
+    if (m) {
+      const pct = WRECKS.length ? Math.round(62 / WRECKS.length * 100) : 0;
+      document.getElementById('archive-last-updated').textContent =
+        `The Archive Dataset was last updated on: ${m[1]} ${m[2]} ${m[3]}. The Project is ${pct}% complete.`;
+    }
+  })();
+
+  let activeFilter = 'all';
+
+  const PRIMETIME_EXTS = ['jpg','jpeg','png','webp'];
+  function tryPrimetimeExt(img, id) {
+    const cur  = img.src.split('.').pop();
+    const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
+    if (next) { img.src = `${ROOT}/img/targets/${id}/primetime.${next}`; }
+    else       { img.closest('.td-img').style.background = 'var(--bg-deep)'; img.style.display = 'none'; }
+  }
+
+  function renderTable(filter) {
+    const filtered = filter === 'all'             ? WRECKS
+                   : filter === 'newly-uncovered' ? WRECKS.filter(w => w.newTarget)
+                   : filter === 'wrecks'          ? WRECKS.filter(w => w.type === 'Vessel')
+                   : WRECKS.filter(w => w.status === filter || w.type === filter);
+    document.getElementById('archive-count').textContent = `${filtered.length} Target${filtered.length !== 1 ? 's' : ''} — Lake Union`;
+    document.getElementById('archive-body').innerHTML = filtered.map(w => `
+      <tr style="cursor:pointer;" onclick="location.href='${ROOT}/lu-archive/${w.id}'">
+        <td class="td-img">
+          <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
+               onerror="tryPrimetimeExt(this,'${w.id}')">
+        </td>
+        <td class="td-catalog">${w.catalog}</td>
+        <td><span class="td-name">${w.name}</span></td>
+        <td class="td-type">${w.type}</td>
+        <td>${depthDisplay(w.depth)}</td>
+        <td>
+          <span class="status-dot status-${w.status}"></span>${statusLabel(w.status)}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Build filter buttons from unique statuses + wrecks + newly uncovered
+  const statuses = ['all', 'wrecks', ...new Set(WRECKS.map(w => w.status)), 'newly-uncovered'];
+  const filterBar = document.getElementById('filter-bar');
+  filterBar.innerHTML = statuses.map(s => `
+    <button class="filter-btn ${s === 'all' ? 'active' : ''}" data-filter="${s}">
+      ${s === 'all' ? 'All Targets' : s === 'wrecks' ? 'Wrecks' : s === 'newly-uncovered' ? 'Newly Uncovered' : statusLabel(s)}
+    </button>
+  `).join('');
+
+  filterBar.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTable(btn.dataset.filter);
+  });
+
+  const initialFilter = location.hash.replace('#', '') || 'all';
+  const initialBtn = filterBar.querySelector(`[data-filter="${initialFilter}"]`);
+  if (initialBtn) {
+    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    initialBtn.classList.add('active');
+  }
+  renderTable(initialFilter);
+  if (window.innerWidth <= 600) {
+    const ct = document.getElementById('archive-caution-text');
+    if (ct) ct.textContent = 'Wreck Archive is best viewed on desktop.';
+  }
+
+  // Gallery
+  document.getElementById('arc-gallery-label').href = `${ROOT}/lu-archive`;
+
+  const arcAllPrimetime = WRECKS.filter(w => w.hasPrimetime);
+  const arcHalf         = Math.ceil(arcAllPrimetime.length / 2);
+
+  function makeArcTiles(wrecks) {
+    return wrecks.map(w => `
+      <a class="field-photo-tile" href="${ROOT}/lu-archive/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+      </a>`).join('');
+  }
+
+  const apt1     = document.getElementById('arc-primetime-track');
+  const apt2     = document.getElementById('arc-primetime-track-2');
+  const aptLeft  = document.getElementById('arc-primetime-left');
+  const aptRight = document.getElementById('arc-primetime-right');
+  const aptSect  = apt1.closest('section');
+
+  apt1.innerHTML = makeArcTiles(arcAllPrimetime.slice(0, arcHalf));
+  apt2.innerHTML = makeArcTiles(arcAllPrimetime.slice(arcHalf));
+
+  const aptStep = () => apt1.clientWidth;
+  function syncAptArrows() {
+    aptLeft.disabled  = apt1.scrollLeft <= 0;
+    aptRight.disabled = apt1.scrollLeft >= apt1.scrollWidth - apt1.clientWidth - 1;
+  }
+  function scrollBothApt(delta) {
+    apt1.scrollBy({ left: delta, behavior: 'smooth' });
+    apt2.scrollBy({ left: delta, behavior: 'smooth' });
+  }
+  let aptTimer = null;
+  function aptAutoStep() {
+    const atEnd = apt1.scrollLeft >= apt1.scrollWidth - apt1.clientWidth - 1;
+    scrollBothApt(atEnd ? -apt1.scrollWidth : aptStep());
+  }
+  function startAptAuto() { if (!aptTimer) aptTimer = setInterval(aptAutoStep, 6000); }
+  function stopAptAuto()  { clearInterval(aptTimer); aptTimer = null; }
+  startAptAuto();
+  aptSect.addEventListener('mouseenter', stopAptAuto);
+  aptSect.addEventListener('mouseleave', startAptAuto);
+  aptLeft.addEventListener('click',  () => scrollBothApt(-aptStep()));
+  aptRight.addEventListener('click', () => scrollBothApt( aptStep()));
+  apt1.addEventListener('scroll', syncAptArrows);
+  syncAptArrows();
+</script>
+</body>
+</html>

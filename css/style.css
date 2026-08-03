@@ -139,9 +139,19 @@ img { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: grayscale(1) brightness(0.38) sepia(0.6) hue-rotate(185deg) saturate(4);
+  filter: grayscale(1) brightness(0.75) sepia(0.6) hue-rotate(185deg) saturate(4);
   opacity: 0.9;
   display: block;
+}
+
+/* right half of the hero links through to the featured vessel's page */
+.hero-photo-link {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 4;
 }
 
 /* square grid behind the sonar sweep */

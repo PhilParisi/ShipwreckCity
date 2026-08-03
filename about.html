@@ -89,7 +89,7 @@
 <div id="nav-mount"></div>
 
 <div class="page-hero">
-  <div class="hero-bg-photo"><img src="img/wrecks/lu082/primetime.webp" alt="" aria-hidden="true"></div>
+  <div class="hero-bg-photo"><img src="img/targets/lu082/primetime.webp" alt="" aria-hidden="true"></div>
   <div class="page-hero-grid"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">The project</div>
@@ -325,13 +325,13 @@
   }
 
   // Gallery
-  document.getElementById('abt-gallery-label').href = `${ROOT}/archive`;
+  document.getElementById('abt-gallery-label').href = `${ROOT}/lu-archive`;
 
   const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
   function tryPrimetimeExt(img, id) {
     const cur  = img.src.split('.').pop();
     const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
-    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
+    if (next) { img.src = `${ROOT}/img/targets/${id}/primetime.${next}`; }
     else       { img.closest('a').style.display = 'none'; }
   }
 
@@ -340,8 +340,8 @@
 
   function makeAbtTiles(wrecks) {
     return wrecks.map(w => `
-      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
-        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+      <a class="field-photo-tile" href="${ROOT}/lu-archive/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
              onerror="tryPrimetimeExt(this,'${w.id}')">
       </a>`).join('');
   }

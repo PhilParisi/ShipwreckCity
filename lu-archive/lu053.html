@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57LGQFRM4Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-57LGQFRM4Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO / social preview meta tags — injected per-wreck by generate-wrecks.js at build time -->
+  <title>Pilings — Shipwreck City</title>
+  <meta name="description" content="This target has been classified as a vertical object, possibly a piling, resting in 40 feet of water, with a recorded dimension of 24 feet by 4 feet.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shipwreckcity.org/lu-archive/lu053">
+  <meta property="og:title" content="Pilings — Shipwreck City">
+  <meta property="og:description" content="This target has been classified as a vertical object, possibly a piling, resting in 40 feet of water, with a recorded dimension of 24 feet by 4 feet.">
+  <meta property="og:image" content="https://shipwreckcity.org/img/targets/lu053/primetime.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pilings — Shipwreck City">
+  <meta name="twitter:description" content="This target has been classified as a vertical object, possibly a piling, resting in 40 feet of water, with a recorded dimension of 24 feet by 4 feet.">
+  <meta name="twitter:image" content="https://shipwreckcity.org/img/targets/lu053/primetime.jpg">
+  <link rel="icon" type="image/png" href="../img/thumbnails/favicon_sc.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+<div id="nav-mount"></div>
+<main id="wreck-page"></main>
+<div id="footer-mount"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="../js/wrecks-data.js"></script>
+<script src="../js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('explore');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  const slug  = location.pathname.split('/').pop().replace('.html', '');
+  const wreck = WRECKS.find(w => w.id === slug);
+
+  if (!wreck) {
+    document.getElementById('wreck-page').innerHTML = `
+      <div class="section container" style="padding-top:80px;">
+        <div class="section-label">Error</div>
+        <p style="font-family:var(--font-serif);font-style:italic;color:var(--text-muted);">
+          Wreck record not found. <a href="${ROOT}/">Return to explore →</a>
+        </p>
+      </div>`;
+    document.title = 'Not Found — Shipwreck City';
+  } else {
+    document.title = `${wreck.name} — Shipwreck City`;
+
+    // Prev/next navigation
+    const idx  = WRECKS.indexOf(wreck);
+    const prev = WRECKS[idx - 1];
+    const next = WRECKS[idx + 1];
+
+    const navHtml = `
+      <div class="wreck-nav">
+        ${prev
+          ? `<a class="wreck-nav-item prev has-image" href="${ROOT}/lu-archive/${prev.id}" style="background-image:url('${ROOT}/img/targets/${prev.id}/primetime.webp')">
+              <div class="wreck-nav-dir">← Previous</div>
+              <div class="wreck-nav-name">${prev.name}</div>
+             </a>`
+          : `<div class="wreck-nav-item" style="opacity:0.3;pointer-events:none">
+              <div class="wreck-nav-dir">← Previous</div>
+              <div class="wreck-nav-name">—</div>
+             </div>`
+        }
+        ${next
+          ? `<a class="wreck-nav-item next has-image" href="${ROOT}/lu-archive/${next.id}" style="background-image:url('${ROOT}/img/targets/${next.id}/primetime.webp')">
+              <div class="wreck-nav-dir">Next →</div>
+              <div class="wreck-nav-name">${next.name}</div>
+             </a>`
+          : `<div class="wreck-nav-item next" style="opacity:0.3;pointer-events:none">
+              <div class="wreck-nav-dir">Next →</div>
+              <div class="wreck-nav-name">—</div>
+             </div>`
+        }
+      </div>`;
+
+    // Overview — descriptions held back until team finishes review; flip to true to restore.
+    const SHOW_REAL_DESCRIPTIONS = false;
+    const overviewHtml = SHOW_REAL_DESCRIPTIONS && wreck.summarySections && wreck.summarySections.length
+      ? wreck.summarySections.map(s => `
+          ${s.heading ? `<div class="overview-subhead">${s.heading}</div>` : ''}
+          <p>${s.body}</p>
+        `).join('')
+      : '<p>Descriptions coming August 31, 2026</p>';
+
+    // Footage section
+    const footageHtml = (wreck.footageItems && wreck.footageItems.length)
+      ? wreck.footageItems.map((item, i) => `
+          ${wreck.footageItems.length > 1 ? `<div class="footage-source-label" style="margin-top:${i === 0 ? '32px' : '20px'};">${item.label}</div>` : ''}
+          <div class="footage-embed"${wreck.footageItems.length > 1 ? ' style="margin-top:0;"' : ''}><iframe src="${item.url}" allowfullscreen title="${wreck.name} — ${item.label}"></iframe></div>
+        `).join('')
+      : `<div class="footage-embed" style="height:200px;">
+           <div class="footage-placeholder">
+             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+               <circle cx="16" cy="16" r="12" stroke="#4a6070" stroke-width="1.5"/>
+               <polygon points="13,11 13,21 22,16" fill="#4a6070"/>
+             </svg>
+             <span>Footage pending</span>
+           </div>
+         </div>`;
+
+    document.getElementById('wreck-page').innerHTML = `
+      <!-- WRECK HERO -->
+      <div class="wreck-hero">
+        <div class="wreck-hero-grid"></div>
+        ${prev
+          ? `<a class="wreck-back-arrow" href="${ROOT}/lu-archive/${prev.id}" aria-label="Previous: ${prev.name}"><span>&#8249;</span></a>`
+          : `<a class="wreck-back-arrow" href="${ROOT}/" aria-label="Back to Explore"><span>&#8249;</span></a>`}
+        <div class="wreck-hero-content split">
+          <div class="wreck-hero-left">
+            <div class="wreck-breadcrumb"><a href="${ROOT}/">Explore</a> / ${wreck.catalog}</div>
+            <div class="wreck-catalog-num">${wreck.catalog}</div>
+            <h1 class="wreck-title">${wreck.name}</h1>
+          </div>
+          ${next ? `
+          <div class="wreck-hero-right" onclick="window.location.href='${ROOT}/lu-archive/${next.id}'" style="background-image:url('${ROOT}/img/targets/${next.id}/primetime.webp')">
+            <div class="wreck-hero-right-inner">
+              <div class="wreck-next-label">NEXT</div>
+              <a class="wreck-next-name" href="${ROOT}/lu-archive/${next.id}">${next.name}</a>
+            </div>
+          </div>` : ''}
+        </div>
+      </div>
+
+      <!-- DATA BAR -->
+      <div class="wreck-data-bar">
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Type</div>
+          <div class="wreck-data-val">${wreck.type}</div>
+        </div>
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Class</div>
+          <div class="wreck-data-val">${wreck.class}</div>
+        </div>
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Status</div>
+          <div class="wreck-data-val">
+            <span class="status-dot status-${wreck.status}"></span>${statusLabel(wreck.status)}
+          </div>
+        </div>
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Depth</div>
+          <div class="wreck-data-val">${depthDisplay(wreck.depth)}</div>
+        </div>
+        <div class="wreck-data-item">
+          <div class="wreck-data-label">Dimensions</div>
+          <div class="wreck-data-val">${wreck.dimensions || '—'}</div>
+        </div>
+      </div>
+
+      <!-- PRIMETIME IMAGE -->
+      <div id="primetime-wrap" style="height:${wreck.hasPrimetime ? '100vh' : '380px'};background:${wreck.hasPrimetime ? '#020810' : 'var(--bg-deep)'};"></div>
+
+      <!-- BODY -->
+      <div class="wreck-body">
+        <div class="wreck-main">
+          <div class="prose-section">
+            <h3>Overview</h3>
+            ${overviewHtml}
+          </div>
+          <div class="prose-section">
+            <h3>Links &amp; Resources</h3>
+            <p><strong>Coastal Sensing &amp; Survey:</strong> ${wreck.css_url ? `<a href="${wreck.css_url}" target="_blank" rel="noopener">${wreck.css_url}</a>` : 'NA'}</p>
+            <p><strong>DCS Films:</strong> ${wreck.dcs_url ? `<a href="${wreck.dcs_url}" target="_blank" rel="noopener">${wreck.dcs_url}</a>` : 'NA'}</p>
+            <p><strong>Lake Union Virtual Museum:</strong> ${wreck.luvm_url ? `<a href="${wreck.luvm_url}" target="_blank" rel="noopener">${wreck.luvm_url}</a>` : 'NA'}</p>
+          </div>
+
+          <!-- GALLERY -->
+          <div id="gallery-wrap"></div>
+
+          <div class="section-label" style="margin-top:40px;">Dive footage</div>
+          ${footageHtml}
+        </div>
+
+        <div class="wreck-aside">
+          <div class="aside-label" style="display:flex;align-items:center;gap:8px;">
+            <span>Location</span>
+            <span id="maps-link"
+               style="display:none;color:#fff;opacity:0.55;line-height:1;transition:opacity 0.15s;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+            </span>
+          </div>
+          <div class="aside-coord" id="coord-display">—</div>
+          <div id="wreck-detail-map"></div>
+
+          <div class="aside-label" style="margin-top:28px;">Field data</div>
+          <div class="aside-detail-row"><span>Catalog</span><span>${wreck.catalog}</span></div>
+          <div class="aside-detail-row"><span>Vessel type</span><span>${wreck.type}</span></div>
+          <div class="aside-detail-row"><span>Material</span><span>${wreck.material}</span></div>
+          <div class="aside-detail-row"><span>Status</span><span>${statusLabel(wreck.status)}</span></div>
+          ${wreck.depth ? `<div class="aside-detail-row"><span>Depth</span><span>${wreck.depth} ft</span></div>` : ''}
+          ${wreck.dimensions ? `<div class="aside-detail-row"><span>Dimensions</span><span>${wreck.dimensions}</span></div>` : ''}
+          <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
+
+          <a class="aside-label" href="${ROOT}/lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+          <div id="archive-scroll" style="max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;">
+          ${WRECKS.map(w => `
+            <a ${w.id === wreck.id ? 'id="archive-current"' : ''} href="${ROOT}/lu-archive/${w.id}" class="archive-item" style="
+              display:block;padding:10px 0;border-bottom:1px solid var(--border);
+              color:${w.id === wreck.id ? 'var(--accent)' : 'var(--text-primary)'};
+              text-decoration:none;font-size:14px;letter-spacing:1px;
+              ${w.id === wreck.id ? 'pointer-events:none;' : ''}
+            ">
+              <span style="color:var(--accent);margin-right:8px;font-size:14px;">${w.catalog}</span>${w.name}
+            </a>
+          `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- WRECK NAV -->
+      ${navHtml}
+    `;
+
+    // Scroll archive list so current wreck is at the top
+    const archiveScroll  = document.getElementById('archive-scroll');
+    const archiveCurrent = document.getElementById('archive-current');
+    if (archiveScroll && archiveCurrent) {
+      archiveScroll.scrollTop = archiveCurrent.offsetTop - archiveScroll.offsetTop;
+    }
+
+    // ── Primetime image ───────────────────────────────────────────────────────
+    const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
+    const primetimeWrap  = document.getElementById('primetime-wrap');
+    const galleryWrap    = document.getElementById('gallery-wrap');
+
+    // Display array uses .webp; download array keeps originals from wrecks-data.js
+    const displayPhotos  = (wreck.images || []).map(f => `${ROOT}/img/targets/${wreck.id}/${f.replace(/\.(png|jpe?g)$/i, '.webp')}`);
+    const downloadPhotos = (wreck.images || []).map(f => `${ROOT}/img/targets/${wreck.id}/${f}`);
+    let primetimeUrl   = null;  // webp — used for display / lightbox
+    let primetimeDlUrl = null;  // original — used for download zip
+
+    (function resolvePrimetime(extIdx) {
+      const ext = PRIMETIME_EXTS[extIdx];
+      if (!ext) {
+        primetimeWrap.innerHTML = `
+          <div class="wreck-img-placeholder">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <rect x="10" y="20" width="60" height="44" rx="3" stroke="#e8e0cc" stroke-width="1.5"/>
+              <circle cx="28" cy="37" r="6" stroke="#e8e0cc" stroke-width="1.2"/>
+              <polyline points="10,64 28,44 42,56 54,42 70,64" stroke="#e8e0cc" stroke-width="1.2" fill="none"/>
+            </svg>
+          </div>`;
+        renderGallery(displayPhotos, downloadPhotos);
+        return;
+      }
+      const probe = new Image();
+      probe.onload  = () => {
+        primetimeUrl = probe.src;
+        primetimeWrap.innerHTML = `
+          <div class="wreck-primetime-wrap">
+            <img src="${probe.src}" alt="${wreck.name}">
+          </div>`;
+        // Resolve original (non-webp) for the download zip
+        if (probe.src.endsWith('.webp')) {
+          (function tryDlExt(dlExts, i) {
+            if (i >= dlExts.length) { primetimeDlUrl = primetimeUrl; renderGallery([primetimeUrl, ...displayPhotos], [primetimeDlUrl, ...downloadPhotos]); return; }
+            const dp = new Image();
+            dp.onload  = () => { primetimeDlUrl = dp.src; renderGallery([primetimeUrl, ...displayPhotos], [primetimeDlUrl, ...downloadPhotos]); };
+            dp.onerror = () => tryDlExt(dlExts, i + 1);
+            dp.src = `${ROOT}/img/targets/${wreck.id}/primetime.${dlExts[i]}`;
+          })(['png','jpg','jpeg'], 0);
+        } else {
+          primetimeDlUrl = primetimeUrl;
+          renderGallery([primetimeUrl, ...displayPhotos], [primetimeDlUrl, ...downloadPhotos]);
+        }
+      };
+      probe.onerror = () => resolvePrimetime(extIdx + 1);
+      probe.src = `${ROOT}/img/targets/${wreck.id}/primetime.${ext}`;
+    })(0);
+
+    function renderGallery(photos, dlPhotos) {
+      if (!photos.length) return;
+      galleryWrap.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:12px;">
+          <div class="section-label" style="margin-top:0;">Gallery</div>
+          <button id="gallery-download-btn" class="download-btn" style="font-size:12px;padding:10px 20px;">Download Raw .JPG Images ↓</button>
+        </div>
+        <div class="wreck-gallery">
+          ${photos.map((src, i) => `<img src="${src}" alt="${wreck.name} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
+        </div>`;
+
+      galleryWrap.querySelectorAll('img[data-idx]').forEach(img => {
+        img.addEventListener('click', () => openLightbox(photos, parseInt(img.dataset.idx)));
+      });
+
+      document.getElementById('gallery-download-btn').addEventListener('click', () => {
+        showLicenseModal(() => downloadImagesZip(wreck.id, dlPhotos));
+      });
+    }
+
+    async function downloadImagesZip(id, photos) {
+      const btn = document.getElementById('gallery-download-btn');
+      btn.textContent = 'Preparing…';
+      btn.disabled = true;
+      try {
+        const zip = new JSZip();
+        await Promise.all(photos.map(async src => {
+          const res  = await fetch(src);
+          const blob = await res.blob();
+          zip.file(src.split('/').pop(), blob);
+        }));
+        const content = await zip.generateAsync({ type: 'blob' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(content);
+        a.download = `${id}-images.zip`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      } catch (e) {
+        alert('Download failed. Images may not be available yet.');
+      } finally {
+        btn.textContent = 'Download Raw .JPG Images ↓';
+        btn.disabled = false;
+      }
+    }
+
+    // ── Lightbox ──────────────────────────────────────────────────────────────
+    const lb = document.createElement('div');
+    lb.id = 'lightbox';
+    lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;overflow:hidden;';
+    lb.innerHTML = `
+      <button id="lb-prev" style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8592;</button>
+      <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:95vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);cursor:zoom-in;transform-origin:center center;transition:transform 0.15s ease;user-select:none;">
+      <button id="lb-next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8594;</button>
+      <div id="lb-hint" style="position:absolute;top:3vh;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:2;">scroll or click to zoom · drag to pan</div>
+    `;
+    document.body.appendChild(lb);
+
+    let lbPhotos = [], lbIdx = 0;
+    let lbScale = 1, lbTx = 0, lbTy = 0;
+    let lbDragging = false, lbDragX = 0, lbDragY = 0, lbMoved = false;
+
+    function lbApplyTransform() {
+      const img = document.getElementById('lb-img');
+      img.style.transform = `scale(${lbScale}) translate(${lbTx / lbScale}px, ${lbTy / lbScale}px)`;
+      img.style.cursor = lbScale > 1 ? (lbDragging ? 'grabbing' : 'grab') : 'zoom-in';
+    }
+
+    function lbResetZoom() {
+      lbScale = 1; lbTx = 0; lbTy = 0;
+      lbApplyTransform();
+    }
+
+    function lbShow(i) {
+      lbIdx = (i + lbPhotos.length) % lbPhotos.length;
+      document.getElementById('lb-img').src = lbPhotos[lbIdx];
+      document.getElementById('lb-prev').style.opacity = lbPhotos.length > 1 ? '1' : '0';
+      document.getElementById('lb-next').style.opacity = lbPhotos.length > 1 ? '1' : '0';
+      lbResetZoom();
+    }
+
+    function openLightbox(photos, idx) {
+      lbPhotos = photos;
+      lb.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      lbShow(idx);
+    }
+
+    function closeLightbox() {
+      lb.style.display = 'none';
+      document.body.style.overflow = '';
+      lbResetZoom();
+    }
+
+    // Scroll to zoom
+    lb.addEventListener('wheel', e => {
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? 1.15 : 0.87;
+      lbScale = Math.max(1, Math.min(6, lbScale * factor));
+      if (lbScale === 1) { lbTx = 0; lbTy = 0; }
+      lbApplyTransform();
+    }, { passive: false });
+
+    // Click image to toggle zoom
+    document.getElementById('lb-img').addEventListener('click', e => {
+      e.stopPropagation();
+      if (lbMoved) { lbMoved = false; return; }
+      if (lbScale > 1) { lbResetZoom(); }
+      else             { lbScale = 2.5; lbApplyTransform(); }
+    });
+
+    // Drag to pan (mouse)
+    document.getElementById('lb-img').addEventListener('mousedown', e => {
+      if (lbScale <= 1) return;
+      e.preventDefault();
+      lbDragging = true;
+      lbMoved = false;
+      lbDragX = e.clientX - lbTx;
+      lbDragY = e.clientY - lbTy;
+      lbApplyTransform();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!lbDragging) return;
+      lbMoved = true;
+      lbTx = e.clientX - lbDragX;
+      lbTy = e.clientY - lbDragY;
+      lbApplyTransform();
+    });
+    document.addEventListener('mouseup', () => {
+      if (!lbDragging) return;
+      lbDragging = false;
+      lbApplyTransform();
+    });
+
+    // Drag to pan (touch)
+    document.getElementById('lb-img').addEventListener('touchstart', e => {
+      if (lbScale <= 1 || e.touches.length !== 1) return;
+      lbDragging = true;
+      lbMoved = false;
+      const t = e.touches[0];
+      lbDragX = t.clientX - lbTx;
+      lbDragY = t.clientY - lbTy;
+    }, { passive: true });
+    document.addEventListener('touchmove', e => {
+      if (!lbDragging || e.touches.length !== 1) return;
+      e.preventDefault();
+      lbMoved = true;
+      const t = e.touches[0];
+      lbTx = t.clientX - lbDragX;
+      lbTy = t.clientY - lbDragY;
+      lbApplyTransform();
+    }, { passive: false });
+    document.addEventListener('touchend', () => {
+      if (!lbDragging) return;
+      lbDragging = false;
+      lbApplyTransform();
+    });
+
+    document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx - 1); });
+    document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx + 1); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (lb.style.display === 'none') return;
+      if (e.key === 'ArrowLeft')  { lbShow(lbIdx - 1); }
+      if (e.key === 'ArrowRight') { lbShow(lbIdx + 1); }
+      if (e.key === 'Escape')     { closeLightbox(); }
+    });
+
+    // ── Mini map ──────────────────────────────────────────────────────────────
+    if (wreck.coordinates) {
+      const coordEl = document.getElementById('coord-display');
+      coordEl.innerHTML = coordDisplay(wreck.coordinates);
+      const mapsUrl = `https://www.google.com/maps?q=${wreck.coordinates[0]},${wreck.coordinates[1]}`;
+      coordEl.style.cssText += ';cursor:pointer;transition:color 0.15s;';
+      coordEl.addEventListener('mouseover', () => coordEl.style.color = '#fff');
+      coordEl.addEventListener('mouseout',  () => coordEl.style.color = '');
+      coordEl.addEventListener('click',     () => window.open(mapsUrl, '_blank'));
+
+      const mapsLink = document.getElementById('maps-link');
+      mapsLink.style.display = 'inline-flex';
+
+      const locationRow = mapsLink.parentElement;
+      const locationSpan = locationRow.querySelector('span');
+      locationSpan.style.transition = 'color 0.15s';
+      locationRow.style.cursor = 'pointer';
+      locationRow.addEventListener('click',     () => window.open(mapsUrl, '_blank'));
+      locationRow.addEventListener('mouseover', () => {
+        locationSpan.style.color = '#fff';
+        mapsLink.style.opacity = '1';
+      });
+      locationRow.addEventListener('mouseout', () => {
+        locationSpan.style.color = '';
+        mapsLink.style.opacity = '0.55';
+      });
+
+      const miniMap = L.map('wreck-detail-map', {
+        center: wreck.coordinates,
+        zoom: 15,
+        zoomControl: false,
+        attributionControl: false
+      });
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles © Esri'
+      }).addTo(miniMap);
+      L.marker(wreck.coordinates, { icon: makeMarker(L, wreck) })
+        .addTo(miniMap)
+        .bindPopup(wreck.name)
+        .openPopup();
+
+      miniMap.on('click', () => window.open(mapsUrl, '_blank'));
+      document.getElementById('wreck-detail-map').style.cursor = 'pointer';
+    }
+  }
+</script>
+</body>
+</html>

@@ -16,7 +16,7 @@ function buildNav(activePage) {
     <div class="nav-links">
       <a href="${ROOT}/"            class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
       <a href="${ROOT}/map"         class="${activePage === 'map'    ? 'active' : ''}">Map</a>
-      <a href="${ROOT}/archive"     class="${activePage === 'archive'? 'active' : ''}">Archive</a>
+      <a href="${ROOT}/lu-archive"  class="${activePage === 'lu-archive'? 'active' : ''}">Archive</a>
       <a href="${ROOT}/support"     class="${activePage === 'support' ? 'active' : ''}">Support</a>
       <a href="${ROOT}/about"       class="${activePage === 'about'  ? 'active' : ''}">About</a>
     </div>
@@ -244,11 +244,11 @@ function makePopup(wreck) {
       <div class="popup-catalog">${wreck.catalog}</div>
       <div class="popup-name">${wreck.name}</div>
       <div class="popup-img-wrap">
-        <img src="${ROOT}/img/wrecks/${wreck.id}/primetime.webp" alt="${wreck.name}" onerror="this.closest('.popup-img-wrap').style.display='none'">
+        <img src="${ROOT}/img/targets/${wreck.id}/primetime.webp" alt="${wreck.name}" onerror="this.closest('.popup-img-wrap').style.display='none'">
         ${overlayLines ? `<div class="popup-img-overlay">${overlayLines}</div>` : ''}
       </div>
       <div class="wreck-type-badge" style="margin:8px 0;">${wreck.type}</div>
-      <div class="popup-link" data-href="${ROOT}/wrecks/${wreck.id}">View record →</div>
+      <div class="popup-link" data-href="${ROOT}/lu-archive/${wreck.id}">View record →</div>
     </div>
   `;
 }

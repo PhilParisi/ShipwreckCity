@@ -187,7 +187,7 @@
 <div id="nav-mount"></div>
 
 <div class="page-hero">
-  <div class="hero-bg-photo"><img src="img/wrecks/lu006/primetime.webp" alt="" aria-hidden="true"></div>
+  <div class="hero-bg-photo"><img src="img/targets/lu006/primetime.webp" alt="" aria-hidden="true"></div>
   <div class="page-hero-grid"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">Community Support &amp; Acknowledgements</div>
@@ -361,13 +361,13 @@
   }).join('');
 
   // Gallery
-  document.getElementById('sup-gallery-label').href = `${ROOT}/archive`;
+  document.getElementById('sup-gallery-label').href = `${ROOT}/lu-archive`;
 
   const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
   function tryPrimetimeExt(img, id) {
     const cur  = img.src.split('.').pop();
     const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
-    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
+    if (next) { img.src = `${ROOT}/img/targets/${id}/primetime.${next}`; }
     else       { img.closest('a').style.display = 'none'; }
   }
 
@@ -376,8 +376,8 @@
 
   function makeSupTiles(wrecks) {
     return wrecks.map(w => `
-      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
-        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+      <a class="field-photo-tile" href="${ROOT}/lu-archive/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
              onerror="tryPrimetimeExt(this,'${w.id}')">
       </a>`).join('');
   }

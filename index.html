@@ -86,8 +86,9 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg-photo">
-    <img src="img/wrecks/lu009/primetime.webp" alt="" aria-hidden="true">
+    <img id="hero-vessel-img" src="img/targets/lu009/primetime.webp" alt="" aria-hidden="true">
   </div>
+  <a class="hero-photo-link" id="hero-vessel-link" aria-label="View featured vessel"></a>
   <div class="hero-grid"></div>
   <div class="hero-scan"></div>
   <div class="hero-blip hero-blip-1"></div>
@@ -100,12 +101,12 @@
   <div class="hero-content">
     <div class="hero-eyebrow">Lake Union · Seattle · 47°37'N 122°20'W</div>
     <h1 class="hero-title">SHIP<br><em>WRECK</em><br>CITY</h1>
-    <p class="hero-sub">Completing the underwater archive of Seattle's sunken maritime history — the vessels lost to time, fire, and the deep.</p>
+    <p class="hero-sub">Building the most comprehensive underwater archive of Seattle's sunken maritime history — the vessels lost to scuttlers, disaster, and time.</p>
   </div>
 </section>
 
 <!-- ARCHIVE STATUS BANNER -->
-<a id="archive-status-banner" href="archive" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;opacity:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='1.0';this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+<a id="archive-status-banner" href="lu-archive" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;opacity:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='1.0';this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
   <span style="font-family:var(--font-body);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#4a9bbe;white-space:nowrap;">ℹ Update</span>
   <span style="font-family:var(--font-serif);font-size:22px;color:#7fc4d8;line-height:1.5;text-align:center;" id="index-archive-status">—</span>
 </a>
@@ -126,7 +127,7 @@
 <section style="padding:48px 10%;border-top:1px solid var(--text-primary);border-bottom:1px solid var(--text-primary);">
   <div style="font-family:var(--font-display);font-size:28px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);text-align:center;margin-bottom:24px;">Our Mission</div>
   <p style="font-family:var(--font-serif);font-size:31px;line-height:1.8;color:var(--text-primary);max-width:1200px;margin:0 auto;text-align:center;">
-    <a href="about" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">Shipwreck City</a> is a volunteer effort to <span style="color:var(--accent);">find</span>, <span style="color:var(--accent);">film</span>, <span style="color:var(--accent);">archive</span>, and <span style="color:var(--accent);">share</span> every <a href="archive" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">sunken vessel</a> in Lake Union, one of Seattle's most treasured waterways.
+    <a href="about" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">Shipwreck City</a> is a volunteer effort to <span style="color:var(--accent);">find</span>, <span style="color:var(--accent);">film</span>, <span style="color:var(--accent);">archive</span>, and <span style="color:var(--accent);">share</span> every <a href="lu-archive" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline';this.style.textDecorationColor='#4a9eba';" onmouseout="this.style.textDecoration='none';">sunken vessel</a> in Lake Union, one of Seattle's most treasured waterways.
   </p>
 </section>
 
@@ -202,7 +203,7 @@
         </div>
       </a>
       <a class="media-card" href="https://streetsmartnaturalist.substack.com/p/shipwrecks-of-lake-union" target="_blank" rel="noopener">
-        <img class="media-card-thumb" src="img/wrecks/lu012/primetime.webp" alt="Street Smart Naturalist coverage" loading="lazy">
+        <img class="media-card-thumb" src="img/targets/lu012/primetime.webp" alt="Street Smart Naturalist coverage" loading="lazy">
         <div class="media-card-body">
           <div class="media-card-source">Street Smart Naturalist</div>
           <div class="media-card-title">Shipwrecks of Lake Union — A Rich History Lurks Below</div>
@@ -216,14 +217,14 @@
         </div>
       </a>
       <a class="media-card" href="img/thumbnails/MakingWavesJune26Lo-Res.pdf" target="_blank" rel="noopener">
-        <img class="media-card-thumb" src="img/wrecks/lu078/frame_0011.webp" alt="Lake Washington Rowing Club coverage" loading="lazy">
+        <img class="media-card-thumb" src="img/targets/lu078/frame_0011.webp" alt="Lake Washington Rowing Club coverage" loading="lazy">
         <div class="media-card-body">
           <div class="media-card-source">Lake Washington Rowing Club</div>
           <div class="media-card-title">What Lies Beneath — Lake Union's History</div>
         </div>
       </a>
       <a class="media-card" href="https://nypost.com/2026/05/05/us-news/underwater-robotics-expert-reveals-shipwreck-city-hidden-beneath-major-west-coast-lake/" target="_blank" rel="noopener">
-        <img class="media-card-thumb" src="img/wrecks/lu101/primetime.webp" alt="NY Post coverage" loading="lazy">
+        <img class="media-card-thumb" src="img/targets/lu101/primetime.webp" alt="NY Post coverage" loading="lazy">
         <div class="media-card-body">
           <div class="media-card-source">New York Post</div>
           <div class="media-card-title">Underwater robotics expert reveals 'shipwreck city' hidden beneath major West Coast lake</div>
@@ -251,7 +252,7 @@
         </div>
       </a>
       <a class="media-card" href="https://www.ktvb.com/article/news/nation-world/robotics-underwater-detection-shipwrecks-sonar-survey-remote-operated-vehicle-washington-lake-union/507-d5e09930-31c1-491f-8c8b-01f9fcbba5b8" target="_blank" rel="noopener">
-        <img class="media-card-thumb" src="img/wrecks/lu009/shipwreck2_5.webp" alt="KTVB coverage" loading="lazy">
+        <img class="media-card-thumb" src="img/targets/lu009/shipwreck2_5.webp" alt="KTVB coverage" loading="lazy">
         <div class="media-card-body">
           <div class="media-card-source">KTVB News</div>
           <div class="media-card-title">Underwater robots and sonar reveal hidden shipwrecks in Seattle's Lake Union</div>
@@ -335,6 +336,14 @@
   document.getElementById('map-section-label').href       = `${ROOT}/map`;
   document.getElementById('supporters-section-label').href = `${ROOT}/support`;
 
+  // Hero photo — random vessel (not debris/infrastructure) on every load
+  const vesselWrecks = WRECKS.filter(w => w.type === 'Vessel' && w.hasPrimetime);
+  if (vesselWrecks.length) {
+    const heroWreck = vesselWrecks[Math.floor(Math.random() * vesselWrecks.length)];
+    document.getElementById('hero-vessel-img').src  = `${ROOT}/img/targets/${heroWreck.id}/primetime.webp`;
+    document.getElementById('hero-vessel-link').href = `${ROOT}/lu-archive/${heroWreck.id}`;
+  }
+
   // Stats
   const depths        = WRECKS.map(w => w.depth).filter(Boolean);
   const maxD          = depths.length ? Math.max(...depths) : 0;
@@ -349,10 +358,10 @@
   document.getElementById('index-archive-status').textContent   = `The Shipwreck City Archive Dataset was last updated on: ${archiveDate}. The Project is ${progressPct}% complete.`;
 
   document.getElementById('stats-bar').innerHTML = `
-    <a class="stat" href="${ROOT}/archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
-    <a class="stat" href="${ROOT}/archive#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">62</div><div class="stat-label">Targets Cleared</div></a>
-    <a class="stat" href="${ROOT}/archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num">41</div><div class="stat-label">Wrecks Confirmed</div></a>
-    <a class="stat" href="${ROOT}/archive#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">4</div><div class="stat-label">New Wrecks</div></a>
+    <a class="stat" href="${ROOT}/lu-archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
+    <a class="stat" href="${ROOT}/lu-archive#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">62</div><div class="stat-label">Targets Cleared</div></a>
+    <a class="stat" href="${ROOT}/lu-archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num">41</div><div class="stat-label">Wrecks Confirmed</div></a>
+    <a class="stat" href="${ROOT}/lu-archive#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">4</div><div class="stat-label">New Wrecks</div></a>
   `;
 
   //<div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>
@@ -362,7 +371,7 @@
   function tryPrimetimeExt(img, id) {
     const cur  = img.src.split('.').pop();
     const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
-    if (next) { img.src = `${ROOT}/img/wrecks/${id}/primetime.${next}`; }
+    if (next) { img.src = `${ROOT}/img/targets/${id}/primetime.${next}`; }
     else       { img.style.display = 'none'; }
   }
 
@@ -375,8 +384,8 @@
   }
   grid.innerHTML = gridWrecks.map(w => `
     <div class="wreck-pair">
-      <a class="wreck-photo-tile" href="${ROOT}/wrecks/${w.id}">
-        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+      <a class="wreck-photo-tile" href="${ROOT}/lu-archive/${w.id}">
+        <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
              onload="this.nextElementSibling.style.display='none'"
              onerror="tryPrimetimeExt(this,'${w.id}')">
         <div class="wreck-photo-fallback">
@@ -384,7 +393,7 @@
           <span>No image</span>
         </div>
       </a>
-      <a class="wreck-card" href="${ROOT}/wrecks/${w.id}">
+      <a class="wreck-card" href="${ROOT}/lu-archive/${w.id}">
         <div class="wreck-card-num">${w.catalog}</div>
         <div class="wreck-card-name">${w.name}</div>
         <div class="wreck-card-meta">
@@ -513,15 +522,15 @@
   syncFieldArrows();
 
   // Primetime gallery — two rows, shared arrows
-  document.getElementById('primetime-section-label').href = `${ROOT}/archive`;
+  document.getElementById('primetime-section-label').href = `${ROOT}/lu-archive`;
 
   const allPrimetime = WRECKS.filter(w => w.hasPrimetime);
   const half         = Math.ceil(allPrimetime.length / 2);
 
   function makePrimetimeTiles(wrecks) {
     return wrecks.map(w => `
-      <a class="field-photo-tile" href="${ROOT}/wrecks/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
-        <img src="${ROOT}/img/wrecks/${w.id}/primetime.webp" alt="${w.name}"
+      <a class="field-photo-tile" href="${ROOT}/lu-archive/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
              onerror="tryPrimetimeExt(this,'${w.id}')">
       </a>`).join('');
   }

@@ -257,8 +257,8 @@ def prefer_webp(filenames):
     return sorted(by_base.values())
 
 def scan_images(slug, script_dir):
-    """Scan img/wrecks/{slug}/ and return (hasPrimetime, gallery_files)."""
-    img_dir = os.path.normpath(os.path.join(script_dir, '..', 'img', 'wrecks', slug))
+    """Scan img/targets/{slug}/ and return (hasPrimetime, gallery_files)."""
+    img_dir = os.path.normpath(os.path.join(script_dir, '..', 'img', 'targets', slug))
     if not os.path.isdir(img_dir):
         return False, []
     deduped = prefer_webp(os.listdir(img_dir))
@@ -428,7 +428,7 @@ def main():
  * ============================================================
  *
  *  FIELDS:
- *  id          — unique slug, used in URLs: /wrecks/your-id.html
+ *  id          — unique slug, used in URLs: /archive/your-id.html
  *  name        — display name of the wreck
  *  catalog     — catalog number shown on cards (e.g. "WR — LU001")
  *  type        — CSV "Type (New)" column, or "—" if missing/NA
@@ -446,7 +446,7 @@ def main():
  *               detail page's Overview (heading is null for unstructured text)
  *  dimensions  — e.g. "62ft × 18ft" or null
  *  footageItems — list of {label, url} YouTube/Vimeo embeds, or []
- *  images      — gallery filenames inside img/wrecks/{id}/ (e.g. ["01.jpg","02.jpg"])
+ *  images      — gallery filenames inside img/targets/{id}/ (e.g. ["01.jpg","02.jpg"])
  *               Homepage tile uses primetime.{jpg|png|webp} automatically — no entry needed here.
  */
 """

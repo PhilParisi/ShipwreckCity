@@ -3,7 +3,7 @@
  * generate-wrecks.js
  *
  * Run this script whenever you add/edit/remove wrecks in wrecks-data.js.
- * It generates one HTML file per wreck in /wrecks/, named by wreck ID.
+ * It generates one HTML file per wreck in /lu-archive/, named by wreck ID.
  *
  * Usage:
  *   node generate-wrecks.js
@@ -21,9 +21,9 @@ let WRECKS, SITE_CONFIG;
 const fn = new Function(dataFile + '\nreturn { WRECKS, SITE_CONFIG };');
 ({ WRECKS, SITE_CONFIG } = fn());
 
-const templatePath = path.join(__dirname, 'wrecks/wreck-template.html');
+const templatePath = path.join(__dirname, 'lu-archive/wreck-template.html');
 const template     = fs.readFileSync(templatePath, 'utf8');
-const outDir       = path.join(__dirname, 'wrecks');
+const outDir       = path.join(__dirname, 'lu-archive');
 
 // Social/search crawlers (Slack, iMessage, Discord, Twitter, Facebook, Google)
 // generally don't execute JavaScript, so the preview title/description/image
@@ -42,9 +42,9 @@ function escapeHtml(str) {
 function metaTagsFor(wreck) {
   const title       = escapeHtml(`${wreck.name} — Shipwreck City`);
   const description = escapeHtml(wreck.tagline || `${wreck.name} — Shipwreck City`);
-  const pageUrl      = `${SITE_URL}/wrecks/${wreck.id}`;
+  const pageUrl      = `${SITE_URL}/lu-archive/${wreck.id}`;
   const image        = wreck.hasPrimetime
-    ? `${SITE_URL}/img/wrecks/${wreck.id}/primetime.jpg`
+    ? `${SITE_URL}/img/targets/${wreck.id}/primetime.jpg`
     : FALLBACK_OG_IMAGE;
 
   return `<title>${title}</title>
@@ -68,7 +68,7 @@ WRECKS.forEach(wreck => {
   // but the <head> meta tags are swapped in here per-wreck so link previews work.
   const page = template.replace('<title>Loading...</title>', metaTagsFor(wreck));
   fs.writeFileSync(outPath, page);
-  console.log(`  ✓  wrecks/${wreck.id}.html`);
+  console.log(`  ✓  lu-archive/${wreck.id}.html`);
   generated++;
 });
 
