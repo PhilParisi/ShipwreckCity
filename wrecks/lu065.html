@@ -11,8 +11,18 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- SEO meta tags injected by JS below -->
-  <title>Loading...</title>
+  <!-- SEO / social preview meta tags — injected per-wreck by generate-wrecks.js at build time -->
+  <title>Cannery Tender — Shipwreck City</title>
+  <meta name="description" content="Shipwreck City has yet to explore this target.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shipwreckcity.org/wrecks/lu065">
+  <meta property="og:title" content="Cannery Tender — Shipwreck City">
+  <meta property="og:description" content="Shipwreck City has yet to explore this target.">
+  <meta property="og:image" content="https://shipwreckcity.org/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cannery Tender — Shipwreck City">
+  <meta name="twitter:description" content="Shipwreck City has yet to explore this target.">
+  <meta name="twitter:image" content="https://shipwreckcity.org/img/og-image.jpg">
   <link rel="icon" type="image/png" href="../img/thumbnails/favicon_sc.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,18 +58,6 @@
     document.title = 'Not Found — Shipwreck City';
   } else {
     document.title = `${wreck.name} — Shipwreck City`;
-    document.querySelector('meta[name="description"]')
-      ?.setAttribute('content', wreck.tagline);
-
-    const ogTitle = document.createElement('meta');
-    ogTitle.setAttribute('property','og:title');
-    ogTitle.setAttribute('content', `${wreck.name} — Shipwreck City`);
-    document.head.appendChild(ogTitle);
-
-    const ogDesc = document.createElement('meta');
-    ogDesc.setAttribute('property','og:description');
-    ogDesc.setAttribute('content', wreck.tagline);
-    document.head.appendChild(ogDesc);
 
     // Prev/next navigation
     const idx  = WRECKS.indexOf(wreck);
