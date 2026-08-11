@@ -2087,7 +2087,7 @@ const WRECKS = [
     dimensions: "24' × 8'",
     footageItems: [],
     hasPrimetime: true,
-    images: ["frame100.jpg", "frame_0001.webp", "frame_0002.webp", "frame_0003.webp", "frame_0004.webp", "frame_0005.webp", "frame_0006.webp", "frame_0007.webp", "frame_0008.webp", "frame_0010.webp", "frame_0011.webp", "frame_0012.webp", "frame_0013.webp", "frame_0014.webp", "frame_0015.webp", "sidescan.webp", "sidescan2.webp", "sidescan3.webp"],
+    images: ["frame100.webp", "frame_0001.webp", "frame_0002.webp", "frame_0003.webp", "frame_0004.webp", "frame_0005.webp", "frame_0006.webp", "frame_0007.webp", "frame_0008.webp", "frame_0010.webp", "frame_0011.webp", "frame_0012.webp", "frame_0013.webp", "frame_0014.webp", "frame_0015.webp", "sidescan.webp", "sidescan2.webp", "sidescan3.webp"],
     newTarget: false,
     diveDuration: null,
     diveDate: "6 May 2026",
