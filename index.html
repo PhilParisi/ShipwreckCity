@@ -363,15 +363,15 @@
   if (depthEl) depthEl.textContent = `${minD} — 50 ft`;
 
   // Archive progress bar
-  const progressPct = WRECKS.length ? Math.round((62 / WRECKS.length) * 100) : 0;
+  const progressPct = WRECKS.length ? Math.round((65 / WRECKS.length) * 100) : 0;
   const archiveDate = (ARCHIVE_CSV_FILENAME || '').replace('target_master_archive_', '').replace('.csv', '');
   document.getElementById('index-archive-status').textContent   = `The Shipwreck City Archive Dataset was last updated on: ${archiveDate}. The Project is ${progressPct}% complete.`;
 
   document.getElementById('stats-bar').innerHTML = `
     <a class="stat" href="${ROOT}/lu-archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
-    <a class="stat" href="${ROOT}/lu-archive#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">62</div><div class="stat-label">Targets Cleared</div></a>
-    <a class="stat" href="${ROOT}/lu-archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num">41</div><div class="stat-label">Wrecks Confirmed</div></a>
-    <a class="stat" href="${ROOT}/lu-archive#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">4</div><div class="stat-label">New Wrecks</div></a>
+    <a class="stat" href="${ROOT}/lu-archive#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">65</div><div class="stat-label">Targets Cleared</div></a>
+    <a class="stat" href="${ROOT}/lu-archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num">42</div><div class="stat-label">Wrecks Confirmed</div></a>
+    <a class="stat" href="${ROOT}/lu-archive#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">5</div><div class="stat-label">New Wrecks</div></a>
   `;
 
   //<div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>

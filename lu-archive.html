@@ -302,7 +302,7 @@
     });
     const m = filename.match(/(\d+)([A-Za-z]+)(\d{4})/);
     if (m) {
-      const pct = WRECKS.length ? Math.round(62 / WRECKS.length * 100) : 0;
+      const pct = WRECKS.length ? Math.round(65 / WRECKS.length * 100) : 0;
       document.getElementById('archive-last-updated').textContent =
         `The Archive Dataset was last updated on: ${m[1]} ${m[2]} ${m[3]}. The Project is ${pct}% complete.`;
     }
