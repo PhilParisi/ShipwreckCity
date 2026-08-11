@@ -96,6 +96,19 @@ def parse_dimensions(val):
     v = re.sub(r"\s*[xX×]\s*", " × ", v)
     return v
 
+def parse_dive_date(val):
+    """Return a human-readable ROV dive date, or None.
+    CSV format is like '4May2026' or a comma-separated list for multiple dives."""
+    v = clean(val)
+    if v is None:
+        return None
+    parts = [p.strip() for p in v.split(',') if p.strip()]
+    formatted = []
+    for p in parts:
+        m = re.match(r'^(\d{1,2})([A-Za-z]+)(\d{4})$', p)
+        formatted.append(f'{m.group(1)} {m.group(2)} {m.group(3)}' if m else p)
+    return ', '.join(formatted) if formatted else None
+
 def strip_description_frontmatter(text):
     """Drop leading 'Name: X (LU013)' / 'Type: A | Class: B | Subclass: C' lines,
     stopping at the first real section label or prose line."""
@@ -323,6 +336,7 @@ def convert(csv_path):
                 "images":      images,
                 "newTarget":   (row.get('sc_newly_uncovered_wreck') or '').strip().lower() == 'yes',
                 "diveDuration": (lambda v: float(v) if v else None)(clean(row.get('sc_rov_dive_duration'))),
+                "diveDate":    parse_dive_date(row.get('sc_rov_dive_date')),
                 "css_url":     clean(row.get('css_url')),
                 "dcs_url":     clean(row.get('dcs_history_url')),
                 "luvm_url":    clean(row.get('luvm_url')),
@@ -360,7 +374,7 @@ def wreck_to_js(w):
         'id', 'name', 'catalog', 'type', 'class', 'material', 'year', 'yearNote',
         'depth', 'coordinates', 'location', 'status', 'tagline',
         'summary', 'summarySections', 'dimensions',
-        'footageItems', 'hasPrimetime', 'images', 'newTarget', 'diveDuration',
+        'footageItems', 'hasPrimetime', 'images', 'newTarget', 'diveDuration', 'diveDate',
         'css_url', 'dcs_url', 'luvm_url',
     ]
     for key in fields:
@@ -450,6 +464,7 @@ def main():
  *  footageItems — list of {label, url} YouTube/Vimeo embeds, or []
  *  images      — gallery filenames inside img/targets/{id}/ (e.g. ["01.jpg","02.jpg"])
  *               Homepage tile uses primetime.{jpg|png|webp} automatically — no entry needed here.
+ *  diveDate    — CSV "sc_rov_dive_date" column, formatted (e.g. "4 May 2026"), or null
  */
 """
 

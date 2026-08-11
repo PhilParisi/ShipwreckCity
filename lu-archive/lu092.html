@@ -206,6 +206,7 @@
           <div class="aside-detail-row"><span>Status</span><span>${statusLabel(wreck.status)}</span></div>
           ${wreck.depth ? `<div class="aside-detail-row"><span>Depth</span><span>${wreck.depth} ft</span></div>` : ''}
           ${wreck.dimensions ? `<div class="aside-detail-row"><span>Dimensions</span><span>${wreck.dimensions}</span></div>` : ''}
+          ${wreck.diveDate ? `<div class="aside-detail-row"><span>ROV Dive Date</span><span>${wreck.diveDate}</span></div>` : ''}
           <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${wreck.location}</span></div>
 
           <a class="aside-label" href="${ROOT}/lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
