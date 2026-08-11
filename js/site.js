@@ -252,3 +252,14 @@ function makePopup(wreck) {
     </div>
   `;
 }
+
+// Fade in each page's static hero photo once it's loaded. Skips the homepage's
+// #hero-vessel-img, which picks its photo at random and manages its own fade
+// (it needs to preload off-screen first, since its src isn't known up front).
+document.querySelectorAll('.hero-bg-photo img:not(#hero-vessel-img)').forEach(img => {
+  if (img.complete && img.naturalWidth > 0) {
+    img.classList.add('is-loaded');
+  } else {
+    img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+  }
+});

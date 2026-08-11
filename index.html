@@ -86,7 +86,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg-photo">
-    <img id="hero-vessel-img" src="img/targets/lu009/primetime.webp" alt="" aria-hidden="true">
+    <img id="hero-vessel-img" alt="" aria-hidden="true">
   </div>
   <a class="hero-photo-link" id="hero-vessel-link" aria-label="View featured vessel"></a>
   <div class="hero-grid"></div>
@@ -336,11 +336,21 @@
   document.getElementById('map-section-label').href       = `${ROOT}/map`;
   document.getElementById('supporters-section-label').href = `${ROOT}/support`;
 
-  // Hero photo — random vessel (not debris/infrastructure) on every load
+  // Hero photo — random vessel (not debris/infrastructure) on every load.
+  // Preload off-screen so the visible <img> only ever receives a ready
+  // frame, then fade it in — avoids the old "wrong photo -> pop to new
+  // photo" flash on first paint.
   const vesselWrecks = WRECKS.filter(w => w.type === 'Vessel' && w.hasPrimetime);
   if (vesselWrecks.length) {
     const heroWreck = vesselWrecks[Math.floor(Math.random() * vesselWrecks.length)];
-    document.getElementById('hero-vessel-img').src  = `${ROOT}/img/targets/${heroWreck.id}/primetime.webp`;
+    const heroSrc = `${ROOT}/img/targets/${heroWreck.id}/primetime.webp`;
+    const heroImgEl = document.getElementById('hero-vessel-img');
+    const preload = new Image();
+    preload.onload = () => {
+      heroImgEl.src = heroSrc;
+      heroImgEl.classList.add('is-loaded');
+    };
+    preload.src = heroSrc;
     document.getElementById('hero-vessel-link').href = `${ROOT}/lu-archive/${heroWreck.id}`;
   }
 

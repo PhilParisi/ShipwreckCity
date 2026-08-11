@@ -326,9 +326,10 @@
     document.getElementById('archive-count').textContent = `${filtered.length} Target${filtered.length !== 1 ? 's' : ''} — Lake Union`;
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
       <tr style="cursor:pointer;" onclick="location.href='${ROOT}/lu-archive/${w.id}'">
-        <td class="td-img">
+        <td class="td-img">${w.hasPrimetime ? `
           <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
-               onerror="tryPrimetimeExt(this,'${w.id}')">
+               onerror="tryPrimetimeExt(this,'${w.id}')">` : `
+          <div style="width:96px;height:96px;background:var(--bg-deep);"></div>`}
         </td>
         <td class="td-catalog">${w.catalog}</td>
         <td><span class="td-name">${w.name}</span></td>
