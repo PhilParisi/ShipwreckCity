@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57LGQFRM4Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-57LGQFRM4Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events — Shipwreck City</title>
+  <meta name="description" content="Upcoming talks, lectures, and public events from the Shipwreck City project.">
+  <meta property="og:title" content="Shipwreck City | Mapping Seattle's Sunken Fleet">
+  <meta property="og:description" content="Underwater robots are mapping 100+ wreck and debris sites beneath Seattle's most-visited lake — and publishing everything for free at ShipwreckCity.org.">
+  <meta property="og:image" content="https://shipwreckcity.org/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shipwreckcity.org">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .events-list { display: flex; flex-direction: column; gap: 24px; }
+    .event-card {
+      display: flex;
+      gap: 28px;
+      padding: 32px;
+      border: 1px solid var(--border-mid);
+      background: var(--bg-card);
+      align-items: flex-start;
+    }
+    .event-photo {
+      flex: 0 0 260px;
+      align-self: stretch;
+      overflow: hidden;
+    }
+    .event-photo img {
+      width: 100%; height: 100%; aspect-ratio: 2 / 3;
+      object-fit: cover; display: block;
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    .event-date-block {
+      flex: 0 0 120px;
+      text-align: center;
+      border-right: 1px solid var(--border-mid);
+      padding-right: 24px;
+    }
+    .event-date-month { font-family: var(--font-body); font-size: 13px; letter-spacing: 2px; color: var(--accent); }
+    .event-date-day   { font-family: var(--font-display); font-size: 52px; color: var(--text-primary); line-height: 1; margin: 4px 0; }
+    .event-date-year  { font-family: var(--font-body); font-size: 13px; color: var(--text-muted); }
+    .event-body  { flex: 1; }
+    .event-title { font-family: var(--font-display); font-size: 30px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.15; margin-bottom: 10px; }
+    .event-time  { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; color: var(--accent); margin-bottom: 6px; }
+    .event-meta  { font-family: var(--font-body); font-size: 12px; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 16px; }
+    .event-desc  { font-family: var(--font-serif); font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 22px; }
+    .events-empty {
+      font-family: var(--font-serif); font-style: italic; font-size: 16px;
+      color: var(--text-muted); text-align: center; padding: 48px 0;
+    }
+    @media (max-width: 600px) {
+      .event-card { flex-direction: column; gap: 16px; }
+      .event-photo { display: none; }
+      .event-date-block { border-right: none; border-bottom: 1px solid var(--border-mid); padding-right: 0; padding-bottom: 16px; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="hero-bg-photo"><img src="img/targets/lu073/primetime.webp" alt="" aria-hidden="true"></div>
+  <a class="hero-photo-link" href="lu-archive/lu073" aria-label="View Possible Airplane Drop Tank (LU073) target record"></a>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Talks, Lectures &amp; Public Appearances</div>
+    <h1 class="page-title">UPCOMING<br>EVENTS</h1>
+    <p class="page-sub">Where to catch the Shipwreck City team out in the world.</p>
+  </div>
+</div>
+
+<section class="section container" style="max-width: 1100px;">
+  <div class="events-list" id="events-list"></div>
+</section>
+
+<div class="container" style="padding-top:0; padding-bottom:64px;">
+  <div class="cta-block" style="text-align: center;">
+    <p>
+      Bring Shipwreck City to your event.
+    </p>
+    <a href="mailto:phil@shipwreckcity.org?subject=Speaking%20Request%20for%20Shipwreck%20City" class="download-btn">Email Phil →</a>
+  </div>
+</div>
+
+<div id="footer-mount"></div>
+
+<script src="js/wrecks-data.js"></script>
+<script src="js/events-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('events');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  document.getElementById('events-list').innerHTML = EVENTS.length
+    ? EVENTS.map(e => `
+      <div class="event-card">
+        ${e.image ? `<div class="event-photo"${e.imagePosition === 'right' ? ' style="order:3;"' : ''}><img src="${e.image}" alt="${e.title}" loading="lazy"></div>` : ''}
+        <div class="event-date-block">
+          <div class="event-date-month">${e.month}</div>
+          <div class="event-date-day">${e.day}</div>
+          <div class="event-date-year">${e.year}</div>
+        </div>
+        <div class="event-body">
+          <div class="event-title">${e.title}</div>
+          <div class="event-time">${e.time}</div>
+          <div class="event-meta">${e.venue}${e.address ? `, ${e.address}` : ''}</div>
+          <div class="event-desc">${e.description}</div>
+          <a href="${e.url}" target="_blank" rel="noopener" class="download-btn">${e.ctaLabel || 'Learn More →'}</a>
+        </div>
+      </div>
+    `).join('')
+    : `<div class="events-empty">No upcoming events at this time — check back soon.</div>`;
+</script>
+</body>
+</html>

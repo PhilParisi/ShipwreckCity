@@ -1304,6 +1304,28 @@ a.section-label-link:hover { color: var(--text-primary); }
   border: 1px solid rgba(232, 224, 204, 0.35);
   background: var(--bg-card);
   max-width: 760px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  --cta-sonar-img: url('../img/targets/lu001/sidescan.webp');
+}
+.cta-block::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--cta-sonar-img) center / cover;
+  filter: grayscale(1) brightness(0.85) sepia(0.6) hue-rotate(185deg) saturate(4.5);
+  opacity: 0.8;
+  z-index: 0;
+}
+.cta-block::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(13,26,36,0.25) 0%, rgba(13,26,36,0.85) 78%);
+  z-index: 0;
+}
+.cta-block > * {
+  position: relative;
+  z-index: 1;
 }
 .cta-block p {
   font-family: var(--font-serif);

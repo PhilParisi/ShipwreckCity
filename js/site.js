@@ -17,6 +17,7 @@ function buildNav(activePage) {
       <a href="${ROOT}/"            class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
       <a href="${ROOT}/map"         class="${activePage === 'map'    ? 'active' : ''}">Map</a>
       <a href="${ROOT}/lu-archive"  class="${activePage === 'lu-archive'? 'active' : ''}">Archive</a>
+      <a href="${ROOT}/events"      class="${activePage === 'events' ? 'active' : ''}">Events</a>
       <a href="${ROOT}/support"     class="${activePage === 'support' ? 'active' : ''}">Support</a>
       <a href="${ROOT}/about"       class="${activePage === 'about'  ? 'active' : ''}">About</a>
     </div>
@@ -35,6 +36,7 @@ function buildFooter() {
     <div class="footer-links">
       <a href="${ROOT}/">Explore</a>
       <a href="${ROOT}/map">Map</a>
+      <a href="${ROOT}/events">Events</a>
       <a href="${ROOT}/about">About</a>
       <a href="${ROOT}/support">Support</a>
       <a href="${ROOT}/press">Press</a>
@@ -232,6 +234,55 @@ function showLicenseModal(onAccept) {
   old.parentNode.replaceChild(fresh, old);
   fresh.addEventListener('click', () => { modal.style.display = 'none'; onAccept(); });
   modal.style.display = 'flex';
+}
+
+// ── Lecture announcement popup (home page only) ───────────────────────────────
+function showLectureAnnouncement() {
+  const EVENT_DATE   = new Date('2026-09-09T20:30:00-07:00'); // hides itself after the event ends
+  const DISMISS_KEY  = 'sc-lecture-popup-dismissed-2026-09-09';
+  if (Date.now() > EVENT_DATE.getTime()) return;
+  if (localStorage.getItem(DISMISS_KEY)) return;
+
+  setTimeout(() => {
+    if (localStorage.getItem(DISMISS_KEY)) return; // may have been dismissed on another tab during the delay
+
+    const modal = document.createElement('div');
+    modal.id = 'sc-lecture-modal';
+    modal.style.cssText = 'display:flex;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;padding:20px;';
+    modal.innerHTML = `
+      <style>
+        @media (max-width: 560px) {
+          #sc-lecture-modal .sc-lecture-photo { display: none; }
+        }
+      </style>
+      <div style="background:var(--bg-card);border:1px solid var(--border-mid);max-width:760px;width:100%;padding:36px;position:relative;display:flex;gap:32px;align-items:stretch;">
+        <button id="sc-lecture-close" aria-label="Close" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-muted);font-size:22px;line-height:1;cursor:pointer;padding:4px;z-index:2;">&times;</button>
+        <div style="flex:1 1 280px;">
+          <div style="font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:var(--accent);margin-bottom:14px;">UPCOMING LECTURE</div>
+          <div style="font-family:var(--font-display);font-size:30px;letter-spacing:1px;line-height:1.05;color:var(--text-primary);margin-bottom:16px;">BENEATH THE&nbsp;SURFACE</div>
+          <div style="font-family:var(--font-serif);font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:20px;">
+            Join Phil Parisi and Libbie Barnes at the Cascadia Art Museum as they discuss using underwater robotics to document Lake Union's shipwrecks and build Seattle's most comprehensive maritime archive.
+          </div>
+          <div style="font-family:var(--font-body);font-size:13px;letter-spacing:0.5px;color:var(--text-primary);margin-bottom:28px;line-height:1.9;">
+            Wednesday, September 9 &middot; 6:30&ndash;8:30 PM<br>
+            Cascadia Art Museum, Edmonds, WA
+          </div>
+          <div style="display:flex;gap:12px;">
+            <a href="https://www.cascadiaartmuseum.org/lectures/" target="_blank" rel="noopener" class="download-btn" style="flex:1;text-align:center;text-decoration:none;">Learn More &amp; Reserve &rarr;</a>
+            <button id="sc-lecture-dismiss" style="flex:0 0 auto;font-family:var(--font-body);font-size:11px;letter-spacing:1px;background:none;border:1px solid var(--border-mid);color:var(--text-muted);padding:12px 20px;cursor:pointer;">Dismiss</button>
+          </div>
+        </div>
+        <div class="sc-lecture-photo" style="flex:1 1 240px;overflow:hidden;">
+          <img src="${ROOT}/img/targets/lu012/primetime.webp" alt="Kahlenberg (LU012)" style="width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) brightness(0.75) sepia(0.6) hue-rotate(185deg) saturate(4);">
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    const close = () => { localStorage.setItem(DISMISS_KEY, '1'); modal.remove(); };
+    document.getElementById('sc-lecture-close').addEventListener('click', close);
+    document.getElementById('sc-lecture-dismiss').addEventListener('click', close);
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  }, 3000);
 }
 
 function makePopup(wreck) {
