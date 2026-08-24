@@ -828,9 +828,10 @@ a.section-label-link:hover { color: var(--text-primary); }
   margin-bottom: 20px;
 }
 .wreck-breadcrumb a { color: var(--accent); }
+.wreck-breadcrumb-current { color: var(--accent); }
 
 .wreck-catalog-num {
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: 4px;
   color: var(--accent);
   margin-bottom: 10px;
