@@ -88,6 +88,15 @@ const SUPPORTERS = [
     note: "Sonar Data Processing - provided a free software license to process side scan sonar data to industry standards."
   },
   {
+    name: "Floating Homes Association",
+    url:  "https://www.seattlefloatinghomes.org/",
+    logo: "img/supporters-logo/floatinghomesassoc.webp",
+    type: "organization",
+    note: "Residents of Lake Union who have propelled Shipwreck City with key collaborations, novel introductions, and opening doors across Seattle's community.",
+    LOS: "On behalf of the Floating Homes Association, I am writing to express our enthusiastic support for Shipwreck City and its mission to document the submerged maritime history of Lake Union, the Ship Canal, and the broader Puget Sound region. As an organization whose members live directly on these water, understanding and preserving the history beneath us is central to who we are.",
+    LOSAttrib: "Stafford Green, President of Seattle's Floating Homes Association"
+  },
+  {
     name: "Boatworld Marinas",
     url:  "https://www.boatworldmarina.com/",
     logo: null,
