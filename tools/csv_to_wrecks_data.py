@@ -269,21 +269,31 @@ def prefer_webp(filenames):
             by_base[base] = fname
     return sorted(by_base.values())
 
+def is_sidescan(fname):
+    """True if filename looks like a side-scan sonar image (e.g. 'sidescan.jpg',
+    'sidescan2.png', 'barge_sidescan.jpg', 'ss1.webp', 'ss.png')."""
+    name = os.path.splitext(fname)[0].lower()
+    return 'sidescan' in name or re.match(r'^ss\d*$', name) is not None
+
 def scan_images(slug, script_dir):
-    """Scan img/targets/{slug}/ and return (hasPrimetime, gallery_files)."""
+    """Scan img/targets/{slug}/ and return (hasPrimetime, gallery_files).
+    Side-scan sonar images are always sorted to the end of the gallery."""
     img_dir = os.path.normpath(os.path.join(script_dir, '..', 'img', 'targets', slug))
     if not os.path.isdir(img_dir):
         return False, []
     deduped = prefer_webp(os.listdir(img_dir))
     has_primetime = False
-    gallery = []
+    photos = []
+    sidescans = []
     for fname in deduped:
         name = os.path.splitext(fname)[0]
         if name.lower() == 'primetime':
             has_primetime = True
+        elif is_sidescan(fname):
+            sidescans.append(fname)
         else:
-            gallery.append(fname)
-    return has_primetime, gallery
+            photos.append(fname)
+    return has_primetime, photos + sidescans
 
 def convert(csv_path):
     wrecks = []

@@ -13,15 +13,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- SEO / social preview meta tags — injected per-wreck by generate-wrecks.js at build time -->
   <title>***Quinn II — Shipwreck City</title>
-  <meta name="description" content="This target has been classified as a fiberglass shipwreck, resting in 40 feet of water, with a recorded dimension of 28 feet by 8.5 feet.">
+  <meta name="description" content="This target has been classified as a fiberglass shipwreck, resting in 40 feet of water and measuring roughly 28 feet by 8.5 feet.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shipwreckcity.org/lu-archive/lu026">
   <meta property="og:title" content="***Quinn II — Shipwreck City">
-  <meta property="og:description" content="This target has been classified as a fiberglass shipwreck, resting in 40 feet of water, with a recorded dimension of 28 feet by 8.5 feet.">
+  <meta property="og:description" content="This target has been classified as a fiberglass shipwreck, resting in 40 feet of water and measuring roughly 28 feet by 8.5 feet.">
   <meta property="og:image" content="https://shipwreckcity.org/img/targets/lu026/primetime.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="***Quinn II — Shipwreck City">
-  <meta name="twitter:description" content="This target has been classified as a fiberglass shipwreck, resting in 40 feet of water, with a recorded dimension of 28 feet by 8.5 feet.">
+  <meta name="twitter:description" content="This target has been classified as a fiberglass shipwreck, resting in 40 feet of water and measuring roughly 28 feet by 8.5 feet.">
   <meta name="twitter:image" content="https://shipwreckcity.org/img/targets/lu026/primetime.jpg">
   <link rel="icon" type="image/png" href="../img/thumbnails/favicon_sc.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,14 +88,13 @@
         }
       </div>`;
 
-    // Overview — descriptions held back until team finishes review; flip to true to restore.
-    const SHOW_REAL_DESCRIPTIONS = false;
-    const overviewHtml = SHOW_REAL_DESCRIPTIONS && wreck.summarySections && wreck.summarySections.length
+    // Overview
+    const overviewHtml = wreck.summarySections && wreck.summarySections.length
       ? wreck.summarySections.map(s => `
           ${s.heading ? `<div class="overview-subhead">${s.heading}</div>` : ''}
           <p>${s.body}</p>
         `).join('')
-      : '<p>Descriptions coming August 31, 2026</p>';
+      : '<p>Description coming soon.</p>';
 
     // Footage section
     const footageHtml = (wreck.footageItems && wreck.footageItems.length)
@@ -174,9 +173,9 @@
           </div>
           <div class="prose-section">
             <h3>Links &amp; Resources</h3>
-            <p><strong>Coastal Sensing &amp; Survey:</strong> ${wreck.css_url ? `<a href="${wreck.css_url}" target="_blank" rel="noopener">${wreck.css_url}</a>` : 'NA'}</p>
-            <p><strong>DCS Films:</strong> ${wreck.dcs_url ? `<a href="${wreck.dcs_url}" target="_blank" rel="noopener">${wreck.dcs_url}</a>` : 'NA'}</p>
-            <p><strong>Lake Union Virtual Museum:</strong> ${wreck.luvm_url ? `<a href="${wreck.luvm_url}" target="_blank" rel="noopener">${wreck.luvm_url}</a>` : 'NA'}</p>
+            <p><strong>Coastal Sensing &amp; Survey:</strong> ${wreck.css_url ? `<a href="${wreck.css_url}" target="_blank" rel="noopener">${wreck.css_url}</a>` : 'No record available from this source for this target'}</p>
+            <p><strong>DCS Films:</strong> ${wreck.dcs_url ? `<a href="${wreck.dcs_url}" target="_blank" rel="noopener">${wreck.dcs_url}</a>` : 'No record available from this source for this target'}</p>
+            <p><strong>Lake Union Virtual Museum:</strong> ${wreck.luvm_url ? `<a href="${wreck.luvm_url}" target="_blank" rel="noopener">${wreck.luvm_url}</a>` : 'No record available from this source for this target'}</p>
           </div>
 
           <!-- GALLERY -->
@@ -215,10 +214,10 @@
             <a ${w.id === wreck.id ? 'id="archive-current"' : ''} href="${ROOT}/lu-archive/${w.id}" class="archive-item" style="
               display:block;padding:10px 0;border-bottom:1px solid var(--border);
               color:${w.id === wreck.id ? 'var(--accent)' : 'var(--text-primary)'};
-              text-decoration:none;font-size:14px;letter-spacing:1px;
+              text-decoration:none;font-size:15px;letter-spacing:1px;
               ${w.id === wreck.id ? 'pointer-events:none;' : ''}
             ">
-              <span style="color:var(--accent);margin-right:8px;font-size:14px;">${w.catalog}</span>${w.name}
+              <span style="color:var(--accent);margin-right:8px;font-size:15px;">${w.catalog}</span>${w.name}
             </a>
           `).join('')}
           </div>
@@ -291,7 +290,7 @@
       galleryWrap.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:12px;">
           <div class="section-label" style="margin-top:0;">Gallery</div>
-          <button id="gallery-download-btn" class="download-btn" style="font-size:12px;padding:10px 20px;">Download Raw .JPG Images ↓</button>
+          <button id="gallery-download-btn" class="download-btn" style="font-size:15px;padding:10px 20px;">Download Raw .JPG Images ↓</button>
         </div>
         <div class="wreck-gallery">
           ${photos.map((src, i) => `<img src="${src}" alt="${wreck.name} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
@@ -339,7 +338,7 @@
       <button id="lb-prev" style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8592;</button>
       <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:95vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);cursor:zoom-in;transform-origin:center center;transition:transform 0.15s ease;user-select:none;">
       <button id="lb-next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8594;</button>
-      <div id="lb-hint" style="position:absolute;top:3vh;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:2;">scroll or click to zoom · drag to pan</div>
+      <div id="lb-hint" style="position:absolute;top:3vh;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:15px;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:2;">scroll or click to zoom · drag to pan</div>
     `;
     document.body.appendChild(lb);
 

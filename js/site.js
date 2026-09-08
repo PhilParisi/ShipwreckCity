@@ -155,7 +155,7 @@ function addTileToggle(L, map, tiles, defaultLayer = 'Dark') {
       position: absolute; bottom: calc(100% + 8px); left: 50%;
       transform: translateX(-50%);
       background: #0a1f2e; border: 1px solid #4a9eba; color: #e8e0cc;
-      font-family: var(--font-body); font-size: 11px; letter-spacing: 1.5px;
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 1.5px;
       text-transform: uppercase; padding: 8px 14px;
       white-space: nowrap; pointer-events: none;
       opacity: 0; transition: opacity 0.2s ease;
@@ -167,7 +167,7 @@ function addTileToggle(L, map, tiles, defaultLayer = 'Dark') {
     #credit-toast {
       position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
       background: #0a1f2e; border: 1px solid #4a9eba; color: #e8e0cc;
-      font-family: var(--font-body); font-size: 13px; letter-spacing: 1.5px;
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 1.5px;
       text-transform: uppercase; padding: 14px 28px; z-index: 9999;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -209,7 +209,7 @@ function showLicenseModal(onAccept) {
     modal.innerHTML = `
       <div style="background:var(--bg-card);border:1px solid var(--border-mid);max-width:480px;width:90%;padding:36px;position:relative;">
         <div style="font-family:var(--font-display);font-size:28px;letter-spacing:1px;color:var(--text-primary);margin-bottom:16px;">LICENSE TERMS</div>
-        <div style="font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:var(--accent);margin-bottom:20px;">CC BY-NC 4.0 — CREATIVE COMMONS</div>
+        <div style="font-family:var(--font-body);font-size:15px;letter-spacing:2px;color:var(--accent);margin-bottom:20px;">CC BY-NC 4.0 — CREATIVE COMMONS</div>
         <div style="font-family:var(--font-serif);font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:24px;">
           These photos are free to use under the following terms:
           <ul style="margin:12px 0 0 20px;padding:0;">
@@ -217,12 +217,12 @@ function showLicenseModal(onAccept) {
             <li><strong style="color:var(--text-primary);">Non-commercial only</strong> — no advertising, stock sales, or paid publications, without permission</li>
           </ul>
         </div>
-        <div style="font-family:var(--font-serif);font-size:13px;color:var(--text-muted);margin-bottom:28px;">
+        <div style="font-family:var(--font-serif);font-size:15px;color:var(--text-muted);margin-bottom:28px;">
           For commercial use or licensing, contact <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>.
         </div>
         <div style="display:flex;gap:12px;">
           <button id="sc-license-accept" class="download-btn" style="flex:1;text-align:center;">Accept &amp; Download ↓</button>
-          <button id="sc-license-cancel" style="flex:0 0 auto;font-family:var(--font-body);font-size:11px;letter-spacing:1px;background:none;border:1px solid var(--border-mid);color:var(--text-muted);padding:12px 20px;cursor:pointer;">Cancel</button>
+          <button id="sc-license-cancel" style="flex:0 0 auto;font-family:var(--font-body);font-size:15px;letter-spacing:1px;background:none;border:1px solid var(--border-mid);color:var(--text-muted);padding:12px 20px;cursor:pointer;">Cancel</button>
         </div>
       </div>`;
     document.body.appendChild(modal);
@@ -258,18 +258,18 @@ function showLectureAnnouncement() {
       <div style="background:var(--bg-card);border:1px solid var(--border-mid);max-width:760px;width:100%;padding:36px;position:relative;display:flex;gap:32px;align-items:stretch;">
         <button id="sc-lecture-close" aria-label="Close" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-muted);font-size:22px;line-height:1;cursor:pointer;padding:4px;z-index:2;">&times;</button>
         <div style="flex:1 1 280px;">
-          <div style="font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:var(--accent);margin-bottom:14px;">UPCOMING LECTURE</div>
+          <div style="font-family:var(--font-body);font-size:15px;letter-spacing:2px;color:var(--accent);margin-bottom:14px;">UPCOMING LECTURE</div>
           <div style="font-family:var(--font-display);font-size:30px;letter-spacing:1px;line-height:1.05;color:var(--text-primary);margin-bottom:16px;">BENEATH THE&nbsp;SURFACE</div>
           <div style="font-family:var(--font-serif);font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:20px;">
             Join Phil Parisi and Libbie Barnes at the Cascadia Art Museum as they discuss using underwater robotics to document Lake Union's shipwrecks and build Seattle's most comprehensive maritime archive.
           </div>
-          <div style="font-family:var(--font-body);font-size:13px;letter-spacing:0.5px;color:var(--text-primary);margin-bottom:28px;line-height:1.9;">
+          <div style="font-family:var(--font-body);font-size:15px;letter-spacing:0.5px;color:var(--text-primary);margin-bottom:28px;line-height:1.9;">
             Wednesday, September 9 &middot; 6:30&ndash;8:30 PM<br>
             Cascadia Art Museum, Edmonds, WA
           </div>
           <div style="display:flex;gap:12px;">
             <a href="https://www.cascadiaartmuseum.org/lectures/" target="_blank" rel="noopener" class="download-btn" style="flex:1;text-align:center;text-decoration:none;">Learn More &amp; Reserve &rarr;</a>
-            <button id="sc-lecture-dismiss" style="flex:0 0 auto;font-family:var(--font-body);font-size:11px;letter-spacing:1px;background:none;border:1px solid var(--border-mid);color:var(--text-muted);padding:12px 20px;cursor:pointer;">Dismiss</button>
+            <button id="sc-lecture-dismiss" style="flex:0 0 auto;font-family:var(--font-body);font-size:15px;letter-spacing:1px;background:none;border:1px solid var(--border-mid);color:var(--text-muted);padding:12px 20px;cursor:pointer;">Dismiss</button>
           </div>
         </div>
         <div class="sc-lecture-photo" style="flex:1 1 240px;overflow:hidden;">
