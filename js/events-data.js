@@ -18,6 +18,7 @@
  *  ctaLabel    — text for the link button
  *  image       — path to a photo shown alongside the entry, or null
  *  imagePosition — "left" (default) or "right" — which side of the card the photo sits on
+ *  badge       — short access/notice label shown on the card (e.g. "Members Only"), or null
  */
 
 const EVENTS = [
@@ -36,15 +37,15 @@ const EVENTS = [
   },
   {
     title: "Lectures on Tap",
-    month: "",
-    day: "TBD",
-    year: "Nov–Dec 2026",
-    time: "Date & Time TBA",
-    venue: "Location TBD",
-    address: "Seattle, WA",
+    month: "NOV",
+    day: "10",
+    year: "2026",
+    time: "6:30 PM",
+    venue: "Old Stove Brewing (Ship Canal)",
+    address: "600 W Nickerson St, Seattle, WA",
     image: "img/targets/lu069/primetime.webp",
     imagePosition: "right",
-    description: "Lectures on Tap is a national event series that brings professors and experts into local bars for laid-back, 45-minute talks followed by audience Q&A over a drink. Shipwreck City is bringing its Lake Union shipwreck survey to a Seattle taproom near you — exact date and venue are still being finalized.",
+    description: "Lectures on Tap is a national event series that brings professors and experts into local bars for laid-back, 45-minute talks followed by audience Q&A over a drink. Shipwreck City is bringing its Lake Union shipwreck survey to Old Stove Brewing's Ship Canal taproom.",
     url: "https://lecturesontap.com/seattle-1",
     ctaLabel: "Visit Lectures on Tap →"
   },
@@ -53,10 +54,11 @@ const EVENTS = [
     month: "MAR",
     day: "03",
     year: "2027",
-    time: "Time TBA",
+    time: "7:00 PM",
     venue: "Seattle Yacht Club",
     address: "Portage Bay, Seattle, WA",
     image: "img/about-page/IMG_5683.webp",
+    badge: "Members Only",
     description: "Phil Parisi brings the Shipwreck City project to Seattle Yacht Club's Portage Bay clubhouse for an evening exploring the sunken vessels resting beneath Lake Union and the surrounding waterways.",
     url: "https://www.seattleyachtclub.org/",
     ctaLabel: "Learn More →"

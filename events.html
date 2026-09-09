@@ -56,6 +56,11 @@
     .event-date-year  { font-family: var(--font-body); font-size: 15px; color: var(--text-muted); }
     .event-body  { flex: 1; }
     .event-title { font-family: var(--font-display); font-size: 30px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.15; margin-bottom: 10px; }
+    .event-badge {
+      display: inline-block; font-family: var(--font-body); font-size: 12px; letter-spacing: 2px;
+      text-transform: uppercase; color: #d99456; border: 1px solid #5a3f1a; background: rgba(217,148,86,0.08);
+      padding: 3px 10px; margin-bottom: 12px;
+    }
     .event-time  { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; color: var(--accent); margin-bottom: 6px; }
     .event-meta  { font-family: var(--font-body); font-size: 15px; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 16px; }
     .event-desc  { font-family: var(--font-serif); font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 22px; }
@@ -117,6 +122,7 @@
           <div class="event-date-year">${e.year}</div>
         </div>
         <div class="event-body">
+          ${e.badge ? `<div class="event-badge">${e.badge}</div>` : ''}
           <div class="event-title">${e.title}</div>
           <div class="event-time">${e.time}</div>
           <div class="event-meta">${e.venue}${e.address ? `, ${e.address}` : ''}</div>
