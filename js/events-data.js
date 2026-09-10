@@ -18,7 +18,8 @@
  *  ctaLabel    — text for the link button
  *  image       — path to a photo shown alongside the entry, or null
  *  imagePosition — "left" (default) or "right" — which side of the card the photo sits on
- *  badge       — short access/notice label shown on the card (e.g. "Members Only"), or null
+ *  badge       — short access/notice label(s) shown on the card (e.g. "Members Only"). A string, an array of strings, or null
+ *  past        — true if the event has already happened (shows in the Previous Events section)
  */
 
 const EVENTS = [
@@ -31,9 +32,11 @@ const EVENTS = [
     venue: "Cascadia Art Museum",
     address: "Edmonds, WA",
     image: "img/about-page/PhilROV.webp",
+    badge: ["Past Event", "Sold Out"],
+    past: true,
     description: "Over one hundred targets of interest (including barges, shipwrecks, and cars) lie at the bottom of Lake Union. Gaps remain in this chapter of Seattle’s maritime history, and the newly-founded Shipwreck City project is working to film never-before-seen wrecks with the help of Finn, a blue remote-controlled robot the size of a microwave. Hear stories from the Shipwreck City team as they build the most up-to-date Seattle shipwreck archive and work to uncover what lies just beneath the surface of our city’s beloved central lake.",
     url: "https://www.cascadiaartmuseum.org/lectures/",
-    ctaLabel: "Learn More & Reserve →"
+    ctaLabel: "View Event Details →"
   },
   {
     title: "Lectures on Tap",

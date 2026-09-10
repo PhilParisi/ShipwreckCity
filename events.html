@@ -59,7 +59,7 @@
     .event-badge {
       display: inline-block; font-family: var(--font-body); font-size: 12px; letter-spacing: 2px;
       text-transform: uppercase; color: #d99456; border: 1px solid #5a3f1a; background: rgba(217,148,86,0.08);
-      padding: 3px 10px; margin-bottom: 12px;
+      padding: 3px 10px; margin: 0 8px 12px 0;
     }
     .event-time  { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; color: var(--accent); margin-bottom: 6px; }
     .event-meta  { font-family: var(--font-body); font-size: 15px; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 16px; }
@@ -67,6 +67,39 @@
     .events-empty {
       font-family: var(--font-serif); font-style: italic; font-size: 16px;
       color: var(--text-muted); text-align: center; padding: 48px 0;
+    }
+    .recap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .recap-tile {
+      margin: 0;
+      background: var(--bg-deep);
+      overflow: hidden;
+    }
+    .recap-tile img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+    .recap-tile:hover img {
+      filter: brightness(1);
+      transform: scale(1.03);
+    }
+    .recap-tile figcaption {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    @media (max-width: 800px) {
+      .recap-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 600px) {
       .event-card { flex-direction: column; gap: 16px; }
@@ -91,7 +124,35 @@
 </div>
 
 <section class="section container" style="max-width: 1100px;">
+  <div class="section-label">Upcoming Events</div>
   <div class="events-list" id="events-list"></div>
+</section>
+
+<section class="section container" style="max-width: 1100px; padding-top: 0;">
+  <div class="section-label">From the Cascadia Art Museum Lecture</div>
+  <div class="recap-grid">
+    <figure class="recap-tile">
+      <img src="img/events/cascadia_phillibbiestart.webp" alt="Phil Parisi and Libbie Barnes in front of the 'Beneath the Surface' title slide" loading="lazy">
+      <figcaption>Opening remarks — "Beneath the Surface," by Phil and Libbie</figcaption>
+    </figure>
+    <figure class="recap-tile">
+      <img src="img/events/cascadia_phil61.webp" alt="Phil Parisi presenting a slide reading 'How many wrecks? 61 and counting...'" loading="lazy">
+      <figcaption>61 wrecks documented, and counting</figcaption>
+    </figure>
+    <figure class="recap-tile">
+      <img src="img/events/cascadia_evantable.webp" alt="Evan Weber speaking with attendees at the Shipwreck City info table" loading="lazy">
+      <figcaption>Evan discussing the archive with attendees</figcaption>
+    </figure>
+    <figure class="recap-tile">
+      <img src="img/events/cascadia_phillibbie.webp" alt="Phil Parisi and Libbie Barnes in front of a 'Thank you, ShipwreckCity.org' closing slide" loading="lazy">
+      <figcaption>"Thank you, ShipwreckCity.org"</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section container" id="previous-events-section" style="max-width: 1100px; padding-top: 0; display: none;">
+  <div class="section-label">Previous Events</div>
+  <div class="events-list" id="previous-events-list"></div>
 </section>
 
 <div class="container" style="padding-top:0; padding-bottom:64px;">
@@ -112,8 +173,8 @@
   document.getElementById('nav-mount').innerHTML    = buildNav('events');
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
-  document.getElementById('events-list').innerHTML = EVENTS.length
-    ? EVENTS.map(e => `
+  function renderEventCard(e) {
+    return `
       <div class="event-card">
         ${e.image ? `<div class="event-photo"${e.imagePosition === 'right' ? ' style="order:3;"' : ''}><img src="${e.image}" alt="${e.title}" loading="lazy"></div>` : ''}
         <div class="event-date-block">
@@ -122,7 +183,7 @@
           <div class="event-date-year">${e.year}</div>
         </div>
         <div class="event-body">
-          ${e.badge ? `<div class="event-badge">${e.badge}</div>` : ''}
+          ${e.badge ? (Array.isArray(e.badge) ? e.badge : [e.badge]).map(b => `<div class="event-badge">${b}</div>`).join('') : ''}
           <div class="event-title">${e.title}</div>
           <div class="event-time">${e.time}</div>
           <div class="event-meta">${e.venue}${e.address ? `, ${e.address}` : ''}</div>
@@ -130,8 +191,20 @@
           <a href="${e.url}" target="_blank" rel="noopener" class="download-btn">${e.ctaLabel || 'Learn More →'}</a>
         </div>
       </div>
-    `).join('')
+    `;
+  }
+
+  const upcomingEvents = EVENTS.filter(e => !e.past);
+  const previousEvents = EVENTS.filter(e => e.past);
+
+  document.getElementById('events-list').innerHTML = upcomingEvents.length
+    ? upcomingEvents.map(renderEventCard).join('')
     : `<div class="events-empty">No upcoming events at this time — check back soon.</div>`;
+
+  if (previousEvents.length) {
+    document.getElementById('previous-events-list').innerHTML = previousEvents.map(renderEventCard).join('');
+    document.getElementById('previous-events-section').style.display = '';
+  }
 </script>
 </body>
 </html>
