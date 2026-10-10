@@ -34,7 +34,100 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU007</span></div>
+          <div class="wreck-catalog-num">#LU007</div>
+          <h1 class="wreck-title">Foss 54 (YC 191)</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Vessel</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">Barge Wreck</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-recently-explored"></span>Recently Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">15 ft</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">91' × 26'</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:100vh;background:#020810;">
+      <div class="wreck-primetime-wrap">
+        <img src="../img/targets/lu007/primetime.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA">
+      </div>
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            <div class="overview-subhead">Shipwreck City Data</div>
+            <p>This target has been classified as a wood barge wreck resting in 15 feet of water and measuring roughly 91 feet by 26 feet. The barge wreck rests upright on the lakebed, with substantial portions of the wooden hull and deck structure still present. Visible features include large deck beams, substantial structural timbers, several upright structural members extending above the wreck, and multiple openings that provide views into the interior. Additional debris is visible within the hull. This barge wreck has been positively identified as Foss 54 (YC 191).</p>
+            <div class="overview-subhead">Prior Research and Theories</div>
+            <p>Previously, Coastal Sensing &amp; Survey had classified this target as LU07. Described as the wreck of a Foss barge, though an earlier CSS entry identifies the barge as Foss #74, creating a discrepancy within the source record. DCS Films had classified this target as Foss 54. Described as the former U.S. Navy barge YC 191, with historical photographs and additional information documenting the vessel's history and specifications. Lake Union Virtual Museum had identified this target as Foss 54. Described as the wreck of Foss barge #54 in Lake Union.</p>
+            <div class="overview-subhead">Additional Context</div>
+            <p>Foss 54 was originally built in 1908 for the U.S. Navy in Bremerton, Washington, as YC 191. Historical data tells us that the barge carried coal, lumber, and other materials in the Puget Sound region over a working life spanning several decades. Its documented history becomes uncertain around 1969, and the exact circumstances and date of its sinking remain unclear. Shipwreck City is actively researching this vessel's history and will provide more details as we learn more.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> <a href="https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU07" target="_blank" rel="noopener">https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU07</a></p>
+          <p><strong>DCS Films:</strong> <a href="http://www.dcsfilms.com/Site_4/FOSS_54_Lake_Union.html" target="_blank" rel="noopener">http://www.dcsfilms.com/Site_4/FOSS_54_Lake_Union.html</a></p>
+          <p><strong>Lake Union Virtual Museum:</strong> <a href="http://www.lakeunionhistory.org/Foss_Barge.html" target="_blank" rel="noopener">http://www.lakeunionhistory.org/Foss_Barge.html</a></p>
+        </div>
+        <div id="gallery-wrap">
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            <img src="../img/targets/lu007/barge10.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 1" loading="lazy">
+            <img src="../img/targets/lu007/barge11.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 2" loading="lazy">
+            <img src="../img/targets/lu007/barge12.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 3" loading="lazy">
+            <img src="../img/targets/lu007/barge13.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 4" loading="lazy">
+            <img src="../img/targets/lu007/barge14.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 5" loading="lazy">
+            <img src="../img/targets/lu007/barge15.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 6" loading="lazy">
+            <img src="../img/targets/lu007/barge16.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 7" loading="lazy">
+            <img src="../img/targets/lu007/barge17.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 8" loading="lazy">
+            <img src="../img/targets/lu007/barge18.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 9" loading="lazy">
+            <img src="../img/targets/lu007/barge19.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 10" loading="lazy">
+            <img src="../img/targets/lu007/barge7.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 11" loading="lazy">
+            <img src="../img/targets/lu007/barge8.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 12" loading="lazy">
+            <img src="../img/targets/lu007/barge9.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 13" loading="lazy">
+            <img src="../img/targets/lu007/barge_1.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 14" loading="lazy">
+            <img src="../img/targets/lu007/barge_3.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 15" loading="lazy">
+            <img src="../img/targets/lu007/barge_4.webp" alt="Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA — photo 16" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU007</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Vessel</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>Wooden, Wood</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Recently Explored</span></div>
+        <div class="aside-detail-row"><span>Depth</span><span>15 ft</span></div>
+        <div class="aside-detail-row"><span>Dimensions</span><span>91' × 26'</span></div>
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>13 Dec 2025</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu006" style="background-image:url('../img/targets/lu006/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">LCVP PA 201-8/9</div>
+        </a>
+      <a class="wreck-nav-item next has-image" href="../lu-archive/lu008" style="background-image:url('../img/targets/lu008/primetime.webp')">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">Irene</div>
+        </a>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

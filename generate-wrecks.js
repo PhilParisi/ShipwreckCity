@@ -67,19 +67,167 @@ function metaTagsFor(wreck) {
   <meta name="twitter:image" content="${image}">`;
 }
 
+// Keep these two helpers in step with statusLabel()/depthDisplay() in js/site.js.
+const STATUS_LABELS = {
+  'recently-explored':   'Recently Explored',
+  'previously-explored': 'Previously Explored',
+  'never-explored':      'Never Explored',
+};
+const statusLabel  = status => STATUS_LABELS[status] || status;
+const depthDisplay = depth  => (depth ? `${depth} ft` : '—');
+
+// ── Static page body ─────────────────────────────────────────────────────
+// The template draws the whole page with JavaScript at runtime, which leaves
+// the raw HTML with an empty <main>. Crawlers that don't run scripts (and
+// Google's first pass) would see no content, so write the wreck's real text
+// into <main id="wreck-page"> here. It mirrors the template's markup and
+// classes so it looks the same; the template script then replaces it on load
+// with the full interactive version (map, lightbox, footage, archive list).
+// If the template's layout changes, update this to match.
+const NO_RECORD = 'No record available from this source for this target';
+
+function sourceLink(url) {
+  return url
+    ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(url)}</a>`
+    : NO_RECORD;
+}
+
+function staticBodyFor(wreck, prev, next) {
+  const seoTitle = escapeHtml(wreck.seoTitle || `${wreck.name} — Shipwreck City`);
+  const name     = escapeHtml(wreck.name);
+  const imgBase  = `../img/targets/${wreck.id}`;
+
+  const overview = wreck.summarySections && wreck.summarySections.length
+    ? wreck.summarySections.map(sec => `
+            ${sec.heading ? `<div class="overview-subhead">${escapeHtml(sec.heading)}</div>` : ''}
+            <p>${escapeHtml(sec.body)}</p>`).join('')
+    : `
+            <p>Description coming soon.</p>`;
+
+  const gallery = (wreck.images || []).map(f => f.replace(/\.(png|jpe?g)$/i, '.webp'));
+
+  const navItem = (w, dir, cls) => w
+    ? `<a class="wreck-nav-item ${cls} has-image" href="../lu-archive/${w.id}" style="background-image:url('../img/targets/${w.id}/primetime.webp')">
+          <div class="wreck-nav-dir">${dir}</div>
+          <div class="wreck-nav-name">${escapeHtml(w.name)}</div>
+        </a>`
+    : `<div class="wreck-nav-item ${cls}" style="opacity:0.3;pointer-events:none">
+          <div class="wreck-nav-dir">${dir}</div>
+          <div class="wreck-nav-name">—</div>
+        </div>`;
+
+  return `
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">${escapeHtml(wreck.catalog)}</span></div>
+          <div class="wreck-catalog-num">${escapeHtml(wreck.catalog)}</div>
+          <h1 class="wreck-title">${name}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">${escapeHtml(wreck.type)}</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">${escapeHtml(wreck.class)}</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-${wreck.status}"></span>${escapeHtml(statusLabel(wreck.status))}</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">${depthDisplay(wreck.depth)}</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">${escapeHtml(wreck.dimensions || '—')}</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:${wreck.hasPrimetime ? '100vh' : '380px'};background:${wreck.hasPrimetime ? '#020810' : 'var(--bg-deep)'};">${wreck.hasPrimetime ? `
+      <div class="wreck-primetime-wrap">
+        <img src="${imgBase}/primetime.webp" alt="${seoTitle}">
+      </div>` : ''}
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>${overview}
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> ${sourceLink(wreck.css_url)}</p>
+          <p><strong>DCS Films:</strong> ${sourceLink(wreck.dcs_url)}</p>
+          <p><strong>Lake Union Virtual Museum:</strong> ${sourceLink(wreck.luvm_url)}</p>
+        </div>
+        <div id="gallery-wrap">${gallery.length ? `
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            ${gallery.map((f, i) => `<img src="${imgBase}/${escapeHtml(f)}" alt="${seoTitle} — photo ${i + 1}" loading="lazy">`).join('\n            ')}
+          </div>` : ''}
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>${escapeHtml(wreck.catalog)}</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>${escapeHtml(wreck.type)}</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>${escapeHtml(wreck.material)}</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>${escapeHtml(statusLabel(wreck.status))}</span></div>${wreck.depth ? `
+        <div class="aside-detail-row"><span>Depth</span><span>${wreck.depth} ft</span></div>` : ''}${wreck.dimensions ? `
+        <div class="aside-detail-row"><span>Dimensions</span><span>${escapeHtml(wreck.dimensions)}</span></div>` : ''}${wreck.diveDate ? `
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>${escapeHtml(wreck.diveDate)}</span></div>` : ''}
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">${escapeHtml(wreck.location)}</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      ${navItem(prev, '← Previous', 'prev')}
+      ${navItem(next, 'Next →', 'next')}
+    </div>
+  `;
+}
+
+const MAIN_PLACEHOLDER = '<main id="wreck-page"></main>';
+if (!template.includes(MAIN_PLACEHOLDER)) {
+  console.warn('  ⚠ <main id="wreck-page"></main> not found in the template — static page bodies not written.');
+}
+
 let generated = 0;
 
-WRECKS.forEach(wreck => {
+WRECKS.forEach((wreck, i) => {
   const outPath = path.join(outDir, `${wreck.id}.html`);
-  // The template is self-contained — it reads the wreck ID from the URL at runtime —
-  // but the <head> meta tags are swapped in here per-wreck so link previews work.
-  const page = template.replace('<title>Loading...</title>', metaTagsFor(wreck));
+  // The template reads the wreck ID from the URL and draws the page at runtime, but the
+  // <head> meta tags and a static copy of the page body are written in here per-wreck so
+  // link previews and crawlers get real content without running any JavaScript.
+  // (Function replacers: wreck text may contain "$", which a string replacement would mangle.)
+  const page = template
+    .replace('<title>Loading...</title>', () => metaTagsFor(wreck))
+    .replace(MAIN_PLACEHOLDER, () => `<main id="wreck-page">${staticBodyFor(wreck, WRECKS[i - 1], WRECKS[i + 1])}</main>`);
   fs.writeFileSync(outPath, page);
   console.log(`  ✓  lu-archive/${wreck.id}.html`);
   generated++;
 });
 
 console.log(`\n  Generated ${generated} wreck page(s).\n`);
+
+// ── lu-archive.html static rows ──────────────────────────────────────────
+// The archive table is drawn by JavaScript at runtime, which leaves the raw
+// HTML with no links to the individual wreck pages. Write a plain row per
+// target (with a real <a href>) between the STATIC-ROWS markers so crawlers
+// can discover every page; the page's renderTable() replaces them on load.
+const archivePath = path.join(__dirname, 'lu-archive.html');
+const archiveHtml = fs.readFileSync(archivePath, 'utf8');
+const ROWS_RE     = /(<!-- STATIC-ROWS:START -->)[\s\S]*?(<!-- STATIC-ROWS:END -->)/;
+
+if (!ROWS_RE.test(archiveHtml)) {
+  console.warn('  ⚠ STATIC-ROWS markers not found in lu-archive.html — static archive rows not written.');
+} else {
+  const rows = WRECKS.map(w => `      <tr>
+        <td class="td-img"></td>
+        <td class="td-catalog">${escapeHtml(w.catalog)}</td>
+        <td><a href="lu-archive/${w.id}"><span class="td-name">${escapeHtml(w.name)}</span></a></td>
+        <td class="td-type">${escapeHtml(w.type)}</td>
+        <td>${depthDisplay(w.depth)}</td>
+        <td><span class="status-dot status-${w.status}"></span>${escapeHtml(statusLabel(w.status))}</td>
+      </tr>`).join('\n');
+  fs.writeFileSync(archivePath, archiveHtml.replace(ROWS_RE, (m, start, end) => `${start}\n${rows}\n${end}`));
+  console.log(`  Wrote ${WRECKS.length} static rows into lu-archive.html.`);
+}
 
 // ── sitemap.xml ──────────────────────────────────────────────────────────
 // Regenerated every time this script runs, so it can never drift out of

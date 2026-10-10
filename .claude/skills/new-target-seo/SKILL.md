@@ -1,16 +1,26 @@
 ---
 name: new-target-seo
-description: Set up SEO (title, meta description, image alt text) for a newly added ShipwreckCity target. Use whenever a new LUxxx target is added to the site.
+description: Rebuild the ShipwreckCity wreck pages and set up SEO (title, meta description, image alt text) from the master archive CSV. Use whenever a new target_master_archive CSV is added or updated, or a new LUxxx target is added to the site.
 ---
 
-# New-target SEO setup
+# New archive / new-target rebuild and SEO
 
 ShipwreckCity's per-target SEO lives in the master archive CSV
 (`data/archive/target_master_archive_<date>.csv`), in the `seo_title` and
 `seo_description` columns. The pipeline carries them through:
 
     CSV  →  tools/csv_to_wrecks_data.py  →  js/wrecks-data.js (seoTitle, seoDescription)
-         →  node generate-wrecks.js      →  lu-archive/luXXX.html <head> tags + sitemap.xml
+         →  node generate-wrecks.js      →  lu-archive/luXXX.html (one real page per target:
+                                             <head> tags + static copy of the page content)
+                                          →  lu-archive.html (static table row + link per target)
+                                          →  sitemap.xml
+
+Nothing runs on its own: the pages are only (re)built when those two
+commands run. So **whenever a new or updated `target_master_archive_*.csv`
+appears in `data/archive/` — new targets or not — run the pipeline (step 6)
+without waiting to be asked**, then report what changed. The static page
+content and archive rows exist so crawlers can read every target without
+JavaScript; a stale build means Google sees stale text.
 
 `seo_title` becomes the page `<title>`, og:/twitter: title, and (at runtime,
 in `lu-archive/wreck-template.html`) the image alt text. `seo_description`
@@ -19,11 +29,13 @@ any more — the old `js/seo-data.js` was retired in Oct 2026.
 
 The master CSV is the user's own spreadsheet. If a new target's row already
 has `seo_title`/`seo_description`, just run the pipeline. If they're blank,
-draft them (steps below) and hand them to the user to paste into their
-master sheet — don't silently invent values in their CSV.
+draft them (steps below) and **propose them to the user**. Never write to
+the master CSV without the user explicitly asking for that edit.
 
-Do this automatically whenever a new target (new LUxxx id) is added —
-don't wait to be asked.
+Do the SEO steps automatically whenever a new target (new LUxxx id) is
+added — don't wait to be asked. For a new archive CSV with no new targets,
+skip to step 6. (For new targets, the image/webp steps in the saved
+new-target workflow notes still apply too.)
 
 ## Steps
 
@@ -66,9 +78,9 @@ don't wait to be asked.
      `difflib.SequenceMatcher`); a ratio above ~0.90 means rewrite it with
      more varied language.
 
-5. **Get the values into the CSV.** Give the drafted title/description to
-   the user for their master sheet (or, if they ask, edit the CSV in
-   `data/archive/` directly).
+5. **Propose the values to the user** and stop there. They add them to
+   their master sheet. Only edit `data/archive/target_master_archive_*.csv`
+   yourself if the user explicitly asks you to make that specific edit.
 
 6. **Run the pipeline** from the project root:
 
@@ -78,6 +90,19 @@ don't wait to be asked.
    ```
 
    Both scripts warn if any target is missing `seo_title`/`seo_description`
-   — there should be zero warnings. Confirm the new page's `<title>`, meta
-   description, canonical URL, and image alt text (grep the generated
-   `lu-archive/luXXX.html`) reflect the CSV values.
+   — there should be zero warnings. `generate-wrecks.js` should report one
+   page per target, the same number of static rows written into
+   `lu-archive.html`, and the sitemap URL count. Then confirm, for each new
+   or changed target:
+   - `lu-archive/luXXX.html` exists and its `<title>`, meta description and
+     canonical URL reflect the CSV values;
+   - the raw HTML inside `<main id="wreck-page">` contains the target's
+     name, write-up and (if it has one) primetime image with alt text — i.e.
+     the static content was written, not just the head tags;
+   - `lu-archive.html` has a static row linking to `lu-archive/luXXX`
+     between the `STATIC-ROWS` markers, and `sitemap.xml` lists the page.
+
+   If the wreck page layout in `lu-archive/wreck-template.html` was changed,
+   mirror it in `staticBodyFor()` in `generate-wrecks.js` before rebuilding.
+   The rebuilt pages still need to be committed and pushed by the user to go
+   live.

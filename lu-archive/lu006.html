@@ -34,7 +34,110 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU006</span></div>
+          <div class="wreck-catalog-num">#LU006</div>
+          <h1 class="wreck-title">LCVP PA 201-8/9</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Vessel</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">Shipwreck</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-recently-explored"></span>Recently Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">40 ft</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">25' × 8'</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:100vh;background:#020810;">
+      <div class="wreck-primetime-wrap">
+        <img src="../img/targets/lu006/primetime.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA">
+      </div>
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            <div class="overview-subhead">Shipwreck City Data</div>
+            <p>This target has been classified as a wood shipwreck resting in 40 feet of water and measuring roughly 25 feet by 8 feet. The shipwreck rests upright on the lakebed, with much of the hull structure still present with minor places of deterioration. Visible features include partial hull markings, exposed wooden structural members, and a circular opening within the wreck that may represent one of the craft’s gun wells. Additional unidentified debris is visible within the hull. This shipwreck is believed to be a Landing Craft, Vehicle, Personnel (LCVP), commonly known as a Higgins Boat.</p>
+            <div class="overview-subhead">Prior Research and Theories</div>
+            <p>Previously, Coastal Sensing &amp; Survey had classified this target as LU06. Described as a weed-covered landing craft. DCS Films had classified this target as an LCVP, or Higgins Boat. Described as bearing the partial hull number &quot;PA 201,&quot; possibly connecting the craft to the USS Menard, though the complete designation could not be determined. Previously, Lake Union Virtual Museum had classified this target as a Higgins Boat. Described as a landing craft.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> <a href="https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU06" target="_blank" rel="noopener">https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU06</a></p>
+          <p><strong>DCS Films:</strong> <a href="http://www.dcsfilms.com/Site_4/Higgins_Boat.html" target="_blank" rel="noopener">http://www.dcsfilms.com/Site_4/Higgins_Boat.html</a></p>
+          <p><strong>Lake Union Virtual Museum:</strong> <a href="http://www.lakeunionhistory.org/Higgins_Boat.html" target="_blank" rel="noopener">http://www.lakeunionhistory.org/Higgins_Boat.html</a></p>
+        </div>
+        <div id="gallery-wrap">
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            <img src="../img/targets/lu006/frame_0001.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 1" loading="lazy">
+            <img src="../img/targets/lu006/frame_0002.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 2" loading="lazy">
+            <img src="../img/targets/lu006/frame_0003.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 3" loading="lazy">
+            <img src="../img/targets/lu006/frame_0004.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 4" loading="lazy">
+            <img src="../img/targets/lu006/frame_0005.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 5" loading="lazy">
+            <img src="../img/targets/lu006/frame_0006.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 6" loading="lazy">
+            <img src="../img/targets/lu006/frame_0007.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 7" loading="lazy">
+            <img src="../img/targets/lu006/frame_0008.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 8" loading="lazy">
+            <img src="../img/targets/lu006/frame_0009.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 9" loading="lazy">
+            <img src="../img/targets/lu006/frame_0010.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 10" loading="lazy">
+            <img src="../img/targets/lu006/frame_0011.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 11" loading="lazy">
+            <img src="../img/targets/lu006/frame_0013.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 12" loading="lazy">
+            <img src="../img/targets/lu006/frame_0014.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 13" loading="lazy">
+            <img src="../img/targets/lu006/frame_0015.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 14" loading="lazy">
+            <img src="../img/targets/lu006/frame_0016.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 15" loading="lazy">
+            <img src="../img/targets/lu006/frame_0017.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 16" loading="lazy">
+            <img src="../img/targets/lu006/frame_0018.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 17" loading="lazy">
+            <img src="../img/targets/lu006/frame_0019.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 18" loading="lazy">
+            <img src="../img/targets/lu006/frame_0020.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 19" loading="lazy">
+            <img src="../img/targets/lu006/frame_0021.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 20" loading="lazy">
+            <img src="../img/targets/lu006/frame_0022.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 21" loading="lazy">
+            <img src="../img/targets/lu006/frame_0023.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 22" loading="lazy">
+            <img src="../img/targets/lu006/frame_0024.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 23" loading="lazy">
+            <img src="../img/targets/lu006/frame_0025.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 24" loading="lazy">
+            <img src="../img/targets/lu006/frame_0026.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 25" loading="lazy">
+            <img src="../img/targets/lu006/frame_0027.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 26" loading="lazy">
+            <img src="../img/targets/lu006/sidescan.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 27" loading="lazy">
+            <img src="../img/targets/lu006/sidescan2.webp" alt="WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA — photo 28" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU006</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Vessel</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>Wooden, Wood</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Recently Explored</span></div>
+        <div class="aside-detail-row"><span>Depth</span><span>40 ft</span></div>
+        <div class="aside-detail-row"><span>Dimensions</span><span>25' × 8'</span></div>
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>6 May 2026</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu005" style="background-image:url('../img/targets/lu005/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">Wooden Boat</div>
+        </a>
+      <a class="wreck-nav-item next has-image" href="../lu-archive/lu007" style="background-image:url('../img/targets/lu007/primetime.webp')">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">Foss 54 (YC 191)</div>
+        </a>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

@@ -34,7 +34,100 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU105</span></div>
+          <div class="wreck-catalog-num">#LU105</div>
+          <h1 class="wreck-title">Barge and Trailer (The Dump)</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Debris</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">Man Made</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-recently-explored"></span>Recently Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">—</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">—</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:100vh;background:#020810;">
+      <div class="wreck-primetime-wrap">
+        <img src="../img/targets/lu105/primetime.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA">
+      </div>
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            <div class="overview-subhead">Shipwreck City Data</div>
+            <p>This target has been classified as mixed-material man-made debris. No depth or overall dimensions are currently recorded for the target. The site consists of an extensive debris field spread across the lakebed, with large sections of wood and metal lying both individually and in overlapping concentrations. Visible features include the remains of a trailer, with portions of its metal frame, axle assembly, and wheels still recognizable, along with several additional loose tires. Large wooden planks, panels, and structural members are distributed throughout the site, including broad sections that may represent remains of a small barge or wooden platform. Additional debris includes metal frames, rods and tubing, cables or lines, sheet-like material, and several unidentified metal components.</p>
+            <div class="overview-subhead">Prior Research and Theories</div>
+            <p>No corresponding prior documentation from Coastal Sensing &amp; Survey, DCS Films, or the Lake Union Virtual Museum has been identified for this target in the material reviewed to date.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> No record available from this source for this target</p>
+          <p><strong>DCS Films:</strong> No record available from this source for this target</p>
+          <p><strong>Lake Union Virtual Museum:</strong> No record available from this source for this target</p>
+        </div>
+        <div id="gallery-wrap">
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            <img src="../img/targets/lu105/frame_0016.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 1" loading="lazy">
+            <img src="../img/targets/lu105/frame_0017.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 2" loading="lazy">
+            <img src="../img/targets/lu105/frame_0018.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 3" loading="lazy">
+            <img src="../img/targets/lu105/frame_0019.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 4" loading="lazy">
+            <img src="../img/targets/lu105/frame_0020.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 5" loading="lazy">
+            <img src="../img/targets/lu105/frame_0021.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 6" loading="lazy">
+            <img src="../img/targets/lu105/frame_0022.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 7" loading="lazy">
+            <img src="../img/targets/lu105/frame_0023.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 8" loading="lazy">
+            <img src="../img/targets/lu105/frame_0024.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 9" loading="lazy">
+            <img src="../img/targets/lu105/frame_0025.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 10" loading="lazy">
+            <img src="../img/targets/lu105/frame_0026.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 11" loading="lazy">
+            <img src="../img/targets/lu105/frame_0027.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 12" loading="lazy">
+            <img src="../img/targets/lu105/frame_0028.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 13" loading="lazy">
+            <img src="../img/targets/lu105/frame_0030.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 14" loading="lazy">
+            <img src="../img/targets/lu105/frame_0031.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 15" loading="lazy">
+            <img src="../img/targets/lu105/frame_0032.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 16" loading="lazy">
+            <img src="../img/targets/lu105/frame_0033.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 17" loading="lazy">
+            <img src="../img/targets/lu105/frame_0034.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 18" loading="lazy">
+            <img src="../img/targets/lu105/frame_0035.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 19" loading="lazy">
+            <img src="../img/targets/lu105/ss1.webp" alt="Barge &amp; Trailer 'The Dump' | Lake Union, Seattle, WA — photo 20" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU105</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Debris</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>Mixed Materials</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Recently Explored</span></div>
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>2 June 2026</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu104" style="background-image:url('../img/targets/lu104/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">Small Dock</div>
+        </a>
+      <a class="wreck-nav-item next has-image" href="../lu-archive/lu106" style="background-image:url('../img/targets/lu106/primetime.webp')">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">Wooden Wreck</div>
+        </a>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

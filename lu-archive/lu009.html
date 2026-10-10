@@ -34,7 +34,98 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU009</span></div>
+          <div class="wreck-catalog-num">#LU009</div>
+          <h1 class="wreck-title">Landing Craft</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Vessel</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">Shipwreck</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-recently-explored"></span>Recently Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">40 ft</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">40' × 10'</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:100vh;background:#020810;">
+      <div class="wreck-primetime-wrap">
+        <img src="../img/targets/lu009/primetime.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA">
+      </div>
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            <div class="overview-subhead">Shipwreck City Data</div>
+            <p>This target has been classified as a wood shipwreck, resting in 40 feet of water and measuring roughly 40 feet by 10 feet. The shipwreck appears to rest upright on the lakebed, with much of the hull and deck structure still present. Visible features include a broad, flat-ended hull section with an angular profile, exposed deck framing, several rectangular deck openings, and a heavily encrusted metal deck fitting that may represent a towing bitt. A second heavily encrusted metal fitting is attached to one of the structural timbers, with a looped or eye-like component hanging beneath it. The overall form of the wreck is consistent with a landing craft, though its original configuration cannot currently be fully determined.</p>
+            <div class="overview-subhead">Prior Research and Theories</div>
+            <p>Previously, Coastal Sensing &amp; Survey had classified this target as LU09. Described as a shipwreck near Gas Works Park in Seattle. DCS Films had classified this target as Target 10. Described as an unidentified converted landing craft. Lake Union Virtual Museum had classified this target as a military LCVP landing craft that was later converted for other uses. Described with dimensions of approximately 34 feet in length, 9 feet in width, and 4 feet in depth at the bow.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> <a href="https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU09" target="_blank" rel="noopener">https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU09</a></p>
+          <p><strong>DCS Films:</strong> <a href="http://www.dcsfilms.com/Site_4/Lake_Union_Targets.html" target="_blank" rel="noopener">http://www.dcsfilms.com/Site_4/Lake_Union_Targets.html</a></p>
+          <p><strong>Lake Union Virtual Museum:</strong> <a href="http://www.lakeunionhistory.org/Converted_Landing_Craft.html" target="_blank" rel="noopener">http://www.lakeunionhistory.org/Converted_Landing_Craft.html</a></p>
+        </div>
+        <div id="gallery-wrap">
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            <img src="../img/targets/lu009/shipwreck2_1.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 1" loading="lazy">
+            <img src="../img/targets/lu009/shipwreck2_2.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 2" loading="lazy">
+            <img src="../img/targets/lu009/shipwreck2_3.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 3" loading="lazy">
+            <img src="../img/targets/lu009/shipwreck2_4.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 4" loading="lazy">
+            <img src="../img/targets/lu009/shipwreck2_5.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 5" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_10.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 6" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_11.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 7" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_12.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 8" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_13.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 9" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_14.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 10" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_15.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 11" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_16.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 12" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_6.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 13" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_7.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 14" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_8.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 15" loading="lazy">
+            <img src="../img/targets/lu009/shipwrek2_9.webp" alt="40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA — photo 16" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU009</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Vessel</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>Wood</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Recently Explored</span></div>
+        <div class="aside-detail-row"><span>Depth</span><span>40 ft</span></div>
+        <div class="aside-detail-row"><span>Dimensions</span><span>40' × 10'</span></div>
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>13 Dec 2025</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu008" style="background-image:url('../img/targets/lu008/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">Irene</div>
+        </a>
+      <a class="wreck-nav-item next has-image" href="../lu-archive/lu010" style="background-image:url('../img/targets/lu010/primetime.webp')">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">Small Work Barge</div>
+        </a>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

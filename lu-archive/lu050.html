@@ -34,7 +34,72 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU050</span></div>
+          <div class="wreck-catalog-num">#LU050</div>
+          <h1 class="wreck-title">Possible Shipwreck</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Undetermined</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">—</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-never-explored"></span>Never Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">40 ft</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">—</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:380px;background:var(--bg-deep);">
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            
+            <p>Shipwreck City has yet to explore this target. Based on available prior documentation, Shipwreck City currently believes this target may be a shipwreck, though its classification remains undetermined. This interpretation has not yet been independently confirmed. See below resources for additional information.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> <a href="https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU50" target="_blank" rel="noopener">https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU50</a></p>
+          <p><strong>DCS Films:</strong> No record available from this source for this target</p>
+          <p><strong>Lake Union Virtual Museum:</strong> No record available from this source for this target</p>
+        </div>
+        <div id="gallery-wrap">
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU050</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Undetermined</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>—</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Never Explored</span></div>
+        <div class="aside-detail-row"><span>Depth</span><span>40 ft</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu049" style="background-image:url('../img/targets/lu049/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">Possible Shipwreck</div>
+        </a>
+      <a class="wreck-nav-item next has-image" href="../lu-archive/lu051" style="background-image:url('../img/targets/lu051/primetime.webp')">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">Possible Shipwreck</div>
+        </a>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

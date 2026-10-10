@@ -34,7 +34,89 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU066</span></div>
+          <div class="wreck-catalog-num">#LU066</div>
+          <h1 class="wreck-title">Previous Harley Davidson Site</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Vessel</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">Car Wreck</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-recently-explored"></span>Recently Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">15 ft</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">—</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:100vh;background:#020810;">
+      <div class="wreck-primetime-wrap">
+        <img src="../img/targets/lu066/primetime.webp" alt="Sunken E-Bike at Harley Site | Lake Union, Seattle, WA">
+      </div>
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            <div class="overview-subhead">Shipwreck City Data</div>
+            <p>This target has been classified as a metal car wreck, resting in 15 feet of water. No overall dimensions are currently recorded for the target. During Shipwreck City’s updated survey, the previously documented Harley-Davidson motorcycle was not located. The site currently consists of an electric bicycle and scattered debris resting on the lakebed. Visible features include the electric bicycle, a barrel, and a smaller cylindrical object. We are unable to determine whether these objects are associated with the previously documented motorcycle site.</p>
+            <div class="overview-subhead">Prior Research and Theories</div>
+            <p>Previously, Coastal Sensing &amp; Survey had classified this target as LU66. Described as a Harley-Davidson motorcycle and noted that SDOT claimed it would be removed as part of the Eastlake Way Bridge project. DCS Films had classified this target as Target 25. Described as a Harley-Davidson motorcycle.</p>
+            <div class="overview-subhead">Additional Context</div>
+            <p>Coastal Sensing &amp; Survey reported that SDOT planned to remove the Harley-Davidson motorcycle as part of the Eastlake Way Bridge project. Shipwreck City’s later survey did not locate the motorcycle, making removal as part of the project a likely explanation.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> <a href="https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU66" target="_blank" rel="noopener">https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU66</a></p>
+          <p><strong>DCS Films:</strong> <a href="http://www.dcsfilms.com/Site_4/Harley_Davidson.html" target="_blank" rel="noopener">http://www.dcsfilms.com/Site_4/Harley_Davidson.html</a></p>
+          <p><strong>Lake Union Virtual Museum:</strong> No record available from this source for this target</p>
+        </div>
+        <div id="gallery-wrap">
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            <img src="../img/targets/lu066/frame_0001.webp" alt="Sunken E-Bike at Harley Site | Lake Union, Seattle, WA — photo 1" loading="lazy">
+            <img src="../img/targets/lu066/frame_0002.webp" alt="Sunken E-Bike at Harley Site | Lake Union, Seattle, WA — photo 2" loading="lazy">
+            <img src="../img/targets/lu066/frame_0003.webp" alt="Sunken E-Bike at Harley Site | Lake Union, Seattle, WA — photo 3" loading="lazy">
+            <img src="../img/targets/lu066/frame_0004.webp" alt="Sunken E-Bike at Harley Site | Lake Union, Seattle, WA — photo 4" loading="lazy">
+            <img src="../img/targets/lu066/frame_0005.webp" alt="Sunken E-Bike at Harley Site | Lake Union, Seattle, WA — photo 5" loading="lazy">
+            <img src="../img/targets/lu066/frame_0008.webp" alt="Sunken E-Bike at Harley Site | Lake Union, Seattle, WA — photo 6" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU066</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Vessel</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>Metal</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Recently Explored</span></div>
+        <div class="aside-detail-row"><span>Depth</span><span>15 ft</span></div>
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>3 June 2026</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu065" style="background-image:url('../img/targets/lu065/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">Cannery Tender</div>
+        </a>
+      <a class="wreck-nav-item next has-image" href="../lu-archive/lu067" style="background-image:url('../img/targets/lu067/primetime.webp')">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">Likely Barge</div>
+        </a>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

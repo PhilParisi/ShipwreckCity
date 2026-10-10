@@ -23,6 +23,9 @@
 <body>
 
 <div id="nav-mount"></div>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
 <main id="wreck-page"></main>
 <div id="footer-mount"></div>
 

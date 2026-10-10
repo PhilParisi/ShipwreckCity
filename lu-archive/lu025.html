@@ -34,7 +34,103 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU025</span></div>
+          <div class="wreck-catalog-num">#LU025</div>
+          <h1 class="wreck-title">Log Pile</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Debris</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">Man Made</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-recently-explored"></span>Recently Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">40 ft</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">40' × 25'</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:100vh;background:#020810;">
+      <div class="wreck-primetime-wrap">
+        <img src="../img/targets/lu025/primetime.webp" alt="Log Pile Debris | Lake Union, Seattle, WA">
+      </div>
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            <div class="overview-subhead">Shipwreck City Data</div>
+            <p>This target has been classified as man-made wooden debris, resting in 40 feet of water and measuring roughly 28 feet by 8.5 feet. The debris rests in a concentrated pile on the lakebed with logs lying across and alongside one another. Visible features include logs with flat, sawn ends, several lengths and loops of rope possibly associated with the timber, and additional wooden material extending through the site. Some of the rope appears to remain attached to or wrapped around individual logs. We are unable to determine whether all of the visible logs and rope belong to a single deposited pile or form part of a broader concentration of debris.</p>
+            <div class="overview-subhead">Prior Research and Theories</div>
+            <p>Previously, Coastal Sensing &amp; Survey had classified this target as LU25. Described as a pile of logs. DCS Films had classified this target as a pile of logs and are described with dimensions of approximately 25 feet by 30 feet.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> <a href="https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU25" target="_blank" rel="noopener">https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU25</a></p>
+          <p><strong>DCS Films:</strong> <a href="http://www.dcsfilms.com/Site_4/Lake_Union_logs.html" target="_blank" rel="noopener">http://www.dcsfilms.com/Site_4/Lake_Union_logs.html</a></p>
+          <p><strong>Lake Union Virtual Museum:</strong> No record available from this source for this target</p>
+        </div>
+        <div id="gallery-wrap">
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            <img src="../img/targets/lu025/frame_0001.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 1" loading="lazy">
+            <img src="../img/targets/lu025/frame_0002.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 2" loading="lazy">
+            <img src="../img/targets/lu025/frame_0003.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 3" loading="lazy">
+            <img src="../img/targets/lu025/frame_0005.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 4" loading="lazy">
+            <img src="../img/targets/lu025/frame_0006.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 5" loading="lazy">
+            <img src="../img/targets/lu025/frame_0007.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 6" loading="lazy">
+            <img src="../img/targets/lu025/frame_0008.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 7" loading="lazy">
+            <img src="../img/targets/lu025/frame_0009.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 8" loading="lazy">
+            <img src="../img/targets/lu025/frame_0010.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 9" loading="lazy">
+            <img src="../img/targets/lu025/frame_0011.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 10" loading="lazy">
+            <img src="../img/targets/lu025/frame_0012.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 11" loading="lazy">
+            <img src="../img/targets/lu025/frame_0013.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 12" loading="lazy">
+            <img src="../img/targets/lu025/frame_0014.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 13" loading="lazy">
+            <img src="../img/targets/lu025/frame_0015.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 14" loading="lazy">
+            <img src="../img/targets/lu025/frame_0016.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 15" loading="lazy">
+            <img src="../img/targets/lu025/frame_0017.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 16" loading="lazy">
+            <img src="../img/targets/lu025/frame_0018.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 17" loading="lazy">
+            <img src="../img/targets/lu025/frame_0019.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 18" loading="lazy">
+            <img src="../img/targets/lu025/frame_0020.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 19" loading="lazy">
+            <img src="../img/targets/lu025/ss1.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 20" loading="lazy">
+            <img src="../img/targets/lu025/ss2.webp" alt="Log Pile Debris | Lake Union, Seattle, WA — photo 21" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU025</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Debris</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>Wood</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Recently Explored</span></div>
+        <div class="aside-detail-row"><span>Depth</span><span>40 ft</span></div>
+        <div class="aside-detail-row"><span>Dimensions</span><span>40' × 25'</span></div>
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>2 June 2026</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu024" style="background-image:url('../img/targets/lu024/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">Bowspirit Boat</div>
+        </a>
+      <a class="wreck-nav-item next has-image" href="../lu-archive/lu026" style="background-image:url('../img/targets/lu026/primetime.webp')">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">***Quinn II</div>
+        </a>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

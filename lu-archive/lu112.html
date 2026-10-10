@@ -34,7 +34,101 @@
 <body>
 
 <div id="nav-mount"></div>
-<main id="wreck-page"></main>
+<!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
+     (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
+     and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
+<main id="wreck-page">
+    <div class="wreck-hero">
+      <div class="wreck-hero-grid"></div>
+      <div class="wreck-hero-content split">
+        <div class="wreck-hero-left">
+          <div class="wreck-breadcrumb"><a href="../lu-archive">Archive</a> / <span class="wreck-breadcrumb-current">#LU112</span></div>
+          <div class="wreck-catalog-num">#LU112</div>
+          <h1 class="wreck-title">Logs</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="wreck-data-bar">
+      <div class="wreck-data-item"><div class="wreck-data-label">Type</div><div class="wreck-data-val">Debris</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Class</div><div class="wreck-data-val">Organic</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Status</div><div class="wreck-data-val"><span class="status-dot status-recently-explored"></span>Recently Explored</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Depth</div><div class="wreck-data-val">—</div></div>
+      <div class="wreck-data-item"><div class="wreck-data-label">Dimensions</div><div class="wreck-data-val">—</div></div>
+    </div>
+
+    <div id="primetime-wrap" style="height:100vh;background:#020810;">
+      <div class="wreck-primetime-wrap">
+        <img src="../img/targets/lu112/primetime.webp" alt="Log Pile | Lake Union, Seattle, WA">
+      </div>
+    </div>
+
+    <div class="wreck-body">
+      <div class="wreck-main">
+        <div class="prose-section">
+          <h3>Overview</h3>
+            <div class="overview-subhead">Shipwreck City Data</div>
+            <p>This target has been classified as organic wooden debris. No depth or overall dimensions are currently recorded for the target. The site consists of a concentration of large logs lying across and alongside one another on the lakebed. Visible features include several substantial logs, areas of exposed wood, broken and split ends, and sections partially embedded in sediment. Several of the logs overlap or rest against one another, while others extend beyond the main concentration. We are unable to determine whether all of the visible logs form a single deposited pile or are part of a broader concentration of logs.</p>
+            <div class="overview-subhead">Prior Research and Theories</div>
+            <p>No corresponding prior documentation from Coastal Sensing &amp; Survey, DCS Films, or the Lake Union Virtual Museum has been identified for this target in the material reviewed to date.</p>
+        </div>
+        <div class="prose-section">
+          <h3>Links &amp; Resources</h3>
+          <p><strong>Coastal Sensing &amp; Survey:</strong> No record available from this source for this target</p>
+          <p><strong>DCS Films:</strong> No record available from this source for this target</p>
+          <p><strong>Lake Union Virtual Museum:</strong> No record available from this source for this target</p>
+        </div>
+        <div id="gallery-wrap">
+          <div class="section-label" style="margin-top:40px;">Gallery</div>
+          <div class="wreck-gallery">
+            <img src="../img/targets/lu112/frame_0001.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 1" loading="lazy">
+            <img src="../img/targets/lu112/frame_0002.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 2" loading="lazy">
+            <img src="../img/targets/lu112/frame_0003.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 3" loading="lazy">
+            <img src="../img/targets/lu112/frame_0005.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 4" loading="lazy">
+            <img src="../img/targets/lu112/frame_0006.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 5" loading="lazy">
+            <img src="../img/targets/lu112/frame_0007.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 6" loading="lazy">
+            <img src="../img/targets/lu112/frame_0008.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 7" loading="lazy">
+            <img src="../img/targets/lu112/frame_0009.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 8" loading="lazy">
+            <img src="../img/targets/lu112/frame_0010.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 9" loading="lazy">
+            <img src="../img/targets/lu112/frame_0011.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 10" loading="lazy">
+            <img src="../img/targets/lu112/frame_0012.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 11" loading="lazy">
+            <img src="../img/targets/lu112/frame_0013.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 12" loading="lazy">
+            <img src="../img/targets/lu112/frame_0014.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 13" loading="lazy">
+            <img src="../img/targets/lu112/frame_0015.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 14" loading="lazy">
+            <img src="../img/targets/lu112/frame_0016.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 15" loading="lazy">
+            <img src="../img/targets/lu112/frame_0017.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 16" loading="lazy">
+            <img src="../img/targets/lu112/frame_0018.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 17" loading="lazy">
+            <img src="../img/targets/lu112/frame_0019.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 18" loading="lazy">
+            <img src="../img/targets/lu112/frame_0020.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 19" loading="lazy">
+            <img src="../img/targets/lu112/frame_0021.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 20" loading="lazy">
+            <img src="../img/targets/lu112/frame_0022.webp" alt="Log Pile | Lake Union, Seattle, WA — photo 21" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="wreck-aside">
+        <div class="aside-label">Field data</div>
+        <div class="aside-detail-row"><span>Catalog</span><span>#LU112</span></div>
+        <div class="aside-detail-row"><span>Vessel type</span><span>Debris</span></div>
+        <div class="aside-detail-row"><span>Material</span><span>Wood</span></div>
+        <div class="aside-detail-row"><span>Status</span><span>Recently Explored</span></div>
+        <div class="aside-detail-row"><span>ROV Dive Date</span><span>21 July 2026</span></div>
+        <div class="aside-detail-row"><span>Location</span><span style="text-align:right;max-width:160px;">Lake Union, Seattle</span></div>
+        <a class="aside-label" href="../lu-archive" style="margin-top:28px;display:block;text-decoration:none;">Target Archive</a>
+      </div>
+    </div>
+
+    <div class="wreck-nav">
+      <a class="wreck-nav-item prev has-image" href="../lu-archive/lu111" style="background-image:url('../img/targets/lu111/primetime.webp')">
+          <div class="wreck-nav-dir">← Previous</div>
+          <div class="wreck-nav-name">Small Wood Dock</div>
+        </a>
+      <div class="wreck-nav-item next" style="opacity:0.3;pointer-events:none">
+          <div class="wreck-nav-dir">Next →</div>
+          <div class="wreck-nav-name">—</div>
+        </div>
+    </div>
+  </main>
 <div id="footer-mount"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
