@@ -21,11 +21,6 @@ let WRECKS, SITE_CONFIG;
 const fn = new Function(dataFile + '\nreturn { WRECKS, SITE_CONFIG };');
 ({ WRECKS, SITE_CONFIG } = fn());
 
-// Hand-written per-target SEO title/description (see js/seo-data.js).
-// Falls back to an auto-generated title/description for any target not yet covered there.
-const seoFile = fs.readFileSync(path.join(__dirname, 'js/seo-data.js'), 'utf8');
-const SEO_DATA = new Function(seoFile + '\nreturn SEO_DATA;')();
-
 const templatePath = path.join(__dirname, 'lu-archive/wreck-template.html');
 const template     = fs.readFileSync(templatePath, 'utf8');
 const outDir       = path.join(__dirname, 'lu-archive');
@@ -45,16 +40,17 @@ function escapeHtml(str) {
 }
 
 function metaTagsFor(wreck) {
-  const seo         = SEO_DATA[wreck.id];
-  const title       = escapeHtml(seo ? seo.title : `${wreck.name} — Shipwreck City`);
-  const description = escapeHtml(seo ? seo.description : (wreck.tagline || `${wreck.name} — Shipwreck City`));
+  // Per-target SEO comes from the archive CSV's seo_title / seo_description columns
+  // (carried into wrecks-data.js by tools/csv_to_wrecks_data.py).
+  const title       = escapeHtml(wreck.seoTitle || `${wreck.name} — Shipwreck City`);
+  const description = escapeHtml(wreck.seoDescription || wreck.tagline || `${wreck.name} — Shipwreck City`);
   const pageUrl      = `${SITE_URL}/lu-archive/${wreck.id}`;
   const image        = wreck.hasPrimetime
     ? `${SITE_URL}/img/targets/${wreck.id}/primetime.jpg`
     : FALLBACK_OG_IMAGE;
 
-  if (!seo) {
-    console.warn(`  ⚠ no SEO_DATA entry for ${wreck.id} — using auto-generated title/description. Add one to js/seo-data.js.`);
+  if (!wreck.seoTitle || !wreck.seoDescription) {
+    console.warn(`  ⚠ no seo_title/seo_description for ${wreck.id} — using auto-generated values. Fill them in the archive CSV.`);
   }
 
   return `<title>${title}</title>

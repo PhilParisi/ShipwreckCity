@@ -29,7 +29,6 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="../js/wrecks-data.js"></script>
-<script src="../js/seo-data.js"></script>
 <script src="../js/site.js"></script>
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('explore');
@@ -48,8 +47,7 @@
       </div>`;
     document.title = 'Not Found — Shipwreck City';
   } else {
-    const seo = (typeof SEO_DATA !== 'undefined' && SEO_DATA[wreck.id]) || null;
-    const seoTitle = seo ? seo.title : `${wreck.name} — Shipwreck City`;
+    const seoTitle = wreck.seoTitle || `${wreck.name} — Shipwreck City`;
     document.title = seoTitle;
 
     // Prev/next navigation

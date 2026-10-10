@@ -27,6 +27,8 @@
  *  images      — gallery filenames inside img/targets/{id}/ (e.g. ["01.jpg","02.jpg"])
  *               Homepage tile uses primetime.{jpg|png|webp} automatically — no entry needed here.
  *  diveDate    — CSV "sc_rov_dive_date" column, formatted (e.g. "4 May 2026"), or null
+ *  seoTitle    — CSV "seo_title" column: the page <title>, og/twitter title, and image alt text
+ *  seoDescription — CSV "seo_description" column: the meta/og/twitter description
  */
 
 const SITE_CONFIG = {
@@ -69,6 +71,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU01",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "20' Wooden Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 20' x 12' wooden barge wreck resting upright in 35 ft of water in Lake Union, Seattle, its hull still largely intact beneath weeds and netting.",
   },
   {
     id: "lu002",
@@ -96,6 +100,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU02",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "16' Sunken Wood Structure | Lake Union, Seattle, WA",
+    seoDescription: "Fragmented remains of a 16' x 8' wooden dock or work barge, resting in 35 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu003",
@@ -123,6 +129,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU03",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_barges.html",
     luvm_url: null,
+    seoTitle: "100' Wooden Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A massive 100' x 30' wooden barge wreck in 35 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu004",
@@ -150,6 +158,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU04",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Metal Frame Debris | Lake Union, Seattle, WA",
+    seoDescription: "A 6' x 6' angular metal frame resting in 35 ft of water amid scattered debris in Seattle's Lake Union — its original purpose still unknown.",
   },
   {
     id: "lu005",
@@ -177,6 +187,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU05",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "32' Wooden Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 32' x 11' wooden shipwreck in 40 ft of water in Lake Union, Seattle, its hull deteriorated but bow stem and ribs still visible.",
   },
   {
     id: "lu006",
@@ -204,6 +216,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU06",
     dcs_url: "http://www.dcsfilms.com/Site_4/Higgins_Boat.html",
     luvm_url: "http://www.lakeunionhistory.org/Higgins_Boat.html",
+    seoTitle: "WWII Higgins Boat Wreck (LCVP) | Lake Union, Seattle, WA",
+    seoDescription: "A 25' x 8' WWII-era Higgins boat (LCVP) wreck in 40 ft of water in Lake Union, Seattle, its partial hull number possibly tied to the USS Menard.",
   },
   {
     id: "lu007",
@@ -231,6 +245,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU07",
     dcs_url: "http://www.dcsfilms.com/Site_4/FOSS_54_Lake_Union.html",
     luvm_url: "http://www.lakeunionhistory.org/Foss_Barge.html",
+    seoTitle: "Foss 54: Sunken 1908 Navy Barge | Lake Union, Seattle, WA",
+    seoDescription: "Foss 54 (YC 191): a 91' x 26' wooden Navy barge built in 1908, now resting in just 15 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu008",
@@ -258,6 +274,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU08",
     dcs_url: "http://www.dcsfilms.com/Site_4/Irene_Lake_Union.html",
     luvm_url: "http://www.lakeunionhistory.org/Irene.html",
+    seoTitle: "Irene: 45' Wooden Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "Irene: a 45' x 12' wooden shipwreck resting in 40 ft of water in Lake Union, Seattle, with identifying lettering found on her hull.",
   },
   {
     id: "lu009",
@@ -285,6 +303,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU09",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_Targets.html",
     luvm_url: "http://www.lakeunionhistory.org/Converted_Landing_Craft.html",
+    seoTitle: "40' WWII-Era Landing Craft Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 40' x 10' wooden landing craft wreck in 40 ft of water near Gas Works Park in Seattle's Lake Union.",
   },
   {
     id: "lu010",
@@ -312,6 +332,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU10",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "15' Wooden Work Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A small 15' x 6' wooden work barge wreck resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu011",
@@ -339,6 +361,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU11",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Timber & Rope Debris | Lake Union, Seattle, WA",
+    seoDescription: "Worked timber and metal fittings resting in 40 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu012",
@@ -366,6 +390,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU12",
     dcs_url: "http://www.dcsfilms.com/Site_4/Wreck_of_the_Kahlenberg.html",
     luvm_url: null,
+    seoTitle: "The Kahlenberg: Historic Navy Wreck | Lake Union, Seattle, WA",
+    seoDescription: "The Kahlenberg: a 55' x 14' wooden wreck in 40 ft of water in Lake Union, Seattle. Built in 1913, she served the Navy before Puget Sound's shrimp fleet.",
   },
   {
     id: "lu013",
@@ -393,6 +419,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU13",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unidentified Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "An unidentified shipwreck logged in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu014",
@@ -420,6 +448,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU14",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unexplored Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "An unconfirmed shipwreck resting in 40 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu015",
@@ -447,6 +477,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU15",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_shipwrecks.html",
     luvm_url: null,
+    seoTitle: "75' Wooden Tugboat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A wooden boat or tug wreck, roughly 75' x 18', resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu016",
@@ -474,6 +506,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU16",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "21' Mystery Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A potential 21' x 8' shipwreck of unknown material resting in 40 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu017",
@@ -501,6 +535,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU17",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_boats_sink.html",
     luvm_url: null,
+    seoTitle: "The Karinda: Fiberglass Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "The Karinda: a 21' x 8' fiberglass shipwreck resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu018",
@@ -528,6 +564,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU18",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_boats_sink.html",
     luvm_url: null,
+    seoTitle: "HI-YU-ALL: Sunken Cabin Cruiser | Lake Union, Seattle, WA",
+    seoDescription: "HI-YU-ALL: a 25' x 8' fiberglass shipwreck, likely a cabin cruiser, resting in 40 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu019",
@@ -555,6 +593,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU19",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_boats_sink.html",
     luvm_url: null,
+    seoTitle: "25' Wood Cruiser Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A 25' x 10' wooden cruiser wreck resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu020",
@@ -582,6 +622,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU20",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Suspected Barge Site | Lake Union, Seattle, WA",
+    seoDescription: "A suspected barge wreck resting in 30 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu021",
@@ -609,6 +651,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU21",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Steel Workboat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A steel workboat wreck in 30 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu022",
@@ -636,6 +680,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU22",
     dcs_url: "http://www.dcsfilms.com/Site_4/DIT_Boat.html",
     luvm_url: "http://www.lakeunionhistory.org/Steel_Workboat.html",
+    seoTitle: "30' Sunken Fireboat | Lake Union, Seattle, WA",
+    seoDescription: "A 30.5' x 11' metal fireboat wreck believed to rest in Seattle's Lake Union.",
   },
   {
     id: "lu023",
@@ -663,6 +709,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU23",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_boats_sink.html",
     luvm_url: null,
+    seoTitle: "12' Wood Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 12' x 5' wood barge, one of Lake Union's smallest, resting in 30 ft of water off Seattle.",
   },
   {
     id: "lu024",
@@ -690,6 +738,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU24",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_Sailboat.html",
     luvm_url: "http://www.lakeunionhistory.org/Large_Sailboat.html",
+    seoTitle: "33' Bowsprit Sailboat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "The Bowsprit Boat: a 33' x 10' wooden shipwreck in 40 ft of water in Lake Union, Seattle, named for a long spar still projecting from its bow.",
   },
   {
     id: "lu025",
@@ -717,6 +767,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU25",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_logs.html",
     luvm_url: null,
+    seoTitle: "Log Pile Debris | Lake Union, Seattle, WA",
+    seoDescription: "A concentrated pile of sawn logs and rope, roughly 40' x 25', resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu026",
@@ -744,6 +796,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU26",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Quinn II: 28' Cabin Cruiser Wreck | Lake Union, Seattle, WA",
+    seoDescription: "Quinn II: a 28' x 8.5' fiberglass cabin cruiser wreck in 40 ft of water in Lake Union, Seattle, its white topsides and engine still visible.",
   },
   {
     id: "lu027",
@@ -771,6 +825,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU27",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_Sidewheeler.html",
     luvm_url: null,
+    seoTitle: "Possible Sidewheeler Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A wooden shipwreck resting in Seattle's Lake Union, possibly a sidewheel vessel.",
   },
   {
     id: "lu028",
@@ -798,6 +854,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU28",
     dcs_url: "http://www.dcsfilms.com/Site_4/wooden_wreck_lake_union.html",
     luvm_url: null,
+    seoTitle: "60' Wooden Wreck & Propeller | Lake Union, Seattle, WA",
+    seoDescription: "A 60' x 20' wooden shipwreck in 40 ft of water in Lake Union, Seattle, its multi-bladed propeller and shafting still intact amid the wreckage.",
   },
   {
     id: "lu029",
@@ -825,6 +883,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU29",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Corroded Metal Frame Debris | Lake Union, Seattle, WA",
+    seoDescription: "A corroded 12' rectangular metal frame resting in 40 ft of water in Seattle's Lake Union, tangled in old fishing line and floats.",
   },
   {
     id: "lu030",
@@ -852,6 +912,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU30",
     dcs_url: "http://www.dcsfilms.com/Site_4/Wrecks_of_Lake_Union.html",
     luvm_url: null,
+    seoTitle: "34' Wooden Sailboat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 34' x 10' wooden sailboat wreck believed to rest in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu031",
@@ -879,6 +941,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU31",
     dcs_url: "http://www.dcsfilms.com/Site_4/Wrecks_of_Lake_Union.html",
     luvm_url: null,
+    seoTitle: "Sunken Metal Boat | Lake Union, Seattle, WA",
+    seoDescription: "A metal boat wreck resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu032",
@@ -906,6 +970,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU32",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_Survey.html",
     luvm_url: "http://www.lakeunionhistory.org/Old_Barge.html",
+    seoTitle: "60' Wood Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 60' x 20' wooden barge wreck in 40 ft of water in Lake Union, Seattle, its heavy timber construction still identifiable despite partial collapse.",
   },
   {
     id: "lu033",
@@ -933,6 +999,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU33",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "45' Collapsed Wooden Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 45' x 16' wooden shipwreck in 40 ft of water in Lake Union, Seattle.",
   },
   {
     id: "lu034",
@@ -960,6 +1028,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU34",
     dcs_url: "http://www.dcsfilms.com/Site_4/Sea_Bee.html",
     luvm_url: null,
+    seoTitle: "Liveaboard Debris | Lake Union, Seattle, WA",
+    seoDescription: "Mixed-material debris resting in 30 ft of water in Seattle's Lake Union, possibly the remains of a personal liveaboard.",
   },
   {
     id: "lu035",
@@ -987,6 +1057,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU35",
     dcs_url: "http://www.dcsfilms.com/Site_4/Jeanette_Lake_Union.html",
     luvm_url: "http://www.lakeunionhistory.org/Jeanette.html",
+    seoTitle: "The Jeanette: Wooden Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "The Jeanette: a wooden shipwreck resting in Seattle's Lake Union, identified by name in prior research.",
   },
   {
     id: "lu036",
@@ -1014,6 +1086,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU36",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Rope & Metal Debris Field | Lake Union, Seattle, WA",
+    seoDescription: "A scattered debris field of rope and metal fragments resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu037",
@@ -1041,6 +1115,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU37",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Cable & Debris Site | Lake Union, Seattle, WA",
+    seoDescription: "A small concentration of cable and metal debris resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu038",
@@ -1068,6 +1144,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU38",
     dcs_url: "http://www.dcsfilms.com/Site_4/PC_1138_Lake_Union.html",
     luvm_url: "http://www.lakeunionhistory.org/Lapeer.html",
+    seoTitle: "USS Lapeer (PC-1138): Navy Wreck | Lake Union, Seattle, WA",
+    seoDescription: "USS Lapeer (PC-1138): a Navy patrol craft believed to rest under a dock near shore in Lake Union, Seattle.",
   },
   {
     id: "lu039",
@@ -1095,6 +1173,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU39",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unidentified Debris | Lake Union, Seattle, WA",
+    seoDescription: "A 9' x 6' object of unknown material resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu040",
@@ -1122,6 +1202,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU40",
     dcs_url: "http://www.dcsfilms.com/Site_4/Long_wooden_Hull_Lake_Union.html",
     luvm_url: "http://www.lakeunionhistory.org/Sternwheeler.html",
+    seoTitle: "Sunken Sternwheeler | Lake Union, Seattle, WA",
+    seoDescription: "A sternwheeler wreck believed to rest in 30 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu041",
@@ -1149,6 +1231,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU41",
     dcs_url: "http://www.dcsfilms.com/Site_4/Sea_Bee.html",
     luvm_url: null,
+    seoTitle: "The Sea Bee: Wooden Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "The Sea Bee: a wooden shipwreck believed to rest under a dock near shore in Seattle's Lake Union.",
   },
   {
     id: "lu042",
@@ -1176,6 +1260,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU42",
     dcs_url: "http://www.dcsfilms.com/Site_4/JE_Boyden.html",
     luvm_url: "http://www.lakeunionhistory.org/Boyden.html",
+    seoTitle: "J.E. Boyden: 1888 Steam Tug Wreck | Lake Union, Seattle, WA",
+    seoDescription: "J.E. Boyden: a 90' x 18' wooden steam tug built in Seattle in 1888, resting in 40 ft of water in Lake Union after towing barges and log booms for decades.",
   },
   {
     id: "lu043",
@@ -1203,6 +1289,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU43",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Timber & Anchor Debris | Lake Union, Seattle, WA",
+    seoDescription: "A splintered log, folding anchor, and scattered debris resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu044",
@@ -1230,6 +1318,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU44",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Log Debris | Lake Union, Seattle, WA",
+    seoDescription: "A single large cut log, broken into several sections, resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu045",
@@ -1257,6 +1347,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU45",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Collapsed Wood Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A collapsed wooden shipwreck resting in 40 ft of water in Lake Union, Seattle, its structure now scattered flat across the lakebed.",
   },
   {
     id: "lu046",
@@ -1284,6 +1376,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU46",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Bicycles & E-Scooters | Lake Union, Seattle, WA",
+    seoDescription: "Bicycles, e-scooters, and scattered debris resting on the lakebed at a site once logged as a submerged Buick, in Seattle's Lake Union.",
   },
   {
     id: "lu047",
@@ -1311,6 +1405,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU47",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Suspected Shipwreck Debris | Lake Union, Seattle, WA",
+    seoDescription: "Suspected shipwreck debris resting in 40 ft of water in Seattle's Lake Union, not yet fully surveyed.",
   },
   {
     id: "lu048",
@@ -1338,6 +1434,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU48",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Barrel & Rope Debris | Lake Union, Seattle, WA",
+    seoDescription: "A barrel and length of floating rope resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu049",
@@ -1365,6 +1463,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU49",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unconfirmed Shipwreck Site | Lake Union, Seattle, WA",
+    seoDescription: "Suspected shipwreck debris resting in Seattle's Lake Union, not yet fully surveyed.",
   },
   {
     id: "lu050",
@@ -1392,6 +1492,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU50",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Suspected Sunken Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A suspected shipwreck resting in 40 ft of water in Seattle's Lake Union, its classification still undetermined.",
   },
   {
     id: "lu051",
@@ -1419,6 +1521,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU51",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unverified Shipwreck Site | Lake Union, Seattle, WA",
+    seoDescription: "A second unverified wreck nearby, resting in 40 ft of water in Seattle's Lake Union, not yet fully surveyed.",
   },
   {
     id: "lu052",
@@ -1446,6 +1550,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU52",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "5' × 4' Metal Chest | Lake Union, Seattle, WA",
+    seoDescription: "A 5' x 4' metal chest resting in 40 ft of water in Seattle's Lake Union, its corroded surfaces and original purpose still a mystery.",
   },
   {
     id: "lu053",
@@ -1473,6 +1579,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU53",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Wooden Pilings | Lake Union, Seattle, WA",
+    seoDescription: "Weathered wooden pilings rising from the lakebed in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu054",
@@ -1500,6 +1608,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU54",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Scattered Wreck Debris | Lake Union, Seattle, WA",
+    seoDescription: "A 24' x 4' field of scattered wood and debris resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu055",
@@ -1527,6 +1637,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU55",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Buried Shipwreck in Mud | Lake Union, Seattle, WA",
+    seoDescription: "A shipwreck believed buried in the mud of Seattle's Lake Union, its outline still emerging from 40 ft of water.",
   },
   {
     id: "lu056",
@@ -1554,6 +1666,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU56",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_barges.html",
     luvm_url: null,
+    seoTitle: "70' Sunken Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A large 70' x 40' barge wreck believed to rest in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu057",
@@ -1581,6 +1695,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU57",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Shipwreck Debris Field | Lake Union, Seattle, WA",
+    seoDescription: "A shipwreck debris field of unknown material resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu058",
@@ -1608,6 +1724,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU58",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Barge Wreck Buried in Mud | Lake Union, Seattle, WA",
+    seoDescription: "A barge wreck, its hull mostly buried in mud, resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu059",
@@ -1635,6 +1753,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU59",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unidentified Shipwreck Site | Lake Union, Seattle, WA",
+    seoDescription: "One of several uncharted shipwrecks resting in 40 ft of water in Seattle's Lake Union, yet to be fully surveyed.",
   },
   {
     id: "lu060",
@@ -1662,6 +1782,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU60",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Cables, Tires & Drums | Lake Union, Seattle, WA",
+    seoDescription: "Cables, tires, and drums resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu061",
@@ -1689,6 +1811,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU61",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unidentified Lakebed Debris | Lake Union, Seattle, WA",
+    seoDescription: "Unidentified debris resting on the lakebed in Seattle's Lake Union, not yet fully surveyed.",
   },
   {
     id: "lu062",
@@ -1716,6 +1840,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU62",
     dcs_url: "http://www.dcsfilms.com/Site_4/YMS_105.html",
     luvm_url: "http://www.lakeunionhistory.org/Gypsy_Queen.html",
+    seoTitle: "Gypsy Queen: WWII Minesweeper Wreck | Lake Union, Seattle, WA",
+    seoDescription: "Gypsy Queen (YMS-105): a WWII Navy minesweeper turned floating fish-processing plant, resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu063",
@@ -1743,6 +1869,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_sloop.html",
     luvm_url: null,
+    seoTitle: "Sunken Wooden Sloop | Lake Union, Seattle, WA",
+    seoDescription: "Logged as a wooden sloop, this shipwreck rests on the bottom of Seattle's Lake Union.",
   },
   {
     id: "lu064",
@@ -1770,6 +1898,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU64",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_sloop.html",
     luvm_url: null,
+    seoTitle: "Wooden Pleasure Craft Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A wooden pleasure craft wreck resting in 40 ft of water in Seattle's Lake Union, its partial name still visible but unconfirmed.",
   },
   {
     id: "lu065",
@@ -1797,6 +1927,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU65",
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_cannery_tender.html",
     luvm_url: "http://www.lakeunionhistory.org/Cannery_Tender.html",
+    seoTitle: "Historic Cannery Tender Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A metal cannery tender wreck resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu066",
@@ -1824,6 +1956,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU66",
     dcs_url: "http://www.dcsfilms.com/Site_4/Harley_Davidson.html",
     luvm_url: null,
+    seoTitle: "Sunken E-Bike at Harley Site | Lake Union, Seattle, WA",
+    seoDescription: "The site of a since-removed Harley-Davidson motorcycle in 15 ft of water in Seattle's Lake Union, now home to a sunken e-bike and scattered debris.",
   },
   {
     id: "lu067",
@@ -1851,6 +1985,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU67",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Suspected Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A suspected barge wreck of unknown material resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu068",
@@ -1878,6 +2014,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU68",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Probable Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A suspected barge wreck of unknown material resting in 40 ft of water in Seattle's Lake Union, near a similar unconfirmed site.",
   },
   {
     id: "lu069",
@@ -1905,6 +2043,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU69",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "28' Collapsed Wooden Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 28' x 8' collapsed wooden boat wreck resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu070",
@@ -1932,6 +2072,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU70",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Ladder Debris Field | Lake Union, Seattle, WA",
+    seoDescription: "A field of metal ladder debris resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu071",
@@ -1959,6 +2101,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU71",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Sunken Metal Pleasure Craft | Lake Union, Seattle, WA",
+    seoDescription: "A pleasure craft wreck of metal construction, resting somewhere in the 40-ft depths of Seattle's Lake Union.",
   },
   {
     id: "lu072",
@@ -1986,6 +2130,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU72",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Small Debris Site | Lake Union, Seattle, WA",
+    seoDescription: "A small 9' x 5' debris site resting in 40 ft of water in Seattle's Lake Union, its contents still unidentified.",
   },
   {
     id: "lu073",
@@ -2013,6 +2159,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU73",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Suspected WWII Aircraft Drop Tank | Lake Union, Seattle, WA",
+    seoDescription: "A suspected WWII-era aircraft drop tank, 12 ft long, resting in 40 ft of water in Seattle's Lake Union — once logged as a kayak in early surveys.",
   },
   {
     id: "lu074",
@@ -2040,6 +2188,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU74",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "35' Bulwarks Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "The Bulwarks Boat: a 35' wooden shipwreck resting in just 4 ft of water in Seattle's Lake Union, heavily collapsed.",
   },
   {
     id: "lu075",
@@ -2067,6 +2217,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU75",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Wood Beam Debris | Lake Union, Seattle, WA",
+    seoDescription: "Two long cut wooden beams, fastened together, resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu076",
@@ -2094,6 +2246,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU76",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "24' Fiberglass Boat DARE-LES | Lake Union, Seattle, WA",
+    seoDescription: "DARE-LES (WN 3986 D): a 24' x 8' fiberglass shipwreck in 40 ft of water in Lake Union, Seattle, its hull name and Seattle homeport still legible.",
   },
   {
     id: "lu077",
@@ -2121,6 +2275,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU77",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "25' Wooden Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 25' x 4' wooden boat wreck resting low in 40 ft of water in Seattle's Lake Union, its deck long buried in sediment.",
   },
   {
     id: "lu078",
@@ -2148,6 +2304,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU78",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Betty W.: 35' Sailing Vessel Wreck | Lake Union, Seattle, WA",
+    seoDescription: "Believed to be the 35' sailing vessel Betty W., this wooden shipwreck rests in 40 ft of water in Seattle's Lake Union, its cabin still standing.",
   },
   {
     id: "lu079",
@@ -2175,6 +2333,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU79",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Unknown Debris Field | Lake Union, Seattle, WA",
+    seoDescription: "A scattered debris field, including a cushion-like object and tangled netting, resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu080",
@@ -2202,6 +2362,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU80",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Scattered Lakebed Debris | Lake Union, Seattle, WA",
+    seoDescription: "A field of tangled netting and mixed debris resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu081",
@@ -2229,6 +2391,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU81",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Sunken Metal Boat & Dock Debris | Lake Union, Seattle, WA",
+    seoDescription: "A collapsed metal boat amid the remains of a wooden dock, resting in Seattle's Lake Union.",
   },
   {
     id: "lu082",
@@ -2256,6 +2420,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU82",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Mixed-Material Work Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A mixed-material work boat wreck resting in 35 ft of water in Seattle's Lake Union, a heavy chain still draped across its timbers.",
   },
   {
     id: "lu083",
@@ -2283,6 +2449,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU83",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Small Wood Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A small wood barge wreck resting in 20 ft of water beneath a commercial mooring area in Seattle's Lake Union.",
   },
   {
     id: "lu084",
@@ -2310,6 +2478,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU84",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "24' Metal Barge Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 24' x 12' metal barge wreck resting in 30 ft of water near a stormwater outfall in Seattle's Lake Union.",
   },
   {
     id: "lu085",
@@ -2337,6 +2507,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU85",
     dcs_url: "http://www.dcsfilms.com/Site_4/gypsy_trader.html",
     luvm_url: null,
+    seoTitle: "Gypsy Trader: Wooden Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "Gypsy Trader: a wooden shipwreck believed to rest in 40 ft of water in Seattle's Lake Union, not yet independently documented.",
   },
   {
     id: "lu086",
@@ -2364,6 +2536,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU86",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "14' Small Wooden Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A small 14' x 4.5' wooden boat wreck resting in 40 ft of water in Seattle's Lake Union, heavily deteriorated and partly buried.",
   },
   {
     id: "lu087",
@@ -2391,6 +2565,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU87",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Sunken Resonance Kayak | Lake Union, Seattle, WA",
+    seoDescription: "A 14' Resonance-brand kayak resting in 40 ft of water in Seattle's Lake Union, its hull markings the subject of an ongoing identification effort.",
   },
   {
     id: "lu088",
@@ -2418,6 +2594,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU88",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "45' Suspected Sailboat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 45' x 15' suspected sailboat wreck resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu089",
@@ -2445,6 +2623,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU89",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Tires & Timber Debris Field | Lake Union, Seattle, WA",
+    seoDescription: "A dispersed field of tires, timber, and rope resting in 40 ft of water in Seattle's Lake Union, possibly tied to a larger vessel.",
   },
   {
     id: "lu090",
@@ -2472,6 +2652,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU90",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "24' Unidentified Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A 24' x 8' shipwreck resting in 40 ft of water in Seattle's Lake Union, its identity still undetermined.",
   },
   {
     id: "lu091",
@@ -2499,6 +2681,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU91",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "35' Unidentified Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A larger, 35' x 8' unidentified wreck resting in 40 ft of water in Seattle's Lake Union, yet to be fully surveyed.",
   },
   {
     id: "lu092",
@@ -2526,6 +2710,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU92",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "25' Mystery Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A 25' shipwreck of unknown type resting in 40 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu093",
@@ -2553,6 +2739,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU93",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "12' Small Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "One of Lake Union's smallest unconfirmed wrecks, just 12' x 5', resting in 40 ft of water off Seattle.",
   },
   {
     id: "lu094",
@@ -2580,6 +2768,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU94",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "14' Fiberglass Rowboat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 14' fiberglass rowboat wreck resting in 40 ft of water in Seattle's Lake Union, its bench seats and gunwales still intact.",
   },
   {
     id: "lu095",
@@ -2607,6 +2797,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU95",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "15' Wooden Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 15' x 6' wooden boat wreck resting in 40 ft of water in Seattle's Lake Union, its bench-like beams and gunwales still in place.",
   },
   {
     id: "lu096",
@@ -2634,6 +2826,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU96",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "14' Fiberglass Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 14' x 4.5' fiberglass boat wreck (WN 7352 JD) in 40 ft of water in Seattle's Lake Union — its registration is under active research by Shipwreck City.",
   },
   {
     id: "lu097",
@@ -2661,6 +2855,8 @@ const WRECKS = [
     css_url: "https://www.coastalsensing.com/survey-target-logs-lake-union/tag/LU97",
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Lakebed Cables | Lake Union, Seattle, WA",
+    seoDescription: "Multiple lengths of exposed cable spread across the lakebed in 20 ft of water in Seattle's Lake Union.",
   },
   {
     id: "lu098",
@@ -2688,6 +2884,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "24' Sunken Pleasure Craft | Lake Union, Seattle, WA",
+    seoDescription: "A 24' x 8' pleasure craft wreck resting in 23 ft of water in Seattle's Lake Union, its cabin windows and railing still visible.",
   },
   {
     id: "lu099",
@@ -2715,6 +2913,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Onondaga: 165' USCG Cutter Wreck | Ballard Ship Canal, Seattle, WA",
+    seoDescription: "Onondaga (WPG-79), later Arctic Explorer: a 165' x 36' Coast Guard cutter resting in just 4 ft of water near Seattle's Ballard Ship Canal.",
   },
   {
     id: "lu100",
@@ -2742,6 +2942,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Fiberglass Cruiser Wreck | Ballard Ship Canal, Seattle, WA",
+    seoDescription: "A fiberglass cruising vessel wreck resting near Seattle's Ballard Ship Canal, its cabin and railing largely intact.",
   },
   {
     id: "lu101",
@@ -2769,6 +2971,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Mixed-Material Cruiser Wreck | Ballard Ship Canal, Seattle, WA",
+    seoDescription: "A mixed-material cruising vessel wreck resting near Seattle's Ballard Ship Canal, its hull sections displaced but recognizable.",
   },
   {
     id: "lu102",
@@ -2796,6 +3000,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Sunken Car Wreck (V6 Badge) | Lake Union, Seattle, WA",
+    seoDescription: "A metal car wreck resting upside-down in Seattle's Lake Union — a surviving V6 badge suggests it may be a first-generation Mazda MPV.",
   },
   {
     id: "lu103",
@@ -2823,6 +3029,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Small Wooden Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A small wooden boat wreck resting on the lakebed in Seattle's Lake Union, its bow fitting and hull framing still intact.",
   },
   {
     id: "lu104",
@@ -2850,6 +3058,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Small Dock | Lake Union, Seattle, WA",
+    seoDescription: "A 15' x 6' small dock, its wooden decking and metal fittings still visible, resting on the lakebed in Seattle's Lake Union.",
   },
   {
     id: "lu105",
@@ -2877,6 +3087,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Barge & Trailer 'The Dump' | Lake Union, Seattle, WA",
+    seoDescription: "Known as \"The Dump\": a barge, trailer, tires, and scattered debris spread across the lakebed in Seattle's Lake Union.",
   },
   {
     id: "lu106",
@@ -2904,6 +3116,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "22' Wooden Shipwreck | Lake Union, Seattle, WA",
+    seoDescription: "A 22' x 8' wooden shipwreck resting in just 3 ft of water on a sloping lakebed in Seattle's Lake Union, its propeller and rudder still in place.",
   },
   {
     id: "lu107",
@@ -2931,6 +3145,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: "http://www.dcsfilms.com/Site_4/Lake_Union_boats_sink.html",
     luvm_url: null,
+    seoTitle: "15' Small Wooden Boat Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A 15' x 5' small wooden boat wreck resting in Seattle's Lake Union.",
   },
   {
     id: "lu108",
@@ -2958,6 +3174,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: "http://www.dcsfilms.com/Site_4/Sea_Bee.html",
     luvm_url: null,
+    seoTitle: "Tree Trunks | Lake Union, Seattle, WA",
+    seoDescription: "Sunken tree trunks resting on the lakebed in Seattle's Lake Union, classified as organic debris.",
   },
   {
     id: "lu109",
@@ -2985,6 +3203,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Natural Rock Formation | Lake Union, Seattle, WA",
+    seoDescription: "A natural sedimentary rock formation, roughly 15' x 8', exposed on the lakebed in Seattle's Lake Union.",
   },
   {
     id: "lu110",
@@ -3012,6 +3232,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Sunken Car Wreck | Lake Union, Seattle, WA",
+    seoDescription: "A metal car wreck resting in roughly 24 ft of water at the bottom of the Fremont Cut Canal, where it connects to Seattle's Lake Union.",
   },
   {
     id: "lu111",
@@ -3039,6 +3261,8 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Wood Dock Debris | Lake Union, Seattle, WA",
+    seoDescription: "A small wooden dock resting in 28 ft of water in Seattle's Lake Union, its timbers and metal rods still partially standing.",
   },
   {
     id: "lu112",
@@ -3066,5 +3290,7 @@ const WRECKS = [
     css_url: null,
     dcs_url: null,
     luvm_url: null,
+    seoTitle: "Log Pile | Lake Union, Seattle, WA",
+    seoDescription: "A concentration of large logs resting on the lakebed in Seattle's Lake Union, classified as organic debris.",
   }
 ];

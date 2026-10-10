@@ -298,6 +298,7 @@ def scan_images(slug, script_dir):
 def convert(csv_path):
     wrecks = []
     seen_ids = {}
+    missing_seo = []
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     with open(csv_path, newline='', encoding='utf-8-sig') as f:
@@ -350,9 +351,16 @@ def convert(csv_path):
                 "css_url":     clean(row.get('css_url')),
                 "dcs_url":     clean(row.get('dcs_history_url')),
                 "luvm_url":    clean(row.get('luvm_url')),
+                "seoTitle":    clean(row.get('seo_title')),
+                "seoDescription": clean(row.get('seo_description')),
             }
+            if not wreck["seoTitle"] or not wreck["seoDescription"]:
+                missing_seo.append(target_no.upper())
             wrecks.append(wreck)
 
+    if missing_seo:
+        print(f"  ⚠ missing seo_title/seo_description in the CSV for: {', '.join(missing_seo)}"
+              " — those pages will fall back to an auto-generated title/description.")
     return wrecks
 
 def js_value(v, indent=6):
@@ -385,7 +393,7 @@ def wreck_to_js(w):
         'depth', 'coordinates', 'location', 'status', 'tagline',
         'summary', 'summarySections', 'dimensions',
         'footageItems', 'hasPrimetime', 'images', 'newTarget', 'diveDuration', 'diveDate',
-        'css_url', 'dcs_url', 'luvm_url',
+        'css_url', 'dcs_url', 'luvm_url', 'seoTitle', 'seoDescription',
     ]
     for key in fields:
         val = w.get(key)
@@ -475,6 +483,8 @@ def main():
  *  images      — gallery filenames inside img/targets/{id}/ (e.g. ["01.jpg","02.jpg"])
  *               Homepage tile uses primetime.{jpg|png|webp} automatically — no entry needed here.
  *  diveDate    — CSV "sc_rov_dive_date" column, formatted (e.g. "4 May 2026"), or null
+ *  seoTitle    — CSV "seo_title" column: the page <title>, og/twitter title, and image alt text
+ *  seoDescription — CSV "seo_description" column: the meta/og/twitter description
  */
 """
 
