@@ -111,6 +111,7 @@ img { max-width: 100%; display: block; }
 .nav-links a:hover,
 .nav-links a.active { color: var(--text-primary); }
 
+
 /* ============================================================
    HERO
    ============================================================ */
@@ -1408,6 +1409,33 @@ a.section-label-link:hover { color: var(--text-primary); }
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+/* Collapse the main nav into the hamburger menu before the links run out of room */
+@media (max-width: 1080px) {
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(10,14,20,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 4px 20px 8px;
+    z-index: 99;
+  }
+  .nav-links a {
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  .site-nav.nav-open .nav-links { display: flex; }
+}
+
 @media (max-width: 900px) {
   .hero-title { font-size: 72px; }
   .wrecks-grid { grid-template-columns: 1fr 1fr; }
@@ -1451,29 +1479,6 @@ a.section-label-link:hover { color: var(--text-primary); }
   .stats-bar { grid-template-columns: 1fr 1fr; min-height: 220px; }
   #nav-mount { min-height: 65px; }
   .site-nav { padding: 14px 20px; }
-  .nav-hamburger { display: flex; }
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(10,14,20,0.97);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-    padding: 4px 20px 8px;
-    z-index: 99;
-  }
-  .nav-links a {
-    width: 100%;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 15px;
-  }
-  .site-nav.nav-open .nav-links { display: flex; }
   .section { padding: 32px 20px; }
   .wreck-title { font-size: 44px; }
   .wreck-data-bar { flex-wrap: wrap; }

@@ -29,6 +29,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="../js/wrecks-data.js"></script>
+<script src="../js/seo-data.js"></script>
 <script src="../js/site.js"></script>
 <script>
   document.getElementById('nav-mount').innerHTML    = buildNav('explore');
@@ -47,7 +48,9 @@
       </div>`;
     document.title = 'Not Found — Shipwreck City';
   } else {
-    document.title = `${wreck.name} — Shipwreck City`;
+    const seo = (typeof SEO_DATA !== 'undefined' && SEO_DATA[wreck.id]) || null;
+    const seoTitle = seo ? seo.title : `${wreck.name} — Shipwreck City`;
+    document.title = seoTitle;
 
     // Prev/next navigation
     const idx  = WRECKS.indexOf(wreck);
@@ -255,7 +258,7 @@
         primetimeUrl = probe.src;
         primetimeWrap.innerHTML = `
           <div class="wreck-primetime-wrap">
-            <img src="${probe.src}" alt="${wreck.name}">
+            <img src="${probe.src}" alt="${seoTitle}">
           </div>`;
         // Resolve original (non-webp) for the download zip
         if (probe.src.endsWith('.webp')) {
@@ -283,7 +286,7 @@
           <button id="gallery-download-btn" class="download-btn" style="font-size:15px;padding:10px 20px;">Download Raw .JPG Images ↓</button>
         </div>
         <div class="wreck-gallery">
-          ${photos.map((src, i) => `<img src="${src}" alt="${wreck.name} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
+          ${photos.map((src, i) => `<img src="${src}" alt="${seoTitle} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
         </div>`;
 
       galleryWrap.querySelectorAll('img[data-idx]').forEach(img => {

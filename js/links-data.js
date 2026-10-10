@@ -15,13 +15,20 @@
 
 const SUPPORTERS = [
   {
+    name: "Pacific Science Center Foundation",
+    url:  "https://www.pacificsciencecenter.org/",
+    logo: "img/supporters-logo/pacsci-logo.webp",
+    type: "organization",
+    note: "Seattle's hub for hands-on science learning, sparking curiosity and critical thinking across the region — Shipwreck City is presenting at their private \"Igniter Evening: Mysteries from the Deep\" on November 5, 2026, as part of their <em>Mysteries from the Deep: Exploring Underwater Archaeology</em> exhibition."
+  },
+  {
     name: "Lake Union Virtual Museum",
     url:  "http://www.lakeunionhistory.org/Home.html",
     logo: "img/supporters-logo/luvm.webp",
     type: "organization",
     note: "Online museum dedicated to the history of Lake Union — a foundational inspiration for Shipwreck City's mission to document the lake's sunken heritage.",
     LOS:  "I am excited to see that Phil Parisi and Shipwreck City are continuing the work of exploring the shipwrecks of Lake Union. They are bringing passion and curiosity, together with expertise in un-manned submersibles, to document these shipwrecks and the lake bottom more thoroughly and vividly than has ever been done before. I look forward to new discoveries and new videos from Shipwreck City.",
-    LOSAttrib: "Vaun Raymond, Creator"
+    LOSAttrib: "Vaun Raymond, Creator of Lake Union Virtual Museum"
   },
   {
     name: "United Indians of All Tribes Foundation",
@@ -30,7 +37,7 @@ const SUPPORTERS = [
     type: "organization",
     note: "Stewards of the Northwest Native Canoe Center in South Lake Union — formally endorsed Shipwreck City's work mapping the environmental and cultural history of the lake.",
     LOS:  "As the stewards of the Northwest Native Canoe Center in South Lake Union, the United Indians of All Tribes Foundation is committed to working with all willing community stakeholders to gain an evolving understanding of current environmental conditions around the lake. We fully support Shipwreck City for mapping the lake like nobody else has.",
-    LOSAttrib: "Michael Tulee, CEO"
+    LOSAttrib: "Michael Tulee, CEO of UIATF"
   },
   {
     name: "DCS Films",
@@ -39,7 +46,7 @@ const SUPPORTERS = [
     type: "organization",
     note: "Advanced technical divers (Dan, Carl, and Scott) dedicated to underwater cinematography who shared their Seattle dive logs and shipwreck footage.",
     LOS: "This project will continue on the work of many local individuals to educate the future by diving into the past.",
-    LOSAttrib: "Dan Warter, President"
+    LOSAttrib: "Dan Warter, President of DCS Films"
   },
   {
     name: "Museum of History & Industry (MOHAI)",
@@ -48,7 +55,7 @@ const SUPPORTERS = [
     type: "organization",
     note: "Museum of History & Industry — letter of support acknowledging the archive's alignment with Seattle's broader maritime heritage mission.",
     LOS: "The Museum of History & Industry (MOHAI) supports the Shipwreck City Mapping Project for its contribution to documenting and preserving the layered history of Lake Union. The information gathered may serve as a valuable resource for future exhibitions, programming, and public interpretation. As a Lake Union Park institution, MOHAI is committed to the stewardship of this historical shared waterway and values projects that engage the community while expanding the historical record.",
-    LOSAttrib: "Libbie Barnes, Associate Curator of Exhibits and Engagement"
+    LOSAttrib: "Libbie Barnes, Associate Curator of Exhibits and Engagement at MOHAI"
   },
   {
     name: "Coastal Sensing and Survey",
@@ -78,7 +85,7 @@ const SUPPORTERS = [
     type: "organization",
     note: "Letter of support recognizing the project's contribution to the documentation of Lake Union's environmental and historical record.",
     LOS: "Puget Soundkeeper Alliance supports Shipwreck City because documenting shipwrecks and other large objects submerged in Puget Sound both preserves maritime heritage and strengthens our understanding of underwater debris and its environmental impacts. Our collaboration with Phil Parisi in the past—identifying debris in South Lake Union and documenting sunken vessels in the Ship Canal—shows how exploration and storytelling can directly support more effective stewardship of Puget Sound.",
-    LOSAttrib: "Anna Bachman, Clean Water Program Director"
+    LOSAttrib: "Anna Bachman, Clean Water Program Director at Puget Soundkeeper Alliance"
   },
     {
     name: "Chesapeake Technology: SonarWiz",
@@ -95,6 +102,15 @@ const SUPPORTERS = [
     note: "Residents of Lake Union who have propelled Shipwreck City with key collaborations, novel introductions, and opening doors across Seattle's community.",
     LOS: "On behalf of the Floating Homes Association, I am writing to express our enthusiastic support for Shipwreck City and its mission to document the submerged maritime history of Lake Union, the Ship Canal, and the broader Puget Sound region. As an organization whose members live directly on these waters, understanding and preserving the history beneath us is central to who we are.",
     LOSAttrib: "Stafford Green, President of Seattle's Floating Homes Association"
+  },
+  {
+    name: "Cascadia Art Museum",
+    url:  "https://www.cascadiaartmuseum.org/",
+    logo: "img/supporters-logo/CascadiaLogo.webp",
+    type: "organization",
+    note: "Museum dedicated to the art and cultural heritage of the Pacific Northwest. The connection began with Shipwreck City's sold-out \"Beneath the Surface\" talk in their lecture series on September 9, 2026, inspired by <em>Admiral Line Derelict, Lake Union Seattle</em>, a watercolor by Edmond James Fitzgerald featured in their <em>Between Water and Sky</em> exhibition. The painting sparked a conversation about Seattle's maritime history and the stories still waiting to be discovered, and the museum has recognized how Shipwreck City's work complements its commitment to making the art, history, and cultural heritage of the Pacific Northwest more accessible and meaningful to the community.",
+    LOS: "Cascadia Art Museum is pleased to support Shipwreck City and its work to uncover and share the maritime history of the Pacific Northwest. As a museum dedicated to the art and cultural heritage of our region, we value Shipwreck City’s efforts to bring hidden stories to light and deepen our understanding of the people, places, and events that have shaped our communities...",
+    LOSAttrib: "Julie Olson Anna, Museum Educator at Cascadia Art Museum"
   },
   {
     name: "Boatworld Marinas",

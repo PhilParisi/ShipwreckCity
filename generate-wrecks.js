@@ -21,6 +21,11 @@ let WRECKS, SITE_CONFIG;
 const fn = new Function(dataFile + '\nreturn { WRECKS, SITE_CONFIG };');
 ({ WRECKS, SITE_CONFIG } = fn());
 
+// Hand-written per-target SEO title/description (see js/seo-data.js).
+// Falls back to an auto-generated title/description for any target not yet covered there.
+const seoFile = fs.readFileSync(path.join(__dirname, 'js/seo-data.js'), 'utf8');
+const SEO_DATA = new Function(seoFile + '\nreturn SEO_DATA;')();
+
 const templatePath = path.join(__dirname, 'lu-archive/wreck-template.html');
 const template     = fs.readFileSync(templatePath, 'utf8');
 const outDir       = path.join(__dirname, 'lu-archive');
@@ -40,15 +45,21 @@ function escapeHtml(str) {
 }
 
 function metaTagsFor(wreck) {
-  const title       = escapeHtml(`${wreck.name} — Shipwreck City`);
-  const description = escapeHtml(wreck.tagline || `${wreck.name} — Shipwreck City`);
+  const seo         = SEO_DATA[wreck.id];
+  const title       = escapeHtml(seo ? seo.title : `${wreck.name} — Shipwreck City`);
+  const description = escapeHtml(seo ? seo.description : (wreck.tagline || `${wreck.name} — Shipwreck City`));
   const pageUrl      = `${SITE_URL}/lu-archive/${wreck.id}`;
   const image        = wreck.hasPrimetime
     ? `${SITE_URL}/img/targets/${wreck.id}/primetime.jpg`
     : FALLBACK_OG_IMAGE;
 
+  if (!seo) {
+    console.warn(`  ⚠ no SEO_DATA entry for ${wreck.id} — using auto-generated title/description. Add one to js/seo-data.js.`);
+  }
+
   return `<title>${title}</title>
   <meta name="description" content="${description}">
+  <link rel="canonical" href="${pageUrl}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${pageUrl}">
   <meta property="og:title" content="${title}">
@@ -73,3 +84,22 @@ WRECKS.forEach(wreck => {
 });
 
 console.log(`\n  Generated ${generated} wreck page(s).\n`);
+
+// ── sitemap.xml ──────────────────────────────────────────────────────────
+// Regenerated every time this script runs, so it can never drift out of
+// sync with the live set of wreck pages.
+const STATIC_PAGES = ['', 'map', 'lu-archive', 'events', 'support', 'project', 'team', 'history', 'press', 'contact'];
+
+const sitemapUrls = [
+  ...STATIC_PAGES.map(slug => `${SITE_URL}/${slug}`),
+  ...WRECKS.map(wreck => `${SITE_URL}/lu-archive/${wreck.id}`),
+];
+
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map(url => `  <url><loc>${url}</loc></url>`).join('\n')}
+</urlset>
+`;
+
+fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapXml);
+console.log(`  Wrote sitemap.xml (${sitemapUrls.length} URLs).\n`);

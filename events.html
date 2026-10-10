@@ -19,7 +19,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://shipwreckcity.org">
+  <meta property="og:url" content="https://shipwreckcity.org/events">
+  <link rel="canonical" href="https://shipwreckcity.org/events">
   <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +35,13 @@
       border: 1px solid var(--border-mid);
       background: var(--bg-card);
       align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .event-card > .recap-grid {
+      order: 4;
+      flex: 1 0 100%;
+      padding-top: 28px;
+      border-top: 1px solid var(--border-mid);
     }
     .event-photo {
       flex: 0 0 260px;
@@ -54,7 +62,7 @@
     .event-date-month { font-family: var(--font-body); font-size: 15px; letter-spacing: 2px; color: var(--accent); }
     .event-date-day   { font-family: var(--font-display); font-size: 52px; color: var(--text-primary); line-height: 1; margin: 4px 0; }
     .event-date-year  { font-family: var(--font-body); font-size: 15px; color: var(--text-muted); }
-    .event-body  { flex: 1; }
+    .event-body  { flex: 1; min-width: 0; }
     .event-title { font-family: var(--font-display); font-size: 30px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.15; margin-bottom: 10px; }
     .event-badge {
       display: inline-block; font-family: var(--font-body); font-size: 12px; letter-spacing: 2px;
@@ -86,6 +94,7 @@
       filter: brightness(0.85);
       transition: filter 0.3s ease, transform 0.3s ease;
     }
+    .recap-tile { cursor: zoom-in; }
     .recap-tile:hover img {
       filter: brightness(1);
       transform: scale(1.03);
@@ -128,28 +137,6 @@
   <div class="events-list" id="events-list"></div>
 </section>
 
-<section class="section container" style="max-width: 1100px; padding-top: 0;">
-  <div class="section-label">From the Cascadia Art Museum Lecture</div>
-  <div class="recap-grid">
-    <figure class="recap-tile">
-      <img src="img/events/cascadia_phillibbiestart.webp" alt="Phil Parisi and Libbie Barnes in front of the 'Beneath the Surface' title slide" loading="lazy">
-      <figcaption>Opening remarks — "Beneath the Surface," by Phil and Libbie</figcaption>
-    </figure>
-    <figure class="recap-tile">
-      <img src="img/events/cascadia_phil61.webp" alt="Phil Parisi presenting a slide reading 'How many wrecks? 61 and counting...'" loading="lazy">
-      <figcaption>61 wrecks documented, and counting</figcaption>
-    </figure>
-    <figure class="recap-tile">
-      <img src="img/events/cascadia_evantable.webp" alt="Evan Weber speaking with attendees at the Shipwreck City info table" loading="lazy">
-      <figcaption>Evan discussing the archive with attendees</figcaption>
-    </figure>
-    <figure class="recap-tile">
-      <img src="img/events/cascadia_phillibbie.webp" alt="Phil Parisi and Libbie Barnes in front of a 'Thank you, ShipwreckCity.org' closing slide" loading="lazy">
-      <figcaption>"Thank you, ShipwreckCity.org"</figcaption>
-    </figure>
-  </div>
-</section>
-
 <section class="section container" id="previous-events-section" style="max-width: 1100px; padding-top: 0; display: none;">
   <div class="section-label">Previous Events</div>
   <div class="events-list" id="previous-events-list"></div>
@@ -185,11 +172,17 @@
         <div class="event-body">
           ${e.badge ? (Array.isArray(e.badge) ? e.badge : [e.badge]).map(b => `<div class="event-badge">${b}</div>`).join('') : ''}
           <div class="event-title">${e.title}</div>
-          <div class="event-time">${e.time}</div>
+          ${e.time ? `<div class="event-time">${e.time}</div>` : ''}
           <div class="event-meta">${e.venue}${e.address ? `, ${e.address}` : ''}</div>
           <div class="event-desc">${e.description}</div>
-          <a href="${e.url}" target="_blank" rel="noopener" class="download-btn">${e.ctaLabel || 'Learn More →'}</a>
+          ${e.url ? `<a href="${e.url}" target="_blank" rel="noopener" class="download-btn">${e.ctaLabel || 'Learn More →'}</a>` : ''}
         </div>
+        ${e.recap && e.recap.length ? `<div class="recap-grid">${e.recap.map(r => `
+          <figure class="recap-tile" data-event="${EVENTS.indexOf(e)}" data-idx="${e.recap.indexOf(r)}">
+            <img src="${r.src}" alt="${r.alt}" loading="lazy">
+            ${r.caption ? `<figcaption>${r.caption}</figcaption>` : ''}
+          </figure>`).join('')}
+        </div>` : ''}
       </div>
     `;
   }
@@ -205,6 +198,140 @@
     document.getElementById('previous-events-list').innerHTML = previousEvents.map(renderEventCard).join('');
     document.getElementById('previous-events-section').style.display = '';
   }
+
+  // ── Lightbox (recap photos) — same viewer as the archive gallery, plus captions ──
+  const lb = document.createElement('div');
+  lb.id = 'lightbox';
+  lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;overflow:hidden;';
+  lb.innerHTML = `
+    <button id="lb-prev" style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8592;</button>
+    <img id="lb-img" style="max-width:calc(95vw - 128px);max-height:78vh;margin-bottom:8vh;object-fit:contain;display:block;box-shadow:0 0 60px rgba(0,0,0,0.8);cursor:zoom-in;transform-origin:center center;transition:transform 0.15s ease;user-select:none;">
+    <button id="lb-next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:25vh;width:64px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background 0.2s,color 0.2s;z-index:2;" onmouseover="this.style.background='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,1)';" onmouseout="this.style.background='none';this.style.color='rgba(255,255,255,0.4)';">&#8594;</button>
+    <div id="lb-hint" style="position:absolute;top:3vh;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:15px;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:2;white-space:nowrap;">scroll or click to zoom · drag to pan</div>
+    <div id="lb-caption" style="position:absolute;bottom:3vh;left:50%;transform:translateX(-50%);width:min(90vw,800px);text-align:center;font-family:var(--font-serif);font-style:italic;font-size:17px;line-height:1.5;color:rgba(255,255,255,0.85);z-index:2;pointer-events:none;"></div>
+  `;
+  document.body.appendChild(lb);
+
+  let lbPhotos = [], lbIdx = 0;
+  let lbScale = 1, lbTx = 0, lbTy = 0;
+  let lbDragging = false, lbDragX = 0, lbDragY = 0, lbMoved = false;
+
+  function lbApplyTransform() {
+    const img = document.getElementById('lb-img');
+    img.style.transform = `scale(${lbScale}) translate(${lbTx / lbScale}px, ${lbTy / lbScale}px)`;
+    img.style.cursor = lbScale > 1 ? (lbDragging ? 'grabbing' : 'grab') : 'zoom-in';
+  }
+
+  function lbResetZoom() {
+    lbScale = 1; lbTx = 0; lbTy = 0;
+    lbApplyTransform();
+  }
+
+  function lbShow(i) {
+    lbIdx = (i + lbPhotos.length) % lbPhotos.length;
+    const photo = lbPhotos[lbIdx];
+    const img = document.getElementById('lb-img');
+    img.src = photo.src;
+    img.alt = photo.alt || '';
+    const counter = lbPhotos.length > 1 ? `<span style="font-family:var(--font-body);font-style:normal;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.4);display:block;margin-top:6px;">${lbIdx + 1} / ${lbPhotos.length}</span>` : '';
+    document.getElementById('lb-caption').innerHTML = (photo.caption || '') + counter;
+    document.getElementById('lb-prev').style.opacity = lbPhotos.length > 1 ? '1' : '0';
+    document.getElementById('lb-next').style.opacity = lbPhotos.length > 1 ? '1' : '0';
+    lbResetZoom();
+  }
+
+  function openLightbox(photos, idx) {
+    lbPhotos = photos;
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    lbShow(idx);
+  }
+
+  function closeLightbox() {
+    lb.style.display = 'none';
+    document.body.style.overflow = '';
+    lbResetZoom();
+  }
+
+  document.addEventListener('click', e => {
+    const tile = e.target.closest('.recap-tile');
+    if (!tile) return;
+    openLightbox(EVENTS[+tile.dataset.event].recap, +tile.dataset.idx);
+  });
+
+  // Scroll to zoom
+  lb.addEventListener('wheel', e => {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.15 : 0.87;
+    lbScale = Math.max(1, Math.min(6, lbScale * factor));
+    if (lbScale === 1) { lbTx = 0; lbTy = 0; }
+    lbApplyTransform();
+  }, { passive: false });
+
+  // Click image to toggle zoom
+  document.getElementById('lb-img').addEventListener('click', e => {
+    e.stopPropagation();
+    if (lbMoved) { lbMoved = false; return; }
+    if (lbScale > 1) { lbResetZoom(); }
+    else             { lbScale = 2.5; lbApplyTransform(); }
+  });
+
+  // Drag to pan (mouse)
+  document.getElementById('lb-img').addEventListener('mousedown', e => {
+    if (lbScale <= 1) return;
+    e.preventDefault();
+    lbDragging = true;
+    lbMoved = false;
+    lbDragX = e.clientX - lbTx;
+    lbDragY = e.clientY - lbTy;
+    lbApplyTransform();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!lbDragging) return;
+    lbMoved = true;
+    lbTx = e.clientX - lbDragX;
+    lbTy = e.clientY - lbDragY;
+    lbApplyTransform();
+  });
+  document.addEventListener('mouseup', () => {
+    if (!lbDragging) return;
+    lbDragging = false;
+    lbApplyTransform();
+  });
+
+  // Drag to pan (touch)
+  document.getElementById('lb-img').addEventListener('touchstart', e => {
+    if (lbScale <= 1 || e.touches.length !== 1) return;
+    lbDragging = true;
+    lbMoved = false;
+    const t = e.touches[0];
+    lbDragX = t.clientX - lbTx;
+    lbDragY = t.clientY - lbTy;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!lbDragging || e.touches.length !== 1) return;
+    e.preventDefault();
+    lbMoved = true;
+    const t = e.touches[0];
+    lbTx = t.clientX - lbDragX;
+    lbTy = t.clientY - lbDragY;
+    lbApplyTransform();
+  }, { passive: false });
+  document.addEventListener('touchend', () => {
+    if (!lbDragging) return;
+    lbDragging = false;
+    lbApplyTransform();
+  });
+
+  document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx - 1); });
+  document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx + 1); });
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (lb.style.display === 'none') return;
+    if (e.key === 'ArrowLeft')  { lbShow(lbIdx - 1); }
+    if (e.key === 'ArrowRight') { lbShow(lbIdx + 1); }
+    if (e.key === 'Escape')     { closeLightbox(); }
+  });
 </script>
 </body>
 </html>

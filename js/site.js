@@ -6,6 +6,18 @@
 // Auto-detect subdirectory for GitHub Pages project repos vs local dev
 const ROOT = location.hostname.includes('github.io') ? '/ShipwreckCity' : '';
 
+// Main navigation — shared by the top nav and the footer, in display order
+const NAV_LINKS = [
+  { slug: 'lu-archive', label: 'Archive' },
+  { slug: 'map',        label: 'Maps'    },
+  { slug: 'support',    label: 'Support' },
+  { slug: 'events',     label: 'Events'  },
+  { slug: 'team',       label: 'Team'    },
+  { slug: 'project',    label: 'Project' },
+  { slug: 'history',    label: 'History' },
+  { slug: 'press',      label: 'Press'   },
+];
+
 function buildNav(activePage) {
   return `
   <nav class="site-nav" id="site-nav">
@@ -14,12 +26,7 @@ function buildNav(activePage) {
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
-      <a href="${ROOT}/"            class="${activePage === 'home'   ? 'active' : ''}">Explore</a>
-      <a href="${ROOT}/map"         class="${activePage === 'map'    ? 'active' : ''}">Map</a>
-      <a href="${ROOT}/lu-archive"  class="${activePage === 'lu-archive'? 'active' : ''}">Archive</a>
-      <a href="${ROOT}/events"      class="${activePage === 'events' ? 'active' : ''}">Events</a>
-      <a href="${ROOT}/support"     class="${activePage === 'support' ? 'active' : ''}">Support</a>
-      <a href="${ROOT}/about"       class="${activePage === 'about'  ? 'active' : ''}">About</a>
+      ${NAV_LINKS.map(p => `<a href="${ROOT}/${p.slug}" class="${activePage === p.slug ? 'active' : ''}">${p.label}</a>`).join('\n      ')}
     </div>
   </nav>`;
 }
@@ -34,12 +41,7 @@ function buildFooter() {
     <div class="footer-logo">SHIPWRECK <span>CITY</span></div>
     <div class="footer-copy">© ${year} Shipwreck City · Seattle, WA, USA</div>
     <div class="footer-links">
-      <a href="${ROOT}/">Explore</a>
-      <a href="${ROOT}/map">Map</a>
-      <a href="${ROOT}/events">Events</a>
-      <a href="${ROOT}/about">About</a>
-      <a href="${ROOT}/support">Support</a>
-      <a href="${ROOT}/press">Press</a>
+      ${NAV_LINKS.map(p => `<a href="${ROOT}/${p.slug}">${p.label}</a>`).join('\n      ')}
     </div>
   </footer>`;
 }

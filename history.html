@@ -19,7 +19,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://shipwreckcity.org">
+  <meta property="og:url" content="https://shipwreckcity.org/history">
+  <link rel="canonical" href="https://shipwreckcity.org/history">
   <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +57,37 @@
     }
     .history-sources a:last-child { border-bottom: none; }
     .history-sources a:hover { color: var(--accent); }
+    .reading-title {
+      font-family: var(--font-display); font-size: 42px; letter-spacing: 1px;
+      color: var(--text-primary); margin-bottom: 24px;
+    }
+    .reading-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .reading-item {
+      display: block; background: var(--bg-card); padding: 22px 24px;
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      text-decoration: none; transition: background 0.2s, box-shadow 0.2s;
+    }
+    .reading-item:hover {
+      background: var(--bg-hover); box-shadow: inset 0 0 0 1px var(--accent);
+      text-decoration: none;
+    }
+    .reading-name {
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text-primary); margin-bottom: 6px;
+    }
+    .reading-item:hover .reading-name { color: var(--accent); }
+    .reading-desc {
+      font-family: var(--font-serif); font-size: 15px; font-style: italic;
+      line-height: 1.7; color: var(--text-muted);
+    }
+    @media (max-width: 900px) {
+      .reading-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 700px) {
+      .reading-grid { grid-template-columns: 1fr; }
       .history-grid { grid-template-columns: 1fr; gap: 32px; }
       .era-title { font-size: 30px; }
     }
@@ -220,25 +251,69 @@
       </div>
       <div class="history-aside-block">
         <div class="aside-label">Sources &amp; Further Reading</div>
-        <div class="history-sources">
-          <a href="https://www.duwamishtribe.org/" target="_blank" rel="noopener">Duwamish Tribe</a>
-          <a href="https://www.historylink.org/" target="_blank" rel="noopener">HistoryLink.org</a>
-          <a href="https://mohai.org" target="_blank" rel="noopener">MOHAI</a>
-          <a href="https://www.cwb.org/" target="_blank" rel="noopener">Center for Wooden Boats</a>
-          <a href="https://www.facebook.com/MaritimeDocumentationSociety/" target="_blank" rel="noopener">Maritime Documentation Society</a>
-          <a href="http://www.dcsfilms.com/Site_4/DCS_Website.html" target="_blank" rel="noopener">DCS Films</a>
-          <a href="https://www.coastalsensing.com/" target="_blank" rel="noopener">Coastal Sensing and Survey</a>
-          <a href="http://www.lakeunionhistory.org/Home.html" target="_blank" rel="noopener">Lake Union Virtual Museum</a>
-        </div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
+          The organizations, archives, and researchers behind this history.
+        </p>
+        <a href="#further-reading" class="download-btn">Further Reading ↓</a>
       </div>
       <div class="history-aside-block">
         <div class="aside-label">About the Project</div>
         <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
           Read about the team and method behind today's archive.
         </p>
-        <a href="about" class="download-btn">About Shipwreck City →</a>
+        <a href="project" class="download-btn">About Shipwreck City →</a>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section container" id="further-reading" style="padding-top:0;">
+  <h2 class="reading-title">Further Reading</h2>
+  <div class="reading-grid">
+    <a class="reading-item" href="https://www.duwamishtribe.org/" target="_blank" rel="noopener">
+      <div class="reading-name">Duwamish Tribe</div>
+      <div class="reading-desc">The first people of Seattle and Lake Union.</div>
+    </a>
+    <a class="reading-item" href="https://www.historylink.org/" target="_blank" rel="noopener">
+      <div class="reading-name">HistoryLink.org</div>
+      <div class="reading-desc">The free online encyclopedia of Washington State history.</div>
+    </a>
+    <a class="reading-item" href="https://mohai.org" target="_blank" rel="noopener">
+      <div class="reading-name">MOHAI</div>
+      <div class="reading-desc">Museum of History &amp; Industry, housed in the former Naval Reserve Armory on Lake Union.</div>
+    </a>
+    <a class="reading-item" href="https://www.cwb.org/" target="_blank" rel="noopener">
+      <div class="reading-name">Center for Wooden Boats</div>
+      <div class="reading-desc">Keeping the craft and history of wooden boats alive on South Lake Union.</div>
+    </a>
+    <a class="reading-item" href="https://www.facebook.com/MaritimeDocumentationSociety/" target="_blank" rel="noopener">
+      <div class="reading-name">Maritime Documentation Society</div>
+      <div class="reading-desc">Divers locating and documenting historic Pacific Northwest shipwrecks.</div>
+    </a>
+    <a class="reading-item" href="http://www.dcsfilms.com/Site_4/DCS_Website.html" target="_blank" rel="noopener">
+      <div class="reading-name">DCS Films</div>
+      <div class="reading-desc">A decade of scuba dive footage from Lake Union's wrecks.</div>
+    </a>
+    <a class="reading-item" href="https://www.coastalsensing.com/" target="_blank" rel="noopener">
+      <div class="reading-name">Coastal Sensing and Survey</div>
+      <div class="reading-desc">The 2017 side-scan sonar survey that mapped nearly 100 targets.</div>
+    </a>
+    <a class="reading-item" href="http://www.lakeunionhistory.org/Home.html" target="_blank" rel="noopener">
+      <div class="reading-name">Lake Union Virtual Museum</div>
+      <div class="reading-desc">An online archive of Lake Union's underwater history.</div>
+    </a>
+    <a class="reading-item" href="https://pugetmaritime.org/" target="_blank" rel="noopener">
+      <div class="reading-name">Puget Sound Maritime Historical Society</div>
+      <div class="reading-desc">Preserving and sharing the maritime heritage of Puget Sound.</div>
+    </a>
+    <a class="reading-item" href="https://content.lib.washington.edu/" target="_blank" rel="noopener">
+      <div class="reading-name">UW Digital Collections</div>
+      <div class="reading-desc">Historical photographs, maps, and documents from University of Washington Libraries.</div>
+    </a>
+    <a class="reading-item" href="https://pugetsoundnavymuseum.org/" target="_blank" rel="noopener">
+      <div class="reading-name">Puget Sound Navy Museum</div>
+      <div class="reading-desc">The naval history of the Pacific Northwest, in Bremerton.</div>
+    </a>
   </div>
 </section>
 

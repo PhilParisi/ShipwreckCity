@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57LGQFRM4Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-57LGQFRM4Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seattle Shipwrecks — About the Shipwreck City Project</title>
+  <meta name="description" content="The story behind Shipwreck City — a community effort to document, film, and archive the sunken vessels resting on the floor of Lake Union, Seattle.">
+  <meta property="og:title" content="Shipwreck City | Mapping Seattle's Sunken Fleet">
+  <meta property="og:description" content="Underwater robots are mapping 100+ wreck and debris sites beneath Seattle's most-visited lake — and publishing everything for free at ShipwreckCity.org.">
+  <meta property="og:image" content="https://shipwreckcity.org/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shipwreckcity.org/project">
+  <link rel="canonical" href="https://shipwreckcity.org/project">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hero-bg-photo img { filter: grayscale(1) brightness(0.9) sepia(0.6) hue-rotate(185deg) saturate(4); }
+    .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; }
+    .about-body p {
+      font-family: var(--font-serif); font-size: 20px;
+      line-height: 1.95; color: var(--text-mid); margin-bottom: 24px;
+    }
+    .about-body h2 {
+      font-family: var(--font-display); font-size: 42px;
+      color: var(--text-primary); letter-spacing: 1px;
+      margin: 40px 0 16px;
+    }
+    .about-aside .aside-label { font-size: 16px; }
+    .about-aside-block { margin-bottom: 36px; }
+    .about-aside {
+      display: flex; flex-direction: column; height: 100%;
+    }
+    .about-aside-block:last-child {
+      flex: 1; min-height: 0; display: flex; flex-direction: column; margin-bottom: 0;
+    }
+    .about-journey-photos {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+      overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .about-journey-photos:hover { overflow-y: auto; }
+    .about-journey-photos div { display: block; overflow: hidden; flex-shrink: 0; }
+    .about-journey-photos img {
+      width: 100%; display: block; object-fit: cover;
+      transition: transform 0.3s ease; filter: brightness(0.85);
+    }
+    .about-journey-photos div:hover img { transform: scale(1.03); filter: brightness(1); }
+    .cta-block {
+      margin-top: 56px;
+      padding: 36px;
+      border: 1px solid rgba(232, 224, 204, 0.35);
+      background: var(--bg-card);
+    }
+    .cta-block p { margin-bottom: 20px; }
+    .about-gallery-heading {
+      font-family: var(--font-display); font-size: 42px; letter-spacing: 1px;
+      color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+    .about-gallery-heading:hover { color: var(--accent); }
+    #abt-primetime-left, #abt-primetime-right { height: 88px; }
+    #abt-primetime-track .field-photo-tile img,
+    #abt-primetime-track-2 .field-photo-tile img {
+      filter: brightness(0.95) contrast(1.08) saturate(1.15);
+    }
+    #abt-primetime-track .field-photo-tile:hover img,
+    #abt-primetime-track-2 .field-photo-tile:hover img {
+      filter: brightness(1.1) contrast(1.08) saturate(1.2);
+    }
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="hero-bg-photo"><img src="img/targets/lu110/primetime.webp" alt="" aria-hidden="true"></div>
+  <a class="hero-photo-link" href="lu-archive/lu110" aria-label="View Car Wreck (LU110) target record"></a>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">The project</div>
+    <h1 class="page-title">ABOUT<br>THE DIVE</h1>
+    <p class="page-sub">The story behind the Shipwreck City project and team making it happen.</p>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" style="color:#c87941;" id="about-total">—</div><div class="stat-label">Known Lakebed Targets</div></div>
+  <div class="stat"><div class="stat-num" style="color:#4a9eba;">65</div><div class="stat-label">Targets Cleared</div></div>
+  <div class="stat"><div class="stat-num">42</div><div class="stat-label">Wrecks Confirmed</div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label">New Wrecks</div></div>
+</div>
+
+<div class="stats-bar stats-bar-wide">
+  <div class="stat"><div class="stat-num">13</div><div class="stat-label">Field Days</div></div>
+  <div class="stat"><div class="stat-num">81</div><div class="stat-label">Dives</div></div>
+  <div class="stat"><div class="stat-num">28hr</div><div class="stat-label">Underwater Hours</div></div>
+  <div class="stat"><div class="stat-num">190</div><div class="stat-label">Volunteer Hours</div></div>
+  <div class="stat"><div class="stat-num" style="font-size:44px;">10 Aug '26</div><div class="stat-label">Last Update</div></div>
+</div>
+
+<section class="section container">
+  <div class="about-grid">
+    <div class="about-body">
+      <h2>The project</h2>
+      <p>
+        Shipwreck City is an ongoing effort to document, photograph, and share the
+        sunken vessels and debris resting on the floor of Lake Union — one of Seattle's most
+        beloved waterways. Its bottom holds a remarkable record of the past: a hidden landscape
+        shaped over generations as vessels and debris collect on the lakebed.
+      </p>
+      <p>
+        Many of these submerged sites are unknown to the people who swim, paddle, sail, and fly
+        above them each day. Shipwreck City brings this hidden world into view. By creating a visual archive
+        of each site, the project shows how the lake continues to evolve. It invites us to think about
+        preservation, pollution, and our shared responsibility to care for urban waterways.
+      </p>
+      <p>
+        Through photography, video, and research, we aim to make these underwater stories accessible
+        while encouraging deeper connection to Lake Union and its connected waterways. For the fuller story
+        of who has lived on, worked, and explored this lake before us, see our <a href="history">History page</a>.
+      </p>
+
+      <h2>The Team</h2>
+      <p>
+        Shipwreck City is run by a small team: Phil Parisi (project lead and unmanned
+        systems pilot), Libbie Barnes (community manager), Evan Weber (digital archivist), and
+        Captain George Spano (boat captain). Meet them and see open volunteer roles on
+        our <a href="team">Team page</a>.
+      </p>
+
+      <h2>Prior work</h2>
+      <p>
+        Shipwreck City stands on the shoulders of prior efforts by researchers, divers, and filmmakers
+        who mapped and documented Lake Union's wrecks long before our first ROV dive — from Coastal
+        Sensing and Survey's baseline side-scan sonar map to DCS Films' decade of dive footage.
+        When comparing those two datasets, the number of surveyed targets (~100) greatly exceeded the
+        number of wrecks ever filmed (~50) — a gap that became the reason Shipwreck City exists.
+        Our role is to consolidate these disparate historical sources, capture high-resolution video of
+        each target using ROVs, and republish the updated underwater archive in one place. Read the full
+        story on our <a href="history">History page</a>.
+      </p>
+
+      <h2>The method</h2>
+      <p>
+        Target locations are obtained via CSS side scan surveys, other records, or word of mouth.
+        Then, an ROV equipped with a side scan sonar is deployed at the site. The ROV
+        first scans the nearby area to locate the target, then swims closer to film the wreck.
+        Attempts are made to find any identifying criteria (e.g. hull names, registration number)
+        and fully capture all aspects of the target. We do not disturb the wrecks or remove artifacts;
+        great care is taken to neither disturb the target itself nor the environment. After each dive, 
+        data is cross-referenced with existing sources, the archive is updated, and images uploaded.
+        All data is made publicly accessible as it is acquired, with field work planned throughout 2026.
+      </p>
+      <p>
+        Upon completition of discrete areas, the team will corroborate the dataset's details
+        with local historians to confirm consistency and accuracy. Shipwreck City 
+        takes all measures to issue errorless datasets, but this cannot be guranteed.
+      </p>
+
+      <h2>Equipment</h2>
+      <p>
+        ROV Platform: Blue Robotics <a href="https://bluerobotics.com/store/rov/bluerov2/" target="_blank" rel="noopener">BlueROV2</a> with Heavy Add-on. 8 thrusters, 4 lumen lights, and the <a href="https://bluerobotics.com/store/thrusters/grippers/newton-gripper-asm-r2-rp/" target="_blank" rel="noopener">Newton Gripper</a>.
+        BlueOS, <a href="https://youtu.be/1bpTAEN3K3s?si=huxQBqZd4KEPUvyh" target="_blank" rel="noopener">Cockpit</a> for piloting. Built on the Ardupilot Ardusub stack. 
+      </p>
+      <p>
+        Sensors: port-mounted Cerulean Sonar 450kHz <a href="https://ceruleansonar.com/product/omniscan-450fs-100m-rated/" target="_blank" rel="noopener">FS450</a>. 
+      </p>      
+      <p>
+        Video: 4K 30fps GoPro Hero12. On-board 1080p for live piloting.
+        Insta360 X2 for creative shots. Drone footage with DJI Mini Pro 4.
+      </p>
+
+      <h2>Coverage</h2>
+      <p>
+        We are currently focused on Lake Union and the connecting waterways. Future phases may expand to Lake
+        Washington, and greater Puget Sound. If you have information about
+        a wreck not in our archive, we want to <a href="contact">hear from you</a>!
+      </p>
+
+      <div class="cta-block">
+        <p>
+          If you would like to support Shipwreck City — whether through dock access,
+          a letter of support, vessel time, financial support, or a connection in the community
+          — we would love to hear from you.
+        </p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+          <a href="contact" class="download-btn">Contact the Team →</a>
+          <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-aside">
+      <div class="about-aside-block">
+        <div class="aside-label" style="margin-top:0;">Project Area</div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:17px;color:var(--text-muted);line-height:1.7;">
+          Lake Union & Connecting Waterways<br>Seattle, Washington<br>47°37'N 122°20'W
+        </p>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Contact</div>
+        <a id="about-contact-btn" href="#" class="download-btn" style="margin-top:8px;">Contact the Team →</a>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Want to Help?</div>
+        <p style="font-family:var(--font-serif);font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
+          We are moved by the generosity of the community. Every donation moves the archive forward.
+        </p>
+        <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Support the Project →</a>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">History</div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
+          From the Duwamish to today — the full story of who has lived on and explored this lake.
+        </p>
+        <a href="history" class="download-btn" style="margin-top:4px;">Read the History →</a>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Press &amp; Media</div>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
+          Photos, boilerplate, and media inquiries.
+        </p>
+        <a href="press" class="download-btn" style="margin-top:4px;">Press Kit →</a>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">Built with</div>
+        <p style="font-size:15px;color:var(--text-primary);line-height:1.9;">
+          Plain HTML/CSS/JS<br>
+          Leaflet.js (maps)<br>
+          CartoDB dark tiles<br>
+          Hosted on GitHub Pages
+        </p>
+      </div>
+      <div class="about-aside-block">
+        <div class="aside-label">The Team</div>
+        <div class="about-journey-photos" id="about-journey-photos"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- GALLERY -->
+<section style="padding:48px 10% 0;">
+  <a class="about-gallery-heading" id="abt-gallery-label">Gallery: Click to Explore</a>
+</section>
+<section class="wrecks-scroll-section">
+  <div class="wrecks-scroll-wrapper">
+    <button class="scroll-arrow scroll-arrow-left" id="abt-primetime-left" aria-label="Scroll left">&#8592;</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:1px;overflow:hidden;">
+      <div class="field-scroll-track" id="abt-primetime-track"></div>
+      <div class="field-scroll-track" id="abt-primetime-track-2"></div>
+    </div>
+    <button class="scroll-arrow scroll-arrow-right" id="abt-primetime-right" aria-label="Scroll right">&#8594;</button>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/wrecks-data.js"></script>
+<script src="js/photos-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('project');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+  document.getElementById('about-total').textContent = WRECKS.length;
+  document.getElementById('about-contact-btn').href = `${ROOT}/contact`;
+
+  const photoEl = document.getElementById('about-journey-photos');
+  if (ABOUT_PHOTOS.length) {
+    photoEl.innerHTML = ABOUT_PHOTOS.map(f => `
+      <div>
+        <img src="${ROOT}/img/about-page/${f}" alt="From the field" loading="lazy">
+      </div>`).join('');
+  }
+
+  // Gallery
+  document.getElementById('abt-gallery-label').href = `${ROOT}/lu-archive`;
+
+  const PRIMETIME_EXTS = ['webp','jpg','jpeg','png'];
+  function tryPrimetimeExt(img, id) {
+    const cur  = img.src.split('.').pop();
+    const next = PRIMETIME_EXTS[PRIMETIME_EXTS.indexOf(cur) + 1];
+    if (next) { img.src = `${ROOT}/img/targets/${id}/primetime.${next}`; }
+    else       { img.closest('a').style.display = 'none'; }
+  }
+
+  const abtAllPrimetime = WRECKS.filter(w => w.hasPrimetime);
+  const abtHalf         = Math.ceil(abtAllPrimetime.length / 2);
+
+  function makeAbtTiles(wrecks) {
+    return wrecks.map(w => `
+      <a class="field-photo-tile" href="${ROOT}/lu-archive/${w.id}" target="_blank" rel="noopener" style="cursor:pointer;">
+        <img src="${ROOT}/img/targets/${w.id}/primetime.webp" alt="${w.name}"
+             onerror="tryPrimetimeExt(this,'${w.id}')">
+      </a>`).join('');
+  }
+
+  const abtt1     = document.getElementById('abt-primetime-track');
+  const abtt2     = document.getElementById('abt-primetime-track-2');
+  const abtLeft   = document.getElementById('abt-primetime-left');
+  const abtRight  = document.getElementById('abt-primetime-right');
+  const abtSect   = abtt1.closest('section');
+
+  abtt1.innerHTML = makeAbtTiles(abtAllPrimetime.slice(0, abtHalf));
+  abtt2.innerHTML = makeAbtTiles(abtAllPrimetime.slice(abtHalf));
+
+  const abtStep = () => abtt1.clientWidth;
+  function syncAbtArrows() {
+    abtLeft.disabled  = abtt1.scrollLeft <= 0;
+    abtRight.disabled = abtt1.scrollLeft >= abtt1.scrollWidth - abtt1.clientWidth - 1;
+  }
+  function scrollBothAbt(delta) {
+    abtt1.scrollBy({ left: delta, behavior: 'smooth' });
+    abtt2.scrollBy({ left: delta, behavior: 'smooth' });
+  }
+  let abtTimer = null;
+  function abtAutoStep() {
+    const atEnd = abtt1.scrollLeft >= abtt1.scrollWidth - abtt1.clientWidth - 1;
+    scrollBothAbt(atEnd ? -abtt1.scrollWidth : abtStep());
+  }
+  function startAbtAuto() { if (!abtTimer) abtTimer = setInterval(abtAutoStep, 6000); }
+  function stopAbtAuto()  { clearInterval(abtTimer); abtTimer = null; }
+  startAbtAuto();
+  abtSect.addEventListener('mouseenter', stopAbtAuto);
+  abtSect.addEventListener('mouseleave', startAbtAuto);
+  abtLeft.addEventListener('click',  () => scrollBothAbt(-abtStep()));
+  abtRight.addEventListener('click', () => scrollBothAbt( abtStep()));
+  abtt1.addEventListener('scroll', syncAbtArrows);
+  syncAbtArrows();
+</script>
+</body>
+</html>

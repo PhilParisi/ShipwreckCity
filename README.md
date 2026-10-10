@@ -103,7 +103,7 @@ shipwreck-city/
 ├── index.html              ← Homepage (wreck grid + map)
 ├── map.html                ← Full map page
 ├── archive.html            ← Filterable table of all wrecks
-├── about.html              ← About the project
+├── project.html            ← About the project (about.html redirects here)
 ├── css/
 │   └── style.css           ← All styles
 ├── js/

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57LGQFRM4Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-57LGQFRM4Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seattle Shipwrecks — The Shipwreck City Team</title>
+  <meta name="description" content="Meet the team behind Shipwreck City — the pilots, historians, archivists, captains, and other volunteers documenting the sunken vessels of Lake Union — and find open volunteer opportunities.">
+  <meta property="og:title" content="Shipwreck City | Mapping Seattle's Sunken Fleet">
+  <meta property="og:description" content="Underwater robots are mapping 100+ wreck and debris sites beneath Seattle's most-visited lake — and publishing everything for free at ShipwreckCity.org.">
+  <meta property="og:image" content="https://shipwreckcity.org/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shipwreckcity.org/team">
+  <link rel="canonical" href="https://shipwreckcity.org/team">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hero-bg-photo img { filter: grayscale(1) brightness(0.9) sepia(0.6) hue-rotate(185deg) saturate(4); }
+    .team-section-title {
+      font-family: var(--font-display); font-size: 42px;
+      color: var(--text-primary); letter-spacing: 1px;
+      margin: 0 0 24px;
+    }
+    .team-intro {
+      font-family: var(--font-serif); font-size: 20px;
+      line-height: 1.95; color: var(--text-mid); margin-bottom: 40px; max-width: 860px;
+    }
+
+    /* Team members */
+    .member {
+      display: grid; grid-template-columns: 260px 1fr; gap: 40px;
+      padding: 40px 0; border-top: 1px solid var(--border);
+    }
+    .member:last-of-type { border-bottom: 1px solid var(--border); }
+    .member-photo {
+      width: 100%; aspect-ratio: 4 / 5; overflow: hidden;
+      background: var(--bg-card); border: 1px solid var(--border-mid);
+    }
+    .member-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .member-photo.monogram {
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 88px; letter-spacing: 4px;
+      color: var(--accent);
+    }
+    .member-role {
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .member-name {
+      font-family: var(--font-display); font-size: 48px; letter-spacing: 1px;
+      color: var(--text-primary); line-height: 1; margin-bottom: 20px;
+    }
+    .member-body p {
+      font-family: var(--font-serif); font-size: 19px;
+      line-height: 1.9; color: var(--text-mid); margin-bottom: 18px;
+    }
+    .member-link {
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 1.5px;
+      color: var(--accent); text-decoration: none;
+    }
+    .member-link:hover { color: var(--text-primary); }
+
+    .member-quote {
+      border-left: 3px solid var(--accent);
+      padding: 16px 24px; margin: 24px 0 0;
+      background: var(--bg-card);
+    }
+    .member-quote blockquote {
+      font-family: var(--font-serif); font-style: italic; font-size: 18px;
+      color: var(--text-primary); line-height: 1.7; margin: 0;
+    }
+
+    /* Volunteer roles */
+    .roles-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .role-card {
+      display: block; background: var(--bg-card); padding: 28px 24px;
+      text-decoration: none; transition: background 0.2s, box-shadow 0.2s;
+    }
+    .role-card:hover {
+      background: var(--bg-hover); box-shadow: inset 0 0 0 1px var(--accent);
+      text-decoration: none;
+    }
+    .role-card:hover .role-title { color: var(--accent); }
+    .role-title {
+      font-family: var(--font-display); font-size: 28px; letter-spacing: 1px;
+      color: var(--text-primary); margin-bottom: 10px; line-height: 1.1;
+    }
+    .role-desc {
+      font-family: var(--font-serif); font-size: 16px;
+      line-height: 1.8; color: var(--text-muted); margin: 0;
+    }
+    .cta-block {
+      padding: 36px;
+      border: 1px solid rgba(232, 224, 204, 0.35);
+      background: var(--bg-card);
+    }
+    .cta-block p {
+      font-family: var(--font-serif); font-size: 19px;
+      line-height: 1.9; color: var(--text-mid); margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .roles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .member { grid-template-columns: 1fr; gap: 24px; }
+      .member-photo { max-width: 280px; }
+      .member-name { font-size: 40px; }
+      .roles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="page-hero">
+  <div class="hero-bg-photo"><img src="img/targets/lu009/primetime.webp" alt="" aria-hidden="true"></div>
+  <a class="hero-photo-link" href="lu-archive/lu009" aria-label="View Landing Craft (LU009) target record"></a>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">The people</div>
+    <h1 class="page-title">THE<br>TEAM</h1>
+    <p class="page-sub">The team bringing Lake Union's hidden history to the surface.</p>
+  </div>
+</div>
+
+<section class="section container">
+
+  <h2 class="team-section-title">Core Team</h2>
+  <p class="team-intro">
+    Shipwreck City is built by local community members. Each team member brings a different
+    discipline to the water, including robotics, maritime history, archival work, and seamanship.
+  </p>
+
+  <div class="member" id="phil">
+    <div class="member-photo"><img src="img/team_official/PhilROV.webp" alt="Phil Parisi kneeling on a dock holding the BlueROV2" loading="lazy" style="object-position:center 40%;"></div>
+    <div class="member-body">
+      <div class="member-role">Founder · Project Lead · Unmanned Systems Pilot</div>
+      <div class="member-name">Phil Parisi</div>
+      <p>
+        Phil is the project lead and unmanned systems pilot. A robotics researcher and Seattle
+        rookie, Phil embraces Lake Union and the surrounding waters through sailing, scuba diving,
+        and paddle boarding. The existence of 'unknown' lakebed targets in his new backyard drove
+        him to start Shipwreck City. Phil holds a Master's Degree in Ocean Engineering from the
+        University of Rhode Island and previously worked for U.S. National Laboratories.
+      </p>
+      <a class="member-link" href="https://www.linkedin.com/in/phil-parisi/" target="_blank" rel="noopener">LinkedIn →</a>
+      <div class="member-quote"><blockquote>"Lake Union is one of Seattle's most-visited lakes — and almost nobody knows what's beneath the surface. We're changing that."</blockquote></div>
+    </div>
+  </div>
+
+  <div class="member" id="libbie">
+    <div class="member-photo"><img src="img/team_official/libbie.webp" alt="Libbie Barnes standing at an observation deck railing overlooking Elliott Bay at sunset" loading="lazy" style="object-position:center 30%;"></div>
+    <div class="member-body">
+      <div class="member-role">Community Manager</div>
+      <div class="member-name">Libbie Barnes</div>
+      <p>
+        Libbie is the associate curator of exhibits and engagement lead at MOHAI. Her background
+        in Maritime Studies and eight years working in museums bring key historical perspectives
+        and community connections, which elevate this project to new levels. Libbie holds a
+        Master's Degree in Museum Studies from the University of Washington.
+      </p>
+      <a class="member-link" href="https://www.linkedin.com/in/libbie-barnes-698717330/" target="_blank" rel="noopener">LinkedIn →</a>
+      <div class="member-quote"><blockquote>"Documenting what is below the surface of Lake Union will help us understand how to be better stewards of urban nature and open doors to scientific and historical research we can all benefit from."</blockquote></div>
+    </div>
+  </div>
+
+  <div class="member" id="evan">
+    <div class="member-photo"><img src="img/team_official/evan.webp" alt="Evan Weber crouching on the wing of a WWII Navy aircraft in a museum hangar" loading="lazy" style="object-position:center 20%;"></div>
+    <div class="member-body">
+      <div class="member-role">Digital Archivist</div>
+      <div class="member-name">Evan Weber</div>
+      <p>
+        Evan serves as Shipwreck City's Digital Archivist, helping transform underwater discoveries
+        into an accessible public archive. With a background in archaeology, museum studies, and
+        public history, he reviews dive records and historical sources and develops public-facing
+        overviews that make Lake Union's submerged history easier to search, understand, and share.
+      </p>
+      <p>
+        Evan holds a Master's Degree in Museum Studies from Johns Hopkins University and is
+        passionate about preserving cultural heritage by uncovering the human stories behind
+        artifacts and bringing them to life through research, storytelling, and interpretation.
+      </p>
+      <a class="member-link" href="https://www.linkedin.com/in/evangarethweber/" target="_blank" rel="noopener">LinkedIn →</a>
+      <div class="member-quote"><blockquote>"These wrecks are more than just objects on the lakebed. They are evidence of the people and the stories that shaped Lake Union. Our job is to document what remains and make that history accessible for all."</blockquote></div>
+    </div>
+  </div>
+
+  <div class="member" id="george">
+    <div class="member-photo"><img src="img/team_official/georgerov.webp" alt="Captain George Spano lowering the ROV over the side of a boat on Lake Union" loading="lazy" style="object-position:center 35%;"></div>
+    <div class="member-body">
+      <div class="member-role">Boat Captain</div>
+      <div class="member-name">Captain George Spano</div>
+      <p>
+        George is an experienced boat captain, fisherman, and ocean conservationist. His interest
+        in marine robotics led to his involvement as a boat captain for ROV deployments around
+        the Puget Sound. He holds a degree in Business from the University of Washington and
+        maintains a USCG OUPV (six-pack) captain's license.
+      </p>
+      <a class="member-link" href="https://www.linkedin.com/in/george-spano-942007a/" target="_blank" rel="noopener">LinkedIn →</a>
+      <div class="member-quote"><blockquote>"Every ROV dive into Lake Union is a mystery. We go down never knowing exactly what we're going to find, and that's the best part."</blockquote></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section container" style="padding-top:0;">
+  <h2 class="team-section-title" id="volunteer">Volunteer Roles</h2>
+  <p class="team-intro">
+    We're always looking for people who want to help document Lake Union. If one of these
+    roles fits your skills, or you have something else to offer, get in touch.
+  </p>
+
+  <div class="roles-grid">
+    <a class="role-card" href="mailto:phil@shipwreckcity.org?subject=Interest%20in%20Volunteering%20as%20a%20Graphic%20Designer">
+      <div class="role-title">Graphic Designer</div>
+      <p class="role-desc">Shape the visual identity of the project, including maps, infographics, social media graphics, and print materials for events.</p>
+    </a>
+    <a class="role-card" href="mailto:phil@shipwreckcity.org?subject=Interest%20in%20Volunteering%20as%20a%20Videographer%20%28Land%29">
+      <div class="role-title">Videographer (Land)</div>
+      <p class="role-desc">Capture the story above the waterline, including field days, boat operations, interviews, and behind-the-scenes footage. Manage audio and visual.</p>
+    </a>
+    <a class="role-card" href="mailto:phil@shipwreckcity.org?subject=Interest%20in%20Volunteering%20as%20a%20Videographer%20%28Underwater%29">
+      <div class="role-title">Videographer (Underwater)</div>
+      <p class="role-desc">Help us obtain improved footage of the wrecks and underwater operations, working with the ROV team and divers on camera setup, lighting, and shot planning.</p>
+    </a>
+    <a class="role-card" href="mailto:phil@shipwreckcity.org?subject=Interest%20in%20Volunteering%20as%20a%20Video%20Editor">
+      <div class="role-title">Video Editor</div>
+      <p class="role-desc">Turn hours of raw dive footage into short, shareable pieces for the archive, social media, and presentations.</p>
+    </a>
+    <a class="role-card" href="mailto:phil@shipwreckcity.org?subject=Interest%20in%20Volunteering%20as%20a%20Scuba%20Diver">
+      <div class="role-title">Scuba Diver</div>
+      <p class="role-desc">Support dive operations and close-up documentation where conditions allow. Advanced Open Water certification, DAN insurance, and experience in cold water diving required.</p>
+    </a>
+    <a class="role-card" href="mailto:phil@shipwreckcity.org?subject=Interest%20in%20Volunteering%20as%20an%20Unmanned%20Systems%20Pilot">
+      <div class="role-title">Unmanned Systems Pilot</div>
+      <p class="role-desc">Fly the ROV and aerial drones on field days. Experience with unmanned systems is required.</p>
+    </a>
+    <a class="role-card" href="mailto:phil@shipwreckcity.org?subject=Interest%20in%20Volunteering%20as%20a%20Social%20Media%20Manager">
+      <div class="role-title">Social Media Manager</div>
+      <p class="role-desc">Plan and execute social media campaigns for Shipwreck City official channels. Promote maritime archaeology and share behind the scenes footage of our adventures.</p>
+    </a>
+  </div>
+
+  <div class="cta-block">
+    <p>
+      Interested in volunteering? Share your resume, introduce yourself, and tell us why you're interested in Shipwreck City!
+    </p>
+    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="contact" class="download-btn">Contact the Team →</a>
+      <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" class="download-btn">Make a Donation →</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/wrecks-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('team');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+</script>
+</body>
+</html>
