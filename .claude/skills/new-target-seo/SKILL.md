@@ -14,6 +14,9 @@ ShipwreckCity's per-target SEO lives in the master archive CSV
                                              <head> tags + static copy of the page content)
                                           →  lu-archive.html (static table row + link per target)
                                           →  sitemap.xml
+                                          →  wrecks/luXXX.html + archive.html (redirects from the
+                                             pre-Aug-2026 addresses to /lu-archive/; never edit or
+                                             delete these by hand, and keep them out of the sitemap)
 
 Nothing runs on its own: the pages are only (re)built when those two
 commands run. So **whenever a new or updated `target_master_archive_*.csv`
