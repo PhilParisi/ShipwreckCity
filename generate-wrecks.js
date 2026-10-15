@@ -21,6 +21,39 @@ let WRECKS, SITE_CONFIG;
 const fn = new Function(dataFile + '\nreturn { WRECKS, SITE_CONFIG };');
 ({ WRECKS, SITE_CONFIG } = fn());
 
+// buildNav()/buildFooter() from js/site.js, so the static nav/footer written into
+// each page below are exactly what the site's script draws at runtime. site.js
+// also touches the DOM when it loads, so run it against a do-nothing stub
+// browser, with a production hostname so ROOT resolves to '' (root-relative links).
+function loadSiteChrome() {
+  const stub = new Proxy(function () {}, {
+    get: (t, k) => (k === Symbol.toPrimitive ? () => '' : k === Symbol.iterator ? [][Symbol.iterator] : stub),
+    apply: () => stub,
+    construct: () => stub,
+    set: () => true,
+  });
+  const document = new Proxy({}, {
+    get: (t, k) => (k === 'querySelectorAll' ? () => [] : k === 'getElementById' || k === 'querySelector' ? () => null : stub),
+  });
+  const src = fs.readFileSync(path.join(__dirname, 'js/site.js'), 'utf8');
+  return new Function('location', 'document', 'window', 'localStorage',
+    `${src}\nreturn { buildNav, buildFooter };`)({ hostname: 'shipwreckcity.org' }, document, stub, stub);
+}
+const { buildNav, buildFooter } = loadSiteChrome();
+
+// Fill <div id="nav-mount"> / <div id="footer-mount"> with a static copy of the nav
+// and footer, between STATIC-* markers so reruns replace rather than append. The
+// page's own script still redraws both on load; this copy is for crawlers / no-JS.
+const MOUNT_RE = {
+  nav:    /<div id="nav-mount">(?:<!-- STATIC-NAV:START -->[\s\S]*?<!-- STATIC-NAV:END -->)?<\/div>/,
+  footer: /<div id="footer-mount">(?:<!-- STATIC-FOOTER:START -->[\s\S]*?<!-- STATIC-FOOTER:END -->)?<\/div>/,
+};
+function withStaticChrome(html, activePage) {
+  return html
+    .replace(MOUNT_RE.nav,    () => `<div id="nav-mount"><!-- STATIC-NAV:START -->${buildNav(activePage)}\n<!-- STATIC-NAV:END --></div>`)
+    .replace(MOUNT_RE.footer, () => `<div id="footer-mount"><!-- STATIC-FOOTER:START -->${buildFooter()}\n<!-- STATIC-FOOTER:END --></div>`);
+}
+
 const templatePath = path.join(__dirname, 'lu-archive/wreck-template.html');
 const template     = fs.readFileSync(templatePath, 'utf8');
 const outDir       = path.join(__dirname, 'lu-archive');
@@ -195,9 +228,10 @@ WRECKS.forEach((wreck, i) => {
   // <head> meta tags and a static copy of the page body are written in here per-wreck so
   // link previews and crawlers get real content without running any JavaScript.
   // (Function replacers: wreck text may contain "$", which a string replacement would mangle.)
-  const page = template
+  let page = template
     .replace('<title>Loading...</title>', () => metaTagsFor(wreck))
     .replace(MAIN_PLACEHOLDER, () => `<main id="wreck-page">${staticBodyFor(wreck, WRECKS[i - 1], WRECKS[i + 1])}</main>`);
+  page = withStaticChrome(page, 'explore');
   fs.writeFileSync(outPath, page);
   console.log(`  ✓  lu-archive/${wreck.id}.html`);
   generated++;
@@ -228,6 +262,21 @@ if (!ROWS_RE.test(archiveHtml)) {
   fs.writeFileSync(archivePath, archiveHtml.replace(ROWS_RE, (m, start, end) => `${start}\n${rows}\n${end}`));
   console.log(`  Wrote ${WRECKS.length} static rows into lu-archive.html.`);
 }
+
+// ── Static nav/footer in the top-level pages ─────────────────────────────
+// Each page's active nav item comes from its own buildNav('<key>') call.
+const topLevelPages = fs.readdirSync(__dirname).filter(f => f.endsWith('.html'));
+let chromePages = 0;
+topLevelPages.forEach(f => {
+  const file = path.join(__dirname, f);
+  const html = fs.readFileSync(file, 'utf8');
+  if (!MOUNT_RE.nav.test(html) && !MOUNT_RE.footer.test(html)) return;   // e.g. 404.html, redirect pages
+  const active = (html.match(/buildNav\('([^']*)'\)/) || [])[1] || '';
+  const updated = withStaticChrome(html, active);
+  if (updated !== html) fs.writeFileSync(file, updated);
+  chromePages++;
+});
+console.log(`  Wrote static nav/footer into ${chromePages} top-level pages (+ every wreck page).`);
 
 // ── Redirects from the pre-August-2026 addresses ─────────────────────────
 // Wreck pages used to live at /wrecks/luNNN and the archive at /archive. They

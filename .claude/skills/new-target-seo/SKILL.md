@@ -14,6 +14,10 @@ ShipwreckCity's per-target SEO lives in the master archive CSV
                                              <head> tags + static copy of the page content)
                                           →  lu-archive.html (static table row + link per target)
                                           →  sitemap.xml
+                                          →  static nav + footer in every page (built from
+                                             buildNav()/buildFooter() in js/site.js, between
+                                             STATIC-NAV / STATIC-FOOTER markers — rerun the build
+                                             after changing NAV_LINKS)
                                           →  wrecks/luXXX.html + archive.html (redirects from the
                                              pre-Aug-2026 addresses to /lu-archive/; never edit or
                                              delete these by hand, and keep them out of the sitemap)

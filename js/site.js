@@ -6,7 +6,9 @@
 // Auto-detect subdirectory for GitHub Pages project repos vs local dev
 const ROOT = location.hostname.includes('github.io') ? '/ShipwreckCity' : '';
 
-// Main navigation — shared by the top nav and the footer, in display order
+// Main navigation — shared by the top nav and the footer, in display order.
+// generate-wrecks.js also writes a static copy of the nav/footer into every page
+// (for crawlers), so rerun `node generate-wrecks.js` after changing these.
 const NAV_LINKS = [
   { slug: 'lu-archive', label: 'Archive' },
   { slug: 'map',        label: 'Maps'    },

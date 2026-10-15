@@ -33,7 +33,24 @@
 </head>
 <body>
 
-<div id="nav-mount"></div>
+<div id="nav-mount"><!-- STATIC-NAV:START -->
+  <nav class="site-nav" id="site-nav">
+    <a href="/" class="nav-logo">SHIPWRECK <span>CITY</span></a>
+    <button class="nav-hamburger" aria-label="Toggle menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="/lu-archive" class="">Archive</a>
+      <a href="/map" class="">Maps</a>
+      <a href="/support" class="">Support</a>
+      <a href="/events" class="">Events</a>
+      <a href="/team" class="">Team</a>
+      <a href="/project" class="">Project</a>
+      <a href="/history" class="">History</a>
+      <a href="/press" class="">Press</a>
+    </div>
+  </nav>
+<!-- STATIC-NAV:END --></div>
 <!-- generate-wrecks.js fills this <main> with a static copy of the wreck's content at build time
      (for crawlers / no-JS); the script below then redraws it. Keep the empty tag exactly as written,
      and mirror any layout changes in staticBodyFor() in generate-wrecks.js. -->
@@ -117,7 +134,25 @@
         </a>
     </div>
   </main>
-<div id="footer-mount"></div>
+<div id="footer-mount"><!-- STATIC-FOOTER:START -->
+  <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;transition:filter 0.2s;" onmouseover="this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+    <span class="footer-support-text" style="font-family:var(--font-serif);font-size:16px;color:#7fc4d8;line-height:1.5;text-align:center;">— Support The Shipwreck City Project —</span>
+  </a>
+  <footer class="site-footer">
+    <div class="footer-logo">SHIPWRECK <span>CITY</span></div>
+    <div class="footer-copy">© 2026 Shipwreck City · Seattle, WA, USA</div>
+    <div class="footer-links">
+      <a href="/lu-archive">Archive</a>
+      <a href="/map">Maps</a>
+      <a href="/support">Support</a>
+      <a href="/events">Events</a>
+      <a href="/team">Team</a>
+      <a href="/project">Project</a>
+      <a href="/history">History</a>
+      <a href="/press">Press</a>
+    </div>
+  </footer>
+<!-- STATIC-FOOTER:END --></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
