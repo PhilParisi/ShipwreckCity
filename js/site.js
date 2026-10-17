@@ -20,6 +20,37 @@ const NAV_LINKS = [
   { slug: 'press',      label: 'Press'   },
 ];
 
+// Photo license. Used for the Google Images "Licensable" metadata that
+// generate-wrecks.js writes into every wreck page. IF THE LICENSE TERMS EVER
+// CHANGE: update this, the "Usage Rights" section on press.html and the
+// license modal below, then rerun `node generate-wrecks.js`.
+const IMAGE_LICENSE = {
+  url:             'https://creativecommons.org/licenses/by-nc/4.0/',   // CC BY-NC 4.0
+  acquirePage:     'https://shipwreckcity.org/press#usage-rights',
+  creditText:      'Photo courtesy of Shipwreck City / ShipwreckCity.org',
+  copyrightNotice: '© Shipwreck City',
+  creator:         'Shipwreck City',
+};
+
+// Alt text for a wreck photo, shared by the static pages (generate-wrecks.js)
+// and the runtime gallery so both say the same thing. Kept deliberately
+// simple: the target's SEO title + catalog number + which image it is.
+function imageAltText(wreck, file) {
+  const title = (wreck.seoTitle || `${wreck.name} | Lake Union, Seattle, WA`).split(' | ');
+  const label = `${title[0]} (${wreck.catalog.replace('#', '')})${title[1] ? `, ${title[1]}` : ''}`;
+  const base  = String(file).split('/').pop().replace(/\.[a-z0-9]+$/i, '');
+  if (base === 'primetime') return `${label} — main photo`;
+  // Number side-scan sonar images and regular photos separately.
+  const names  = (wreck.images || []).map(f => f.replace(/\.[a-z0-9]+$/i, ''));
+  const isScan = n => /sidescan/i.test(n);
+  const group  = names.filter(n => isScan(n) === isScan(base));
+  const i      = group.indexOf(base);
+  const kind   = isScan(base) ? 'side-scan sonar image' : 'photo';
+  if (i < 0)            return `${label} — ${kind}`;
+  if (group.length < 2) return `${label} — ${kind}`;
+  return `${label} — ${kind} ${i + 1} of ${group.length}`;
+}
+
 function buildNav(activePage) {
   return `
   <nav class="site-nav" id="site-nav">

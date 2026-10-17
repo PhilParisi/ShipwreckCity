@@ -37,9 +37,38 @@ function loadSiteChrome() {
   });
   const src = fs.readFileSync(path.join(__dirname, 'js/site.js'), 'utf8');
   return new Function('location', 'document', 'window', 'localStorage',
-    `${src}\nreturn { buildNav, buildFooter };`)({ hostname: 'shipwreckcity.org' }, document, stub, stub);
+    `${src}\nreturn { buildNav, buildFooter, imageAltText, IMAGE_LICENSE };`)({ hostname: 'shipwreckcity.org' }, document, stub, stub);
 }
-const { buildNav, buildFooter } = loadSiteChrome();
+const { buildNav, buildFooter, imageAltText, IMAGE_LICENSE } = loadSiteChrome();
+
+// Every photo shown on a wreck page, as files inside img/targets/{id}/:
+// the primetime image (if any) then the gallery, in .webp form.
+function wreckImageFiles(wreck) {
+  return [
+    ...(wreck.hasPrimetime ? ['primetime.webp'] : []),
+    ...(wreck.images || []).map(f => f.replace(/\.(png|jpe?g)$/i, '.webp')),
+  ];
+}
+
+// Google Images license metadata (schema.org ImageObject) for each photo, so
+// results can show a "Licensable" badge linking to the license terms. Values
+// come from IMAGE_LICENSE in js/site.js.
+function imageLicenseJsonLd(wreck) {
+  const files = wreckImageFiles(wreck);
+  if (!files.length) return '';
+  const objects = files.map(f => ({
+    '@context':          'https://schema.org',
+    '@type':             'ImageObject',
+    contentUrl:          `${SITE_URL}/img/targets/${wreck.id}/${f}`,
+    name:                imageAltText(wreck, f),
+    license:             IMAGE_LICENSE.url,
+    acquireLicensePage:  IMAGE_LICENSE.acquirePage,
+    creditText:          IMAGE_LICENSE.creditText,
+    copyrightNotice:     IMAGE_LICENSE.copyrightNotice,
+    creator:             { '@type': 'Organization', name: IMAGE_LICENSE.creator },
+  }));
+  return `\n  <script type="application/ld+json">${JSON.stringify(objects).replace(/</g, '\\u003c')}</script>`;
+}
 
 // Fill <div id="nav-mount"> / <div id="footer-mount"> with a static copy of the nav
 // and footer, between STATIC-* markers so reruns replace rather than append. The
@@ -97,7 +126,7 @@ function metaTagsFor(wreck) {
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${description}">
-  <meta name="twitter:image" content="${image}">`;
+  <meta name="twitter:image" content="${image}">${imageLicenseJsonLd(wreck)}`;
 }
 
 // Keep these two helpers in step with statusLabel()/depthDisplay() in js/site.js.
@@ -126,7 +155,6 @@ function sourceLink(url) {
 }
 
 function staticBodyFor(wreck, prev, next) {
-  const seoTitle = escapeHtml(wreck.seoTitle || `${wreck.name} — Shipwreck City`);
   const name     = escapeHtml(wreck.name);
   const imgBase  = `../img/targets/${wreck.id}`;
 
@@ -171,7 +199,7 @@ function staticBodyFor(wreck, prev, next) {
 
     <div id="primetime-wrap" style="height:${wreck.hasPrimetime ? '100vh' : '380px'};background:${wreck.hasPrimetime ? '#020810' : 'var(--bg-deep)'};">${wreck.hasPrimetime ? `
       <div class="wreck-primetime-wrap">
-        <img src="${imgBase}/primetime.webp" alt="${seoTitle}">
+        <img src="${imgBase}/primetime.webp" alt="${escapeHtml(imageAltText(wreck, 'primetime.webp'))}">
       </div>` : ''}
     </div>
 
@@ -189,7 +217,7 @@ function staticBodyFor(wreck, prev, next) {
         <div id="gallery-wrap">${gallery.length ? `
           <div class="section-label" style="margin-top:40px;">Gallery</div>
           <div class="wreck-gallery">
-            ${gallery.map((f, i) => `<img src="${imgBase}/${escapeHtml(f)}" alt="${seoTitle} — photo ${i + 1}" loading="lazy">`).join('\n            ')}
+            ${gallery.map((f, i) => `<img src="${imgBase}/${escapeHtml(f)}" alt="${escapeHtml(imageAltText(wreck, f))}" loading="lazy">`).join('\n            ')}
           </div>` : ''}
         </div>
       </div>
@@ -337,18 +365,35 @@ const STATIC_PAGES = ['', 'map', 'lu-archive', 'events', 'support', 'project', '
 
 const sitemapEntries = [
   ...STATIC_PAGES.map(slug => ({ url: `${SITE_URL}/${slug}`, file: `${slug || 'index'}.html` })),
-  ...WRECKS.map(wreck => ({ url: `${SITE_URL}/lu-archive/${wreck.id}`, file: `lu-archive/${wreck.id}.html` })),
+  ...WRECKS.map(wreck => ({
+    url:    `${SITE_URL}/lu-archive/${wreck.id}`,
+    file:   `lu-archive/${wreck.id}.html`,
+    images: wreckImageFiles(wreck).map(f => `${SITE_URL}/img/targets/${wreck.id}/${f}`),
+  })),
 ];
 
 const LASTMOD_PATH = path.join(__dirname, 'data/sitemap-lastmod.json');
 const today        = new Date().toISOString().slice(0, 10);
 const lastmodDb    = fs.existsSync(LASTMOD_PATH) ? JSON.parse(fs.readFileSync(LASTMOD_PATH, 'utf8')) : {};
 
-function contentFingerprint(file) {
-  const html = fs.readFileSync(path.join(__dirname, file), 'utf8')
+// What counts as "content" for lastmod. Wreck pages share one template, so a
+// change to the template's script would otherwise re-date all 112 pages even
+// though nothing a reader or Google sees changed — for those, fingerprint only
+// the <head> tags written per wreck plus the static <main> body. Hand-edited
+// top-level pages fingerprint the whole file minus the shared nav/footer.
+function pageContent(html, file) {
+  if (file.startsWith('lu-archive/')) {
+    const head = html.slice(html.indexOf('<title>'), html.indexOf('</head>'));
+    const main = html.slice(html.indexOf('<main id="wreck-page">'), html.indexOf('</main>'));
+    return head + main;
+  }
+  return html
     .replace(/<!-- STATIC-NAV:START -->[\s\S]*?<!-- STATIC-NAV:END -->/, '')
     .replace(/<!-- STATIC-FOOTER:START -->[\s\S]*?<!-- STATIC-FOOTER:END -->/, '');
-  return crypto.createHash('sha1').update(html).digest('hex');
+}
+function contentFingerprint(file) {
+  const html = fs.readFileSync(path.join(__dirname, file), 'utf8');
+  return crypto.createHash('sha1').update(pageContent(html, file)).digest('hex');
 }
 
 // First time a page is seen: use the date git last committed it (or today if
@@ -379,14 +424,15 @@ sitemapEntries.forEach(entry => {
 fs.writeFileSync(LASTMOD_PATH, JSON.stringify(newLastmodDb, null, 2) + '\n');
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapEntries.map(e => `  <url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod></url>`).join('\n')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${sitemapEntries.map(e => `  <url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod>${(e.images || []).map(img => `
+    <image:image><image:loc>${img}</image:loc></image:image>`).join('')}${e.images && e.images.length ? '\n  ' : ''}</url>`).join('\n')}
 </urlset>
 `;
 
 fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapXml);
 const newPages = sitemapEntries.filter(e => !lastmodDb[e.url]).map(e => e.url);
-console.log(`  Wrote sitemap.xml (${sitemapEntries.length} URLs).`);
+console.log(`  Wrote sitemap.xml (${sitemapEntries.length} URLs, ${sitemapEntries.reduce((n, e) => n + (e.images || []).length, 0)} images).`);
 if (Object.keys(lastmodDb).length) {
   if (newPages.length)     console.log(`    New pages (lastmod ${today}):\n      ${newPages.join('\n      ')}`);
   if (changedPages.length) console.log(`    Changed pages (lastmod ${today}):\n      ${changedPages.join('\n      ')}`);

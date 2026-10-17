@@ -366,7 +366,7 @@
         primetimeUrl = probe.src;
         primetimeWrap.innerHTML = `
           <div class="wreck-primetime-wrap">
-            <img src="${probe.src}" alt="${seoTitle}">
+            <img src="${probe.src}" alt="${imageAltText(wreck, probe.src)}">
           </div>`;
         // Resolve original (non-webp) for the download zip
         if (probe.src.endsWith('.webp')) {
@@ -394,7 +394,7 @@
           <button id="gallery-download-btn" class="download-btn" style="font-size:15px;padding:10px 20px;">Download Raw .JPG Images ↓</button>
         </div>
         <div class="wreck-gallery">
-          ${photos.map((src, i) => `<img src="${src}" alt="${seoTitle} — photo ${i+1}" loading="lazy" data-idx="${i}">`).join('')}
+          ${photos.map((src, i) => `<img src="${src}" alt="${imageAltText(wreck, src)}" loading="lazy" data-idx="${i}">`).join('')}
         </div>`;
 
       galleryWrap.querySelectorAll('img[data-idx]').forEach(img => {

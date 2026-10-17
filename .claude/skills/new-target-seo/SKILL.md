@@ -13,7 +13,10 @@ ShipwreckCity's per-target SEO lives in the master archive CSV
          →  node generate-wrecks.js      →  lu-archive/luXXX.html (one real page per target:
                                              <head> tags + static copy of the page content)
                                           →  lu-archive.html (static table row + link per target)
-                                          →  sitemap.xml, with a <lastmod> per page (date only
+                                          →  per-photo alt text + Google Images license data
+                                             (JSON-LD) in each wreck page, from imageAltText() and
+                                             IMAGE_LICENSE in js/site.js
+                                          →  sitemap.xml, listing every photo under its page, with a <lastmod> per page (date only
                                              changes when that page's content changes; fingerprints
                                              kept in data/sitemap-lastmod.json — commit it too)
                                           →  static nav + footer in every page (built from
