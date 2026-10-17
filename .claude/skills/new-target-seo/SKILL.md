@@ -13,7 +13,9 @@ ShipwreckCity's per-target SEO lives in the master archive CSV
          →  node generate-wrecks.js      →  lu-archive/luXXX.html (one real page per target:
                                              <head> tags + static copy of the page content)
                                           →  lu-archive.html (static table row + link per target)
-                                          →  sitemap.xml
+                                          →  sitemap.xml, with a <lastmod> per page (date only
+                                             changes when that page's content changes; fingerprints
+                                             kept in data/sitemap-lastmod.json — commit it too)
                                           →  static nav + footer in every page (built from
                                              buildNav()/buildFooter() in js/site.js, between
                                              STATIC-NAV / STATIC-FOOTER markers — rerun the build
@@ -112,4 +114,11 @@ new-target workflow notes still apply too.)
    If the wreck page layout in `lu-archive/wreck-template.html` was changed,
    mirror it in `staticBodyFor()` in `generate-wrecks.js` before rebuilding.
    The rebuilt pages still need to be committed and pushed by the user to go
-   live.
+   live — together with `data/sitemap-lastmod.json`, or the next build will
+   re-date pages.
+
+   The build ends by listing **New pages** and **Changed pages** (those whose
+   sitemap `<lastmod>` moved to today). Hand that list to the user as the
+   Search Console step: after they push, Request indexing for the new wreck
+   pages (and any important changed ones), ~10/day. If it says "No page
+   content changed", tell them no Search Console step is needed.

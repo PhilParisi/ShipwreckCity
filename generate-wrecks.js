@@ -321,18 +321,75 @@ console.log(`  Wrote ${WRECKS.length} redirects in wrecks/ and archive.html (old
 // ── sitemap.xml ──────────────────────────────────────────────────────────
 // Regenerated every time this script runs, so it can never drift out of
 // sync with the live set of wreck pages.
+//
+// Each URL carries a <lastmod> date so Google can tell which pages changed
+// (e.g. a newly added target) and recrawl those first. Google ignores
+// lastmod if it's always "today", so a page's date only moves when its
+// content actually changes: we keep a fingerprint of every page in
+// data/sitemap-lastmod.json and bump the date only when the fingerprint
+// differs. The shared nav/footer are left out of the fingerprint, so a nav
+// tweak doesn't mark every page as changed. Commit that JSON file along with
+// the pages so the dates carry over between builds.
+const crypto = require('crypto');
+const { execFileSync } = require('child_process');
+
 const STATIC_PAGES = ['', 'map', 'lu-archive', 'events', 'support', 'project', 'team', 'history', 'press', 'contact'];
 
-const sitemapUrls = [
-  ...STATIC_PAGES.map(slug => `${SITE_URL}/${slug}`),
-  ...WRECKS.map(wreck => `${SITE_URL}/lu-archive/${wreck.id}`),
+const sitemapEntries = [
+  ...STATIC_PAGES.map(slug => ({ url: `${SITE_URL}/${slug}`, file: `${slug || 'index'}.html` })),
+  ...WRECKS.map(wreck => ({ url: `${SITE_URL}/lu-archive/${wreck.id}`, file: `lu-archive/${wreck.id}.html` })),
 ];
+
+const LASTMOD_PATH = path.join(__dirname, 'data/sitemap-lastmod.json');
+const today        = new Date().toISOString().slice(0, 10);
+const lastmodDb    = fs.existsSync(LASTMOD_PATH) ? JSON.parse(fs.readFileSync(LASTMOD_PATH, 'utf8')) : {};
+
+function contentFingerprint(file) {
+  const html = fs.readFileSync(path.join(__dirname, file), 'utf8')
+    .replace(/<!-- STATIC-NAV:START -->[\s\S]*?<!-- STATIC-NAV:END -->/, '')
+    .replace(/<!-- STATIC-FOOTER:START -->[\s\S]*?<!-- STATIC-FOOTER:END -->/, '');
+  return crypto.createHash('sha1').update(html).digest('hex');
+}
+
+// First time a page is seen: use the date git last committed it (or today if
+// it has uncommitted changes / git isn't available), rather than stamping
+// every existing page with today's date.
+function initialDate(file) {
+  try {
+    const dirty = execFileSync('git', ['status', '--porcelain', '--', file], { cwd: __dirname, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (dirty) return today;
+    return execFileSync('git', ['log', '-1', '--format=%cs', '--', file], { cwd: __dirname, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() || today;
+  } catch (e) {
+    return today;
+  }
+}
+
+const newLastmodDb = {};
+let changedPages = [];
+sitemapEntries.forEach(entry => {
+  const hash = contentFingerprint(entry.file);
+  const prev = lastmodDb[entry.url];
+  let date;
+  if (!prev)                  date = initialDate(entry.file);
+  else if (prev.hash !== hash) { date = today; changedPages.push(entry.url); }
+  else                        date = prev.lastmod;
+  newLastmodDb[entry.url] = { lastmod: date, hash };
+  entry.lastmod = date;
+});
+fs.writeFileSync(LASTMOD_PATH, JSON.stringify(newLastmodDb, null, 2) + '\n');
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapUrls.map(url => `  <url><loc>${url}</loc></url>`).join('\n')}
+${sitemapEntries.map(e => `  <url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod></url>`).join('\n')}
 </urlset>
 `;
 
 fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapXml);
-console.log(`  Wrote sitemap.xml (${sitemapUrls.length} URLs).\n`);
+const newPages = sitemapEntries.filter(e => !lastmodDb[e.url]).map(e => e.url);
+console.log(`  Wrote sitemap.xml (${sitemapEntries.length} URLs).`);
+if (Object.keys(lastmodDb).length) {
+  if (newPages.length)     console.log(`    New pages (lastmod ${today}):\n      ${newPages.join('\n      ')}`);
+  if (changedPages.length) console.log(`    Changed pages (lastmod ${today}):\n      ${changedPages.join('\n      ')}`);
+  if (!newPages.length && !changedPages.length) console.log('    No page content changed — lastmod dates unchanged.');
+}
+console.log('');
