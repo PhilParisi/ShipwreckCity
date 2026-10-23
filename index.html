@@ -569,7 +569,7 @@
   let fieldAutoTimer = null;
   function fieldAutoStep() {
     const atEnd = fieldTrack.scrollLeft >= fieldTrack.scrollWidth - fieldTrack.clientWidth - 1;
-    fieldTrack.scrollBy({ left: atEnd ? -fieldTrack.scrollWidth : PHOTO_STEP, behavior: 'smooth' });
+    fieldTrack.scrollBy({ left: atEnd ? -fieldTrack.scrollWidth : photoStep(), behavior: 'smooth' });
   }
   function startFieldAuto() { if (!fieldAutoTimer) fieldAutoTimer = setInterval(fieldAutoStep, 6000); }
   function stopFieldAuto()  { clearInterval(fieldAutoTimer); fieldAutoTimer = null; }
