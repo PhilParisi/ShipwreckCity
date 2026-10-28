@@ -113,6 +113,27 @@ const SUPPORTERS = [
     LOSAttrib: "Julie Olson Anna, Museum Educator at Cascadia Art Museum"
   },
   {
+    name: "Lectures on Tap",
+    url:  "https://lecturesontap.com/",
+    logo: "img/supporters-logo/lecturesontap.webp",
+    type: "organization",
+    note: "National event series that brings experts into local bars for laid-back talks over a drink — hosting Shipwreck City's sold-out \"Beneath Lake Union: Seattle's Hidden Shipwrecks\" talk on November 10, 2026."
+  },
+  {
+    name: "Maritime Archaeological Society",
+    url:  "https://www.maritimearchaeological.org/",
+    logo: "img/supporters-logo/mas-logo.webp",
+    type: "organization",
+    note: "MAS has provided guidance and resources to the Shipwreck City team."
+  },
+  {
+    name: "Nautical Archaeology Society",
+    url:  "https://nauticalarchaeologysociety.org/",
+    logo: "img/supporters-logo/nas-logo.webp",
+    type: "organization",
+    note: "Evan authored \"A City's Underwater History. People Powered Connections\" in NAS' Quarterly Magazine."
+  },
+  {
     name: "Boatworld Marinas",
     url:  "https://www.boatworldmarina.com/",
     logo: null,

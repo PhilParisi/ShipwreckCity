@@ -155,11 +155,7 @@
     <a id="map-section-label" class="index-section-heading">Target Map</a>
   </div>
   <div class="container">
-    <div class="map-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Shipwreck City Explored</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Historically Explored</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c87941;"></div> Not Yet Explored</div>
-    </div>
+    <div class="map-legend" id="type-legend" style="flex-wrap:wrap;"></div>
     <div style="display:flex;align-items:stretch;gap:0;">
     <div class="map-wrapper" id="map-wrapper" style="flex:1;min-width:0;">
       <div id="wreck-map"></div>
@@ -318,7 +314,7 @@
 
 <!-- SUPPORTERS -->
 <section class="supporters-section">
-    <a id="supporters-section-label" class="index-section-heading">Who We Work With</a>
+    <a id="supporters-section-label" class="index-section-heading">Community Connections</a>
     <div class="supporters-grid" id="supporters-grid"></div>
     <div class="index-los-grid" id="index-los-grid"></div>
     <div class="cta-block">
@@ -371,9 +367,23 @@
     </${close}>`;
   }).join('');
 
-  // Supporter logos
+  // Supporter logos ("Community Connections"). These lead the row in this order;
+  // every other supporter with a logo follows in links-data.js order. (Names
+  // must match SUPPORTERS exactly; a name that doesn't match is just skipped.)
+  const LOGO_ORDER = [
+    'Pacific Science Center Foundation',
+    'Museum of History & Industry (MOHAI)',
+    'Maritime Archaeological Society',
+    'Nautical Archaeology Society',
+    'Cascadia Art Museum',
+    'United Indians of All Tribes Foundation',
+  ];
+  const logoRank = s => { const i = LOGO_ORDER.indexOf(s.name); return i < 0 ? LOGO_ORDER.length : i; };
   document.getElementById('supporters-grid').innerHTML = SUPPORTERS
     .filter(s => s.logo)
+    .map((s, i) => ({ s, i }))
+    .sort((a, b) => logoRank(a.s) - logoRank(b.s) || a.i - b.i)
+    .map(({ s }) => s)
     .map(s => s.url && s.url !== '#'
       ? `<a href="${s.url}" target="_blank" rel="noopener"><img src="${ROOT}/${s.logo}" alt="${s.name}"></a>`
       : `<img src="${ROOT}/${s.logo}" alt="${s.name}">`)
@@ -383,7 +393,9 @@
   document.getElementById('nav-mount').innerHTML   = buildNav('home');
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
-  showLectureAnnouncement();
+  // Upcoming-talk popup (js/site.js) — off: Lectures on Tap (Nov 10) is sold out.
+  // To promote the next talk, update showLectureAnnouncement() and uncomment this.
+  // showLectureAnnouncement();
 
   document.getElementById('map-section-label').href       = `${ROOT}/map`;
   document.getElementById('supporters-section-label').href = `${ROOT}/support`;
@@ -415,15 +427,19 @@
   if (depthEl) depthEl.textContent = `${minD} — 50 ft`;
 
   // Archive progress bar
-  const progressPct = WRECKS.length ? Math.round((65 / WRECKS.length) * 100) : 0;
   const archiveDate = (ARCHIVE_CSV_FILENAME || '').replace('target_master_archive_', '').replace('.csv', '');
-  document.getElementById('index-archive-status').textContent   = `The Shipwreck City Archive Dataset was last updated on: ${archiveDate}. The Project is ${progressPct}% complete.`;
+  document.getElementById('index-archive-status').textContent   = `The Shipwreck City Archive Dataset was last updated on: ${archiveDate.replace(/^(\d+)([A-Za-z]+)(\d{4})$/, '$1 $2 $3')}.`;
 
+  // Vessels stat: counted from the same "Type (New)" data as the Target Map legend,
+  // colored to match it, and linking to the archive pre-filtered to that type.
+  // "Targets Visited" (65) and "New Wrecks" (5) are entered by hand on purpose.
+  const typeStat = (type, label) => `
+    <a class="stat" href="${ROOT}/lu-archive#${type}" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:${TYPE_COLORS[type]};">${WRECKS.filter(w => w.type === type).length}</div><div class="stat-label">${label}</div></a>`;
   document.getElementById('stats-bar').innerHTML = `
     <a class="stat" href="${ROOT}/lu-archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#c87941;">${WRECKS.length}</div><div class="stat-label">Known Lakebed Targets</div></a>
-    <a class="stat" href="${ROOT}/lu-archive#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num" style="color:#4a9eba;">65</div><div class="stat-label">Targets Cleared</div></a>
-    <a class="stat" href="${ROOT}/lu-archive" style="text-decoration:none;cursor:pointer;"><div class="stat-num">42</div><div class="stat-label">Wrecks Confirmed</div></a>
-    <a class="stat" href="${ROOT}/lu-archive#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">5</div><div class="stat-label">New Wrecks</div></a>
+    ${typeStat('Vessel',         'Vessels and Counting (Shipwrecks, Barges, Cars)')}
+    <a class="stat" href="${ROOT}/lu-archive#recently-explored" style="text-decoration:none;cursor:pointer;"><div class="stat-num">65</div><div class="stat-label">Targets Visited so far</div></a>
+    <a class="stat" href="${ROOT}/lu-archive#newly-uncovered" style="text-decoration:none;cursor:pointer;"><div class="stat-num">5</div><div class="stat-label">New Wrecks Uncovered</div></a>
   `;
 
   //<div class="stat"><div class="stat-num">${WRECKS.filter(w=>w.status==='documented').length}</div><div class="stat-label">Fully identified</div></div>
@@ -467,6 +483,9 @@
   `).join('');
 
   // Map
+  // Home page map is colored by target type (CSV "Type (New)"), like the map page's first map
+  document.getElementById('type-legend').innerHTML = typeLegendHtml(WRECKS);
+
   const map = L.map('wreck-map', {
     center: SITE_CONFIG.coordinates,
     zoom:   SITE_CONFIG.mapZoom,
@@ -480,7 +499,7 @@
 
   WRECKS.forEach(w => {
     if (!w.coordinates) return;
-    L.marker(w.coordinates, { icon: makeMarker(L, w) })
+    L.marker(w.coordinates, { icon: makeMarker(L, w, typeColor(w)) })
       .addTo(map)
       .bindPopup(makePopup(w), { minWidth: 280, maxWidth: 320 });
   });

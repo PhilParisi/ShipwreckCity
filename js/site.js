@@ -109,8 +109,39 @@ function coordDisplay(coords) {
 }
 
 // Custom Leaflet marker
-function makeMarker(L, wreck) {
-  const color = {
+// Marker colors for the "by type" map (CSV "Type (New)" column), in legend order.
+// A type not listed here (e.g. a new category in a future CSV) falls back to
+// TYPE_COLOR_OTHER and still gets its own legend entry.
+const TYPE_COLORS = {
+  'Vessel':         '#4a8fe0',   // blue
+  'Debris':         '#e8c547',   // yellow
+  'Infrastructure': '#4fbf6a',   // green
+  'Geology':        '#d98fb5',   // pink
+  'Undetermined':   '#f08a3c',   // orange
+};
+const TYPE_COLOR_OTHER = '#6b7c8a';
+function typeColor(wreck) {
+  return TYPE_COLORS[wreck.type] || TYPE_COLOR_OTHER;
+}
+
+// Legend HTML for a "by type" map: every type present in the data, with
+// counts — known types in TYPE_COLORS order first, then any new ones the CSV
+// introduces. Used by the home page map and the map page.
+function typeLegendHtml(wrecks) {
+  const counts = {};
+  wrecks.forEach(w => { counts[w.type] = (counts[w.type] || 0) + 1; });
+  const order = [
+    ...Object.keys(TYPE_COLORS).filter(t => counts[t]),
+    ...Object.keys(counts).filter(t => !(t in TYPE_COLORS)).sort(),
+  ];
+  return order.map(t => `
+    <div class="legend-item"><div class="legend-dot" style="background:${TYPE_COLORS[t] || TYPE_COLOR_OTHER};"></div> ${t === '—' ? 'Unclassified' : t} (${counts[t]})</div>
+  `).join('');
+}
+
+// `color` is optional: by default markers are colored by exploration status.
+function makeMarker(L, wreck, color) {
+  color = color || {
     'recently-explored':  '#4a9eba',   // blue
     'previously-explored':'#5a8a6a',   // green
     'never-explored':     '#c87941',   // orange
@@ -127,29 +158,39 @@ function makeMarker(L, wreck) {
 }
 
 // Tile layers — call once per map, pass both to L.control.layers()
+// All tiles come from Esri's public ArcGIS basemaps, which need no API key.
+// (CARTO's basemaps, used until Oct 2026, started requiring a key and served
+// "API KEY REQUIRED" watermark tiles without one.)
+const ESRI_TILES = 'https://server.arcgisonline.com/ArcGIS/rest/services';
 function makeTileLayers(L) {
-  const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
+  // Esri's Dark Gray Canvas only has tiles to zoom 16; Leaflet upscales beyond that.
+  const darkBase = L.tileLayer(`${ESRI_TILES}/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}`, {
+    attribution: '&copy; Esri',
+    maxNativeZoom: 16,
     maxZoom: 19
   });
-  const satBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  const darkLabels = L.tileLayer(`${ESRI_TILES}/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, {
+    maxNativeZoom: 16,
+    maxZoom: 19
+  });
+  const satBase = L.tileLayer(`${ESRI_TILES}/World_Imagery/MapServer/tile/{z}/{y}/{x}`, {
     attribution: '&copy; Esri',
     maxZoom: 19
   });
-  const satLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
+  const satLabels = L.tileLayer(`${ESRI_TILES}/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}`, {
     maxZoom: 19
   });
+  const dark      = L.layerGroup([darkBase, darkLabels]);
   const satellite = L.layerGroup([satBase, satLabels]);
   return { dark, satellite };
 }
 
-// Apply brightness boost to dark tile pane; remove it for satellite
+// Per-layer CSS filter on the tile pane. The old CARTO dark tiles needed a
+// brightness boost; Esri's Dark Gray Canvas reads well as-is, so both layers
+// are currently unfiltered. Kept as the one place to tune it if needed.
 function applyTileFilter(map, layerName) {
   const pane = map.getPanes().tilePane;
-  pane.style.filter = (layerName === 'Satellite') ? '' : 'brightness(2.8) contrast(2) grayscale(0.5)';
+  pane.style.filter = '';
 }
 
 // Inline Dark / Satellite toggle control — replaces the stack-icon layer switcher

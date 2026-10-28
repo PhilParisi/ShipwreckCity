@@ -23,6 +23,9 @@ ShipwreckCity's per-target SEO lives in the master archive CSV
                                              buildNav()/buildFooter() in js/site.js, between
                                              STATIC-NAV / STATIC-FOOTER markers — rerun the build
                                              after changing NAV_LINKS)
+                                          →  "Last Update" stat on project.html / press.html
+                                             (any data-archive-date element), set from the
+                                             current archive CSV's filename date
                                           →  wrecks/luXXX.html + archive.html (redirects from the
                                              pre-Aug-2026 addresses to /lu-archive/; never edit or
                                              delete these by hand, and keep them out of the sitemap)

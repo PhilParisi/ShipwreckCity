@@ -81,8 +81,33 @@
   </div>
 </div>
 
+<!-- TARGETS BY TYPE MAP -->
 <div class="container" style="max-width:1320px;">
-  <div class="map-legend">
+  <h2 class="index-section-heading" style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);margin:24px 0 4px;">Targets by Type</h2>
+  <div class="map-legend" id="type-legend" style="flex-wrap:wrap;margin-top:8px;"></div>
+</div>
+<div class="map-wrap container" style="position:relative;margin-bottom:32px;max-width:1320px;">
+  <div class="map-wrapper" id="type-map-wrapper">
+    <div id="type-map"></div>
+    <button class="map-fullscreen-btn" id="type-map-fullscreen" aria-label="Toggle fullscreen">
+      <svg class="icon-expand" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="1,5 1,1 5,1"/><polyline points="11,1 15,1 15,5"/>
+        <polyline points="15,11 15,15 11,15"/><polyline points="5,15 1,15 1,11"/>
+      </svg>
+      <svg class="icon-collapse" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none">
+        <polyline points="5,1 1,1 1,5"/><polyline points="11,1 15,1 15,5"/>
+        <polyline points="15,11 15,15 11,15"/><polyline points="5,15 1,15 1,11"/>
+        <polyline points="5,5 1,1"/><polyline points="11,5 15,1"/>
+        <polyline points="15,15 11,11"/><polyline points="1,15 5,11"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- TARGETS BY EXPLORATION STATUS MAP -->
+<div class="container" style="max-width:1320px;">
+  <h2 class="index-section-heading" style="font-family:var(--font-display);font-size:42px;letter-spacing:1px;color:var(--text-primary);margin:24px 0 4px;">Targets by When They Were Explored</h2>
+  <div class="map-legend" style="flex-wrap:wrap;margin-top:8px;">
     <div class="legend-item"><div class="legend-dot" style="background:#4a9eba;"></div> Shipwreck City Explored</div>
     <div class="legend-item"><div class="legend-dot" style="background:#5a8a6a;"></div> Historically Explored</div>
     <div class="legend-item"><div class="legend-dot" style="background:#c87941;"></div> Not Yet Explored</div>
@@ -166,9 +191,6 @@
   document.getElementById('nav-mount').innerHTML    = buildNav('map');
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
-  const recentCount  = WRECKS.filter(w => w.status === 'recently-explored').length;
-  const progressPct  = WRECKS.length ? Math.round((recentCount / WRECKS.length) * 100) : 0;
-  const archiveDate  = (ARCHIVE_CSV_FILENAME || '').replace('target_master_archive_', '').replace('.csv', '');
   const map = L.map('full-map', {
     center: SITE_CONFIG.coordinates,
     zoom: SITE_CONFIG.mapZoom + 1
@@ -186,35 +208,62 @@
       .bindPopup(makePopup(w), { minWidth: 280, maxWidth: 320 });
   });
 
-  map.on('popupopen', e => {
-    const content = e.popup.getElement().querySelector('.leaflet-popup-content');
-    if (content) {
-      content.style.cursor = 'pointer';
-      content.addEventListener('click', () => {
-        const link = content.querySelector('.popup-link');
-        if (link) window.location.href = link.dataset.href;
-      });
-    }
-  });
+  linkPopups(map);
 
-  // Fullscreen toggle
-  const mapWrapper   = document.getElementById('map-wrapper');
-  const fsBtn        = document.getElementById('map-fullscreen');
-  const iconExpand   = fsBtn.querySelector('.icon-expand');
-  const iconCollapse = fsBtn.querySelector('.icon-collapse');
+  // Clicking anywhere in a marker popup opens that target's record
+  function linkPopups(m) {
+    m.on('popupopen', e => {
+      const content = e.popup.getElement().querySelector('.leaflet-popup-content');
+      if (content) {
+        content.style.cursor = 'pointer';
+        content.addEventListener('click', () => {
+          const link = content.querySelector('.popup-link');
+          if (link) window.location.href = link.dataset.href;
+        });
+      }
+    });
+  }
 
-  fsBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) { mapWrapper.requestFullscreen(); }
-    else                             { document.exitFullscreen(); }
+  // Fullscreen toggle (shared by both maps)
+  function setupFullscreen(m, wrapperId, buttonId, mapId) {
+    const wrapper      = document.getElementById(wrapperId);
+    const btn          = document.getElementById(buttonId);
+    const iconExpand   = btn.querySelector('.icon-expand');
+    const iconCollapse = btn.querySelector('.icon-collapse');
+    btn.addEventListener('click', () => {
+      if (!document.fullscreenElement) { wrapper.requestFullscreen(); }
+      else                             { document.exitFullscreen(); }
+    });
+    document.addEventListener('fullscreenchange', () => {
+      const isFs = document.fullscreenElement === wrapper;
+      iconExpand.style.display   = isFs ? 'none' : '';
+      iconCollapse.style.display = isFs ? ''     : 'none';
+      document.getElementById(mapId).style.height = isFs ? window.innerHeight + 'px' : '';
+      setTimeout(() => m.invalidateSize(), 50);
+    });
+  }
+  setupFullscreen(map, 'map-wrapper', 'map-fullscreen', 'full-map');
+
+  // ── Targets by Type map (legend = CSV "Type (New)") ──────────────────────
+  const typeMap = L.map('type-map', {
+    center: SITE_CONFIG.coordinates,
+    zoom: SITE_CONFIG.mapZoom + 1
   });
-  document.addEventListener('fullscreenchange', () => {
-    const isFs = !!document.fullscreenElement;
-    iconExpand.style.display   = isFs ? 'none' : '';
-    iconCollapse.style.display = isFs ? ''     : 'none';
-    const mapEl = document.getElementById('full-map');
-    mapEl.style.height = isFs ? window.innerHeight + 'px' : '';
-    setTimeout(() => map.invalidateSize(), 50);
+  const typeTiles = makeTileLayers(L);
+  typeTiles.satellite.addTo(typeMap);
+  applyTileFilter(typeMap, 'Satellite');
+  addTileToggle(L, typeMap, typeTiles, 'Satellite');
+
+  WRECKS.forEach(w => {
+    if (!w.coordinates) return;
+    L.marker(w.coordinates, { icon: makeMarker(L, w, typeColor(w)) })
+      .addTo(typeMap)
+      .bindPopup(makePopup(w), { minWidth: 280, maxWidth: 320 });
   });
+  linkPopups(typeMap);
+  setupFullscreen(typeMap, 'type-map-wrapper', 'type-map-fullscreen', 'type-map');
+
+  document.getElementById('type-legend').innerHTML = typeLegendHtml(WRECKS);
 
   // Gallery
   document.getElementById('map-gallery-label').href = `${ROOT}/lu-archive`;

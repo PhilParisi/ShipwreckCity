@@ -283,6 +283,7 @@ if (!ROWS_RE.test(archiveHtml)) {
         <td class="td-img"></td>
         <td class="td-catalog">${escapeHtml(w.catalog)}</td>
         <td><a href="lu-archive/${w.id}"><span class="td-name">${escapeHtml(w.name)}</span></a></td>
+        <td><div class="td-desc">${escapeHtml(w.seoDescription || '')}</div></td>
         <td class="td-type">${escapeHtml(w.type)}</td>
         <td>${depthDisplay(w.depth)}</td>
         <td><span class="status-dot status-${w.status}"></span>${escapeHtml(statusLabel(w.status))}</td>
@@ -305,6 +306,26 @@ topLevelPages.forEach(f => {
   chromePages++;
 });
 console.log(`  Wrote static nav/footer into ${chromePages} top-level pages (+ every wreck page).`);
+
+// ── "Last Update" stat on the project and press pages ────────────────────
+// Any element marked data-archive-date shows the date of the current archive
+// CSV (from ARCHIVE_CSV_FILENAME, e.g. target_master_archive_28Oct2026.csv →
+// "28 Oct '26"), so it updates with every new archive instead of by hand.
+const photosJs    = fs.readFileSync(path.join(__dirname, 'js/photos-data.js'), 'utf8');
+const archiveName = (photosJs.match(/ARCHIVE_CSV_FILENAME\s*=\s*"([^"]+)"/) || [])[1] || '';
+const archiveDate = archiveName.match(/(\d{1,2})([A-Za-z]+)(\d{4})/);
+if (!archiveDate) {
+  console.warn(`  ⚠ couldn't read a date from ARCHIVE_CSV_FILENAME ("${archiveName}") — "Last Update" not changed.`);
+} else {
+  const label = `${archiveDate[1]} ${archiveDate[2].slice(0, 1).toUpperCase()}${archiveDate[2].slice(1, 3).toLowerCase()} '${archiveDate[3].slice(2)}`;
+  topLevelPages.forEach(f => {
+    const file = path.join(__dirname, f);
+    const html = fs.readFileSync(file, 'utf8');
+    const updated = html.replace(/(<div class="[^"]*" data-archive-date>)[^<]*(<\/div>)/g, (m, open, close) => `${open}${label.replace(/'/g, '&#39;')}${close}`);
+    if (updated !== html) fs.writeFileSync(file, updated);
+  });
+  console.log(`  "Last Update" set to ${label} (from ${archiveName}).`);
+}
 
 // ── Redirects from the pre-August-2026 addresses ─────────────────────────
 // Wreck pages used to live at /wrecks/luNNN and the archive at /archive. They

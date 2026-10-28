@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url><loc>https://shipwreckcity.org/</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://shipwreckcity.org/map</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://shipwreckcity.org/lu-archive</loc><lastmod>2026-10-15</lastmod></url>
+  <url><loc>https://shipwreckcity.org/</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://shipwreckcity.org/map</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://shipwreckcity.org/lu-archive</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://shipwreckcity.org/events</loc><lastmod>2026-10-15</lastmod></url>
   <url><loc>https://shipwreckcity.org/support</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://shipwreckcity.org/project</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://shipwreckcity.org/team</loc><lastmod>2026-10-15</lastmod></url>
+  <url><loc>https://shipwreckcity.org/project</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://shipwreckcity.org/team</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://shipwreckcity.org/history</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://shipwreckcity.org/press</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://shipwreckcity.org/press</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://shipwreckcity.org/contact</loc><lastmod>2026-10-15</lastmod></url>
   <url><loc>https://shipwreckcity.org/lu-archive/lu001</loc><lastmod>2026-10-17</lastmod>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu001/primetime.webp</image:loc></image:image>
@@ -438,7 +438,7 @@
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu032/barge9.webp</image:loc></image:image>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu032/barge_sidescan.webp</image:loc></image:image>
   </url>
-  <url><loc>https://shipwreckcity.org/lu-archive/lu033</loc><lastmod>2026-10-17</lastmod>
+  <url><loc>https://shipwreckcity.org/lu-archive/lu033</loc><lastmod>2026-10-28</lastmod>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu033/primetime.webp</image:loc></image:image>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu033/wreck_0001.webp</image:loc></image:image>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu033/wreck_0002.webp</image:loc></image:image>
@@ -462,8 +462,8 @@
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu033/sidescan.webp</image:loc></image:image>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu033/sidescan2.webp</image:loc></image:image>
   </url>
-  <url><loc>https://shipwreckcity.org/lu-archive/lu034</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://shipwreckcity.org/lu-archive/lu035</loc><lastmod>2026-10-15</lastmod></url>
+  <url><loc>https://shipwreckcity.org/lu-archive/lu034</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://shipwreckcity.org/lu-archive/lu035</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://shipwreckcity.org/lu-archive/lu036</loc><lastmod>2026-10-17</lastmod>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu036/primetime.webp</image:loc></image:image>
     <image:image><image:loc>https://shipwreckcity.org/img/targets/lu036/frame_0001.webp</image:loc></image:image>

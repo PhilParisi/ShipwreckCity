@@ -53,7 +53,32 @@
     .td-img img { width: 96px; height: 96px; object-fit: cover; display: block; background: var(--bg-deep); }
     .td-catalog { width: 52px; white-space: nowrap; font-size: 15px; padding-right: 8px; }
     .td-type { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .filter-bar { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .filter-bar { margin-bottom: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .filter-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .filter-row-label {
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text-muted); min-width: 80px;
+    }
+    /* The Description column only gets the space left over by the fixed-width
+       columns; below ~1300px that's too narrow to read (and the header would
+       spill into "Type"), so hide the whole column there. */
+    @media (max-width: 1299px) {
+      #archive-table thead th:nth-child(4),
+      #archive-body tr td:nth-child(4) { display: none; }
+      #archive-table thead th:nth-child(7) { width: auto !important; }   /* Status takes what's left */
+    }
+    @media (max-width: 1000px) {
+      #archive-table thead th:nth-child(3) { width: auto !important; }   /* Name shrinks too (long names get "…") */
+    }
+    @media (max-width: 800px) {          /* small tablets: drop Depth, narrow Type */
+      #archive-table thead th:nth-child(6),
+      #archive-body tr td:nth-child(6) { display: none; }
+      #archive-table thead th:nth-child(5) { width: 130px !important; }
+    }
+    .td-desc {
+      font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--text-muted);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
     .filter-btn {
       font-family: var(--font-body); font-size: 16px; letter-spacing: 2px;
       text-transform: uppercase; padding: 10px 28px;
@@ -188,9 +213,10 @@
         <th style="width:110px;"></th>
         <th style="width:80px;">ID#</th>
         <th style="width:312px;">Name</th>
-        <th style="width:260px;">Type</th>
-        <th style="width:125px;">Depth</th>
-        <th>Status</th>
+        <th>Description</th>
+        <th style="width:190px;">Type</th>
+        <th style="width:110px;">Depth</th>
+        <th style="width:230px;">Status</th>
       </tr>
     </thead>
     <!-- Rows between the STATIC-ROWS markers are written by generate-wrecks.js so crawlers
@@ -201,6 +227,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU001</td>
         <td><a href="lu-archive/lu001"><span class="td-name">Wooden Barge</span></a></td>
+        <td><div class="td-desc">A 20' x 12' wooden barge wreck resting upright in 35 ft of water in Lake Union, Seattle, its hull still largely intact beneath weeds and netting.</div></td>
         <td class="td-type">Vessel</td>
         <td>35 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -209,6 +236,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU002</td>
         <td><a href="lu-archive/lu002"><span class="td-name">Wood Structure</span></a></td>
+        <td><div class="td-desc">Fragmented remains of a 16' x 8' wooden dock or work barge, resting in 35 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Infrastructure</td>
         <td>35 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -217,6 +245,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU003</td>
         <td><a href="lu-archive/lu003"><span class="td-name">The Old Barge</span></a></td>
+        <td><div class="td-desc">A massive 100' x 30' wooden barge wreck in 35 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Vessel</td>
         <td>35 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -225,6 +254,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU004</td>
         <td><a href="lu-archive/lu004"><span class="td-name">Metal Frame</span></a></td>
+        <td><div class="td-desc">A 6' x 6' angular metal frame resting in 35 ft of water amid scattered debris in Seattle's Lake Union — its original purpose still unknown.</div></td>
         <td class="td-type">Infrastructure</td>
         <td>35 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -233,6 +263,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU005</td>
         <td><a href="lu-archive/lu005"><span class="td-name">Wooden Boat</span></a></td>
+        <td><div class="td-desc">A 32' x 11' wooden shipwreck in 40 ft of water in Lake Union, Seattle, its hull deteriorated but bow stem and ribs still visible.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -241,6 +272,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU006</td>
         <td><a href="lu-archive/lu006"><span class="td-name">LCVP PA 201-8/9</span></a></td>
+        <td><div class="td-desc">A 25' x 8' WWII-era Higgins boat (LCVP) wreck in 40 ft of water in Lake Union, Seattle, its partial hull number possibly tied to the USS Menard.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -249,6 +281,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU007</td>
         <td><a href="lu-archive/lu007"><span class="td-name">Foss 54 (YC 191)</span></a></td>
+        <td><div class="td-desc">Foss 54 (YC 191): a 91' x 26' wooden Navy barge built in 1908, now resting in just 15 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>15 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -257,6 +290,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU008</td>
         <td><a href="lu-archive/lu008"><span class="td-name">Irene</span></a></td>
+        <td><div class="td-desc">Irene: a 45' x 12' wooden shipwreck resting in 40 ft of water in Lake Union, Seattle, with identifying lettering found on her hull.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -265,6 +299,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU009</td>
         <td><a href="lu-archive/lu009"><span class="td-name">Landing Craft</span></a></td>
+        <td><div class="td-desc">A 40' x 10' wooden landing craft wreck in 40 ft of water near Gas Works Park in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -273,6 +308,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU010</td>
         <td><a href="lu-archive/lu010"><span class="td-name">Small Work Barge</span></a></td>
+        <td><div class="td-desc">A small 15' x 6' wooden work barge wreck resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -281,6 +317,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU011</td>
         <td><a href="lu-archive/lu011"><span class="td-name">Debris Field</span></a></td>
+        <td><div class="td-desc">Worked timber and metal fittings resting in 40 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -289,6 +326,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU012</td>
         <td><a href="lu-archive/lu012"><span class="td-name">Kahlenberg</span></a></td>
+        <td><div class="td-desc">The Kahlenberg: a 55' x 14' wooden wreck in 40 ft of water in Lake Union, Seattle. Built in 1913, she served the Navy before Puget Sound's shrimp fleet.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -297,6 +335,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU013</td>
         <td><a href="lu-archive/lu013"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">An unidentified shipwreck logged in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -305,6 +344,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU014</td>
         <td><a href="lu-archive/lu014"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">An unconfirmed shipwreck resting in 40 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -313,6 +353,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU015</td>
         <td><a href="lu-archive/lu015"><span class="td-name">Wood Boat / Tug</span></a></td>
+        <td><div class="td-desc">A wooden boat or tug wreck, roughly 75' x 18', resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -321,6 +362,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU016</td>
         <td><a href="lu-archive/lu016"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">A potential 21' x 8' shipwreck of unknown material resting in 40 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -329,6 +371,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU017</td>
         <td><a href="lu-archive/lu017"><span class="td-name">Karinda</span></a></td>
+        <td><div class="td-desc">The Karinda: a 21' x 8' fiberglass shipwreck resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -337,6 +380,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU018</td>
         <td><a href="lu-archive/lu018"><span class="td-name">HI-YU-ALL</span></a></td>
+        <td><div class="td-desc">HI-YU-ALL: a 25' x 8' fiberglass shipwreck, likely a cabin cruiser, resting in 40 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -345,6 +389,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU019</td>
         <td><a href="lu-archive/lu019"><span class="td-name">Wood Cruiser</span></a></td>
+        <td><div class="td-desc">A 25' x 10' wooden cruiser wreck resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -353,6 +398,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU020</td>
         <td><a href="lu-archive/lu020"><span class="td-name">Possible Barge</span></a></td>
+        <td><div class="td-desc">A suspected barge wreck resting in 30 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Undetermined</td>
         <td>30 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -361,6 +407,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU021</td>
         <td><a href="lu-archive/lu021"><span class="td-name">Steel Workboat</span></a></td>
+        <td><div class="td-desc">A steel workboat wreck in 30 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Vessel</td>
         <td>30 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -369,6 +416,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU022</td>
         <td><a href="lu-archive/lu022"><span class="td-name">Metal Fire Boat</span></a></td>
+        <td><div class="td-desc">A 30.5' x 11' metal fireboat wreck believed to rest in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -377,6 +425,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU023</td>
         <td><a href="lu-archive/lu023"><span class="td-name">Small Wood Barge</span></a></td>
+        <td><div class="td-desc">A 12' x 5' wood barge, one of Lake Union's smallest, resting in 30 ft of water off Seattle.</div></td>
         <td class="td-type">Vessel</td>
         <td>30 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -385,6 +434,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU024</td>
         <td><a href="lu-archive/lu024"><span class="td-name">Bowspirit Boat</span></a></td>
+        <td><div class="td-desc">The Bowsprit Boat: a 33' x 10' wooden shipwreck in 40 ft of water in Lake Union, Seattle, named for a long spar still projecting from its bow.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -393,6 +443,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU025</td>
         <td><a href="lu-archive/lu025"><span class="td-name">Log Pile</span></a></td>
+        <td><div class="td-desc">A concentrated pile of sawn logs and rope, roughly 40' x 25', resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -401,6 +452,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU026</td>
         <td><a href="lu-archive/lu026"><span class="td-name">***Quinn II</span></a></td>
+        <td><div class="td-desc">Quinn II: a 28' x 8.5' fiberglass cabin cruiser wreck in 40 ft of water in Lake Union, Seattle, its white topsides and engine still visible.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -409,6 +461,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU027</td>
         <td><a href="lu-archive/lu027"><span class="td-name">Possible Sidewheeler</span></a></td>
+        <td><div class="td-desc">A wooden shipwreck resting in Seattle's Lake Union, possibly a sidewheel vessel.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -417,6 +470,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU028</td>
         <td><a href="lu-archive/lu028"><span class="td-name">Draft Marker Boat</span></a></td>
+        <td><div class="td-desc">A 60' x 20' wooden shipwreck in 40 ft of water in Lake Union, Seattle, its multi-bladed propeller and shafting still intact amid the wreckage.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -425,6 +479,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU029</td>
         <td><a href="lu-archive/lu029"><span class="td-name">Metal Box Frame</span></a></td>
+        <td><div class="td-desc">A corroded 12' rectangular metal frame resting in 40 ft of water in Seattle's Lake Union, tangled in old fishing line and floats.</div></td>
         <td class="td-type">Infrastructure</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -433,6 +488,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU030</td>
         <td><a href="lu-archive/lu030"><span class="td-name">Sailboat</span></a></td>
+        <td><div class="td-desc">A 34' x 10' wooden sailboat wreck believed to rest in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -441,6 +497,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU031</td>
         <td><a href="lu-archive/lu031"><span class="td-name">Metal Boat</span></a></td>
+        <td><div class="td-desc">A metal boat wreck resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -449,6 +506,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU032</td>
         <td><a href="lu-archive/lu032"><span class="td-name">Wood Barge</span></a></td>
+        <td><div class="td-desc">A 60' x 20' wooden barge wreck in 40 ft of water in Lake Union, Seattle, its heavy timber construction still identifiable despite partial collapse.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -457,6 +515,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU033</td>
         <td><a href="lu-archive/lu033"><span class="td-name">Collapsed Wooden Boat</span></a></td>
+        <td><div class="td-desc">A 45' x 16' wooden shipwreck in 40 ft of water in Lake Union, Seattle.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -464,8 +523,9 @@
       <tr>
         <td class="td-img"></td>
         <td class="td-catalog">#LU034</td>
-        <td><a href="lu-archive/lu034"><span class="td-name">Personal Liveaboad</span></a></td>
-        <td class="td-type">Debris</td>
+        <td><a href="lu-archive/lu034"><span class="td-name">Personal Liveaboard</span></a></td>
+        <td><div class="td-desc">A mixed-material shipwreck that once served as a personal liveaboard, resting in 30 ft of water in Seattle's Lake Union.</div></td>
+        <td class="td-type">Vessel</td>
         <td>30 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
       </tr>
@@ -473,6 +533,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU035</td>
         <td><a href="lu-archive/lu035"><span class="td-name">Jeanette</span></a></td>
+        <td><div class="td-desc">The Jeanette: a wooden shipwreck resting in Seattle's Lake Union, identified by name in prior research.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -481,6 +542,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU036</td>
         <td><a href="lu-archive/lu036"><span class="td-name">Debris Field</span></a></td>
+        <td><div class="td-desc">A scattered debris field of rope and metal fragments resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -489,6 +551,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU037</td>
         <td><a href="lu-archive/lu037"><span class="td-name">Debris Field</span></a></td>
+        <td><div class="td-desc">A small concentration of cable and metal debris resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -497,6 +560,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU038</td>
         <td><a href="lu-archive/lu038"><span class="td-name">USS Lapeer (PC 1138)</span></a></td>
+        <td><div class="td-desc">USS Lapeer (PC-1138): a Navy patrol craft believed to rest under a dock near shore in Lake Union, Seattle.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -505,6 +569,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU039</td>
         <td><a href="lu-archive/lu039"><span class="td-name">Debris</span></a></td>
+        <td><div class="td-desc">A 9' x 6' object of unknown material resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -513,6 +578,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU040</td>
         <td><a href="lu-archive/lu040"><span class="td-name">Sternwheeler</span></a></td>
+        <td><div class="td-desc">A sternwheeler wreck believed to rest in 30 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>30 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -521,6 +587,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU041</td>
         <td><a href="lu-archive/lu041"><span class="td-name">Sea Bee</span></a></td>
+        <td><div class="td-desc">The Sea Bee: a wooden shipwreck believed to rest under a dock near shore in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -529,6 +596,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU042</td>
         <td><a href="lu-archive/lu042"><span class="td-name">JE Boyden</span></a></td>
+        <td><div class="td-desc">J.E. Boyden: a 90' x 18' wooden steam tug built in Seattle in 1888, resting in 40 ft of water in Lake Union after towing barges and log booms for decades.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -537,6 +605,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU043</td>
         <td><a href="lu-archive/lu043"><span class="td-name">Log and Standing Wood</span></a></td>
+        <td><div class="td-desc">A splintered log, folding anchor, and scattered debris resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -545,6 +614,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU044</td>
         <td><a href="lu-archive/lu044"><span class="td-name">Long Log</span></a></td>
+        <td><div class="td-desc">A single large cut log, broken into several sections, resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -553,6 +623,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU045</td>
         <td><a href="lu-archive/lu045"><span class="td-name">Collapsed Wooden Boat</span></a></td>
+        <td><div class="td-desc">A collapsed wooden shipwreck resting in 40 ft of water in Lake Union, Seattle, its structure now scattered flat across the lakebed.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -561,6 +632,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU046</td>
         <td><a href="lu-archive/lu046"><span class="td-name">Bicycle and Scooter (Previous Buick Site)</span></a></td>
+        <td><div class="td-desc">Bicycles, e-scooters, and scattered debris resting on the lakebed at a site once logged as a submerged Buick, in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>—</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -569,6 +641,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU047</td>
         <td><a href="lu-archive/lu047"><span class="td-name">Possible Shipwreck</span></a></td>
+        <td><div class="td-desc">Suspected shipwreck debris resting in 40 ft of water in Seattle's Lake Union, not yet fully surveyed.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -577,6 +650,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU048</td>
         <td><a href="lu-archive/lu048"><span class="td-name">Barrel and Floating Rope</span></a></td>
+        <td><div class="td-desc">A barrel and length of floating rope resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -585,6 +659,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU049</td>
         <td><a href="lu-archive/lu049"><span class="td-name">Possible Shipwreck</span></a></td>
+        <td><div class="td-desc">Suspected shipwreck debris resting in Seattle's Lake Union, not yet fully surveyed.</div></td>
         <td class="td-type">Undetermined</td>
         <td>—</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -593,6 +668,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU050</td>
         <td><a href="lu-archive/lu050"><span class="td-name">Possible Shipwreck</span></a></td>
+        <td><div class="td-desc">A suspected shipwreck resting in 40 ft of water in Seattle's Lake Union, its classification still undetermined.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -601,6 +677,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU051</td>
         <td><a href="lu-archive/lu051"><span class="td-name">Possible Shipwreck</span></a></td>
+        <td><div class="td-desc">A second unverified wreck nearby, resting in 40 ft of water in Seattle's Lake Union, not yet fully surveyed.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -609,6 +686,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU052</td>
         <td><a href="lu-archive/lu052"><span class="td-name">Small Metal Chest</span></a></td>
+        <td><div class="td-desc">A 5' x 4' metal chest resting in 40 ft of water in Seattle's Lake Union, its corroded surfaces and original purpose still a mystery.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -617,6 +695,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU053</td>
         <td><a href="lu-archive/lu053"><span class="td-name">Pilings</span></a></td>
+        <td><div class="td-desc">Weathered wooden pilings rising from the lakebed in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -625,6 +704,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU054</td>
         <td><a href="lu-archive/lu054"><span class="td-name">Debris Field</span></a></td>
+        <td><div class="td-desc">A 24' x 4' field of scattered wood and debris resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -633,6 +713,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU055</td>
         <td><a href="lu-archive/lu055"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">A shipwreck believed buried in the mud of Seattle's Lake Union, its outline still emerging from 40 ft of water.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -641,6 +722,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU056</td>
         <td><a href="lu-archive/lu056"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">A large 70' x 40' barge wreck believed to rest in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -649,6 +731,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU057</td>
         <td><a href="lu-archive/lu057"><span class="td-name">Shipwreck(s) Debris Field</span></a></td>
+        <td><div class="td-desc">A shipwreck debris field of unknown material resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -657,6 +740,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU058</td>
         <td><a href="lu-archive/lu058"><span class="td-name">Barge</span></a></td>
+        <td><div class="td-desc">A barge wreck, its hull mostly buried in mud, resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -665,6 +749,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU059</td>
         <td><a href="lu-archive/lu059"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">One of several uncharted shipwrecks resting in 40 ft of water in Seattle's Lake Union, yet to be fully surveyed.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -673,6 +758,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU060</td>
         <td><a href="lu-archive/lu060"><span class="td-name">Cables, Tires, Drums</span></a></td>
+        <td><div class="td-desc">Cables, tires, and drums resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -681,6 +767,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU061</td>
         <td><a href="lu-archive/lu061"><span class="td-name">Debris</span></a></td>
+        <td><div class="td-desc">Unidentified debris resting on the lakebed in Seattle's Lake Union, not yet fully surveyed.</div></td>
         <td class="td-type">Undetermined</td>
         <td>—</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -689,6 +776,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU062</td>
         <td><a href="lu-archive/lu062"><span class="td-name">Gypsy Queen (YMS105)</span></a></td>
+        <td><div class="td-desc">Gypsy Queen (YMS-105): a WWII Navy minesweeper turned floating fish-processing plant, resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -697,6 +785,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU063</td>
         <td><a href="lu-archive/lu063"><span class="td-name">Wooden Sloop</span></a></td>
+        <td><div class="td-desc">Logged as a wooden sloop, this shipwreck rests on the bottom of Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -705,6 +794,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU064</td>
         <td><a href="lu-archive/lu064"><span class="td-name">Wooden Pleasure Craft ( ___ANN)</span></a></td>
+        <td><div class="td-desc">A wooden pleasure craft wreck resting in 40 ft of water in Seattle's Lake Union, its partial name still visible but unconfirmed.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -713,6 +803,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU065</td>
         <td><a href="lu-archive/lu065"><span class="td-name">Cannery Tender</span></a></td>
+        <td><div class="td-desc">A metal cannery tender wreck resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -721,6 +812,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU066</td>
         <td><a href="lu-archive/lu066"><span class="td-name">Previous Harley Davidson Site</span></a></td>
+        <td><div class="td-desc">The site of a since-removed Harley-Davidson motorcycle in 15 ft of water in Seattle's Lake Union, now home to a sunken e-bike and scattered debris.</div></td>
         <td class="td-type">Vessel</td>
         <td>15 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -729,6 +821,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU067</td>
         <td><a href="lu-archive/lu067"><span class="td-name">Likely Barge</span></a></td>
+        <td><div class="td-desc">A suspected barge wreck of unknown material resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -737,6 +830,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU068</td>
         <td><a href="lu-archive/lu068"><span class="td-name">Likely Barge</span></a></td>
+        <td><div class="td-desc">A suspected barge wreck of unknown material resting in 40 ft of water in Seattle's Lake Union, near a similar unconfirmed site.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -745,6 +839,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU069</td>
         <td><a href="lu-archive/lu069"><span class="td-name">Collapsed Wooden Boat</span></a></td>
+        <td><div class="td-desc">A 28' x 8' collapsed wooden boat wreck resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -753,6 +848,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU070</td>
         <td><a href="lu-archive/lu070"><span class="td-name">Ladder Debris Field</span></a></td>
+        <td><div class="td-desc">A field of metal ladder debris resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -761,6 +857,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU071</td>
         <td><a href="lu-archive/lu071"><span class="td-name">Pleasure Craft</span></a></td>
+        <td><div class="td-desc">A pleasure craft wreck of metal construction, resting somewhere in the 40-ft depths of Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -769,6 +866,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU072</td>
         <td><a href="lu-archive/lu072"><span class="td-name">Debris</span></a></td>
+        <td><div class="td-desc">A small 9' x 5' debris site resting in 40 ft of water in Seattle's Lake Union, its contents still unidentified.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -777,6 +875,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU073</td>
         <td><a href="lu-archive/lu073"><span class="td-name">Possible Airplane Drop Tank</span></a></td>
+        <td><div class="td-desc">A suspected WWII-era aircraft drop tank, 12 ft long, resting in 40 ft of water in Seattle's Lake Union — once logged as a kayak in early surveys.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -785,6 +884,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU074</td>
         <td><a href="lu-archive/lu074"><span class="td-name">Bulwarks Boat</span></a></td>
+        <td><div class="td-desc">The Bulwarks Boat: a 35' wooden shipwreck resting in just 4 ft of water in Seattle's Lake Union, heavily collapsed.</div></td>
         <td class="td-type">Vessel</td>
         <td>4 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -793,6 +893,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU075</td>
         <td><a href="lu-archive/lu075"><span class="td-name">Wooden Debris</span></a></td>
+        <td><div class="td-desc">Two long cut wooden beams, fastened together, resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -801,6 +902,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU076</td>
         <td><a href="lu-archive/lu076"><span class="td-name">DARE-LES (WN 3986 D)</span></a></td>
+        <td><div class="td-desc">DARE-LES (WN 3986 D): a 24' x 8' fiberglass shipwreck in 40 ft of water in Lake Union, Seattle, its hull name and Seattle homeport still legible.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -809,6 +911,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU077</td>
         <td><a href="lu-archive/lu077"><span class="td-name">Small Wooden Boat</span></a></td>
+        <td><div class="td-desc">A 25' x 4' wooden boat wreck resting low in 40 ft of water in Seattle's Lake Union, its deck long buried in sediment.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -817,6 +920,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU078</td>
         <td><a href="lu-archive/lu078"><span class="td-name">Betty W.</span></a></td>
+        <td><div class="td-desc">Believed to be the 35' sailing vessel Betty W., this wooden shipwreck rests in 40 ft of water in Seattle's Lake Union, its cabin still standing.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -825,6 +929,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU079</td>
         <td><a href="lu-archive/lu079"><span class="td-name">Debris field</span></a></td>
+        <td><div class="td-desc">A scattered debris field, including a cushion-like object and tangled netting, resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -833,6 +938,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU080</td>
         <td><a href="lu-archive/lu080"><span class="td-name">Debris field</span></a></td>
+        <td><div class="td-desc">A field of tangled netting and mixed debris resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -841,6 +947,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU081</td>
         <td><a href="lu-archive/lu081"><span class="td-name">Small Metal Boat with Docks</span></a></td>
+        <td><div class="td-desc">A collapsed metal boat amid the remains of a wooden dock, resting in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -849,6 +956,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU082</td>
         <td><a href="lu-archive/lu082"><span class="td-name">Work Boat</span></a></td>
+        <td><div class="td-desc">A mixed-material work boat wreck resting in 35 ft of water in Seattle's Lake Union, a heavy chain still draped across its timbers.</div></td>
         <td class="td-type">Vessel</td>
         <td>35 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -857,6 +965,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU083</td>
         <td><a href="lu-archive/lu083"><span class="td-name">Small Wood Barge</span></a></td>
+        <td><div class="td-desc">A small wood barge wreck resting in 20 ft of water beneath a commercial mooring area in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>20 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -865,6 +974,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU084</td>
         <td><a href="lu-archive/lu084"><span class="td-name">Metal Barge</span></a></td>
+        <td><div class="td-desc">A 24' x 12' metal barge wreck resting in 30 ft of water near a stormwater outfall in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>30 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -873,6 +983,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU085</td>
         <td><a href="lu-archive/lu085"><span class="td-name">Gypsy Trader</span></a></td>
+        <td><div class="td-desc">Gypsy Trader: a wooden shipwreck believed to rest in 40 ft of water in Seattle's Lake Union, not yet independently documented.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -881,6 +992,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU086</td>
         <td><a href="lu-archive/lu086"><span class="td-name">Small Wooden Boat</span></a></td>
+        <td><div class="td-desc">A small 14' x 4.5' wooden boat wreck resting in 40 ft of water in Seattle's Lake Union, heavily deteriorated and partly buried.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -889,6 +1001,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU087</td>
         <td><a href="lu-archive/lu087"><span class="td-name">Kayak (Resonance Brand)</span></a></td>
+        <td><div class="td-desc">A 14' Resonance-brand kayak resting in 40 ft of water in Seattle's Lake Union, its hull markings the subject of an ongoing identification effort.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -897,6 +1010,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU088</td>
         <td><a href="lu-archive/lu088"><span class="td-name">Possible Sailboat</span></a></td>
+        <td><div class="td-desc">A 45' x 15' suspected sailboat wreck resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -905,6 +1019,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU089</td>
         <td><a href="lu-archive/lu089"><span class="td-name">Debris field</span></a></td>
+        <td><div class="td-desc">A dispersed field of tires, timber, and rope resting in 40 ft of water in Seattle's Lake Union, possibly tied to a larger vessel.</div></td>
         <td class="td-type">Debris</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -913,6 +1028,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU090</td>
         <td><a href="lu-archive/lu090"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">A 24' x 8' shipwreck resting in 40 ft of water in Seattle's Lake Union, its identity still undetermined.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -921,6 +1037,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU091</td>
         <td><a href="lu-archive/lu091"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">A larger, 35' x 8' unidentified wreck resting in 40 ft of water in Seattle's Lake Union, yet to be fully surveyed.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -929,6 +1046,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU092</td>
         <td><a href="lu-archive/lu092"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">A 25' shipwreck of unknown type resting in 40 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -937,6 +1055,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU093</td>
         <td><a href="lu-archive/lu093"><span class="td-name">Shipwreck</span></a></td>
+        <td><div class="td-desc">One of Lake Union's smallest unconfirmed wrecks, just 12' x 5', resting in 40 ft of water off Seattle.</div></td>
         <td class="td-type">Undetermined</td>
         <td>40 ft</td>
         <td><span class="status-dot status-never-explored"></span>Never Explored</td>
@@ -945,6 +1064,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU094</td>
         <td><a href="lu-archive/lu094"><span class="td-name">Fiberglass Rowboat</span></a></td>
+        <td><div class="td-desc">A 14' fiberglass rowboat wreck resting in 40 ft of water in Seattle's Lake Union, its bench seats and gunwales still intact.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -953,6 +1073,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU095</td>
         <td><a href="lu-archive/lu095"><span class="td-name">Wooden Boat</span></a></td>
+        <td><div class="td-desc">A 15' x 6' wooden boat wreck resting in 40 ft of water in Seattle's Lake Union, its bench-like beams and gunwales still in place.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -961,6 +1082,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU096</td>
         <td><a href="lu-archive/lu096"><span class="td-name">Fiberglass Boat (WN 7352 JD)</span></a></td>
+        <td><div class="td-desc">A 14' x 4.5' fiberglass boat wreck (WN 7352 JD) in 40 ft of water in Seattle's Lake Union — its registration is under active research by Shipwreck City.</div></td>
         <td class="td-type">Vessel</td>
         <td>40 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -969,6 +1091,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU097</td>
         <td><a href="lu-archive/lu097"><span class="td-name">Cables</span></a></td>
+        <td><div class="td-desc">Multiple lengths of exposed cable spread across the lakebed in 20 ft of water in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>20 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -977,6 +1100,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU098</td>
         <td><a href="lu-archive/lu098"><span class="td-name">Pleasure Craft</span></a></td>
+        <td><div class="td-desc">A 24' x 8' pleasure craft wreck resting in 23 ft of water in Seattle's Lake Union, its cabin windows and railing still visible.</div></td>
         <td class="td-type">Vessel</td>
         <td>23 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -985,6 +1109,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU099</td>
         <td><a href="lu-archive/lu099"><span class="td-name">Onondaga (Arctic Explorer, WPG-79)</span></a></td>
+        <td><div class="td-desc">Onondaga (WPG-79), later Arctic Explorer: a 165' x 36' Coast Guard cutter resting in just 4 ft of water near Seattle's Ballard Ship Canal.</div></td>
         <td class="td-type">Vessel</td>
         <td>4 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -993,6 +1118,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU100</td>
         <td><a href="lu-archive/lu100"><span class="td-name">Cruising Vessel</span></a></td>
+        <td><div class="td-desc">A fiberglass cruising vessel wreck resting near Seattle's Ballard Ship Canal, its cabin and railing largely intact.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1001,6 +1127,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU101</td>
         <td><a href="lu-archive/lu101"><span class="td-name">Cruising Vessel</span></a></td>
+        <td><div class="td-desc">A mixed-material cruising vessel wreck resting near Seattle's Ballard Ship Canal, its hull sections displaced but recognizable.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1009,6 +1136,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU102</td>
         <td><a href="lu-archive/lu102"><span class="td-name">Car Wreck (V6)</span></a></td>
+        <td><div class="td-desc">A metal car wreck resting upside-down in Seattle's Lake Union — a surviving V6 badge suggests it may be a first-generation Mazda MPV.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1017,6 +1145,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU103</td>
         <td><a href="lu-archive/lu103"><span class="td-name">Smalll Wooden Boat</span></a></td>
+        <td><div class="td-desc">A small wooden boat wreck resting on the lakebed in Seattle's Lake Union, its bow fitting and hull framing still intact.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1025,6 +1154,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU104</td>
         <td><a href="lu-archive/lu104"><span class="td-name">Small Dock</span></a></td>
+        <td><div class="td-desc">A 15' x 6' small dock, its wooden decking and metal fittings still visible, resting on the lakebed in Seattle's Lake Union.</div></td>
         <td class="td-type">Infrastructure</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1033,6 +1163,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU105</td>
         <td><a href="lu-archive/lu105"><span class="td-name">Barge and Trailer (The Dump)</span></a></td>
+        <td><div class="td-desc">Known as &quot;The Dump&quot;: a barge, trailer, tires, and scattered debris spread across the lakebed in Seattle's Lake Union.</div></td>
         <td class="td-type">Debris</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1041,6 +1172,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU106</td>
         <td><a href="lu-archive/lu106"><span class="td-name">Wooden Wreck</span></a></td>
+        <td><div class="td-desc">A 22' x 8' wooden shipwreck resting in just 3 ft of water on a sloping lakebed in Seattle's Lake Union, its propeller and rudder still in place.</div></td>
         <td class="td-type">Vessel</td>
         <td>3 ft</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1049,6 +1181,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU107</td>
         <td><a href="lu-archive/lu107"><span class="td-name">Small Wooden Boat</span></a></td>
+        <td><div class="td-desc">A 15' x 5' small wooden boat wreck resting in Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -1057,6 +1190,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU108</td>
         <td><a href="lu-archive/lu108"><span class="td-name">Tree Trunks</span></a></td>
+        <td><div class="td-desc">Sunken tree trunks resting on the lakebed in Seattle's Lake Union, classified as organic debris.</div></td>
         <td class="td-type">Debris</td>
         <td>—</td>
         <td><span class="status-dot status-previously-explored"></span>Previously Explored</td>
@@ -1065,6 +1199,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU109</td>
         <td><a href="lu-archive/lu109"><span class="td-name">Geological Feature</span></a></td>
+        <td><div class="td-desc">A natural sedimentary rock formation, roughly 15' x 8', exposed on the lakebed in Seattle's Lake Union.</div></td>
         <td class="td-type">Geology</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1073,6 +1208,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU110</td>
         <td><a href="lu-archive/lu110"><span class="td-name">Car Wreck</span></a></td>
+        <td><div class="td-desc">A metal car wreck resting in roughly 24 ft of water at the bottom of the Fremont Cut Canal, where it connects to Seattle's Lake Union.</div></td>
         <td class="td-type">Vessel</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1081,6 +1217,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU111</td>
         <td><a href="lu-archive/lu111"><span class="td-name">Small Wood Dock</span></a></td>
+        <td><div class="td-desc">A small wooden dock resting in 28 ft of water in Seattle's Lake Union, its timbers and metal rods still partially standing.</div></td>
         <td class="td-type">Infrastructure</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1089,6 +1226,7 @@
         <td class="td-img"></td>
         <td class="td-catalog">#LU112</td>
         <td><a href="lu-archive/lu112"><span class="td-name">Logs</span></a></td>
+        <td><div class="td-desc">A concentration of large logs resting on the lakebed in Seattle's Lake Union, classified as organic debris.</div></td>
         <td class="td-type">Debris</td>
         <td>—</td>
         <td><span class="status-dot status-recently-explored"></span>Recently Explored</td>
@@ -1240,13 +1378,10 @@
     });
     const m = filename.match(/(\d+)([A-Za-z]+)(\d{4})/);
     if (m) {
-      const pct = WRECKS.length ? Math.round(65 / WRECKS.length * 100) : 0;
       document.getElementById('archive-last-updated').textContent =
-        `The Archive Dataset was last updated on: ${m[1]} ${m[2]} ${m[3]}. The Project is ${pct}% complete.`;
+        `The Archive Dataset was last updated on: ${m[1]} ${m[2]} ${m[3]}.`;
     }
   })();
-
-  let activeFilter = 'all';
 
   const PRIMETIME_EXTS = ['jpg','jpeg','png','webp'];
   function tryPrimetimeExt(img, id) {
@@ -1256,11 +1391,18 @@
     else       { img.closest('.td-img').style.background = 'var(--bg-deep)'; img.style.display = 'none'; }
   }
 
-  function renderTable(filter) {
-    const filtered = filter === 'all'             ? WRECKS
-                   : filter === 'newly-uncovered' ? WRECKS.filter(w => w.newTarget)
-                   : filter === 'wrecks'          ? WRECKS.filter(w => w.type === 'Vessel')
-                   : WRECKS.filter(w => w.status === filter || w.type === filter);
+  // Two independent filters (one per row): Type (New), and exploration status.
+  // A target shows if it matches both.
+  const filters = { type: 'all', status: 'all' };
+  function matchesStatus(w, status) {
+    if (status === 'all')             return true;
+    if (status === 'newly-uncovered') return w.newTarget;
+    return w.status === status;
+  }
+
+  function renderTable() {
+    const filtered = WRECKS.filter(w =>
+      (filters.type === 'all' || w.type === filters.type) && matchesStatus(w, filters.status));
     document.getElementById('archive-count').textContent = `${filtered.length} Target${filtered.length !== 1 ? 's' : ''} — Lake Union`;
     document.getElementById('archive-body').innerHTML = filtered.map(w => `
       <tr style="cursor:pointer;" onclick="location.href='${ROOT}/lu-archive/${w.id}'">
@@ -1271,6 +1413,7 @@
         </td>
         <td class="td-catalog">${w.catalog}</td>
         <td><a href="${ROOT}/lu-archive/${w.id}"><span class="td-name">${w.name}</span></a></td>
+        <td><div class="td-desc" title="${(w.seoDescription || '').replace(/"/g, '&quot;')}">${w.seoDescription || ''}</div></td>
         <td class="td-type">${w.type}</td>
         <td>${depthDisplay(w.depth)}</td>
         <td>
@@ -1280,30 +1423,51 @@
     `).join('');
   }
 
-  // Build filter buttons from unique statuses + wrecks + newly uncovered
-  const statuses = ['all', 'wrecks', ...new Set(WRECKS.map(w => w.status)), 'newly-uncovered'];
+  // Filter rows. Type buttons come from the data ("Type (New)"), in the same
+  // order as the Targets by Type map legend; statuses are in a fixed order.
+  const typeCounts = {};
+  WRECKS.forEach(w => { typeCounts[w.type] = (typeCounts[w.type] || 0) + 1; });
+  const TYPE_FILTERS = [
+    ...Object.keys(TYPE_COLORS).filter(t => typeCounts[t]),
+    ...Object.keys(typeCounts).filter(t => !(t in TYPE_COLORS)).sort(),
+  ];
+  const STATUS_FILTERS = [
+    ['newly-uncovered',     'Shipwreck City Uncovered'],
+    ['recently-explored',   'Shipwreck City Explored'],
+    ['previously-explored', 'Previously Explored'],
+    ['never-explored',      'Never Explored'],
+  ];
+  const filterBtn = (group, value, label) =>
+    `<button class="filter-btn ${filters[group] === value ? 'active' : ''}" data-group="${group}" data-filter="${value}">${label}</button>`;
   const filterBar = document.getElementById('filter-bar');
-  filterBar.innerHTML = statuses.map(s => `
-    <button class="filter-btn ${s === 'all' ? 'active' : ''}" data-filter="${s}">
-      ${s === 'all' ? 'All Targets' : s === 'wrecks' ? 'Wrecks' : s === 'newly-uncovered' ? 'Newly Uncovered' : statusLabel(s)}
-    </button>
-  `).join('');
+  function drawFilters() {
+    filterBar.innerHTML = `
+      <div class="filter-row"><span class="filter-row-label">Type</span>
+        ${filterBtn('type', 'all', 'All Types')}
+        ${TYPE_FILTERS.map(t => filterBtn('type', t, t === '—' ? 'Unclassified' : t)).join('')}
+      </div>
+      <div class="filter-row"><span class="filter-row-label">Status</span>
+        ${filterBtn('status', 'all', 'All')}
+        ${STATUS_FILTERS.map(([v, l]) => filterBtn('status', v, l)).join('')}
+      </div>`;
+  }
 
   filterBar.addEventListener('click', e => {
     const btn = e.target.closest('.filter-btn');
     if (!btn) return;
-    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderTable(btn.dataset.filter);
+    filters[btn.dataset.group] = btn.dataset.filter;
+    drawFilters();
+    renderTable();
   });
 
-  const initialFilter = location.hash.replace('#', '') || 'all';
-  const initialBtn = filterBar.querySelector(`[data-filter="${initialFilter}"]`);
-  if (initialBtn) {
-    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    initialBtn.classList.add('active');
-  }
-  renderTable(initialFilter);
+  // Links like lu-archive#recently-explored or #newly-uncovered (used on the home
+  // page) preselect a status; #wrecks or a type name preselects a type.
+  const initialFilter = decodeURIComponent(location.hash.replace('#', ''));
+  if (STATUS_FILTERS.some(([v]) => v === initialFilter)) filters.status = initialFilter;
+  else if (initialFilter === 'wrecks')                   filters.type   = 'Vessel';
+  else if (TYPE_FILTERS.includes(initialFilter))         filters.type   = initialFilter;
+  drawFilters();
+  renderTable();
   if (window.innerWidth <= 600) {
     const ct = document.getElementById('archive-caution-text');
     if (ct) ct.textContent = 'Wreck Archive is best viewed on desktop.';

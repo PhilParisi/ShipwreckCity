@@ -67,9 +67,10 @@ const EVENTS = [
     address: "600 W Nickerson St, Seattle, WA",
     image: "img/targets/lu069/primetime.webp",
     imagePosition: "right",
+    badge: "Sold Out",
     description: "Lectures on Tap is a national event series that brings professors and experts into local bars for laid-back, 45-minute talks followed by audience Q&A over a drink. Shipwreck City is bringing its Lake Union shipwreck survey to Old Stove Brewing's Ship Canal taproom.",
-    url: "https://www.eventbrite.com/e/lectures-on-tap-beneath-lake-union-seattles-hidden-shipwrecks-tickets-2003224777234",
-    ctaLabel: "Get Tickets →"
+    url: "https://www.eventbrite.com/e/lectures-on-tap-beneath-lake-union-seattles-hidden-shipwrecks-tickets-2003224777234?aff=odcleoeventsincollection",
+    ctaLabel: "View Event (Sold Out) →"
   },
   {
     title: "An Evening with Shipwreck City",
