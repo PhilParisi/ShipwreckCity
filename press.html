@@ -21,7 +21,8 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shipwreckcity.org/press">
   <link rel="canonical" href="https://shipwreckcity.org/press">
-  <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_master.png">
+  <link rel="apple-touch-icon" href="img/thumbnails/favicon_master.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
@@ -311,6 +312,9 @@
 
   <div class="coverage-grid" id="coverage-grid"></div>
 
+  <div class="press-body"><h2>Publications</h2></div>
+  <div class="coverage-grid" id="publications-grid"></div>
+
 </section>
 
 <div class="container" style="padding-top:0; padding-bottom:64px;">
@@ -395,7 +399,11 @@
     { source: 'Lake Washington Rowing Club', title: 'What Lies Beneath — Lake Union\'s History',                                                                                     href: 'img/thumbnails/MakingWavesJune26Lo-Res.pdf',                                                                                                                                        thumb: 'img/targets/lu078/frame_0011.webp' },
   ];
 
-  document.getElementById('coverage-grid').innerHTML = COVERAGE.map(c => `
+  const PUBLICATIONS = [
+    { source: 'Nautical Archaeology Society — Autumn 2026', title: 'A City\'s Underwater History: People Powered Connections — Evan Weber', href: 'publications/nautical-archaeology-autumn-2026.pdf#page=7', thumb: 'img/thumbnails/nautical_archaeology_autumn2026.webp' },
+  ];
+
+  const mediaCards = items => items.map(c => `
     <a class="media-card" href="${c.href}" target="_blank" rel="noopener">
       <img class="media-card-thumb" src="${c.thumb}" alt="${c.source} coverage" loading="lazy">
       <div class="media-card-body">
@@ -404,6 +412,9 @@
       </div>
     </a>
   `).join('');
+
+  document.getElementById('coverage-grid').innerHTML     = mediaCards(COVERAGE);
+  document.getElementById('publications-grid').innerHTML = mediaCards(PUBLICATIONS);
 
   // Press photo bulk download
   const modal = document.getElementById('license-modal');
