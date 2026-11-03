@@ -1280,7 +1280,7 @@ a.section-label-link:hover { color: var(--text-primary); }
   height: 96px;
   width: auto;
   opacity: 1;
-  filter: brightness(0.7);
+  filter: brightness(0.85);
   transition: opacity 0.2s, filter 0.2s;
 }
 .supporters-grid a:hover img {
@@ -1424,7 +1424,7 @@ a.section-label-link:hover { color: var(--text-primary); }
    RESPONSIVE
    ============================================================ */
 /* Collapse the main nav into the hamburger menu before the links run out of room */
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   .nav-hamburger { display: flex; }
   .nav-links {
     display: none;

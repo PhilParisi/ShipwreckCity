@@ -113,6 +113,7 @@
       <a href="/project" class="">Project</a>
       <a href="/history" class="">History</a>
       <a href="/press" class="">Press</a>
+      <a href="/contact" class="active">Contact</a>
     </div>
   </nav>
 <!-- STATIC-NAV:END --></div>
@@ -211,6 +212,7 @@
       <a href="/project">Project</a>
       <a href="/history">History</a>
       <a href="/press">Press</a>
+      <a href="/contact">Contact</a>
     </div>
   </footer>
 <!-- STATIC-FOOTER:END --></div>
@@ -218,7 +220,7 @@
 <script src="js/wrecks-data.js"></script>
 <script src="js/site.js"></script>
 <script>
-  document.getElementById('nav-mount').innerHTML    = buildNav('');
+  document.getElementById('nav-mount').innerHTML    = buildNav('contact');
   document.getElementById('footer-mount').innerHTML = buildFooter();
 
   document.getElementById('contact-form').addEventListener('submit', async function(e) {

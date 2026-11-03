@@ -18,6 +18,7 @@ const NAV_LINKS = [
   { slug: 'project',    label: 'Project' },
   { slug: 'history',    label: 'History' },
   { slug: 'press',      label: 'Press'   },
+  { slug: 'contact',    label: 'Contact' },
 ];
 
 // Photo license. Used for the Google Images "Licensable" metadata that

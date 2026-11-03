@@ -58,18 +58,18 @@ const EVENTS = [
     ctaLabel: "View Event Details →"
   },
   {
-    title: "Lectures on Tap",
+    title: "Lectures on Tap: Beneath Lake Union — Seattle's Hidden Shipwrecks",
     month: "NOV",
     day: "10",
     year: "2026",
     time: "6:30 – 8:30 PM",
-    venue: "Old Stove Brewing (Ship Canal)",
-    address: "600 W Nickerson St, Seattle, WA",
+    venue: "North Queen Anne",
+    address: "Seattle, WA 98119 (exact address sent with tickets)",
     image: "img/targets/lu069/primetime.webp",
     imagePosition: "right",
     badge: "Sold Out",
-    description: "Lectures on Tap is a national event series that brings professors and experts into local bars for laid-back, 45-minute talks followed by audience Q&A over a drink. Shipwreck City is bringing its Lake Union shipwreck survey to Old Stove Brewing's Ship Canal taproom.",
-    url: "https://www.eventbrite.com/e/lectures-on-tap-beneath-lake-union-seattles-hidden-shipwrecks-tickets-2003224777234?aff=odcleoeventsincollection",
+    description: "More than one hundred targets of interest, including barges, shipwrecks, and even cars, rest on the bottom of Lake Union, and much of their story is still missing from Seattle's maritime history. Over a drink at this Lectures on Tap talk, Phil Parisi and Evan Weber of Shipwreck City share how Finn, the project's small blue remote-controlled robot, is filming never-before-seen wrecks and building the city's most up-to-date shipwreck archive.",
+    url: "https://www.eventbrite.com/e/lectures-on-tap-beneath-lake-union-seattles-hidden-shipwrecks-tickets-2003224777234",
     ctaLabel: "View Event (Sold Out) →"
   },
   {

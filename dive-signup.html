@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dive Sign-Up — Shipwreck City</title>
+  <!-- Private page: shared by link only. Keep it out of search, the nav, and the sitemap.
+       It holds no schedule, names, or password. Those come from the Google Apps Script
+       in tools/dive-signup/, which only answers with the right password. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_sc.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .signup-wrap { max-width: 760px; }
+    .signup-intro {
+      font-family: var(--font-serif); font-size: 16px; line-height: 1.8;
+      color: var(--text-mid); margin-bottom: 28px;
+    }
+    .signup-field {
+      width: 100%; box-sizing: border-box; padding: 12px 14px;
+      font-family: var(--font-body); font-size: 16px;
+      background: var(--bg-deep); color: var(--text-primary);
+      border: 1px solid var(--border-mid);
+    }
+    .signup-field:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+    .signup-label {
+      display: block; font-family: var(--font-body); font-size: 15px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
+    }
+    .signup-btn {
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 12px 24px; background: transparent; border: 1px solid var(--text-primary);
+      color: var(--text-primary); cursor: pointer; transition: all 0.2s;
+    }
+    .signup-btn:hover:not(:disabled) { background: var(--text-primary); color: var(--bg-dark); }
+    .signup-btn:disabled { opacity: 0.5; cursor: default; }
+    .signup-msg { font-family: var(--font-serif); font-size: 15px; line-height: 1.6; margin-top: 14px; min-height: 24px; }
+    .signup-msg.error   { color: #e8956a; }
+    .signup-msg.success { color: #7fc4d8; }
+    #gate-form { display: flex; flex-direction: column; gap: 14px; max-width: 420px; }
+
+    .slot-card { background: var(--bg-card); border: 1px solid var(--border-mid); padding: 24px 28px; margin-bottom: 20px; }
+    .slot-date { font-family: var(--font-display); font-size: 30px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.15; }
+    .slot-time { font-family: var(--font-body); font-size: 15px; letter-spacing: 1px; color: var(--accent); margin-top: 4px; }
+    .slot-notes { font-family: var(--font-serif); font-size: 15px; line-height: 1.7; color: var(--text-mid); margin-top: 10px; }
+    .slot-count { font-family: var(--font-body); font-size: 15px; letter-spacing: 1px; color: var(--text-muted); margin-top: 14px; }
+    .slot-count.full { color: #e8956a; }
+    .slot-names { list-style: none; margin: 8px 0 0; padding: 0; font-family: var(--font-serif); font-size: 16px; line-height: 1.7; color: var(--text-primary); }
+    .slot-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+    @media (max-width: 600px) {
+      .slot-card { padding: 20px; }
+      .slot-form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"><!-- STATIC-NAV:START -->
+  <nav class="site-nav" id="site-nav">
+    <a href="/" class="nav-logo">SHIPWRECK <span>CITY</span></a>
+    <button class="nav-hamburger" aria-label="Toggle menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="/lu-archive" class="">Archive</a>
+      <a href="/map" class="">Maps</a>
+      <a href="/support" class="">Support</a>
+      <a href="/events" class="">Events</a>
+      <a href="/team" class="">Team</a>
+      <a href="/project" class="">Project</a>
+      <a href="/history" class="">History</a>
+      <a href="/press" class="">Press</a>
+      <a href="/contact" class="">Contact</a>
+    </div>
+  </nav>
+<!-- STATIC-NAV:END --></div>
+
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Field Season</div>
+    <h1 class="page-title">DIVE<br>SIGN-UP</h1>
+  </div>
+</div>
+
+<section class="section container signup-wrap">
+
+  <!-- Password gate -->
+  <div id="gate">
+    <p class="signup-intro">This page is for Shipwreck City divers. Enter the password you were given to see the schedule.</p>
+    <form id="gate-form">
+      <div>
+        <label class="signup-label" for="gate-password">Password</label>
+        <input class="signup-field" id="gate-password" type="password" autocomplete="off" required>
+      </div>
+      <div><button class="signup-btn" id="gate-btn" type="submit">Enter →</button></div>
+    </form>
+    <div class="signup-msg error" id="gate-msg" role="alert"></div>
+  </div>
+
+  <!-- Schedule, shown after the password is accepted -->
+  <div id="schedule" hidden>
+    <p class="signup-intro">
+      Pick a slot and add your name and email. Your name is shown here to other divers.
+      Your email is only seen by the Shipwreck City team. Need to cancel or change a slot?
+      Email <a href="mailto:phil@shipwreckcity.org" style="color:var(--accent);">phil@shipwreckcity.org</a>.
+    </p>
+    <div class="signup-msg" id="schedule-msg" role="status"></div>
+    <div id="slots"></div>
+  </div>
+
+</section>
+
+<div id="footer-mount"><!-- STATIC-FOOTER:START -->
+  <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;transition:filter 0.2s;" onmouseover="this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+    <span class="footer-support-text" style="font-family:var(--font-serif);font-size:16px;color:#7fc4d8;line-height:1.5;text-align:center;">— Support The Shipwreck City Project —</span>
+  </a>
+  <footer class="site-footer">
+    <div class="footer-logo">SHIPWRECK <span>CITY</span></div>
+    <div class="footer-copy">© 2026 Shipwreck City · Seattle, WA, USA</div>
+    <div class="footer-links">
+      <a href="/lu-archive">Archive</a>
+      <a href="/map">Maps</a>
+      <a href="/support">Support</a>
+      <a href="/events">Events</a>
+      <a href="/team">Team</a>
+      <a href="/project">Project</a>
+      <a href="/history">History</a>
+      <a href="/press">Press</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </footer>
+<!-- STATIC-FOOTER:END --></div>
+
+<script src="js/site.js"></script>
+<script>
+  // The deployed Google Apps Script web app URL (ends in /exec). See tools/dive-signup/SETUP.md.
+  const DIVE_API_URL = '';
+
+  document.getElementById('nav-mount').innerHTML    = buildNav('');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  const ERRORS = {
+    wrong_password: "That password isn't right. Please check it and try again.",
+    locked:         'Too many wrong attempts. Please wait 10 minutes and try again.',
+    not_configured: "Sign-ups aren't set up yet. Please contact phil@shipwreckcity.org.",
+    bad_name:       'Please enter your name.',
+    bad_email:      'Please enter a valid email address.',
+    full:           'Sorry, that slot just filled up. The schedule below is up to date.',
+    duplicate:      "You're already signed up for that slot.",
+    no_slot:        'That slot is no longer available. The schedule below is up to date.',
+    server_error:   'Something went wrong. Please try again.',
+    bad_request:    'Something went wrong. Please try again.',
+    network:        "Couldn't reach the schedule. Check your connection and try again.",
+  };
+  const errorText = code => ERRORS[code] || ERRORS.server_error;
+
+  // Kept in memory only, so closing or reloading the page asks for it again.
+  let password = '';
+
+  // text/plain keeps this a "simple" request, which Apps Script requires (it can't answer CORS preflights).
+  async function callApi(payload) {
+    if (!DIVE_API_URL) return { ok: false, error: 'not_configured' };
+    try {
+      const res = await fetch(DIVE_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ ...payload, password }),
+      });
+      return await res.json();
+    } catch (e) {
+      return { ok: false, error: 'network' };
+    }
+  }
+
+  // Password gate
+  const gateForm = document.getElementById('gate-form');
+  gateForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('gate-btn');
+    const msg = document.getElementById('gate-msg');
+    password = document.getElementById('gate-password').value;
+    btn.disabled = true;
+    btn.textContent = 'Checking…';
+    msg.textContent = '';
+
+    const data = await callApi({ action: 'list' });
+
+    btn.disabled = false;
+    btn.textContent = 'Enter →';
+    if (!data.ok) {
+      password = '';
+      msg.textContent = errorText(data.error);
+      return;
+    }
+    document.getElementById('gate').hidden = true;
+    document.getElementById('schedule').hidden = false;
+    renderSlots(data.slots);
+  });
+
+  // Schedule. Names and notes are typed by people, so they're always set with
+  // textContent, never as HTML.
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function renderSlots(slots) {
+    const list = document.getElementById('slots');
+    list.textContent = '';
+    if (!slots.length) {
+      list.appendChild(el('p', 'signup-intro', 'No dive slots are posted yet. Check back soon.'));
+      return;
+    }
+    slots.forEach(slot => list.appendChild(slotCard(slot)));
+  }
+
+  function slotCard(slot) {
+    const card = el('div', 'slot-card');
+    card.appendChild(el('div', 'slot-date', slot.date));
+
+    const when = [slot.time, slot.location].filter(Boolean).join(' · ');
+    if (when) card.appendChild(el('div', 'slot-time', when));
+    if (slot.notes) card.appendChild(el('div', 'slot-notes', slot.notes));
+
+    const left = slot.spots - slot.names.length;
+    const full = left <= 0;
+    card.appendChild(el('div', 'slot-count' + (full ? ' full' : ''),
+      full ? `Full · ${slot.spots} of ${slot.spots} spots taken`
+           : `${left} of ${slot.spots} spot${slot.spots === 1 ? '' : 's'} left`));
+
+    if (slot.names.length) {
+      const names = el('ul', 'slot-names');
+      slot.names.forEach(n => names.appendChild(el('li', '', n)));
+      card.appendChild(names);
+    }
+    if (!full) card.appendChild(signupForm(slot));
+    return card;
+  }
+
+  function signupForm(slot) {
+    const form = el('form', 'slot-form');
+    const field = (labelText, type, autocomplete) => {
+      const wrap = el('label');
+      wrap.appendChild(el('span', 'signup-label', labelText));
+      const input = el('input', 'signup-field');
+      input.type = type;
+      input.required = true;
+      input.autocomplete = autocomplete;
+      wrap.appendChild(input);
+      form.appendChild(wrap);
+      return input;
+    };
+    const name  = field('Your Name', 'text', 'name');
+    const email = field('Email', 'email', 'email');
+    name.maxLength  = 80;
+    email.maxLength = 120;
+    const btn = el('button', 'signup-btn', 'Sign Up');
+    btn.type = 'submit';
+    form.appendChild(btn);
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      const data = await callApi({ action: 'signup', slotId: slot.id, name: name.value, email: email.value });
+      if (data.slots) renderSlots(data.slots);
+      btn.disabled = false;
+      btn.textContent = 'Sign Up';
+
+      const msg = document.getElementById('schedule-msg');
+      msg.className = 'signup-msg ' + (data.ok ? 'success' : 'error');
+      msg.textContent = data.ok
+        ? `You're signed up for ${slot.date}.` + (data.emailed ? ' A confirmation email is on its way.' : '')
+        : errorText(data.error);
+      msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    return form;
+  }
+</script>
+</body>
+</html>

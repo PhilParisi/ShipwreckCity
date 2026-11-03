@@ -134,6 +134,20 @@ const SUPPORTERS = [
     note: "Evan authored \"A City's Underwater History. People Powered Connections\" in NAS' Quarterly Magazine."
   },
   {
+    name: "Puget Sound Maritime",
+    url:  "https://pugetmaritime.org/",
+    logo: "img/supporters-logo/puget-sound-maritime.webp",
+    type: "organization",
+    note: "Preserving and sharing the maritime heritage of Puget Sound. Contributed historical images and records (notably, for the Foss 54 barge)."
+  },
+  {
+    name: "South Lake Union Chamber of Commerce",
+    url:  "https://sluchamber.org/",
+    logo: "img/supporters-logo/slu-chamber.webp",
+    type: "organization",
+    note: "Business and community organization for Seattle's South Lake Union neighborhood, helping Shipwreck City build connections with local groups."
+  },
+  {
     name: "Boatworld Marinas",
     url:  "https://www.boatworldmarina.com/",
     logo: null,
