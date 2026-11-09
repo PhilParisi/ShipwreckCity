@@ -226,7 +226,9 @@
   }
 
   const upcomingEvents = EVENTS.filter(e => !e.past);
-  const previousEvents = EVENTS.filter(e => e.past);
+  // Most recent past event first
+  const eventDate = e => new Date(`${e.month} ${e.day}, ${e.year}`);
+  const previousEvents = EVENTS.filter(e => e.past).sort((a, b) => eventDate(b) - eventDate(a));
 
   document.getElementById('events-list').innerHTML = upcomingEvents.length
     ? upcomingEvents.map(renderEventCard).join('')

@@ -52,10 +52,17 @@ const EVENTS = [
     venue: "Pacific Science Center",
     address: "200 Sue Bird Court N, Seattle, WA",
     image: "img/events/pacsci_mysteries-deep.webp",
-    badge: "Private Event",
-    description: "Shipwreck City joins Pacific Science Center's private Igniter Evening, celebrating their <em>Mysteries from the Deep: Exploring Underwater Archaeology</em> exhibition, to share how underwater robotics are uncovering the shipwrecks and submerged history hidden beneath Lake Union.",
-    url: "https://pacificsciencecenter.org/events/igniter-mysteries-event/",
-    ctaLabel: "View Event Details →"
+    badge: ["Past Event", "Private Event"],
+    past: true,
+    recap: [
+      { src: "img/events/pacsci6.webp", alt: "Three Shipwreck City team members standing in front of the Pacific Science Center sign", caption: "The Shipwreck City team at Pacific Science Center" },
+      { src: "img/events/pacsci5.webp", alt: "Two Shipwreck City team members beside a screen reading 'Beneath Lake Union: Seattle's Hidden Shipwrecks'", caption: "\"Beneath Lake Union — Seattle's Hidden Shipwrecks\"" },
+      { src: "img/events/pacsci3.webp", alt: "Shipwreck City team showing guests ROV footage and wreck cards at the info table", caption: "Sharing Lake Union's wrecks with Igniter Evening guests" },
+      { src: "img/events/pacsci4.webp", alt: "Shipwreck City team members talking with guests at the info table", caption: "Talking shipwrecks with guests" }
+    ],
+    description: "Shipwreck City joined Pacific Science Center's private Igniter Evening, celebrating their <em>Mysteries from the Deep: Exploring Underwater Archaeology</em> exhibition, to share how underwater robotics are uncovering the shipwrecks and submerged history hidden beneath Lake Union.",
+    // Button removed now the event is past. Original event page, for reference:
+    // https://pacificsciencecenter.org/events/igniter-mysteries-event/
   },
   {
     title: "Lectures on Tap: Beneath Lake Union — Seattle's Hidden Shipwrecks",
@@ -63,8 +70,8 @@ const EVENTS = [
     day: "10",
     year: "2026",
     time: "6:30 – 8:30 PM",
-    venue: "North Queen Anne",
-    address: "Seattle, WA 98119 (exact address sent with tickets)",
+    venue: "Old Stove Brewing Company - Ship Canal",
+    address: "Seattle, WA",
     image: "img/targets/lu069/primetime.webp",
     imagePosition: "right",
     badge: "Sold Out",
@@ -85,5 +92,18 @@ const EVENTS = [
     description: "Phil Parisi brings the Shipwreck City project to Seattle Yacht Club's Portage Bay clubhouse for an evening exploring the sunken vessels resting beneath Lake Union and the surrounding waterways.",
     url: "https://www.seattleyachtclub.org/",
     ctaLabel: "Learn More →"
+  },
+  {
+    title: "2027 Maritime Archaeological Society Conference",
+    month: "APR",
+    day: "17",
+    year: "2027",
+    time: "All Day",
+    venue: "Maritime Archaeological Society",
+    address: "Astoria, OR",
+    image: "img/targets/lu012/primetime.webp",
+    imagePosition: "right",
+    badge: "Save the Date",
+    description: "The Maritime Archaeological Society (MAS) hosts a full day in Astoria with guest speakers, updates on MAS projects, stories from the world of underwater discovery, and plenty of time to connect with fellow maritime history enthusiasts. Speakers and further details will be announced soon."
   }
 ];
