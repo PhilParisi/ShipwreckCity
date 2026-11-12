@@ -74,10 +74,17 @@ const EVENTS = [
     address: "Seattle, WA",
     image: "img/targets/lu069/primetime.webp",
     imagePosition: "right",
-    badge: "Sold Out",
-    description: "More than one hundred targets of interest, including barges, shipwrecks, and even cars, rest on the bottom of Lake Union, and much of their story is still missing from Seattle's maritime history. Over a drink at this Lectures on Tap talk, Phil Parisi and Evan Weber of Shipwreck City share how Finn, the project's small blue remote-controlled robot, is filming never-before-seen wrecks and building the city's most up-to-date shipwreck archive.",
-    url: "https://www.eventbrite.com/e/lectures-on-tap-beneath-lake-union-seattles-hidden-shipwrecks-tickets-2003224777234",
-    ctaLabel: "View Event (Sold Out) →"
+    badge: ["Past Event", "Sold Out"],
+    past: true,
+    recap: [
+      { src: "img/events/lot1.webp", alt: "Four Shipwreck City team members in front of a Lectures on Tap title screen", caption: "The Shipwreck City team at Lectures on Tap" },
+      { src: "img/events/lot2.webp", alt: "Audience seated in a brewery warehouse facing a screen reading 'Beneath Lake Union: Seattle's Hidden Shipwrecks', with an ROV on a barrel", caption: "A full house at Old Stove Brewing" },
+      { src: "img/events/lot3.webp", alt: "Shipwreck City presenter speaking beside a screen showing underwater ROV footage of a wreck", caption: "Wreck footage from beneath Lake Union" },
+      { src: "img/events/lot4.webp", alt: "Shipwreck City presenter pointing to a sonar slide comparing a 60 ft shipwreck with its sonar shadow", caption: "Reading the shadows: how sonar reveals a 60 ft shipwreck" }
+    ],
+    description: "More than one hundred targets of interest, including barges, shipwrecks, and even cars, rest on the bottom of Lake Union, and much of their story is still missing from Seattle's maritime history. Over a drink at this Lectures on Tap talk, Phil Parisi and Evan Weber of Shipwreck City shared how Finn, the project's small blue remote-controlled robot, is filming never-before-seen wrecks and building the city's most up-to-date shipwreck archive.",
+    // Button removed now the event is past. Original event page, for reference:
+    // https://www.eventbrite.com/e/lectures-on-tap-beneath-lake-union-seattles-hidden-shipwrecks-tickets-2003224777234
   },
   {
     title: "An Evening with Shipwreck City",
@@ -107,3 +114,7 @@ const EVENTS = [
     description: "The Maritime Archaeological Society (MAS) hosts a full day in Astoria with guest speakers, updates on MAS projects, stories from the world of underwater discovery, and plenty of time to connect with fellow maritime history enthusiasts. Speakers and further details will be announced soon."
   }
 ];
+
+// Anchor for an event's card on the Events page (events#<slug>). The hub's
+// timeline links to these.
+const eventSlug = e => String(e.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

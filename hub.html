@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub — Shipwreck City</title>
+  <!-- Private page: shared by link only. Keep it out of search, the nav, and the sitemap.
+       The team content below is encrypted; it's written by tools/team-hub/build-team-hub.js
+       from private/team-hub-content.js, which never goes to GitHub. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="img/thumbnails/favicon_master.png">
+  <link rel="apple-touch-icon" href="img/thumbnails/favicon_master.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hub-wrap { max-width: 1000px; }
+    .hub-intro {
+      font-family: var(--font-serif); font-size: 16px; line-height: 1.8;
+      color: var(--text-mid); margin-bottom: 28px;
+    }
+    .hub-field {
+      width: 100%; box-sizing: border-box; padding: 12px 14px;
+      font-family: var(--font-body); font-size: 16px;
+      background: var(--bg-deep); color: var(--text-primary);
+      border: 1px solid var(--border-mid);
+    }
+    .hub-field:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+    .hub-label {
+      display: block; font-family: var(--font-body); font-size: 15px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
+    }
+    .hub-check { font-family: var(--font-serif); font-size: 15px; color: var(--text-mid); display: flex; gap: 10px; align-items: center; }
+    .hub-btn {
+      font-family: var(--font-body); font-size: 15px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 12px 24px; background: transparent; border: 1px solid var(--text-primary);
+      color: var(--text-primary); cursor: pointer; transition: all 0.2s;
+    }
+    .hub-btn:hover:not(:disabled) { background: var(--text-primary); color: var(--bg-dark); }
+    .hub-btn:disabled { opacity: 0.5; cursor: default; }
+    .hub-msg { font-family: var(--font-serif); font-size: 15px; line-height: 1.6; margin-top: 14px; min-height: 24px; color: #e8956a; }
+    #gate-form { display: flex; flex-direction: column; gap: 14px; max-width: 420px; }
+
+    .hub-topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .hub-updated { font-family: var(--font-body); font-size: 15px; letter-spacing: 1px; color: var(--text-muted); }
+
+    /* Hub menu: this team page, plus the field work sign-up */
+    .hub-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 28px 0 8px; }
+    .hub-tile {
+      display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border-mid);
+      padding: 20px 24px; transition: background 0.2s, border-color 0.2s;
+    }
+    a.hub-tile:hover { background: var(--bg-hover); border-color: var(--accent); }
+    .hub-tile.is-current { border-color: var(--accent); }
+    .hub-tile-kicker { font-family: var(--font-body); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+    .hub-tile-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--text-primary); margin-top: 4px; }
+    .hub-tile-text { font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--text-mid); margin-top: 4px; }
+
+    .hub-section { margin-top: 56px; }
+    .hub-section h2 {
+      font-family: var(--font-display); font-size: 40px; letter-spacing: 1px; color: var(--text-primary);
+      margin: 0 0 24px; padding-bottom: 10px; border-bottom: 1px solid var(--border-mid);
+    }
+    .hub-empty { font-family: var(--font-serif); font-style: italic; font-size: 15px; color: var(--text-muted); }
+    .hub-section a { color: var(--accent); }
+
+    /* ── Timeline ── */
+    .tl { position: relative; padding-left: 40px; }
+    .tl::before {
+      content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--border-mid));
+    }
+    .tl-quarter { position: relative; padding-bottom: 28px; }
+    .tl-quarter-head { position: relative; display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+    .tl-quarter-head::before {
+      content: ''; position: absolute; left: -40px; top: 6px; width: 20px; height: 20px; border-radius: 50%;
+      background: var(--bg-dark); border: 2px solid var(--accent); box-sizing: border-box;
+    }
+    .tl-quarter.is-current .tl-quarter-head::before { background: var(--accent); box-shadow: 0 0 0 5px rgba(74, 158, 186, 0.25); }
+    .tl-quarter.is-past .tl-quarter-head::before { border-color: var(--border-mid); }
+    .tl-q { font-family: var(--font-display); font-size: 34px; letter-spacing: 1px; color: var(--text-primary); line-height: 1; }
+    .tl-q-months { font-family: var(--font-body); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+    .tl-q-now { font-family: var(--font-body); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--bg-dark); background: var(--accent); padding: 2px 8px; }
+    .tl-quarter.is-past .tl-q { color: var(--text-muted); }
+
+    .tl-entry {
+      position: relative; display: grid; grid-template-columns: 96px 1fr; gap: 18px;
+      padding: 10px 0;
+    }
+    .tl-entry::before {
+      content: ''; position: absolute; left: -34px; top: 17px; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+    }
+    .tl-entry.is-event::before { background: #e8c547; }
+    .tl-entry.is-past { opacity: 0.5; }
+    .tl-when { font-family: var(--font-body); font-size: 14px; letter-spacing: 1px; color: var(--accent); padding-top: 6px; text-transform: uppercase; }
+    .tl-entry.is-event .tl-when { color: #e8c547; }
+    .tl-body { background: var(--bg-card); border: 1px solid var(--border); border-left: 2px solid var(--accent); padding: 10px 16px; }
+    .tl-entry.is-event .tl-body { border-left-color: #e8c547; }
+    .tl-title { font-family: var(--font-serif); font-size: 16px; line-height: 1.5; color: var(--text-primary); }
+    .tl-note { font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--text-mid); margin-top: 2px; }
+    .tl-tag { font-family: var(--font-body); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #e8c547; margin-left: 8px; white-space: nowrap; }
+    .hub-section a.tl-link { color: var(--text-primary); text-decoration: none; border-bottom: 1px solid rgba(232, 197, 71, 0.4); }
+    .hub-section a.tl-link:hover { color: #e8c547; border-bottom-color: #e8c547; }
+    .tl-entry.is-past a.tl-link { color: inherit; }
+    .tl-entry.is-task::before { background: #4fbf6a; }
+    .tl-entry.is-task .tl-when { color: #4fbf6a; }
+    .tl-entry.is-task .tl-body { border-left-color: #4fbf6a; }
+    .tl-entry.is-task .tl-tag { color: #4fbf6a; }
+    .tl-who { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .tl-who span {
+      font-family: var(--font-body); font-size: 12px; letter-spacing: 1px; color: var(--text-primary);
+      background: var(--bg-deep); border: 1px solid var(--border-mid); padding: 1px 8px;
+    }
+    .tl-quarter-empty { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--text-muted); padding: 6px 0; }
+
+    .tl-today { position: relative; display: flex; align-items: center; gap: 12px; margin: 6px 0; }
+    .tl-today::before {
+      content: ''; position: absolute; left: -36px; width: 12px; height: 12px; border-radius: 50%;
+      background: #e8956a; box-shadow: 0 0 0 4px rgba(232, 149, 106, 0.25);
+    }
+    .tl-today span { font-family: var(--font-body); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #e8956a; }
+    .tl-today::after { content: ''; flex: 1; border-top: 1px dashed #e8956a; opacity: 0.6; }
+
+    .tl-key { display: flex; gap: 20px; flex-wrap: wrap; margin: -10px 0 24px; font-family: var(--font-body); font-size: 13px; letter-spacing: 1px; color: var(--text-muted); }
+    .tl-key i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+
+    /* ── Team tasks ── */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .member { background: var(--bg-card); border: 1px solid var(--border-mid); padding: 20px 22px; }
+    .member-head { border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 12px; }
+    .member-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.1; }
+    .member-role { font-family: var(--font-body); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
+    .member-summary { font-family: var(--font-serif); font-style: italic; font-size: 14px; line-height: 1.6; color: var(--text-mid); margin-top: 8px; }
+    .member-note {
+      font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--text-primary);
+      background: rgba(232, 149, 106, 0.08); border-left: 2px solid #e8956a; padding: 10px 14px; margin-bottom: 14px;
+    }
+    .group + .group, .member-note + .group { margin-top: 18px; }
+    .group-label {
+      font-family: var(--font-body); font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      padding-bottom: 6px; border-bottom: 1px solid var(--border); margin-bottom: 2px;
+    }
+    .group-priority  .group-label { color: #e8956a; }
+    .group-simmering .group-label { color: var(--text-muted); }
+    .group-simmering .task-text, .group-simmering .task-bullet-list li { color: var(--text-mid); }
+    .group-timeline .group-label { color: var(--accent); }
+    .tl-mini { list-style: none; margin: 0; padding: 0; }
+    .tl-mini li { display: grid; grid-template-columns: 64px 1fr; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .tl-mini li:last-child { border-bottom: none; }
+    .tl-mini-when { font-family: var(--font-body); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); padding-top: 3px; }
+    .tl-mini li.is-event .tl-mini-when { color: #e8c547; }
+    .tl-mini-title { font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--text-primary); }
+    .group-empty { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--text-muted); margin: 8px 0 0; }
+
+    /* ── Editing tasks ── */
+    .hub-editor-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+    .hub-editor-bar .hub-label { margin: 0; }
+    .hub-editor-bar .hub-field { width: auto; min-width: 220px; padding: 8px 10px; }
+    .hub-editor-hint { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--text-muted); }
+    .hub-tasks-msg { font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: #e8956a; margin-bottom: 14px; }
+    .hub-tasks-msg:empty { display: none; }
+    .task-edit, .task-add {
+      background: none; border: none; padding: 0; cursor: pointer;
+      font-family: var(--font-body); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+    }
+    .task-edit { margin-top: 6px; }
+    .task-bullet-list .task-edit { margin: 0 0 0 10px; }
+    .task-edit:hover, .task-add:hover { color: var(--accent); }
+    .task-add { margin-top: 10px; color: var(--accent); }
+    .task-form { display: flex; flex-direction: column; gap: 10px; padding: 12px 0; }
+    .tf-label { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-body); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+    .tf-label span { text-transform: none; letter-spacing: 0; font-family: var(--font-serif); font-style: italic; }
+    .task-form textarea, .task-form select, .task-form input[type="date"] {
+      font-family: var(--font-serif); font-size: 15px; color: var(--text-primary); background: var(--bg-deep);
+      border: 1px solid var(--border-mid); padding: 8px 10px; width: 100%; box-sizing: border-box; letter-spacing: 0; text-transform: none;
+    }
+    .task-form textarea:focus, .task-form select:focus, .task-form input:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+    .task-form input[type="date"] { color-scheme: dark; }
+    .tf-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .tf-check { font-family: var(--font-serif); font-size: 14px; color: var(--text-mid); display: flex; gap: 8px; align-items: center; }
+    .tf-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tf-btn { padding: 8px 14px; font-size: 13px; }
+    .tf-delete { border-color: #e8956a; color: #e8956a; margin-left: auto; }
+    .tf-delete:hover:not(:disabled) { background: #e8956a; color: var(--bg-dark); }
+    .tf-msg { font-family: var(--font-serif); font-size: 14px; color: #e8956a; }
+    .tf-msg:empty { display: none; }
+    .task-bullet-list li.is-form { list-style: none; margin-left: -18px; }
+    @media (max-width: 600px) { .tf-row { grid-template-columns: 1fr; } }
+
+    /* ── Principles and guidelines ── */
+    .points { list-style: none; margin: 0; padding: 0; counter-reset: point; }
+    .points > li {
+      position: relative; background: var(--bg-card); border: 1px solid var(--border-mid);
+      padding: 18px 22px 18px 22px; margin-bottom: 12px;
+    }
+    .points.is-numbered > li { counter-increment: point; padding-left: 74px; }
+    .points.is-numbered > li::before {
+      content: counter(point, decimal-leading-zero); position: absolute; left: 22px; top: 14px;
+      font-family: var(--font-display); font-size: 32px; color: var(--accent); line-height: 1;
+    }
+    .points:not(.is-numbered) > li { border-left: 2px solid var(--accent); }
+    .point-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.2; }
+    .point-text { font-family: var(--font-serif); font-size: 15px; line-height: 1.7; color: var(--text-mid); }
+    .point-title + .point-text { margin-top: 4px; }
+    .point-bullets { margin: 8px 0 0; padding-left: 20px; font-family: var(--font-serif); font-size: 15px; line-height: 1.7; color: var(--text-mid); }
+    .task-list { list-style: none; margin: 0; padding: 0; }
+    .task { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .task:last-child { border-bottom: none; }
+    .task-top { display: flex; gap: 10px; align-items: baseline; justify-content: space-between; }
+    .task-text { font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--text-primary); }
+    .task-status {
+      font-family: var(--font-body); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      padding: 2px 8px; border: 1px solid var(--border-mid); color: var(--text-muted); white-space: nowrap; flex-shrink: 0;
+    }
+    .task-status.todo        { color: #e8c547; border-color: #e8c547; }
+    .task-status.in-progress { color: #7fc4d8; border-color: #7fc4d8; }
+    .task-status.done        { color: #4fbf6a; border-color: #4fbf6a; }
+    .task-due { font-family: var(--font-body); font-size: 13px; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+    .task-due.overdue { color: #e8956a; }
+    .task.is-done { opacity: 0.55; }
+    .task.is-done .task-text { text-decoration: line-through; }
+    .task-notes, .task-bullet-list { margin: 6px 0 0; padding-left: 20px; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--text-mid); }
+    .task-bullet-list { padding-left: 18px; margin: 0; }
+    .task-bullet-list li { padding: 4px 0; font-size: 15px; color: var(--text-primary); }
+
+    @media (max-width: 600px) {
+      .tl { padding-left: 32px; }
+      .tl::before { left: 7px; }
+      .tl-quarter-head::before { left: -32px; }
+      .tl-entry { grid-template-columns: 1fr; gap: 4px; }
+      .tl-entry::before { left: -28px; top: 15px; }
+      .tl-today::before { left: -30px; }
+      .tl-when { padding-top: 0; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-mount"><!-- STATIC-NAV:START -->
+  <nav class="site-nav" id="site-nav">
+    <a href="/" class="nav-logo">SHIPWRECK <span>CITY</span></a>
+    <button class="nav-hamburger" aria-label="Toggle menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="/lu-archive" class="">Archive</a>
+      <a href="/map" class="">Maps</a>
+      <a href="/support" class="">Support</a>
+      <a href="/events" class="">Events</a>
+      <a href="/team" class="">Team</a>
+      <a href="/project" class="">Project</a>
+      <a href="/history" class="">History</a>
+      <a href="/press" class="">Press</a>
+      <a href="/contact" class="">Contact</a>
+    </div>
+  </nav>
+<!-- STATIC-NAV:END --></div>
+
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Team Only</div>
+    <h1 class="page-title">HUB</h1>
+  </div>
+</div>
+
+<section class="section container hub-wrap">
+
+  <!-- Password gate -->
+  <div id="gate">
+    <p class="hub-intro">This page is for the Shipwreck City team. Enter the team password to see the timeline and tasks.</p>
+    <form id="gate-form">
+      <div>
+        <label class="hub-label" for="gate-password">Password</label>
+        <input class="hub-field" id="gate-password" type="password" autocomplete="current-password" required>
+      </div>
+      <label class="hub-check"><input type="checkbox" id="gate-remember"> Remember on this device</label>
+      <div><button class="hub-btn" id="gate-btn" type="submit">Enter →</button></div>
+    </form>
+    <div class="hub-msg" id="gate-msg" role="alert"></div>
+  </div>
+
+  <!-- Content, shown once unlocked -->
+  <div id="hub" hidden>
+    <div class="hub-topbar">
+      <div class="hub-updated" id="hub-updated"></div>
+      <button class="hub-btn" id="hub-lock" type="button">Lock</button>
+    </div>
+
+    <nav class="hub-menu" aria-label="Hub pages">
+      <div class="hub-tile is-current">
+        <div class="hub-tile-kicker">You're here</div>
+        <div class="hub-tile-title">Team</div>
+        <div class="hub-tile-text">Timeline, priorities and what's simmering.</div>
+      </div>
+      <a class="hub-tile" href="dive-signup">
+        <div class="hub-tile-kicker">Field Work</div>
+        <div class="hub-tile-title">Dive Sign-Up →</div>
+        <div class="hub-tile-text">Pick a dive slot. Uses its own password.</div>
+      </a>
+    </nav>
+
+    <div class="hub-section">
+      <h2>Timeline</h2>
+      <div class="tl-key">
+        <span><i style="background:var(--accent)"></i>Team milestone</span>
+        <span><i style="background:#e8c547"></i>Public event (from the <a href="events">Events</a> page)</span>
+        <span><i style="background:#4fbf6a"></i>Task</span>
+      </div>
+      <div class="tl" id="hub-timeline"></div>
+    </div>
+
+    <div class="hub-section">
+      <h2>Tasks</h2>
+      <div class="hub-editor-bar" id="hub-editor-bar" hidden></div>
+      <div class="hub-tasks-msg" id="hub-tasks-msg" role="status"></div>
+      <div class="team-grid" id="hub-team"></div>
+    </div>
+
+    <div class="hub-section">
+      <h2>Shipwreck City Guiding Principles</h2>
+      <div id="hub-principles"></div>
+    </div>
+
+    <div class="hub-section">
+      <h2>Guidelines for Events and Project Socialization</h2>
+      <div id="hub-guidelines"></div>
+    </div>
+  </div>
+
+</section>
+
+<div id="footer-mount"><!-- STATIC-FOOTER:START -->
+  <a href="https://buymeacoffee.com/shipwreckcity" target="_blank" rel="noopener" style="background:#0a1f2e;border-top:1px solid #1a4a6a;border-bottom:1px solid #1a4a6a;padding:14px 32px;display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;transition:filter 0.2s;" onmouseover="this.style.filter='brightness(1.4)'" onmouseout="this.style.filter=''">
+    <span class="footer-support-text" style="font-family:var(--font-serif);font-size:16px;color:#7fc4d8;line-height:1.5;text-align:center;">— Support The Shipwreck City Project —</span>
+  </a>
+  <footer class="site-footer">
+    <div class="footer-logo">SHIPWRECK <span>CITY</span></div>
+    <div class="footer-copy">© 2026 Shipwreck City · Seattle, WA, USA</div>
+    <div class="footer-links">
+      <a href="/lu-archive">Archive</a>
+      <a href="/map">Maps</a>
+      <a href="/support">Support</a>
+      <a href="/events">Events</a>
+      <a href="/team">Team</a>
+      <a href="/project">Project</a>
+      <a href="/history">History</a>
+      <a href="/press">Press</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </footer>
+<!-- STATIC-FOOTER:END --></div>
+
+<!-- Written by tools/team-hub/build-team-hub.js. Don't edit by hand. -->
+<!-- TEAM-HUB-PAYLOAD:START -->
+<script id="team-hub-payload" type="application/json">{"v":1,"iter":600000,"salt":"RRcfxBPDbAz66sxlMqRh8Q==","iv":"gxCSXcdo9Lk5l+FD","data":"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"}</script>
+<!-- TEAM-HUB-PAYLOAD:END -->
+
+<script src="js/site.js"></script>
+<script src="js/events-data.js"></script>
+<script src="js/team-api-config.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML    = buildNav('');
+  document.getElementById('footer-mount').innerHTML = buildFooter();
+
+  const PAYLOAD   = JSON.parse(document.getElementById('team-hub-payload').textContent);
+  const KEY_STORE = 'sc-hub-key';
+
+  const gateForm = document.getElementById('gate-form');
+  const gateBtn  = document.getElementById('gate-btn');
+  const gateMsg  = document.getElementById('gate-msg');
+
+  const fromB64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const toB64   = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+
+  async function deriveKey(password) {
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: fromB64(PAYLOAD.salt), iterations: PAYLOAD.iter, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, true, ['decrypt']);
+  }
+
+  // Throws if the key is wrong: AES-GCM checks the content hasn't been altered.
+  async function decrypt(key) {
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(PAYLOAD.iv) }, key, fromB64(PAYLOAD.data));
+    return JSON.parse(new TextDecoder().decode(plain));
+  }
+
+  // "Remember on this device" keeps the derived key (not the password) in this
+  // browser. It's tied to the salt, so it stops working if the password changes.
+  function readRemembered() {
+    try { return JSON.parse(localStorage.getItem(KEY_STORE) || 'null'); } catch { return null; }
+  }
+  function forget() {
+    try { localStorage.removeItem(KEY_STORE); } catch {}
+  }
+  async function remember(key) {
+    try { localStorage.setItem(KEY_STORE, JSON.stringify({ salt: PAYLOAD.salt, key: toB64(await crypto.subtle.exportKey('raw', key)) })); } catch {}
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const linkify = s => esc(s).replace(/https?:\/\/[^\s<]+[^\s<.,;:!?)]/g, url => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
+
+  const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  const QUARTER_MONTHS = ['Jan – Mar', 'Apr – Jun', 'Jul – Sep', 'Oct – Dec'];
+
+  const parseDay = s => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '');
+    return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+  };
+  const fmtDay = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const quarterOf = d => ({ year: d.getFullYear(), q: Math.floor(d.getMonth() / 3) + 1 });
+  const qIndex = (year, q) => year * 4 + (q - 1);
+
+  // A timeline date can be a day ("2027-02-15"), a month ("2027-02") or a
+  // quarter ("2027-Q1"). Each becomes a sortable start date plus a label.
+  function readWhen(s) {
+    let m;
+    if ((m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s))) {
+      const d = new Date(+m[1], +m[2] - 1, +m[3]);
+      return { start: d, end: d, label: fmtDay(d), q: quarterOf(d) };
+    }
+    if ((m = /^(\d{4})-(\d{2})$/.exec(s))) {
+      const d = new Date(+m[1], +m[2] - 1, 1);
+      return { start: d, end: new Date(+m[1], +m[2], 0), label: d.toLocaleDateString('en-US', { month: 'long' }), q: quarterOf(d) };
+    }
+    if ((m = /^(\d{4})-Q([1-4])$/.exec(s))) {
+      const d = new Date(+m[1], (+m[2] - 1) * 3, 1);
+      return { start: d, end: new Date(+m[1], +m[2] * 3, 0), label: 'Anytime', q: { year: +m[1], q: +m[2] } };
+    }
+    return null;
+  }
+
+  // ── Names ─────────────────────────────────────────────────────────────
+  // "who" lists can use a first name ("George"), a full name, or "Everyone".
+  // Returns the matching team members' full names, in team order.
+  function matchMembers(team, who) {
+    const wanted = [].concat(who || []).map(w => String(w).trim().toLowerCase()).filter(Boolean);
+    if (wanted.some(w => w === 'everyone' || w === 'all')) return team.map(m => m.name);
+    return team.filter(m => {
+      const full  = String(m.name).toLowerCase();
+      const words = full.split(/\s+/);
+      return wanted.some(w => w === full || words.includes(w));
+    }).map(m => m.name);
+  }
+  const firstName = name => { const w = String(name).split(/\s+/); return w[0] === 'Captain' && w[1] ? w[1] : w[0]; };
+
+  // ── Timeline ──────────────────────────────────────────────────────────
+  // Three sources: team milestones from the private content, public events
+  // from the Events page (always current), and tasks marked timeline: true.
+  // A content entry with "event" instead of "date" assigns people to a public
+  // event whose title contains that text.
+  function timelineEntries(content) {
+    const team = content.team || [];
+    const items = content.timeline || [];
+
+    const own = items.filter(e => !e.event).map(e => {
+      const when = readWhen(e.date || '');
+      return when && { ...when, title: e.title, note: e.note, kind: 'team', who: matchMembers(team, e.who) };
+    }).filter(Boolean);
+
+    const assignments = items.filter(e => e.event);
+    const events = (typeof EVENTS !== 'undefined' ? EVENTS : []).map(e => {
+      const month = MONTHS.indexOf(String(e.month || '').toUpperCase());
+      if (month < 0) return null;
+      const d = new Date(+e.year, month, +e.day);
+      const who = assignments.filter(a => String(e.title).toLowerCase().includes(String(a.event).toLowerCase()))
+        .reduce((names, a) => names.concat(matchMembers(team, a.who)), []);
+      return { start: d, end: d, label: fmtDay(d), q: quarterOf(d), title: e.title, note: [e.venue, e.address].filter(Boolean).join(', '), kind: 'event',
+               who: team.map(m => m.name).filter(n => who.includes(n)), href: `events#${eventSlug(e)}` };
+    }).filter(Boolean);
+
+    const tasks = [];
+    TASKS.forEach(t => {
+      const d = t.timeline && parseDay(t.due);
+      if (d) tasks.push({ start: d, end: d, label: fmtDay(d), q: quarterOf(d), title: t.task, kind: 'task', who: matchMembers(team, t.person), done: statusOf(t) === 'done' });
+    });
+
+    return own.concat(events, tasks);
+  }
+
+  function renderTimeline(content) {
+    const parseQ = s => { const m = /^(\d{4})-Q([1-4])$/.exec(s || ''); return m ? qIndex(+m[1], +m[2]) : null; };
+    const from = parseQ(content.timelineRange && content.timelineRange.from);
+    const to   = parseQ(content.timelineRange && content.timelineRange.to);
+    if (from == null || to == null) return '<p class="hub-empty">No timeline yet.</p>';
+
+    const entries = timelineEntries(content);
+    const nowQ = quarterOf(today);
+    let html = '';
+
+    for (let i = from; i <= to; i++) {
+      const year = Math.floor(i / 4), q = i % 4 + 1;
+      const current = qIndex(nowQ.year, nowQ.q) === i;
+      const past    = qIndex(nowQ.year, nowQ.q) > i;
+      const inQ = entries.filter(e => qIndex(e.q.year, e.q.q) === i)
+        .sort((a, b) => (a.label === 'Anytime') - (b.label === 'Anytime') || a.start - b.start);
+
+      const TAGS = { event: 'Public event', task: 'Task' };
+      let rows = inQ.map(e => {
+        const done = e.end < today || e.done;
+        return `
+          <div class="tl-entry is-${e.kind}${done ? ' is-past' : ''}">
+            <div class="tl-when">${esc(e.label)}</div>
+            <div class="tl-body">
+              <div class="tl-title">${e.href ? `<a class="tl-link" href="${e.href}">${esc(e.title)} →</a>` : linkify(e.title)}${TAGS[e.kind] ? `<span class="tl-tag">${TAGS[e.kind]}</span>` : ''}</div>
+              ${e.note ? `<div class="tl-note">${linkify(e.note)}</div>` : ''}
+              ${e.who.length ? `<div class="tl-who">${e.who.map(n => `<span>${esc(firstName(n))}</span>`).join('')}</div>` : ''}
+            </div>
+          </div>`;
+      });
+
+      // "Today" marker, placed among this quarter's dated entries
+      if (current) {
+        const todayRow = `<div class="tl-today"><span>Today · ${esc(fmtDay(today))}</span></div>`;
+        const at = inQ.findIndex(e => e.label !== 'Anytime' && e.start >= today);
+        const anytimeStart = inQ.findIndex(e => e.label === 'Anytime');
+        const pos = at >= 0 ? at : (anytimeStart >= 0 ? anytimeStart : inQ.length);
+        rows.splice(pos, 0, todayRow);
+      }
+
+      html += `
+        <div class="tl-quarter${current ? ' is-current' : ''}${past ? ' is-past' : ''}">
+          <div class="tl-quarter-head">
+            <span class="tl-q">Q${q} ${year}</span>
+            <span class="tl-q-months">${QUARTER_MONTHS[q - 1]}</span>
+            ${current ? '<span class="tl-q-now">Now</span>' : ''}
+          </div>
+          ${rows.length ? rows.join('') : '<div class="tl-quarter-empty">Nothing planned yet.</div>'}
+        </div>`;
+    }
+    return html;
+  }
+
+  // ── Team tasks ────────────────────────────────────────────────────────
+  // Tasks come from the shared Google Sheet when it's connected (and can then
+  // be edited here), otherwise from the private content file, read-only.
+  // Either way they end up in one shape:
+  //   { id, person, list: 'Priority' | 'Simmering', task, status, due, notes, timeline, updatedAt }
+  // where status '' means a plain bullet point rather than a tracked task.
+  let CONTENT  = null;
+  let TASKS    = [];
+  let EDITABLE = false;
+  let editing  = null;   // { id } for an existing task, or { person, list } for a new one
+
+  const EDITOR_STORE = 'sc-hub-editor';
+  const readEditor  = () => { try { return localStorage.getItem(EDITOR_STORE) || ''; } catch { return ''; } };
+  const storeEditor = name => { try { localStorage.setItem(EDITOR_STORE, name); } catch {} };
+
+  function tasksFromContent(content) {
+    const out = [];
+    (content.team || []).forEach(m => [['Priority', m.priority], ['Simmering', m.simmering]].forEach(([list, items]) =>
+      (items || []).forEach(t => {
+        if (typeof t === 'string') { if (t.trim()) out.push({ person: m.name, list, task: t, status: '', notes: [] }); }
+        else if (t) out.push({ person: m.name, list, task: t.task, status: t.status || 'to do', due: t.due || '', notes: t.notes || [], timeline: !!t.timeline });
+      })));
+    return out;
+  }
+
+  const STATUS = { 'to do': 'todo', 'todo': 'todo', 'in progress': 'in-progress', 'done': 'done' };
+  const isBullet = t => !String(t.status || '').trim();
+  const statusOf = t => STATUS[String(t.status || 'to do').trim().toLowerCase()] || 'todo';
+
+  const editButton = t => EDITABLE && t.id ? `<button type="button" class="task-edit" data-edit="${esc(t.id)}">Edit</button>` : '';
+
+  function renderTask(t) {
+    const status  = statusOf(t);
+    const due     = parseDay(t.due);
+    const overdue = status !== 'done' && due && due < today;
+    const notes   = (t.notes || []).filter(n => String(n).trim());
+    return `
+      <li class="task${status === 'done' ? ' is-done' : ''}">
+        <div class="task-top">
+          <div class="task-text">${linkify(t.task)}</div>
+          <div class="task-status ${status}">${esc(t.status || 'to do')}</div>
+        </div>
+        ${due ? `<div class="task-due${overdue ? ' overdue' : ''}">Due ${esc(fmtDay(due))}${due.getFullYear() !== today.getFullYear() ? ', ' + due.getFullYear() : ''}${overdue ? ' · overdue' : ''}${t.timeline ? ' · on the timeline' : ''}</div>` : ''}
+        ${notes.length ? `<ul class="task-notes">${notes.map(n => `<li>${linkify(n)}</li>`).join('')}</ul>` : ''}
+        ${editButton(t)}
+      </li>`;
+  }
+
+  function renderBullet(t) {
+    return `<li><span>${linkify(t.task)}</span>${editButton(t)}</li>`;
+  }
+
+  function renderForm(t) {
+    const opt = (value, label, current) => `<option value="${esc(value)}"${value === current ? ' selected' : ''}>${esc(label)}</option>`;
+    return `
+      <form class="task-form" data-id="${esc(t.id || '')}" data-person="${esc(t.person)}">
+        <label class="tf-label">Task<textarea name="task" rows="2" maxlength="500" required>${esc(t.task || '')}</textarea></label>
+        <div class="tf-row">
+          <label class="tf-label">List<select name="list">${['Priority', 'Simmering'].map(l => opt(l, l, t.list)).join('')}</select></label>
+          <label class="tf-label">Status<select name="status">
+            ${opt('', 'Note (no status)', t.status || '')}${opt('to do', 'To do', t.status)}${opt('in progress', 'In progress', t.status)}${opt('done', 'Done', t.status)}
+          </select></label>
+          <label class="tf-label">Due<input type="date" name="due" value="${esc(t.due || '')}"></label>
+        </div>
+        <label class="tf-label">Notes <span>one bullet point per line</span><textarea name="notes" rows="3">${esc((t.notes || []).join('\n'))}</textarea></label>
+        <label class="tf-check"><input type="checkbox" name="timeline"${t.timeline ? ' checked' : ''}> Show on the timeline (needs a due date)</label>
+        <div class="tf-actions">
+          <button type="submit" class="hub-btn tf-btn">Save</button>
+          <button type="button" class="hub-btn tf-btn" data-cancel>Cancel</button>
+          ${t.id ? '<button type="button" class="hub-btn tf-btn tf-delete" data-delete>Delete</button>' : ''}
+        </div>
+        <div class="tf-msg" role="alert"></div>
+      </form>`;
+  }
+
+  // One group (Priority or Simmering): tracked tasks first, open before done
+  // and soonest due on top, then plain bullet points. The task being edited
+  // is swapped for its form.
+  function renderGroup(label, person, kind) {
+    const items   = TASKS.filter(t => t.person === person && t.list === label);
+    const isOpen  = t => editing && editing.id && t.id === editing.id;
+    const tasks   = items.filter(t => !isBullet(t))
+      .sort((a, b) => (statusOf(a) === 'done') - (statusOf(b) === 'done')
+        || (parseDay(a.due) ? 0 : 1) - (parseDay(b.due) ? 0 : 1)
+        || (parseDay(a.due) || 0) - (parseDay(b.due) || 0));
+    const bullets = items.filter(isBullet);
+    const adding  = editing && !editing.id && editing.person === person && editing.list === label;
+    return `
+      <div class="group group-${kind}">
+        <div class="group-label">${label}</div>
+        ${tasks.length ? `<ul class="task-list">${tasks.map(t => isOpen(t) ? `<li class="task">${renderForm(t)}</li>` : renderTask(t)).join('')}</ul>` : ''}
+        ${bullets.length ? `<ul class="task-bullet-list">${bullets.map(t => isOpen(t) ? `<li class="is-form">${renderForm(t)}</li>` : renderBullet(t)).join('')}</ul>` : ''}
+        ${!items.length && !adding ? '<p class="group-empty">Nothing here yet.</p>' : ''}
+        ${adding ? renderForm({ person, list: label, status: 'to do' }) : ''}
+        ${EDITABLE && !adding ? `<button type="button" class="task-add" data-add-person="${esc(person)}" data-add-list="${label}">+ Add</button>` : ''}
+      </div>`;
+  }
+
+  // Upcoming milestones and events this person is named on. Their own tasks
+  // are left out here, since those already show under Priority or Simmering.
+  function renderAssigned(name, entries) {
+    const mine = entries.filter(e => e.kind !== 'task' && e.who.includes(name) && e.end >= today)
+      .sort((a, b) => a.start - b.start);
+    if (!mine.length) return '';
+    return `
+      <div class="group group-timeline">
+        <div class="group-label">On the timeline</div>
+        <ul class="tl-mini">${mine.map(e => `
+          <li class="is-${e.kind}">
+            <div class="tl-mini-when">${esc(e.label === 'Anytime' ? `Q${e.q.q} ${e.q.year}` : e.label)}</div>
+            <div class="tl-mini-title">${e.href ? `<a class="tl-link" href="${e.href}">${esc(e.title)} →</a>` : linkify(e.title)}</div>
+          </li>`).join('')}
+        </ul>
+      </div>`;
+  }
+
+  function renderTeam(content) {
+    const team = content.team || [];
+    if (!team.length) return '<p class="hub-empty">No team members listed.</p>';
+    const entries = timelineEntries(content);
+    return team.map(m => {
+      // Someone away (with a note) and nothing on their lists: just the note,
+      // unless the lists are editable, so tasks can still be added for them.
+      const quiet = m.note && !EDITABLE && !TASKS.some(t => t.person === m.name);
+      return `
+        <div class="member">
+          <div class="member-head">
+            <div class="member-name">${esc(m.name)}</div>
+            ${m.role ? `<div class="member-role">${esc(m.role)}</div>` : ''}
+            ${m.summary ? `<div class="member-summary">${linkify(m.summary)}</div>` : ''}
+          </div>
+          ${m.note ? `<div class="member-note">${linkify(m.note)}</div>` : ''}
+          ${renderAssigned(m.name, entries)}
+          ${quiet ? '' : `
+            ${renderGroup('Priority', m.name, 'priority')}
+            ${renderGroup('Simmering', m.name, 'simmering')}`}
+        </div>`;
+    }).join('');
+  }
+
+  // "Editing as": everyone shares the hub password, so each edit is signed
+  // with a name picked once per device. It's recorded in the Changes tab.
+  function renderEditorBar(content) {
+    const bar = document.getElementById('hub-editor-bar');
+    if (!EDITABLE) { bar.hidden = true; return; }
+    const current = readEditor();
+    bar.innerHTML = `
+      <label class="hub-label" for="hub-editor">Editing as</label>
+      <select class="hub-field" id="hub-editor">
+        <option value="">Choose your name…</option>
+        ${(content.team || []).map(m => `<option${m.name === current ? ' selected' : ''}>${esc(m.name)}</option>`).join('')}
+      </select>
+      <span class="hub-editor-hint">Changes save to the shared task list straight away.</span>`;
+    bar.hidden = false;
+  }
+
+  function renderTasksAndTimeline() {
+    document.getElementById('hub-timeline').innerHTML = renderTimeline(CONTENT);
+    document.getElementById('hub-team').innerHTML     = renderTeam(CONTENT);
+  }
+
+  // ── Talking to the shared task list ───────────────────────────────────
+  const API_ERRORS = {
+    wrong_password: "The hub's team key doesn't match the Google script. Ask Phil to check the HUB_KEY setting.",
+    locked:         'Too many failed attempts. Please wait 10 minutes and try again.',
+    not_configured: "The shared task list isn't set up yet.",
+    no_editor:      'Choose your name under "Editing as" first.',
+    bad_task:       'Please check the task: it needs some text, and notes can be up to 500 characters each.',
+    not_found:      'That task was deleted by someone else. The list below is up to date.',
+    conflict:       'Someone else changed this task while you were editing. The list below now shows their version; please make your change again.',
+    network:        "Couldn't reach the shared task list. Check your connection and try again.",
+    server_error:   'Something went wrong. Please try again.',
+    bad_request:    'Something went wrong. Please try again.',
+  };
+  const apiError = code => API_ERRORS[code] || API_ERRORS.server_error;
+  const tasksMsg = document.getElementById('hub-tasks-msg');
+
+  // text/plain keeps this a "simple" request, which Apps Script requires (it can't answer CORS preflights).
+  async function api(payload) {
+    try {
+      const res = await fetch(TEAM_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ ...payload, key: CONTENT.apiKey }),
+      });
+      return await res.json();
+    } catch {
+      return { ok: false, error: 'network' };
+    }
+  }
+
+  async function loadSharedTasks() {
+    if (!TEAM_API_URL || !CONTENT.apiKey) return;
+    tasksMsg.textContent = 'Loading the shared task list…';
+    const res = await api({ action: 'tasks' });
+    if (!res.ok) {
+      tasksMsg.textContent = apiError(res.error) + ' Showing the last saved copy, read-only.';
+      return;
+    }
+    TASKS = res.tasks;
+    EDITABLE = true;
+    tasksMsg.textContent = '';
+    renderEditorBar(CONTENT);
+    renderTasksAndTimeline();
+  }
+
+  function formMessage(form, text) {
+    const el = form && form.querySelector('.tf-msg');
+    if (el) el.textContent = text; else tasksMsg.textContent = text;
+  }
+
+  // After a save, delete, or a refused change: take the server's list as the truth.
+  function applyResult(res, form) {
+    if (res.tasks) TASKS = res.tasks;
+    if (res.ok || res.error === 'not_found' || res.error === 'conflict') {
+      editing = null;
+      renderTasksAndTimeline();
+      tasksMsg.textContent = res.ok ? '' : apiError(res.error);
+    } else {
+      formMessage(form, apiError(res.error));
+    }
+  }
+
+  const hubTeam = document.getElementById('hub-team');
+
+  hubTeam.addEventListener('click', async e => {
+    const edit = e.target.closest('[data-edit]');
+    const add  = e.target.closest('[data-add-person]');
+    if (edit) { editing = { id: edit.dataset.edit }; renderTasksAndTimeline(); return; }
+    if (add)  { editing = { person: add.dataset.addPerson, list: add.dataset.addList }; renderTasksAndTimeline(); return; }
+    if (e.target.closest('[data-cancel]')) { editing = null; renderTasksAndTimeline(); return; }
+
+    if (e.target.closest('[data-delete]')) {
+      const form = e.target.closest('form');
+      const editor = readEditor();
+      if (!editor) { formMessage(form, apiError('no_editor')); return; }
+      if (!confirm('Delete this task for everyone?')) return;
+      e.target.disabled = true;
+      applyResult(await api({ action: 'deleteTask', editor, id: form.dataset.id }), form);
+    }
+  });
+
+  hubTeam.addEventListener('submit', async e => {
+    e.preventDefault();
+    const form = e.target;
+    const editor = readEditor();
+    if (!editor) { formMessage(form, apiError('no_editor')); return; }
+
+    const f = form.elements;
+    const existing = TASKS.find(t => t.id === form.dataset.id);
+    const task = {
+      id:        form.dataset.id || '',
+      updatedAt: existing ? existing.updatedAt : '',
+      person:    form.dataset.person,
+      list:      f.list.value,
+      task:      f.task.value.trim(),
+      status:    f.status.value,
+      due:       f.due.value,
+      notes:     f.notes.value.split('\n').map(n => n.trim()).filter(Boolean),
+      timeline:  f.timeline.checked,
+    };
+    if (task.timeline && !task.due) { formMessage(form, 'Add a due date to show this on the timeline.'); return; }
+
+    const btn = form.querySelector('[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    applyResult(await api({ action: 'saveTask', editor, task }), form);
+    if (document.body.contains(btn)) { btn.disabled = false; btn.textContent = 'Save'; }
+  });
+
+  document.getElementById('hub-editor-bar').addEventListener('change', e => {
+    if (e.target.id === 'hub-editor') storeEditor(e.target.value);
+  });
+
+  // ── Principles and guidelines ─────────────────────────────────────────
+  // Each item is a plain string, or { title, text, points } for a heading
+  // with a sentence or two and optional bullet points.
+  function renderPoints(items, numbered) {
+    items = (items || []).filter(i => typeof i === 'string' ? i.trim() : i);
+    if (!items.length) return '<p class="hub-empty">Coming soon.</p>';
+    return `<ol class="points${numbered ? ' is-numbered' : ''}">${items.map(i => typeof i === 'string'
+      ? `<li><div class="point-text">${linkify(i)}</div></li>`
+      : `<li>
+          ${i.title ? `<div class="point-title">${esc(i.title)}</div>` : ''}
+          ${i.text ? `<div class="point-text">${linkify(i.text)}</div>` : ''}
+          ${(i.points || []).length ? `<ul class="point-bullets">${i.points.map(p => `<li>${linkify(p)}</li>`).join('')}</ul>` : ''}
+        </li>`).join('')}</ol>`;
+  }
+
+  function show(content) {
+    CONTENT = content;
+    TASKS   = tasksFromContent(content);
+    document.getElementById('hub-updated').textContent = 'Last updated ' +
+      new Date(content.updated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    renderTasksAndTimeline();
+    document.getElementById('hub-principles').innerHTML = renderPoints(content.principles, true);
+    document.getElementById('hub-guidelines').innerHTML = renderPoints(content.guidelines, false);
+    document.getElementById('gate').hidden = true;
+    document.getElementById('hub').hidden  = false;
+    loadSharedTasks();
+  }
+
+  // ── Unlocking ─────────────────────────────────────────────────────────
+  gateForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    gateMsg.textContent = '';
+    if (!PAYLOAD) { gateMsg.textContent = "The hub isn't set up yet."; return; }
+    gateBtn.disabled = true;
+    gateBtn.textContent = 'Checking…';
+    try {
+      const key = await deriveKey(document.getElementById('gate-password').value);
+      const content = await decrypt(key);
+      if (document.getElementById('gate-remember').checked) await remember(key);
+      show(content);
+    } catch {
+      gateMsg.textContent = "That password isn't right. Please check it and try again.";
+    } finally {
+      gateBtn.disabled = false;
+      gateBtn.textContent = 'Enter →';
+    }
+  });
+
+  document.getElementById('hub-lock').addEventListener('click', () => {
+    forget();
+    location.reload();
+  });
+
+  (async () => {
+    const saved = readRemembered();
+    if (!PAYLOAD || !saved) return;
+    if (saved.salt !== PAYLOAD.salt) { forget(); return; }
+    try {
+      const key = await crypto.subtle.importKey('raw', fromB64(saved.key), 'AES-GCM', false, ['decrypt']);
+      show(await decrypt(key));
+    } catch {
+      forget();   // the password changed since this device last unlocked
+    }
+  })();
+</script>
+
+</body>
+</html>

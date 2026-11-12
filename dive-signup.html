@@ -6,7 +6,7 @@
   <title>Dive Sign-Up — Shipwreck City</title>
   <!-- Private page: shared by link only. Keep it out of search, the nav, and the sitemap.
        It holds no schedule, names, or password. Those come from the Google Apps Script
-       in tools/dive-signup/, which only answers with the right password. -->
+       in tools/google-backend/, which only answers with the right password. -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="img/thumbnails/favicon_master.png">
   <link rel="apple-touch-icon" href="img/thumbnails/favicon_master.png">
@@ -137,9 +137,10 @@
 <!-- STATIC-FOOTER:END --></div>
 
 <script src="js/site.js"></script>
+<script src="js/team-api-config.js"></script>
 <script>
-  // The deployed Google Apps Script web app URL (ends in /exec). See tools/dive-signup/SETUP.md.
-  const DIVE_API_URL = '';
+  // Set once in js/team-api-config.js, shared with the hub. See tools/google-backend/SETUP.md.
+  const DIVE_API_URL = TEAM_API_URL;
 
   document.getElementById('nav-mount').innerHTML    = buildNav('');
   document.getElementById('footer-mount').innerHTML = buildFooter();

@@ -29,7 +29,9 @@
   <link rel="stylesheet" href="css/style.css">
   <style>
     .events-list { display: flex; flex-direction: column; gap: 24px; }
+    .event-card:target { border-color: var(--accent); }
     .event-card {
+      scroll-margin-top: 90px;   /* clear the sticky nav when linked to from the hub */
       display: flex;
       gap: 28px;
       padding: 32px;
@@ -200,7 +202,7 @@
 
   function renderEventCard(e) {
     return `
-      <div class="event-card">
+      <div class="event-card" id="${eventSlug(e)}">
         ${e.image ? `<div class="event-photo"${e.imagePosition === 'right' ? ' style="order:3;"' : ''}><img src="${e.image}" alt="${e.title}" loading="lazy"></div>` : ''}
         <div class="event-date-block">
           <div class="event-date-month">${e.month}</div>
