@@ -30,9 +30,9 @@
  *    priority   what they're focused on now
  *    simmering  on the back burner: ideas and things to get to later
  *    Each item in either list is
- *      - a plain string, shown as a simple bullet, or
+ *      - a plain string (a task that's not started yet), or
  *      - { task, status, due, notes }
- *          status  "to do", "in progress" or "done"
+ *          status  "not started", "in progress" or "done"
  *          due     "YYYY-MM-DD" (optional)
  *          notes   list of bullet points under the task (optional)
  *          timeline  true to also show it on the timeline on its due date
@@ -59,7 +59,7 @@ module.exports = {
       name: "Phil Parisi", role: "Founder",
       summary: "Leads the project: plans and pilots the ROV dives, dives the wrecks, and runs partnerships, events and the website.",
       priority: [
-        { task: "Example task: replace with real ones", status: "to do", due: "2026-11-30", timeline: true, notes: ["Bullet notes go here", "Add as many as you like"] }
+        { task: "Example task: replace with real ones", status: "not started", due: "2026-11-30", timeline: true, notes: ["Bullet notes go here", "Add as many as you like"] }
       ],
       simmering: [
         "Example idea for later"

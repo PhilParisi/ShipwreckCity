@@ -72,7 +72,7 @@ the password. Nothing on the public site links to it.
 
 Team members edit tasks on the hub itself: "+ Add" under Priority or Simmering,
 and "Edit" on any task. Each person picks their name under "Editing as" once
-per device. Every change is recorded in the `Changes` tab with who and when.
+per device (optional; otherwise edits are logged as "Team member"). Every change is recorded in the `Changes` tab with who and when. Nothing is refused except a task with no text, and the last save wins.
 
 You can also edit the `Tasks` tab directly:
 
@@ -82,7 +82,7 @@ You can also edit the `Tasks` tab directly:
 | Person | Full name as on the hub, e.g. `Evan Weber` |
 | List | `Priority` or `Simmering` |
 | Task | The text |
-| Status | `to do`, `in progress`, `done`, or blank for a plain bullet point |
+| Status | `not started`, `in progress` or `done` (blank counts as not started) |
 | Due | `2027-02-10` (optional) |
 | Notes | Bullet points, one per line (Ctrl+Enter for a new line in a cell) |
 | Timeline | `TRUE` to show it on the timeline (needs a Due date) |

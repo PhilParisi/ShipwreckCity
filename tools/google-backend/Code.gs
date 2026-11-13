@@ -34,12 +34,11 @@ var FAILED_WINDOW_SECONDS = 600;
 
 var MAX_NAME_LENGTH  = 80;
 var MAX_EMAIL_LENGTH = 120;
-var MAX_TASK_LENGTH  = 500;
-var MAX_NOTES        = 30;
+var MAX_TASK_LENGTH  = 5000;   // generous; only there to stop a runaway paste
 
 var TASK_HEADERS = ['ID', 'Person', 'List', 'Task', 'Status', 'Due', 'Notes', 'Timeline', 'Updated At', 'Updated By'];
 var TASK_LISTS   = ['Priority', 'Simmering'];
-var TASK_STATUS  = ['', 'to do', 'in progress', 'done'];   // '' is a plain bullet point
+var TASK_STATUS  = ['not started', 'in progress', 'done'];
 
 var HUB_ACTIONS = { tasks: true, saveTask: true, deleteTask: true };
 
@@ -283,14 +282,14 @@ function readTasks_() {
     // Due may have been typed into the Sheet and turned into a date.
     var due = row[5] instanceof Date ? Utilities.formatDate(row[5], tz, 'yyyy-MM-dd') : String(display[i][5] || '').trim();
     var list   = TASK_LISTS.indexOf(display[i][2]) >= 0 ? display[i][2] : 'Priority';
-    var status = String(display[i][4] || '').trim().toLowerCase();
+    var status = normalizeStatus_(display[i][4]);
 
     tasks.push({
       id:        id,
       person:    display[i][1],
       list:      list,
       task:      text,
-      status:    TASK_STATUS.indexOf(status) >= 0 ? status : 'to do',
+      status:    TASK_STATUS.indexOf(status) >= 0 ? status : 'not started',
       due:       /^\d{4}-\d{2}-\d{2}$/.test(due) ? due : '',
       notes:     String(display[i][6] || '').split('\n').map(function (n) { return n.trim(); }).filter(String),
       timeline:  String(display[i][7]).toUpperCase() === 'TRUE',
@@ -298,6 +297,13 @@ function readTasks_() {
     });
   });
   return tasks;
+}
+
+/** Older rows may say "to do" or have no status; both mean "not started". */
+function normalizeStatus_(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (s === '' || s === 'to do' || s === 'todo') return 'not started';
+  return s;
 }
 
 /** Row number (2+) of the task with this ID, or 0. */
@@ -310,8 +316,7 @@ function findTaskRow_(sheet, id) {
 }
 
 function cleanEditor_(req) {
-  var editor = String(req.editor || '').trim();
-  return editor && editor.length <= MAX_NAME_LENGTH ? editor : '';
+  return String(req.editor || '').trim().slice(0, MAX_NAME_LENGTH) || 'Team member';
 }
 
 function logChange_(who, action, person, task) {
@@ -320,28 +325,25 @@ function logChange_(who, action, person, task) {
 }
 
 /**
- * Adds a task (no id) or replaces one. If the row changed since the editor
- * loaded it (updatedAt differs), nothing is saved and the latest list comes
- * back, so one person's edit can't silently wipe out another's.
+ * Adds a task (no id) or replaces one. Deliberately forgiving: the only thing
+ * refused is a task with no text. Anything unexpected is tidied rather than
+ * rejected (unknown status → not started, unknown list → Priority, a due date
+ * that isn't YYYY-MM-DD → none). Last save wins; the Changes tab and the
+ * Sheet's version history are there to recover anything overwritten.
  */
 function saveTask_(req) {
   var editor = cleanEditor_(req);
-  if (!editor) return { ok: false, error: 'no_editor' };
-
   var t      = req.task || {};
-  var person = String(t.person || '').trim();
-  var list   = String(t.list || '');
-  var text   = String(t.task || '').trim();
-  var status = String(t.status || '').trim().toLowerCase();
+  var person = String(t.person || '').trim().slice(0, MAX_NAME_LENGTH);
+  var list   = TASK_LISTS.indexOf(String(t.list || '')) >= 0 ? String(t.list) : 'Priority';
+  var text   = String(t.task || '').trim().slice(0, MAX_TASK_LENGTH);
+  var status = normalizeStatus_(t.status);
   var due    = String(t.due || '').trim();
-  var notes  = (Array.isArray(t.notes) ? t.notes : []).map(function (n) { return String(n).trim(); }).filter(String);
+  var notes  = (Array.isArray(t.notes) ? t.notes : []).map(function (n) { return String(n).trim().slice(0, MAX_TASK_LENGTH); }).filter(String);
 
-  if (!person || person.length > MAX_NAME_LENGTH)   return { ok: false, error: 'bad_task' };
-  if (TASK_LISTS.indexOf(list) < 0)                 return { ok: false, error: 'bad_task' };
-  if (!text || text.length > MAX_TASK_LENGTH)       return { ok: false, error: 'bad_task' };
-  if (TASK_STATUS.indexOf(status) < 0)              return { ok: false, error: 'bad_task' };
-  if (due && !/^\d{4}-\d{2}-\d{2}$/.test(due))      return { ok: false, error: 'bad_task' };
-  if (notes.length > MAX_NOTES || notes.some(function (n) { return n.length > MAX_TASK_LENGTH; })) return { ok: false, error: 'bad_task' };
+  if (!text) return { ok: false, error: 'bad_task' };
+  if (TASK_STATUS.indexOf(status) < 0) status = 'not started';
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(due)) due = '';
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(TASKS_SHEET);
   var id    = String(t.id || '');
@@ -349,8 +351,6 @@ function saveTask_(req) {
   if (id) {
     row = findTaskRow_(sheet, id);
     if (!row) return { ok: false, error: 'not_found', tasks: readTasks_() };
-    var current = sheet.getRange(row, 9).getDisplayValue();
-    if (current !== String(t.updatedAt || '')) return { ok: false, error: 'conflict', tasks: readTasks_() };
   } else {
     id  = Utilities.getUuid().slice(0, 8);
     row = sheet.getLastRow() + 1;
@@ -368,7 +368,6 @@ function saveTask_(req) {
 
 function deleteTask_(req) {
   var editor = cleanEditor_(req);
-  if (!editor) return { ok: false, error: 'no_editor' };
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(TASKS_SHEET);
   var row   = findTaskRow_(sheet, String(req.id || ''));

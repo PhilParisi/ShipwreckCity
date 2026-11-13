@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .hub-wrap { max-width: 1000px; }
+    .hub-wrap { max-width: 1440px; }
     .hub-intro {
       font-family: var(--font-serif); font-size: 16px; line-height: 1.8;
       color: var(--text-mid); margin-bottom: 28px;
@@ -126,68 +126,98 @@
     .tl-key { display: flex; gap: 20px; flex-wrap: wrap; margin: -10px 0 24px; font-family: var(--font-body); font-size: 13px; letter-spacing: 1px; color: var(--text-muted); }
     .tl-key i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
 
-    /* ── Team tasks ── */
-    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-    .member { background: var(--bg-card); border: 1px solid var(--border-mid); padding: 20px 22px; }
-    .member-head { border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 12px; }
-    .member-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.1; }
-    .member-role { font-family: var(--font-body); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
-    .member-summary { font-family: var(--font-serif); font-style: italic; font-size: 14px; line-height: 1.6; color: var(--text-mid); margin-top: 8px; }
+    /* ── Team tasks ── one full-width card per person, sized up to read at a glance */
+    .team-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
+    .member { background: var(--bg-card); border: 1px solid var(--border-mid); padding: 30px 34px; }
+    .member-head { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 20px; }
+    .member-name { font-family: var(--font-display); font-size: 42px; letter-spacing: 1px; color: var(--text-primary); line-height: 1.1; }
+    .member-role { font-family: var(--font-body); font-size: 19px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-top: 6px; }
+    .member-summary { font-family: var(--font-serif); font-style: italic; font-size: 21px; line-height: 1.6; color: var(--text-mid); margin-top: 10px; }
     .member-note {
-      font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--text-primary);
-      background: rgba(232, 149, 106, 0.08); border-left: 2px solid #e8956a; padding: 10px 14px; margin-bottom: 14px;
+      font-family: var(--font-serif); font-size: 21px; line-height: 1.6; color: var(--text-primary);
+      background: rgba(232, 149, 106, 0.08); border-left: 3px solid #e8956a; padding: 14px 20px; margin-bottom: 22px;
     }
-    .group + .group, .member-note + .group { margin-top: 18px; }
+    .member-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 44px; align-items: start; }
+    .group-timeline { margin-bottom: 26px; }
     .group-label {
-      font-family: var(--font-body); font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
-      padding-bottom: 6px; border-bottom: 1px solid var(--border); margin-bottom: 2px;
+      font-family: var(--font-body); font-size: 18px; letter-spacing: 3px; text-transform: uppercase;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 4px;
     }
     .group-priority  .group-label { color: #e8956a; }
     .group-simmering .group-label { color: var(--text-muted); }
-    .group-simmering .task-text, .group-simmering .task-bullet-list li { color: var(--text-mid); }
-    .group-timeline .group-label { color: var(--accent); }
+    .group-timeline  .group-label { color: var(--accent); }
     .tl-mini { list-style: none; margin: 0; padding: 0; }
-    .tl-mini li { display: grid; grid-template-columns: 64px 1fr; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .tl-mini li { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); }
     .tl-mini li:last-child { border-bottom: none; }
-    .tl-mini-when { font-family: var(--font-body); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); padding-top: 3px; }
+    .tl-mini-when { font-family: var(--font-body); font-size: 18px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); padding-top: 3px; }
     .tl-mini li.is-event .tl-mini-when { color: #e8c547; }
-    .tl-mini-title { font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--text-primary); }
-    .group-empty { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--text-muted); margin: 8px 0 0; }
+    .tl-mini-title { font-family: var(--font-serif); font-size: 21px; line-height: 1.5; color: var(--text-primary); }
+    .group-empty { font-family: var(--font-serif); font-style: italic; font-size: 21px; color: var(--text-muted); margin: 12px 0 0; }
+
+    .task-list { list-style: none; margin: 0; padding: 0; }
+    .task { padding: 16px 16px; margin: 0 -16px; border-bottom: 1px solid var(--border); transition: background 0.2s, opacity 0.2s; }
+    .task:last-child { border-bottom: none; }
+    .task-top { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; }
+    .task-text { font-family: var(--font-serif); font-size: 22px; line-height: 1.5; color: var(--text-primary); }
+    .group-simmering .task-text { color: var(--text-mid); }
+    .task-status {
+      font-family: var(--font-body); font-size: 16px; letter-spacing: 1px; text-transform: uppercase;
+      padding: 5px 12px; border: 1px solid var(--border-mid); color: var(--text-muted); white-space: nowrap; flex-shrink: 0;
+      background: var(--bg-deep);
+    }
+    select.task-status { cursor: pointer; }
+    select.task-status:disabled { cursor: wait; opacity: 0.6; }
+    .task-status option { color: var(--text-primary); background: var(--bg-deep); }
+    .task-status.not-started { color: #e8c547; border-color: #e8c547; }
+    .task-status.in-progress { color: #7fc4d8; border-color: #7fc4d8; }
+    .task-status.done        { color: #4fbf6a; border-color: #4fbf6a; }
+    .task-due { font-family: var(--font-body); font-size: 18px; letter-spacing: 1px; color: var(--text-muted); margin-top: 6px; }
+    .task-due.overdue { color: #e8956a; }
+    .task-notes { margin: 8px 0 0; padding-left: 26px; font-family: var(--font-serif); font-size: 20px; line-height: 1.6; color: var(--text-mid); }
+    /* Done: the item darkens and recedes */
+    .task.is-done { background: rgba(0, 0, 0, 0.4); }
+    .task.is-done .task-text, .task.is-done .task-notes, .task.is-done .task-due { color: var(--text-muted); opacity: 0.6; }
 
     /* ── Editing tasks ── */
-    .hub-editor-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
-    .hub-editor-bar .hub-label { margin: 0; }
-    .hub-editor-bar .hub-field { width: auto; min-width: 220px; padding: 8px 10px; }
-    .hub-editor-hint { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--text-muted); }
-    .hub-tasks-msg { font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: #e8956a; margin-bottom: 14px; }
+    .hub-editor-bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+    .hub-editor-bar .hub-label { margin: 0; font-size: 18px; }
+    .hub-editor-bar .hub-field { width: auto; min-width: 260px; padding: 10px 12px; font-size: 20px; }
+    .hub-editor-hint { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--text-muted); }
+    .hub-tasks-msg { font-family: var(--font-serif); font-size: 21px; line-height: 1.6; color: #e8956a; margin-bottom: 18px; }
     .hub-tasks-msg:empty { display: none; }
     .task-edit, .task-add {
       background: none; border: none; padding: 0; cursor: pointer;
-      font-family: var(--font-body); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+      font-family: var(--font-body); font-size: 17px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
     }
-    .task-edit { margin-top: 6px; }
-    .task-bullet-list .task-edit { margin: 0 0 0 10px; }
+    .task-edit { margin-top: 8px; }
     .task-edit:hover, .task-add:hover { color: var(--accent); }
-    .task-add { margin-top: 10px; color: var(--accent); }
-    .task-form { display: flex; flex-direction: column; gap: 10px; padding: 12px 0; }
-    .tf-label { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-body); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+    .task-add { margin-top: 14px; color: var(--accent); }
+    .task-form { display: flex; flex-direction: column; gap: 14px; padding: 16px 0; }
+    .tf-label { display: flex; flex-direction: column; gap: 6px; font-family: var(--font-body); font-size: 17px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
     .tf-label span { text-transform: none; letter-spacing: 0; font-family: var(--font-serif); font-style: italic; }
     .task-form textarea, .task-form select, .task-form input[type="date"] {
-      font-family: var(--font-serif); font-size: 15px; color: var(--text-primary); background: var(--bg-deep);
-      border: 1px solid var(--border-mid); padding: 8px 10px; width: 100%; box-sizing: border-box; letter-spacing: 0; text-transform: none;
+      font-family: var(--font-serif); font-size: 21px; color: var(--text-primary); background: var(--bg-deep);
+      border: 1px solid var(--border-mid); padding: 10px 12px; width: 100%; box-sizing: border-box; letter-spacing: 0; text-transform: none;
     }
     .task-form textarea:focus, .task-form select:focus, .task-form input:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
     .task-form input[type="date"] { color-scheme: dark; }
-    .tf-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .tf-check { font-family: var(--font-serif); font-size: 14px; color: var(--text-mid); display: flex; gap: 8px; align-items: center; }
-    .tf-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .tf-btn { padding: 8px 14px; font-size: 13px; }
+    .tf-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .tf-check { font-family: var(--font-serif); font-size: 20px; color: var(--text-mid); display: flex; gap: 10px; align-items: center; }
+    .tf-check input { width: 20px; height: 20px; }
+    .tf-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tf-btn { padding: 10px 18px; font-size: 17px; }
     .tf-delete { border-color: #e8956a; color: #e8956a; margin-left: auto; }
     .tf-delete:hover:not(:disabled) { background: #e8956a; color: var(--bg-dark); }
-    .tf-msg { font-family: var(--font-serif); font-size: 14px; color: #e8956a; }
+    .tf-msg { font-family: var(--font-serif); font-size: 20px; color: #e8956a; }
     .tf-msg:empty { display: none; }
-    .task-bullet-list li.is-form { list-style: none; margin-left: -18px; }
-    @media (max-width: 600px) { .tf-row { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .member-lists { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) {
+      .member { padding: 22px 20px; }
+      .member-name { font-size: 34px; }
+      .tl-mini li { grid-template-columns: 1fr; gap: 2px; }
+      .tf-row { grid-template-columns: 1fr; }
+      .task-top { flex-direction: column; gap: 10px; }
+    }
 
     /* ── Principles and guidelines ── */
     .points { list-style: none; margin: 0; padding: 0; counter-reset: point; }
@@ -205,25 +235,6 @@
     .point-text { font-family: var(--font-serif); font-size: 15px; line-height: 1.7; color: var(--text-mid); }
     .point-title + .point-text { margin-top: 4px; }
     .point-bullets { margin: 8px 0 0; padding-left: 20px; font-family: var(--font-serif); font-size: 15px; line-height: 1.7; color: var(--text-mid); }
-    .task-list { list-style: none; margin: 0; padding: 0; }
-    .task { padding: 10px 0; border-bottom: 1px solid var(--border); }
-    .task:last-child { border-bottom: none; }
-    .task-top { display: flex; gap: 10px; align-items: baseline; justify-content: space-between; }
-    .task-text { font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--text-primary); }
-    .task-status {
-      font-family: var(--font-body); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-      padding: 2px 8px; border: 1px solid var(--border-mid); color: var(--text-muted); white-space: nowrap; flex-shrink: 0;
-    }
-    .task-status.todo        { color: #e8c547; border-color: #e8c547; }
-    .task-status.in-progress { color: #7fc4d8; border-color: #7fc4d8; }
-    .task-status.done        { color: #4fbf6a; border-color: #4fbf6a; }
-    .task-due { font-family: var(--font-body); font-size: 13px; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
-    .task-due.overdue { color: #e8956a; }
-    .task.is-done { opacity: 0.55; }
-    .task.is-done .task-text { text-decoration: line-through; }
-    .task-notes, .task-bullet-list { margin: 6px 0 0; padding-left: 20px; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--text-mid); }
-    .task-bullet-list { padding-left: 18px; margin: 0; }
-    .task-bullet-list li { padding: 4px 0; font-size: 15px; color: var(--text-primary); }
 
     @media (max-width: 600px) {
       .tl { padding-left: 32px; }
@@ -356,7 +367,7 @@
 
 <!-- Written by tools/team-hub/build-team-hub.js. Don't edit by hand. -->
 <!-- TEAM-HUB-PAYLOAD:START -->
-<script id="team-hub-payload" type="application/json">{"v":1,"iter":600000,"salt":"RRcfxBPDbAz66sxlMqRh8Q==","iv":"gxCSXcdo9Lk5l+FD","data":"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"}</script>
+<script id="team-hub-payload" type="application/json">{"v":1,"iter":600000,"salt":"RRcfxBPDbAz66sxlMqRh8Q==","iv":"EIdv7Sxg+7uypmqA","data":"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"}</script>
 <!-- TEAM-HUB-PAYLOAD:END -->
 
 <script src="js/site.js"></script>
@@ -552,21 +563,37 @@
   const readEditor  = () => { try { return localStorage.getItem(EDITOR_STORE) || ''; } catch { return ''; } };
   const storeEditor = name => { try { localStorage.setItem(EDITOR_STORE, name); } catch {} };
 
+  // Every task has one of three statuses. Older entries may say "to do" or
+  // have no status at all; both count as "not started".
+  const STATUSES = ['not started', 'in progress', 'done'];
+  const STATUS_LABEL = { 'not started': 'Not started', 'in progress': 'In progress', 'done': 'Done' };
+  const normStatus = s => {
+    s = String(s || '').trim().toLowerCase();
+    return STATUSES.includes(s) ? s : 'not started';
+  };
+  const statusClass = s => normStatus(s).replace(' ', '-');
+
   function tasksFromContent(content) {
     const out = [];
     (content.team || []).forEach(m => [['Priority', m.priority], ['Simmering', m.simmering]].forEach(([list, items]) =>
       (items || []).forEach(t => {
-        if (typeof t === 'string') { if (t.trim()) out.push({ person: m.name, list, task: t, status: '', notes: [] }); }
-        else if (t) out.push({ person: m.name, list, task: t.task, status: t.status || 'to do', due: t.due || '', notes: t.notes || [], timeline: !!t.timeline });
+        if (typeof t === 'string') { if (t.trim()) out.push({ person: m.name, list, task: t, status: 'not started', notes: [] }); }
+        else if (t) out.push({ person: m.name, list, task: t.task, status: normStatus(t.status), due: t.due || '', notes: t.notes || [], timeline: !!t.timeline });
       })));
     return out;
   }
 
-  const STATUS = { 'to do': 'todo', 'todo': 'todo', 'in progress': 'in-progress', 'done': 'done' };
-  const isBullet = t => !String(t.status || '').trim();
-  const statusOf = t => STATUS[String(t.status || 'to do').trim().toLowerCase()] || 'todo';
-
+  const statusOf = t => statusClass(t.status);
   const editButton = t => EDITABLE && t.id ? `<button type="button" class="task-edit" data-edit="${esc(t.id)}">Edit</button>` : '';
+
+  // Editable: a status picker that saves as soon as it's changed. Read-only: a label.
+  function statusControl(t) {
+    const s = normStatus(t.status);
+    if (!(EDITABLE && t.id)) return `<div class="task-status ${statusClass(s)}">${STATUS_LABEL[s]}</div>`;
+    return `<select class="task-status ${statusClass(s)}" data-status-for="${esc(t.id)}" aria-label="Status">
+      ${STATUSES.map(v => `<option value="${v}"${v === s ? ' selected' : ''}>${STATUS_LABEL[v]}</option>`).join('')}
+    </select>`;
+  }
 
   function renderTask(t) {
     const status  = statusOf(t);
@@ -577,16 +604,12 @@
       <li class="task${status === 'done' ? ' is-done' : ''}">
         <div class="task-top">
           <div class="task-text">${linkify(t.task)}</div>
-          <div class="task-status ${status}">${esc(t.status || 'to do')}</div>
+          ${statusControl(t)}
         </div>
         ${due ? `<div class="task-due${overdue ? ' overdue' : ''}">Due ${esc(fmtDay(due))}${due.getFullYear() !== today.getFullYear() ? ', ' + due.getFullYear() : ''}${overdue ? ' · overdue' : ''}${t.timeline ? ' · on the timeline' : ''}</div>` : ''}
         ${notes.length ? `<ul class="task-notes">${notes.map(n => `<li>${linkify(n)}</li>`).join('')}</ul>` : ''}
         ${editButton(t)}
       </li>`;
-  }
-
-  function renderBullet(t) {
-    return `<li><span>${linkify(t.task)}</span>${editButton(t)}</li>`;
   }
 
   function renderForm(t) {
@@ -596,13 +619,11 @@
         <label class="tf-label">Task<textarea name="task" rows="2" maxlength="500" required>${esc(t.task || '')}</textarea></label>
         <div class="tf-row">
           <label class="tf-label">List<select name="list">${['Priority', 'Simmering'].map(l => opt(l, l, t.list)).join('')}</select></label>
-          <label class="tf-label">Status<select name="status">
-            ${opt('', 'Note (no status)', t.status || '')}${opt('to do', 'To do', t.status)}${opt('in progress', 'In progress', t.status)}${opt('done', 'Done', t.status)}
-          </select></label>
+          <label class="tf-label">Status<select name="status">${STATUSES.map(s => opt(s, STATUS_LABEL[s], normStatus(t.status))).join('')}</select></label>
           <label class="tf-label">Due<input type="date" name="due" value="${esc(t.due || '')}"></label>
         </div>
         <label class="tf-label">Notes <span>one bullet point per line</span><textarea name="notes" rows="3">${esc((t.notes || []).join('\n'))}</textarea></label>
-        <label class="tf-check"><input type="checkbox" name="timeline"${t.timeline ? ' checked' : ''}> Show on the timeline (needs a due date)</label>
+        <label class="tf-check"><input type="checkbox" name="timeline"${t.timeline ? ' checked' : ''}> Show on the timeline (on its due date)</label>
         <div class="tf-actions">
           <button type="submit" class="hub-btn tf-btn">Save</button>
           <button type="button" class="hub-btn tf-btn" data-cancel>Cancel</button>
@@ -612,25 +633,23 @@
       </form>`;
   }
 
-  // One group (Priority or Simmering): tracked tasks first, open before done
-  // and soonest due on top, then plain bullet points. The task being edited
-  // is swapped for its form.
+  // One group (Priority or Simmering), ordered by due date: soonest first,
+  // tasks without a date at the bottom. Same date: in progress, then not
+  // started, then done. The task being edited is swapped for its form.
+  const STATUS_ORDER = { 'in-progress': 0, 'not-started': 1, 'done': 2 };
   function renderGroup(label, person, kind) {
-    const items   = TASKS.filter(t => t.person === person && t.list === label);
-    const isOpen  = t => editing && editing.id && t.id === editing.id;
-    const tasks   = items.filter(t => !isBullet(t))
-      .sort((a, b) => (statusOf(a) === 'done') - (statusOf(b) === 'done')
-        || (parseDay(a.due) ? 0 : 1) - (parseDay(b.due) ? 0 : 1)
-        || (parseDay(a.due) || 0) - (parseDay(b.due) || 0));
-    const bullets = items.filter(isBullet);
-    const adding  = editing && !editing.id && editing.person === person && editing.list === label;
+    const isOpen = t => editing && editing.id && t.id === editing.id;
+    const tasks  = TASKS.filter(t => t.person === person && t.list === label)
+      .sort((a, b) => (parseDay(a.due) ? 0 : 1) - (parseDay(b.due) ? 0 : 1)
+        || (parseDay(a.due) || 0) - (parseDay(b.due) || 0)
+        || STATUS_ORDER[statusOf(a)] - STATUS_ORDER[statusOf(b)]);
+    const adding = editing && !editing.id && editing.person === person && editing.list === label;
     return `
       <div class="group group-${kind}">
         <div class="group-label">${label}</div>
         ${tasks.length ? `<ul class="task-list">${tasks.map(t => isOpen(t) ? `<li class="task">${renderForm(t)}</li>` : renderTask(t)).join('')}</ul>` : ''}
-        ${bullets.length ? `<ul class="task-bullet-list">${bullets.map(t => isOpen(t) ? `<li class="is-form">${renderForm(t)}</li>` : renderBullet(t)).join('')}</ul>` : ''}
-        ${!items.length && !adding ? '<p class="group-empty">Nothing here yet.</p>' : ''}
-        ${adding ? renderForm({ person, list: label, status: 'to do' }) : ''}
+        ${!tasks.length && !adding ? '<p class="group-empty">Nothing here yet.</p>' : ''}
+        ${adding ? renderForm({ person, list: label, status: 'not started' }) : ''}
         ${EDITABLE && !adding ? `<button type="button" class="task-add" data-add-person="${esc(person)}" data-add-list="${label}">+ Add</button>` : ''}
       </div>`;
   }
@@ -671,14 +690,17 @@
           ${m.note ? `<div class="member-note">${linkify(m.note)}</div>` : ''}
           ${renderAssigned(m.name, entries)}
           ${quiet ? '' : `
-            ${renderGroup('Priority', m.name, 'priority')}
-            ${renderGroup('Simmering', m.name, 'simmering')}`}
+            <div class="member-lists">
+              ${renderGroup('Priority', m.name, 'priority')}
+              ${renderGroup('Simmering', m.name, 'simmering')}
+            </div>`}
         </div>`;
     }).join('');
   }
 
-  // "Editing as": everyone shares the hub password, so each edit is signed
-  // with a name picked once per device. It's recorded in the Changes tab.
+  // "Editing as": everyone shares the hub password, so edits are signed with
+  // a name picked once per device and recorded in the Changes tab. Optional:
+  // without one, edits are logged as "Team member".
   function renderEditorBar(content) {
     const bar = document.getElementById('hub-editor-bar');
     if (!EDITABLE) { bar.hidden = true; return; }
@@ -686,7 +708,7 @@
     bar.innerHTML = `
       <label class="hub-label" for="hub-editor">Editing as</label>
       <select class="hub-field" id="hub-editor">
-        <option value="">Choose your name…</option>
+        <option value="">Choose your name (optional)…</option>
         ${(content.team || []).map(m => `<option${m.name === current ? ' selected' : ''}>${esc(m.name)}</option>`).join('')}
       </select>
       <span class="hub-editor-hint">Changes save to the shared task list straight away.</span>`;
@@ -703,8 +725,7 @@
     wrong_password: "The hub's team key doesn't match the Google script. Ask Phil to check the HUB_KEY setting.",
     locked:         'Too many failed attempts. Please wait 10 minutes and try again.',
     not_configured: "The shared task list isn't set up yet.",
-    no_editor:      'Choose your name under "Editing as" first.',
-    bad_task:       'Please check the task: it needs some text, and notes can be up to 500 characters each.',
+    bad_task:       'Please add some text for the task.',
     not_found:      'That task was deleted by someone else. The list below is up to date.',
     conflict:       'Someone else changed this task while you were editing. The list below now shows their version; please make your change again.',
     network:        "Couldn't reach the shared task list. Check your connection and try again.",
@@ -713,6 +734,12 @@
   };
   const apiError = code => API_ERRORS[code] || API_ERRORS.server_error;
   const tasksMsg = document.getElementById('hub-tasks-msg');
+
+  const editorName = () => readEditor() || 'Team member';
+
+  // The first version of the Google script knows "not started" as "to do";
+  // every version reads "to do" back as "not started", so send that.
+  const toSheet = task => ({ ...task, status: task.status === 'not started' ? 'to do' : task.status });
 
   // text/plain keeps this a "simple" request, which Apps Script requires (it can't answer CORS preflights).
   async function api(payload) {
@@ -736,7 +763,7 @@
       tasksMsg.textContent = apiError(res.error) + ' Showing the last saved copy, read-only.';
       return;
     }
-    TASKS = res.tasks;
+    TASKS = res.tasks.map(t => ({ ...t, status: normStatus(t.status) }));
     EDITABLE = true;
     tasksMsg.textContent = '';
     renderEditorBar(CONTENT);
@@ -750,7 +777,7 @@
 
   // After a save, delete, or a refused change: take the server's list as the truth.
   function applyResult(res, form) {
-    if (res.tasks) TASKS = res.tasks;
+    if (res.tasks) TASKS = res.tasks.map(t => ({ ...t, status: normStatus(t.status) }));
     if (res.ok || res.error === 'not_found' || res.error === 'conflict') {
       editing = null;
       renderTasksAndTimeline();
@@ -771,20 +798,15 @@
 
     if (e.target.closest('[data-delete]')) {
       const form = e.target.closest('form');
-      const editor = readEditor();
-      if (!editor) { formMessage(form, apiError('no_editor')); return; }
       if (!confirm('Delete this task for everyone?')) return;
       e.target.disabled = true;
-      applyResult(await api({ action: 'deleteTask', editor, id: form.dataset.id }), form);
+      applyResult(await api({ action: 'deleteTask', editor: editorName(), id: form.dataset.id }), form);
     }
   });
 
   hubTeam.addEventListener('submit', async e => {
     e.preventDefault();
     const form = e.target;
-    const editor = readEditor();
-    if (!editor) { formMessage(form, apiError('no_editor')); return; }
-
     const f = form.elements;
     const existing = TASKS.find(t => t.id === form.dataset.id);
     const task = {
@@ -798,13 +820,24 @@
       notes:     f.notes.value.split('\n').map(n => n.trim()).filter(Boolean),
       timeline:  f.timeline.checked,
     };
-    if (task.timeline && !task.due) { formMessage(form, 'Add a due date to show this on the timeline.'); return; }
-
     const btn = form.querySelector('[type="submit"]');
     btn.disabled = true;
     btn.textContent = 'Saving…';
-    applyResult(await api({ action: 'saveTask', editor, task }), form);
+    applyResult(await api({ action: 'saveTask', editor: editorName(), task: toSheet(task) }), form);
     if (document.body.contains(btn)) { btn.disabled = false; btn.textContent = 'Save'; }
+  });
+
+  // Changing a task's status picker saves straight away.
+  hubTeam.addEventListener('change', async e => {
+    const picker = e.target.closest('[data-status-for]');
+    if (!picker) return;
+    const existing = TASKS.find(t => t.id === picker.dataset.statusFor);
+    if (!existing) return;
+    tasksMsg.textContent = '';
+    picker.disabled = true;
+    picker.closest('.task').classList.toggle('is-done', picker.value === 'done');
+    applyResult(await api({ action: 'saveTask', editor: editorName(), task: toSheet({ ...existing, status: picker.value }) }), null);
+    if (document.body.contains(picker)) renderTasksAndTimeline();   // save refused: put the picker back
   });
 
   document.getElementById('hub-editor-bar').addEventListener('change', e => {
